@@ -21,7 +21,7 @@ body::before, body::after {
   margin: 10px auto;
 }
 
-.EditorExample-root {
+.RichTextEditor-root {
   background: #fff;
   border: 1px solid #ddd;
   font-family: 'Georgia', serif;
@@ -29,28 +29,28 @@ body::before, body::after {
   padding: 15px;
 }
 
-.EditorExample-editor {
+.RichTextEditor-editor {
   border-top: 1px solid #ddd;
   cursor: text;
   font-size: 16px;
   margin-top: 10px;
 }
 
-.EditorExample-editor .public-DraftEditorPlaceholder-root,
-.EditorExample-editor .public-DraftEditor-content {
+.RichTextEditor-editor .public-DraftEditorPlaceholder-root,
+.RichTextEditor-editor .public-DraftEditor-content {
   margin: 0 -15px -15px;
   padding: 15px;
 }
 
-.EditorExample-editor .public-DraftEditor-content {
+.RichTextEditor-editor .public-DraftEditor-content {
   min-height: 100px;
 }
 
-.EditorExample-hidePlaceholder .public-DraftEditorPlaceholder-root {
+.RichTextEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
   display: none;
 }
 
-.EditorExample-editor .EditorExample-blockquote {
+.RichTextEditor-editor .RichTextEditor-blockquote {
   border-left: 5px solid #eee;
   color: #666;
   font-family: 'Hoefler Text', 'Georgia', serif;
@@ -59,27 +59,27 @@ body::before, body::after {
   padding: 10px 20px;
 }
 
-.EditorExample-editor .public-DraftStyleDefault-pre {
+.RichTextEditor-editor .public-DraftStyleDefault-pre {
   background-color: rgba(0, 0, 0, 0.05);
   font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
   font-size: 16px;
   padding: 20px;
 }
 
-.EditorExample-controls {
+.RichTextEditor-controls {
   font-family: 'Helvetica', sans-serif;
   font-size: 14px;
   margin-bottom: 5px;
   user-select: none;
 }
 
-.EditorExample-styleButton {
+.RichTextEditor-styleButton {
   color: #999;
   cursor: pointer;
   margin-right: 16px;
   padding: 2px 0;
 }
 
-.EditorExample-activeButton {
+.RichTextEditor-activeButton {
   color: #5890ff;
 }
