@@ -1,0 +1,27 @@
+{
+  "name": "react-rte",
+  "version": "1.0.0",
+  "description": "React Rich Text Editor",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sstur/react-rte.git"
+  },
+  "keywords": [
+    "reactjs",
+    "draftjs",
+    "contenteditable",
+    "wysiwyg",
+    "rich-text",
+    "editor"
+  ],
+  "author": "sstur@me.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sstur/react-rte/issues"
+  },
+  "homepage": "https://github.com/sstur/react-rte#readme"
+}
