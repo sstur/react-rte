@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    "transform-class-properties"
+  ],
+  "presets": [
+    "babel-preset-es2015",
+    "babel-preset-react",
+    "babel-preset-stage-2"
+  ]
+}

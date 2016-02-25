@@ -1,0 +1,8 @@
+[ignore]
+.*node_modules/babel.*
+
+[include]
+
+[libs]
+
+[options]
