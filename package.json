@@ -4,8 +4,8 @@
   "description": "React Rich Text Editor",
   "main": "main.js",
   "dependencies": {
-    "draft-js": "^0.1.0",
     "classnames": "^2.2.3",
+    "draft-js": "^0.1.0",
     "immutable": "^3.7.6",
     "react": "^0.14.7",
     "react-dom": "^0.14.7"
