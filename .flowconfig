@@ -6,3 +6,4 @@
 [libs]
 
 [options]
+esproposal.class_static_fields=enable
