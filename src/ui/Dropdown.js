@@ -1,10 +1,12 @@
 /* @flow */
 import React, {Component} from 'react';
+import cx from 'classnames';
 
 type Props = {
-  choices: Map<string, string>,
-  selectedKey: ?string,
-  onChange: (selectedKey: string) => any
+  choices: Map<string, string>;
+  selectedKey: ?string;
+  onChange: (selectedKey: string) => any;
+  className: string;
 };
 
 export default class Dropdown extends Component<Props> {
@@ -16,13 +18,15 @@ export default class Dropdown extends Component<Props> {
   }
 
   render(): React.Element {
-    let {choices, selectedKey} = this.props;
-    let selectedValue = (selectedKey == null) ? null : choices.get(selectedKey);
+    let {choices, selectedKey, className, ...otherProps} = this.props;
+    className = cx(className, 'ui-button');
+    let selectedValue = (selectedKey == null) ? '' : choices.get(selectedKey);
     return (
       <span className="ui-dropdown" title={selectedValue}>
-        <select value={selectedKey} onChange={this._onChange}>
+        <select {...otherProps} value={selectedKey} onChange={this._onChange}>
           {this._renderChoices()}
         </select>
+        <span className="value">{selectedValue}</span>
       </span>
     );
   }
