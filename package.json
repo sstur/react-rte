@@ -1,6 +1,6 @@
 {
   "name": "react-rte",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "React Rich Text Editor",
   "main": "main.js",
   "dependencies": {
@@ -38,7 +38,7 @@
     "draftjs",
     "contenteditable",
     "wysiwyg",
-    "rich-text",
+    "richtext",
     "editor"
   ],
   "author": "sstur@me.com",
