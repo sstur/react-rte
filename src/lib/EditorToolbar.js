@@ -4,8 +4,9 @@ import React, {Component} from 'react';
 import {EditorState, RichUtils} from 'draft-js';
 import Constants from './Constants';
 import StyleButton from './StyleButton';
+import Dropdown from '../ui/Dropdown';
 
-const {BLOCK_TYPES, INLINE_STYLES} = Constants;
+const {INLINE_STYLES, BLOCK_TYPES_DROPDOWN, BLOCK_TYPES_BUTTON} = Constants;
 
 type ChangeHandler = (state: EditorState) => any;
 
@@ -26,6 +27,7 @@ export default class EditorToolbar extends Component<Props> {
   render(): React.Element {
     return (
       <div className="RichTextEditor-toolbar">
+        {this._renderBlockTypeDropdown()}
         <div className="RichTextEditor-buttonGroup">
           {this._renderBlockTypeButtons()}
         </div>
@@ -36,15 +38,26 @@ export default class EditorToolbar extends Component<Props> {
     );
   }
 
-  _renderBlockTypeButtons(): Array<React.Element> {
-    let {editorState} = this.props;
-    let selection = editorState.getSelection();
-    let blockType = editorState
-      .getCurrentContent()
-      .getBlockForKey(selection.getStartKey())
-      .getType();
+  _renderBlockTypeDropdown(): React.Element {
+    let blockType = this._getCurrentBlockType();
+    let choices = new Map(
+      BLOCK_TYPES_DROPDOWN.map((type) => [type.style, type.label])
+    );
+    if (!choices.has(blockType)) {
+      blockType = Array.from(choices.keys())[0];
+    }
+    return (
+      <Dropdown
+        choices={choices}
+        selectedKey={blockType}
+        onChange={this._toggleBlockType}
+      />
+    );
+  }
 
-    return BLOCK_TYPES.map((type, index) => (
+  _renderBlockTypeButtons(): Array<React.Element> {
+    let blockType = this._getCurrentBlockType();
+    return BLOCK_TYPES_BUTTON.map((type, index) => (
       <StyleButton
         key={String(index)}
         active={type.style === blockType}
@@ -67,6 +80,15 @@ export default class EditorToolbar extends Component<Props> {
         style={type.style}
       />
     ));
+  }
+
+  _getCurrentBlockType(): string {
+    let {editorState} = this.props;
+    let selection = editorState.getSelection();
+    return editorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey())
+      .getType();
   }
 
   _toggleBlockType(blockType: string) {

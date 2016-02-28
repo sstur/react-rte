@@ -5,13 +5,17 @@ const Constants = {
     {label: 'Underline', style: 'UNDERLINE'},
     {label: 'Monospace', style: 'CODE'},
   ],
-  BLOCK_TYPES: [
-    {label: 'H1', style: 'header-one'},
-    {label: 'H2', style: 'header-two'},
-    {label: 'Blockquote', style: 'blockquote'},
+  BLOCK_TYPES_DROPDOWN: [
+    {label: 'Normal', style: 'unstyled'},
+    {label: 'Heading Large', style: 'header-one'},
+    {label: 'Heading Medium', style: 'header-two'},
+    {label: 'Heading Small', style: 'header-three'},
+    {label: 'Code Block', style: 'code-block'},
+  ],
+  BLOCK_TYPES_BUTTON: [
     {label: 'UL', style: 'unordered-list-item'},
     {label: 'OL', style: 'ordered-list-item'},
-    {label: 'Code Block', style: 'code-block'},
+    {label: 'Blockquote', style: 'blockquote'},
   ],
 };
 

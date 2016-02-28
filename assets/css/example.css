@@ -2,6 +2,7 @@
 @import "/assets/css/draft.css";
 @import "/assets/css/ui-button.css";
 @import "/assets/css/ui-icon-button.css";
+@import "/assets/css/ui-dropdown.css";
 
 html {
   height: 100%;
@@ -73,6 +74,10 @@ body::before, body::after {
   font-size: 14px;
   margin-bottom: 5px;
   user-select: none;
+}
+
+.RichTextEditor-toolbar .ui-dropdown {
+  margin-right: 5px;
 }
 
 .RichTextEditor-buttonGroup {
