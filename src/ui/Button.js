@@ -3,20 +3,40 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
 
+type EventHandler = (event: Event) => any;
+
 type Props = {
-  className: ?string;
   children: ?any;
+  className: ?string;
+  focusOnClick: ?boolean;
+  onMouseDown: ?EventHandler;
 };
 
 export default class Button extends Component<Props> {
   props: Props;
 
+  constructor() {
+    super(...arguments);
+    this._onMouseDownPreventDefault = this._onMouseDownPreventDefault.bind(this);
+  }
+
   render(): React.Element {
     let {props} = this;
     let {className, ...otherProps} = props;
     className = cx(className, 'ui-button');
+    let onMouseDown = (props.focusOnClick === false) ? this._onMouseDownPreventDefault : props.onMouseDown;
     return (
-      <button type="button" className={className} {...otherProps}>{props.children}</button>
+      <button type="button" {...otherProps} onMouseDown={onMouseDown} className={className}>
+        {props.children}
+      </button>
     );
+  }
+
+  _onMouseDownPreventDefault(event: Event) {
+    event.preventDefault();
+    let {onMouseDown} = this.props;
+    if (onMouseDown != null) {
+      onMouseDown(event);
+    }
   }
 }
