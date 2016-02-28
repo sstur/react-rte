@@ -26,7 +26,18 @@ export default class EditorExample extends Component<Props, State> {
   render(): React.Element {
     let {editorState} = this.state;
     return (
-      <RichTextEditor editorState={editorState} onChange={this._onChange} />
+      <div>
+        <div className="form-field">
+          <RichTextEditor editorState={editorState} onChange={this._onChange} />
+        </div>
+        <div className="form-field">
+          <textarea
+            className="source"
+            placeholder="Editor Source"
+            value={JSON.stringify(editorState)}
+          />
+        </div>
+      </div>
     );
   }
 }
