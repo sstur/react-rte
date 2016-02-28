@@ -68,15 +68,40 @@ body::before, body::after {
   padding: 20px;
 }
 
-.RichTextEditor-controls {
+.RichTextEditor-toolbar {
   font-family: 'Helvetica', sans-serif;
   font-size: 14px;
   margin-bottom: 5px;
   user-select: none;
 }
 
-.RichTextEditor-styleButton {
+.RichTextEditor-buttonGroup {
+  display: inline-block;
   margin-right: 5px;
+}
+
+.RichTextEditor-buttonGroup:last-child {
+  margin-right: 0;
+}
+
+.RichTextEditor-buttonGroup .ui-button {
+  margin-right: 0;
+}
+
+.RichTextEditor-buttonGroup .ui-button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.RichTextEditor-buttonGroup .ui-button + .ui-button:not(:last-child) {
+  border-radius: 0;
+  border-left-width: 0;
+}
+
+.RichTextEditor-buttonGroup .ui-button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left-width: 0;
 }
 
 .RichTextEditor-activeButton {
