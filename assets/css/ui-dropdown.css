@@ -67,3 +67,18 @@
 .ui-dropdown select:focus + .value {
   border-color: #66afe9;
 }
+
+/* On Webkit we can style <select> to be transparant without turning off the
+   default focus styles. This is better for accessibility. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .ui-dropdown select {
+    opacity: 1;
+    color: transparent;
+    -webkit-appearance: none;
+    border-left-width: 12px;
+    border-right-width: 35px;
+  }
+  .ui-dropdown select:focus + .value {
+    border-color: #999;
+  }
+}
