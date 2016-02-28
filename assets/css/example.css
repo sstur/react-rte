@@ -93,6 +93,11 @@ body::before, body::after {
   margin-right: 0;
 }
 
+.RichTextEditor-buttonGroup .ui-button:focus {
+  position: relative;
+  z-index: 1;
+}
+
 .RichTextEditor-buttonGroup .ui-button:first-child {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
