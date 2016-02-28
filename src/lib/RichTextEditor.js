@@ -44,9 +44,9 @@ export default class RichTextEditor extends Component<Props, State> {
   constructor() {
     super(...arguments);
     this.focus = () => this.refs.editor.focus();
-    this.handleKeyCommand = (command) => this._handleKeyCommand(command);
-    this.toggleBlockType = (type) => this._toggleBlockType(type);
-    this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
+    this._handleKeyCommand = this._handleKeyCommand.bind(this);
+    this._toggleBlockType = this._toggleBlockType.bind(this);
+    this._toggleInlineStyle = this._toggleInlineStyle.bind(this);
   }
 
   _handleKeyCommand(command: string): boolean {
@@ -94,18 +94,18 @@ export default class RichTextEditor extends Component<Props, State> {
       <div className="RichTextEditor-root">
         <BlockStyleControls
           editorState={editorState}
-          onToggle={this.toggleBlockType}
+          onToggle={this._toggleBlockType}
         />
         <InlineStyleControls
           editorState={editorState}
-          onToggle={this.toggleInlineStyle}
+          onToggle={this._toggleInlineStyle}
         />
         <div className={className} onClick={this.focus}>
           <Editor
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
-            handleKeyCommand={this.handleKeyCommand}
+            handleKeyCommand={this._handleKeyCommand}
             onChange={this.props.onChange}
             placeholder="Tell a story..."
             ref="editor"
