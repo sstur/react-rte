@@ -2,6 +2,7 @@
   display: inline-block;
   position: relative;
   line-height: 22px;
+  vertical-align: top;
 }
 
 .ui-dropdown select {
@@ -23,7 +24,7 @@
   cursor: pointer;
 }
 
-.ui-dropdown select + .value {
+.ui-dropdown .value {
   display: block;
   position: absolute;
   z-index: 1;
@@ -39,6 +40,28 @@
   padding-left: 12px;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.ui-dropdown .value::before,
+.ui-dropdown .value::after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+}
+
+.ui-dropdown .value::before {
+  margin-top: -10px;
+  border-bottom-color: #555;
+}
+
+.ui-dropdown .value::after {
+  margin-top: 1px;
+  border-top-color: #555;
 }
 
 .ui-dropdown select:focus + .value {
