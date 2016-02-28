@@ -15,9 +15,14 @@ const styleMap = {
 };
 
 function getBlockStyle(block) {
+  let result = 'RichTextEditor-block';
   switch (block.getType()) {
-    case 'blockquote': return 'RichTextEditor-blockquote';
-    default: return null;
+    case 'unstyled':
+      return result + ' RichTextEditor-paragraph';
+    case 'blockquote':
+      return result + ' RichTextEditor-blockquote';
+    default:
+      return result;
   }
 }
 
@@ -57,6 +62,7 @@ export default class RichTextEditor extends Component<Props> {
         />
         <div className={className} onClick={this._focus}>
           <Editor
+            className="asdfasdf"
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
