@@ -1,16 +1,12 @@
 /* @flow */
-import React from 'react';
+import React, {Component} from 'react';
 import RichTextEditor from './lib/RichTextEditor';
-import stateToHTML from './lib/stateToHTML';
-
-// TODO: Wrap EditorState using a class that has fromMarkup() and toMarkup()
-import {EditorState} from 'draft-js';
-
-const {Component} = React;
+import EditorValue from './lib/EditorValue';
 
 type Props = {};
 type State = {
-  editorState: EditorState;
+  value: EditorValue;
+  format: string;
 };
 
 export default class EditorExample extends Component<Props, State> {
@@ -20,30 +16,35 @@ export default class EditorExample extends Component<Props, State> {
   constructor() {
     super(...arguments);
     this.state = {
-      editorState: EditorState.createEmpty()
+      value: EditorValue.createEmpty(),
+      format: 'html',
     };
-    this._onChange = (editorState: EditorState) => {
-      this.setState({editorState});
-    };
+    this._onChange = this._onChange.bind(this);
   }
 
   render(): React.Element {
-    let {editorState} = this.state;
-    let editorSource = stateToHTML(editorState.getCurrentContent());
+    let {value, format} = this.state;
     return (
       <div>
         <div className="form-field">
-          <RichTextEditor editorState={editorState} onChange={this._onChange} />
+          <RichTextEditor
+            value={value}
+            onChange={this._onChange}
+          />
         </div>
         <div className="form-field">
           <textarea
             className="source"
             placeholder="Editor Source"
-            value={editorSource}
+            value={value.toString(format)}
             onChange={() => null}
           />
         </div>
       </div>
     );
+  }
+
+  _onChange(value: EditorValue) {
+    this.setState({value});
   }
 }

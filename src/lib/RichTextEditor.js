@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {Editor, EditorState, RichUtils} from 'draft-js';
 import EditorToolbar from './EditorToolbar';
+import EditorValue from './EditorValue';
 import cx from 'classnames';
 
 // Custom overrides for "code" style.
@@ -26,28 +27,25 @@ function getBlockStyle(block) {
   }
 }
 
-type ChangeHandler = (state: EditorState) => any;
+type ChangeHandler = (value: EditorValue) => any;
 
 type Props = {
-  editorState: EditorState;
+  value: EditorValue;
   onChange: ChangeHandler;
 };
 
 export default class RichTextEditor extends Component<Props> {
   props: Props;
 
-  static defaultProps = {
-    editorState: EditorState.createEmpty(),
-  };
-
   constructor() {
     super(...arguments);
     this._focus = this._focus.bind(this);
     this._handleKeyCommand = this._handleKeyCommand.bind(this);
+    this._onChange = this._onChange.bind(this);
   }
 
   render(): React.Element {
-    let {editorState} = this.props;
+    let editorState = this.props.value.getEditorState();
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
     let className = cx({
@@ -58,7 +56,7 @@ export default class RichTextEditor extends Component<Props> {
       <div className="RichTextEditor-root">
         <EditorToolbar
           editorState={editorState}
-          onChange={this.props.onChange}
+          onChange={this._onChange}
         />
         <div className={className} onClick={this._focus}>
           <Editor
@@ -67,7 +65,7 @@ export default class RichTextEditor extends Component<Props> {
             customStyleMap={styleMap}
             editorState={editorState}
             handleKeyCommand={this._handleKeyCommand}
-            onChange={this.props.onChange}
+            onChange={this._onChange}
             placeholder="Tell a story..."
             ref="editor"
             spellCheck={true}
@@ -78,7 +76,8 @@ export default class RichTextEditor extends Component<Props> {
   }
 
   _shouldHidePlaceholder(): boolean {
-    let contentState = this.props.editorState.getCurrentContent();
+    let editorState = this.props.value.getEditorState();
+    let contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
       if (contentState.getBlockMap().first().getType() !== 'unstyled') {
         return true;
@@ -88,13 +87,17 @@ export default class RichTextEditor extends Component<Props> {
   }
 
   _handleKeyCommand(command: string): boolean {
-    const {editorState} = this.props;
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      this.props.onChange(newState);
+    let editorState = this.props.value.getEditorState();
+    let newEditorState = RichUtils.handleKeyCommand(editorState, command);
+    if (newEditorState) {
+      this._onChange(newEditorState);
       return true;
     }
     return false;
+  }
+
+  _onChange(editorState: EditorState) {
+    this.props.onChange(EditorValue.createFromState(editorState));
   }
 
   _focus() {
