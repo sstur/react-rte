@@ -1,3 +1,26 @@
+const BLOCK_TYPE = {
+  UNSTYLED: 'unstyled',
+  PARAGRAPH: 'paragraph',
+  HEADER_ONE: 'header-one',
+  HEADER_TWO: 'header-two',
+  // This one is not actually in DraftBlockType but it seems to work.
+  HEADER_THREE: 'header-three',
+  UNORDERED_LIST_ITEM: 'unordered-list-item',
+  ORDERED_LIST_ITEM: 'ordered-list-item',
+  BLOCKQUOTE: 'blockquote',
+  PULLQUOTE: 'pullquote',
+  CODE: 'code-block',
+  MEDIA: 'media',
+};
+
+const INLINE_STYLE = {
+  BOLD: 'BOLD',
+  CODE: 'CODE',
+  ITALIC: 'ITALIC',
+  STRIKETHROUGH: 'STRIKETHROUGH',
+  UNDERLINE: 'UNDERLINE',
+};
+
 const Constants = {
   INLINE_STYLES: [
     {label: 'Bold', style: 'BOLD'},
@@ -17,6 +40,8 @@ const Constants = {
     {label: 'OL', style: 'ordered-list-item'},
     {label: 'Blockquote', style: 'blockquote'},
   ],
+  BLOCK_TYPE,
+  INLINE_STYLE,
 };
 
 export default Constants;
