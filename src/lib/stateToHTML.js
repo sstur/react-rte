@@ -28,6 +28,7 @@ type StylePiece = [string, Style];
 type EntityPiece = [EntityKey, Array<StylePiece>];
 
 const INDENT = '  ';
+const BREAK = '<br/>';
 
 function getTag(blockType: number): string {
   switch (blockType) {
@@ -77,7 +78,8 @@ function encodeContent(text: string): string {
     .split('&').join('&amp;')
     .split('<').join('&lt;')
     .split('>').join('&gt;')
-    .split('\xA0').join('&nbsp;');
+    .split('\xA0').join('&nbsp;')
+    .split('\n').join(BREAK + '\n');
 }
 
 // function encodeAttr(text: string): string {
@@ -191,7 +193,7 @@ class MarkupGenerator {
     let text = block.getText();
     if (text === '') {
       // prevent element collapse if completely empty
-      return '<br/>';
+      return BREAK;
     }
     text = this.preserveWhitespace(text);
     let charMetaList: CharacterMetaList = block.getCharacterList();

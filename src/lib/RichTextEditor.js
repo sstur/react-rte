@@ -15,6 +15,7 @@ const styleMap = {
   },
 };
 
+
 function getBlockStyle(block) {
   let result = 'RichTextEditor-block';
   switch (block.getType()) {
@@ -40,6 +41,7 @@ export default class RichTextEditor extends Component<Props> {
   constructor() {
     super(...arguments);
     this._focus = this._focus.bind(this);
+    this._handleReturn = this._handleReturn.bind(this);
     this._handleKeyCommand = this._handleKeyCommand.bind(this);
     this._onChange = this._onChange.bind(this);
   }
@@ -64,6 +66,7 @@ export default class RichTextEditor extends Component<Props> {
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
+            handleReturn={this._handleReturn}
             handleKeyCommand={this._handleKeyCommand}
             onChange={this._onChange}
             placeholder="Tell a story..."
@@ -86,14 +89,25 @@ export default class RichTextEditor extends Component<Props> {
     return false;
   }
 
+  _handleReturn(event: Object): boolean {
+    if (event.shiftKey) {
+      let editorState = this.props.value.getEditorState();
+      this._onChange(RichUtils.insertSoftNewline(editorState));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   _handleKeyCommand(command: string): boolean {
     let editorState = this.props.value.getEditorState();
     let newEditorState = RichUtils.handleKeyCommand(editorState, command);
     if (newEditorState) {
       this._onChange(newEditorState);
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   _onChange(editorState: EditorState) {
