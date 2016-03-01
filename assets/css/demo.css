@@ -28,6 +28,15 @@ body::before, body::after {
   margin: 10px 0;
 }
 
+.editor-demo .radio-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.editor-demo .radio-item input {
+  margin-right: 5px;
+}
+
 .editor-demo .source {
   display: block;
   margin: 0;

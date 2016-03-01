@@ -20,6 +20,7 @@ export default class EditorDemo extends Component<Props, State> {
       format: 'html',
     };
     this._onChange = this._onChange.bind(this);
+    this._onChangeFormat = this._onChangeFormat.bind(this);
   }
 
   render(): React.Element {
@@ -36,6 +37,28 @@ export default class EditorDemo extends Component<Props, State> {
           />
         </div>
         <div className="row">
+          <label className="radio-item">
+            <input
+              type="radio"
+              name="format"
+              value="html"
+              checked={this.state.format === 'html'}
+              onChange={this._onChangeFormat}
+            />
+            <span>HTML</span>
+          </label>
+          <label className="radio-item">
+            <input
+              type="radio"
+              name="format"
+              value="markdown"
+              checked={this.state.format === 'markdown'}
+              onChange={this._onChangeFormat}
+            />
+            <span>Markdown</span>
+          </label>
+        </div>
+        <div className="row">
           <textarea
             className="source"
             placeholder="Editor Source"
@@ -49,5 +72,9 @@ export default class EditorDemo extends Component<Props, State> {
 
   _onChange(value: EditorValue) {
     this.setState({value});
+  }
+
+  _onChangeFormat(event: Object) {
+    this.setState({format: event.target.value});
   }
 }
