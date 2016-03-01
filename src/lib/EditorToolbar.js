@@ -7,7 +7,11 @@ import StyleButton from './StyleButton';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
 
-const {INLINE_STYLES, BLOCK_TYPES_DROPDOWN, BLOCK_TYPES_BUTTON} = Constants;
+const {
+  INLINE_STYLE_BUTTONS,
+  BLOCK_TYPE_DROPDOWN,
+  BLOCK_TYPE_BUTTONS
+} = Constants;
 
 type ChangeHandler = (state: EditorState) => any;
 
@@ -58,7 +62,7 @@ export default class EditorToolbar extends Component<Props> {
   _renderBlockTypeDropdown(): React.Element {
     let blockType = this._getCurrentBlockType();
     let choices = new Map(
-      BLOCK_TYPES_DROPDOWN.map((type) => [type.style, type.label])
+      BLOCK_TYPE_DROPDOWN.map((type) => [type.style, type.label])
     );
     if (!choices.has(blockType)) {
       blockType = Array.from(choices.keys())[0];
@@ -74,7 +78,7 @@ export default class EditorToolbar extends Component<Props> {
 
   _renderBlockTypeButtons(): Array<React.Element> {
     let blockType = this._getCurrentBlockType();
-    return BLOCK_TYPES_BUTTON.map((type, index) => (
+    return BLOCK_TYPE_BUTTONS.map((type, index) => (
       <StyleButton
         key={String(index)}
         active={type.style === blockType}
@@ -88,7 +92,7 @@ export default class EditorToolbar extends Component<Props> {
   _renderInlineStyleButtons(): Array<React.Element> {
     let {editorState} = this.props;
     let currentStyle = editorState.getCurrentInlineStyle();
-    return INLINE_STYLES.map((type, index) => (
+    return INLINE_STYLE_BUTTONS.map((type, index) => (
       <StyleButton
         key={String(index)}
         active={currentStyle.has(type.style)}

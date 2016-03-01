@@ -22,20 +22,21 @@ const INLINE_STYLE = {
 };
 
 const Constants = {
-  INLINE_STYLES: [
+  INLINE_STYLE_BUTTONS: [
     {label: 'Bold', style: 'BOLD'},
     {label: 'Italic', style: 'ITALIC'},
     {label: 'Underline', style: 'UNDERLINE'},
+    {label: 'Strikethrough', style: 'STRIKETHROUGH'},
     {label: 'Monospace', style: 'CODE'},
   ],
-  BLOCK_TYPES_DROPDOWN: [
+  BLOCK_TYPE_DROPDOWN: [
     {label: 'Normal', style: 'unstyled'},
     {label: 'Heading Large', style: 'header-one'},
     {label: 'Heading Medium', style: 'header-two'},
     {label: 'Heading Small', style: 'header-three'},
     {label: 'Code Block', style: 'code-block'},
   ],
-  BLOCK_TYPES_BUTTON: [
+  BLOCK_TYPE_BUTTONS: [
     {label: 'UL', style: 'unordered-list-item'},
     {label: 'OL', style: 'ordered-list-item'},
     {label: 'Blockquote', style: 'blockquote'},
