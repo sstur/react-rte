@@ -50,6 +50,8 @@ body::before, body::after {
   font-size: 13px;
   line-height: 18px;
   resize: none;
+  white-space: pre;
+  word-wrap: normal;
 }
 
 .RichTextEditor-root {
