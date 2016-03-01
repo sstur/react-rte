@@ -6,7 +6,7 @@ This is a UI component built completely in React that is meant to be a full-feat
 
 Where Draft.js aims to be more of a low-level framework (`contentEditable` abstraction), this component is intended to be a fully polished UI component that you can reach for when you need to replace a `<textarea/>` in your application to support bold, italic, links, lists, headings, etc.
 
-![Screenshot 1](https://dl.dropboxusercontent.com/u/341900/images/2016-03-01-082312.png)
+![Screenshot 1](https://dl.dropboxusercontent.com/u/341900/images/2016-03-01-195847.png)
 
 The data model in Draft.js allows us to represent the document in a way that is mostly agnostic to the textual representation (html/markdown) you choose. This data model is encapsulated as EditorState and is based on [Immutable.js][immutablejs] to be both performant and easy to reason about. EditorState contains not only the content in the editor document but its entire state including cursor position and selection.
 
