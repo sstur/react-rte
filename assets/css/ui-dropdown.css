@@ -3,6 +3,9 @@
   position: relative;
   line-height: 22px;
   vertical-align: top;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .ui-dropdown select {
