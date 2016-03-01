@@ -19,16 +19,16 @@ body::before, body::after {
   display: table;
 }
 
-.example-container {
+.editor-demo {
   width: 540px;
   margin: 10px auto;
 }
 
-.example-container .form-field {
+.editor-demo .form-field {
   margin: 10px 0;
 }
 
-.example-container .source {
+.editor-demo .source {
   display: block;
   margin: 0;
   padding: 10px;

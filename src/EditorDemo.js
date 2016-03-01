@@ -9,7 +9,7 @@ type State = {
   format: string;
 };
 
-export default class EditorExample extends Component<Props, State> {
+export default class EditorDemo extends Component<Props, State> {
   props: Props;
   state: State;
 
@@ -25,7 +25,7 @@ export default class EditorExample extends Component<Props, State> {
   render(): React.Element {
     let {value, format} = this.state;
     return (
-      <div>
+      <div className="editor-demo">
         <div className="form-field">
           <RichTextEditor
             value={value}
