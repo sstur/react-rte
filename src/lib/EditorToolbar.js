@@ -5,6 +5,7 @@ import {EditorState, RichUtils} from 'draft-js';
 import Constants from './Constants';
 import StyleButton from './StyleButton';
 import Dropdown from '../ui/Dropdown';
+import IconButton from '../ui/IconButton';
 
 const {INLINE_STYLES, BLOCK_TYPES_DROPDOWN, BLOCK_TYPES_BUTTON} = Constants;
 
@@ -20,6 +21,8 @@ export default class EditorToolbar extends Component<Props> {
 
   constructor() {
     super(...arguments);
+    this._undo = this._undo.bind(this);
+    this._redo = this._redo.bind(this);
     this._toggleBlockType = this._toggleBlockType.bind(this);
     this._toggleInlineStyle = this._toggleInlineStyle.bind(this);
   }
@@ -27,6 +30,20 @@ export default class EditorToolbar extends Component<Props> {
   render(): React.Element {
     return (
       <div className="RichTextEditor-toolbar">
+        <div className="RichTextEditor-buttonGroup">
+          <IconButton
+            label="Undo"
+            iconName="undo"
+            onClick={this._undo}
+            focusOnClick={false}
+          />
+          <IconButton
+            label="Redo"
+            iconName="redo"
+            onClick={this._redo}
+            focusOnClick={false}
+          />
+        </div>
         {this._renderBlockTypeDropdown()}
         <div className="RichTextEditor-buttonGroup">
           {this._renderBlockTypeButtons()}
@@ -106,6 +123,20 @@ export default class EditorToolbar extends Component<Props> {
         this.props.editorState,
         inlineStyle
       )
+    );
+  }
+
+  _undo() {
+    let {editorState} = this.props;
+    this.props.onChange(
+      EditorState.undo(editorState)
+    );
+  }
+
+  _redo() {
+    let {editorState} = this.props;
+    this.props.onChange(
+      EditorState.redo(editorState)
     );
   }
 }
