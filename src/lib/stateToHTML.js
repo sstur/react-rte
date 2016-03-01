@@ -77,7 +77,8 @@ function encodeContent(text: string): string {
     .split('&').join('&amp;')
     .split('<').join('&lt;')
     .split('>').join('&gt;')
-    .split('\xA0').join('&nbsp;');
+    .split('\xA0').join('&nbsp;')
+    .split('\n').join('<br>\n');
 }
 
 // function encodeAttr(text: string): string {
