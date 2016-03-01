@@ -62,7 +62,6 @@ export default class RichTextEditor extends Component<Props> {
         />
         <div className={className} onClick={this._focus}>
           <Editor
-            className="asdfasdf"
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
