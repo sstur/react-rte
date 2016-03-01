@@ -26,13 +26,16 @@ export default class EditorDemo extends Component<Props, State> {
     let {value, format} = this.state;
     return (
       <div className="editor-demo">
-        <div className="form-field">
+        <div className="row">
+          <p>This is a demo of the <a href="https://www.npmjs.com/package/react-rte"><code>react-rte</code></a> editor.</p>
+        </div>
+        <div className="row">
           <RichTextEditor
             value={value}
             onChange={this._onChange}
           />
         </div>
-        <div className="form-field">
+        <div className="row">
           <textarea
             className="source"
             placeholder="Editor Source"
