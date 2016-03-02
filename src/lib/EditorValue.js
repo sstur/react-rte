@@ -41,7 +41,9 @@ export default class EditorValue {
 
   static createFromString(source: string, format: string): EditorValue {
     let editorState = fromString(source, format);
-    return new EditorValue(editorState);
+    let value = new EditorValue(editorState);
+    value._cache[format] = source;
+    return value;
   }
 
   static createFromState(editorState: EditorState): EditorValue {
