@@ -20,7 +20,6 @@ type DOMNode = SyntheticNode | Node;
 
 const {
   UNSTYLED,
-  PARAGRAPH,
   UNORDERED_LIST_ITEM,
   ORDERED_LIST_ITEM,
   BLOCKQUOTE,
@@ -144,9 +143,6 @@ class BlockGenerator {
       }
       case 'pre': {
         return CODE_BLOCK;
-      }
-      case 'p': {
-        return PARAGRAPH;
       }
       default: {
         return UNSTYLED;

@@ -1,6 +1,6 @@
 export const BLOCK_TYPE = {
+  // This is used in place of paragraph to represent a normal text block.
   UNSTYLED: 'unstyled',
-  PARAGRAPH: 'paragraph',
   HEADER_ONE: 'header-one',
   HEADER_TWO: 'header-two',
   // This one is not actually in DraftBlockType but it seems to work.
