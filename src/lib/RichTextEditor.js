@@ -110,7 +110,8 @@ export default class RichTextEditor extends Component<Props> {
   }
 
   _onChange(editorState: EditorState) {
-    this.props.onChange(EditorValue.createFromState(editorState));
+    let newValue = this.props.value.setEditorState(editorState);
+    this.props.onChange(newValue);
   }
 
   _focus() {
