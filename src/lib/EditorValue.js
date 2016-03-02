@@ -7,24 +7,44 @@ import stateFromMarkdown from './stateFromMarkdown';
 
 type StringMap = {[key: string]: string};
 
+const INIT_FROM_EMPTY = 'INIT_FROM_EMPTY';
+const INIT_FROM_STATE = 'INIT_FROM_STATE';
+const INIT_FROM_STRING = 'INIT_FROM_STRING';
+
+type ValueSource = EditorState | [string, string];
+
 export default class EditorValue {
-  _editorState: ?EditorState;
+  _editorState: EditorState;
   _cache: StringMap;
 
-  constructor(editorState: ?EditorState) {
-    this._editorState = editorState;
+  constructor(initType: string, source: ValueSource) {
     this._cache = {};
+    switch (initType) {
+      case INIT_FROM_EMPTY: {
+        this._editorState = EditorState.createEmpty();
+        break;
+      }
+      case INIT_FROM_STATE: {
+        this._editorState = source;
+        break;
+      }
+      case INIT_FROM_STRING: {
+        let [markup, format] = source;
+        this._cache[format] = markup;
+        this._editorState = fromString(markup, format);
+        break;
+      }
+    }
   }
 
   getEditorState(): EditorState {
-    return this._editorState || EditorState.createEmpty();
+    return this._editorState;
   }
 
   setEditorState(editorState: EditorState): EditorValue {
-    if (this._editorState === editorState) {
-      return this;
-    }
-    return new EditorValue(editorState);
+    return (this._editorState === editorState) ?
+      this :
+      new EditorValue(INIT_FROM_STATE, editorState);
   }
 
   toString(format: string): string {
@@ -36,18 +56,15 @@ export default class EditorValue {
   }
 
   static createEmpty(): EditorValue {
-    return new EditorValue();
-  }
-
-  static createFromString(source: string, format: string): EditorValue {
-    let editorState = fromString(source, format);
-    let value = new EditorValue(editorState);
-    value._cache[format] = source;
-    return value;
+    return new EditorValue(INIT_FROM_EMPTY);
   }
 
   static createFromState(editorState: EditorState): EditorValue {
-    return new EditorValue(editorState);
+    return new EditorValue(INIT_FROM_STATE, editorState);
+  }
+
+  static createFromString(markup: string, format: string): EditorValue {
+    return new EditorValue(INIT_FROM_STRING, [markup, format]);
   }
 }
 
@@ -66,13 +83,13 @@ function toString(editorState, format) {
   }
 }
 
-function fromString(source, format) {
+function fromString(markup, format) {
   switch (format) {
     case 'html': {
-      return stateFromHTML(source);
+      return stateFromHTML(markup);
     }
     case 'markdown': {
-      return stateFromMarkdown(source);
+      return stateFromMarkdown(markup);
     }
     default: {
       throw new Error('Format not supported: ' + format);
