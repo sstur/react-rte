@@ -1,4 +1,4 @@
-const BLOCK_TYPE = {
+export const BLOCK_TYPE = {
   UNSTYLED: 'unstyled',
   PARAGRAPH: 'paragraph',
   HEADER_ONE: 'header-one',
@@ -13,7 +13,7 @@ const BLOCK_TYPE = {
   MEDIA: 'media',
 };
 
-const INLINE_STYLE = {
+export const INLINE_STYLE = {
   BOLD: 'BOLD',
   CODE: 'CODE',
   ITALIC: 'ITALIC',
@@ -21,28 +21,31 @@ const INLINE_STYLE = {
   UNDERLINE: 'UNDERLINE',
 };
 
-const Constants = {
-  INLINE_STYLE_BUTTONS: [
-    {label: 'Bold', style: 'BOLD'},
-    {label: 'Italic', style: 'ITALIC'},
-    {label: 'Underline', style: 'UNDERLINE'},
-    {label: 'Strikethrough', style: 'STRIKETHROUGH'},
-    {label: 'Monospace', style: 'CODE'},
-  ],
-  BLOCK_TYPE_DROPDOWN: [
-    {label: 'Normal', style: 'unstyled'},
-    {label: 'Heading Large', style: 'header-one'},
-    {label: 'Heading Medium', style: 'header-two'},
-    {label: 'Heading Small', style: 'header-three'},
-    {label: 'Code Block', style: 'code-block'},
-  ],
-  BLOCK_TYPE_BUTTONS: [
-    {label: 'UL', style: 'unordered-list-item'},
-    {label: 'OL', style: 'ordered-list-item'},
-    {label: 'Blockquote', style: 'blockquote'},
-  ],
+export const INLINE_STYLE_BUTTONS = [
+  {label: 'Bold', style: 'BOLD'},
+  {label: 'Italic', style: 'ITALIC'},
+  {label: 'Underline', style: 'UNDERLINE'},
+  {label: 'Strikethrough', style: 'STRIKETHROUGH'},
+  {label: 'Monospace', style: 'CODE'},
+];
+
+export const BLOCK_TYPE_DROPDOWN = [
+  {label: 'Normal', style: 'unstyled'},
+  {label: 'Heading Large', style: 'header-one'},
+  {label: 'Heading Medium', style: 'header-two'},
+  {label: 'Heading Small', style: 'header-three'},
+  {label: 'Code Block', style: 'code-block'},
+];
+export const BLOCK_TYPE_BUTTONS = [
+  {label: 'UL', style: 'unordered-list-item'},
+  {label: 'OL', style: 'ordered-list-item'},
+  {label: 'Blockquote', style: 'blockquote'},
+];
+
+export default {
+  INLINE_STYLE_BUTTONS,
+  BLOCK_TYPE_DROPDOWN,
+  BLOCK_TYPE_BUTTONS,
   BLOCK_TYPE,
   INLINE_STYLE,
 };
-
-export default Constants;

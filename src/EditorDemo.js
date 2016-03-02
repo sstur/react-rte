@@ -20,6 +20,7 @@ export default class EditorDemo extends Component<Props, State> {
       format: 'html',
     };
     this._onChange = this._onChange.bind(this);
+    this._onChangeSource = this._onChangeSource.bind(this);
     this._onChangeFormat = this._onChangeFormat.bind(this);
   }
 
@@ -42,7 +43,7 @@ export default class EditorDemo extends Component<Props, State> {
               type="radio"
               name="format"
               value="html"
-              checked={this.state.format === 'html'}
+              checked={format === 'html'}
               onChange={this._onChangeFormat}
             />
             <span>HTML</span>
@@ -52,7 +53,7 @@ export default class EditorDemo extends Component<Props, State> {
               type="radio"
               name="format"
               value="markdown"
-              checked={this.state.format === 'markdown'}
+              checked={format === 'markdown'}
               onChange={this._onChangeFormat}
             />
             <span>Markdown</span>
@@ -63,7 +64,7 @@ export default class EditorDemo extends Component<Props, State> {
             className="source"
             placeholder="Editor Source"
             value={value.toString(format)}
-            onChange={() => null}
+            onChange={this._onChangeSource}
           />
         </div>
       </div>
@@ -72,6 +73,13 @@ export default class EditorDemo extends Component<Props, State> {
 
   _onChange(value: EditorValue) {
     this.setState({value});
+  }
+
+  _onChangeSource(event: Object) {
+    let source = event.target.value;
+    this.setState({
+      value: EditorValue.createFromString(source, this.state.format),
+    });
   }
 
   _onChangeFormat(event: Object) {

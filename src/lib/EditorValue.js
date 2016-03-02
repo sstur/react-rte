@@ -1,7 +1,9 @@
 /* @flow */
 import {EditorState} from 'draft-js';
 import stateToHTML from './stateToHTML';
+import stateFromHTML from './stateFromHTML';
 import stateToMarkdown from './stateToMarkdown';
+import stateFromMarkdown from './stateFromMarkdown';
 
 type StringMap = {[key: string]: string};
 
@@ -62,6 +64,16 @@ function toString(editorState, format) {
   }
 }
 
-function fromString() {
-  throw new Error('Not yet implemented: fromString');
+function fromString(source, format) {
+  switch (format) {
+    case 'html': {
+      return stateFromHTML(source);
+    }
+    case 'markdown': {
+      return stateFromMarkdown(source);
+    }
+    default: {
+      throw new Error('Format not supported: ' + format);
+    }
+  }
 }

@@ -1,12 +1,11 @@
 /* @flow */
 
-import Constants from './Constants';
+import {BLOCK_TYPE, INLINE_STYLE} from './Constants';
 import Immutable, {OrderedSet} from 'immutable';
 
 import type {ContentState, ContentBlock} from 'draft-js';
 
 const EMPTY_SET = OrderedSet();
-const {BLOCK_TYPE, INLINE_STYLE} = Constants;
 
 const {
   BOLD,

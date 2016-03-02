@@ -2,16 +2,14 @@
 
 import React, {Component} from 'react';
 import {EditorState, RichUtils} from 'draft-js';
-import Constants from './Constants';
+import {
+  INLINE_STYLE_BUTTONS,
+  BLOCK_TYPE_DROPDOWN,
+  BLOCK_TYPE_BUTTONS,
+} from './Constants';
 import StyleButton from './StyleButton';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
-
-const {
-  INLINE_STYLE_BUTTONS,
-  BLOCK_TYPE_DROPDOWN,
-  BLOCK_TYPE_BUTTONS
-} = Constants;
 
 type ChangeHandler = (state: EditorState) => any;
 
