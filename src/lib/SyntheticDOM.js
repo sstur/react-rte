@@ -29,6 +29,7 @@ export class TextNode extends Node {
 export class ElementNode extends Node {
   childNodes: Array<Node>;
   attributes: Array<Attr>;
+  attributesMap: Map<string, string>;
   isSelfClosing: boolean;
 
   constructor(name: string, attributes: Array<Attr>, childNodes: Array<Node>) {
@@ -37,6 +38,7 @@ export class ElementNode extends Node {
     this.nodeType = NODE_TYPE_ELEMENT;
     this.nodeName = name;
     this.attributes = attributes || [];
+    this.attributesMap = new Map(attributes);
     this.childNodes = [];
     this.isSelfClosing = isSelfClosing;
     if (!isSelfClosing && childNodes) {
@@ -52,6 +54,10 @@ export class ElementNode extends Node {
     } else {
       this.childNodes.push(node);
     }
+  }
+
+  getAttribute(name: string): ?string {
+    return this.attributesMap.get(name);
   }
 
   toString(isXHTML: boolean): string {

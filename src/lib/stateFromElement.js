@@ -5,6 +5,7 @@ import {
   ContentBlock,
   ContentState,
   EditorState,
+  Entity,
   genKey,
   SelectionState,
 } from 'draft-js';
@@ -12,28 +13,30 @@ import {List, OrderedMap, OrderedSet, Repeat, Seq, Stack} from 'immutable';
 import {BLOCK_TYPE, INLINE_STYLE} from './Constants';
 import {NODE_TYPE_ELEMENT, NODE_TYPE_TEXT} from './SyntheticDOM';
 
-import type ArraySeq from 'Immutable';
-
 import type {Node as SyntheticNode} from './SyntheticDOM';
 
 type DOMNode = SyntheticNode | Node;
 
-type CharacterMetaList = ArraySeq<CharacterMetadata>;
+type CharacterMetaSeq = Seq<CharacterMetadata>;
 type StyleSet = OrderedSet;
 type BlockMap = OrderedMap<string, ContentBlock>;
 
 type TextFragment = {
   text: string;
-  characterList: CharacterMetaList;
+  characterMeta: CharacterMetaSeq;
 };
 
+// A ParsedBlock has two purposes:
+//   1) to keep data about the block (textFragments, type)
+//   2) to act as some context for storing parser state as we parse its contents
 type ParsedBlock = {
   tagName: string;
   textFragments: Array<TextFragment>;
   type: string;
   // a stack in which the last item represents the styles that will apply
   // to any text node descendants
-  styles: Array<StyleSet>;
+  styleStack: Array<StyleSet>;
+  entityStack: Array<?Entity>;
   depth: number;
 };
 
@@ -48,6 +51,7 @@ const {
 } = BLOCK_TYPE;
 
 const NO_STYLE = OrderedSet();
+const NO_ENTITY = null;
 
 const {
   BOLD,
@@ -61,7 +65,7 @@ const EMPTY_BLOCK = new ContentBlock({
   key: genKey(),
   text: '',
   type: UNSTYLED,
-  characterList: List(), // TODO: Is this a List or a Seq or an ArraySeq?
+  characterList: List(),
   depth: 0,
 });
 
@@ -109,13 +113,13 @@ class BlockGenerator {
     this.processBlockElement(element);
     let contentBlocks = [];
     this.blockList.forEach((block) => {
-      let {text, characterList} = concatFragments(block.textFragments);
+      let {text, characterMeta} = concatFragments(block.textFragments);
       // If this block contains only a soft linebreak then don't discard it
       let includeEmptyBlock = (text === '\r');
       if (block.tagName === 'pre') {
-        ({text, characterList} = trimLeadingNewline(text, characterList));
+        ({text, characterMeta} = trimLeadingNewline(text, characterMeta));
       } else {
-        ({text, characterList} = collapseWhiteSpace(text, characterList));
+        ({text, characterMeta} = collapseWhiteSpace(text, characterMeta));
       }
       // discard empty blocks (unless otherwise specified)
       if (text.length || includeEmptyBlock) {
@@ -124,7 +128,7 @@ class BlockGenerator {
             key: genKey(),
             text: text,
             type: block.type,
-            characterList: List(characterList), // Is this a List or a Seq?
+            characterList: characterMeta.toList(),
             depth: block.depth,
           })
         );
@@ -172,9 +176,8 @@ class BlockGenerator {
       tagName: tagName,
       textFragments: [],
       type: type,
-      // a stack in which the last item represents the styles that will apply
-      // to any text node descendants
-      styles: [NO_STYLE],
+      styleStack: [NO_STYLE],
+      entityStack: [NO_ENTITY],
       depth: hasDepth ? this.depth : 0,
     };
     if (allowRender) {
@@ -199,34 +202,45 @@ class BlockGenerator {
       return this.processText('\r');
     }
     let block = this.blockStack.slice(-1)[0];
-    let style = block.styles.slice(-1)[0];
+    let style = block.styleStack.slice(-1)[0];
     let newStyle = addStyleFromTagName(style, tagName);
-    block.styles.push(newStyle);
+    block.styleStack.push(newStyle);
+    let entityKey = null;
+    if (tagName === 'a') {
+      let href = element.getAttribute('href');
+      if (href != null) {
+        entityKey = Entity.create('LINK', 'MUTABLE', {href});
+      }
+    }
+    block.entityStack.push(entityKey);
     if (element.childNodes != null) {
       Array.from(element.childNodes).forEach(this.processNode, this);
     }
-    block.styles.pop();
+    block.entityStack.pop();
+    block.styleStack.pop();
   }
 
   processTextNode(node: DOMNode) {
     let text = node.nodeValue;
-    // this is important because we will use \r as a placeholder
+    // This is important because we will use \r as a placeholder.
     text = text.replace(LINE_BREAKS, '\n');
-    // replace zero-width space (used as a placeholder in markdown)
+    // Replace zero-width space (used as a placeholder in markdown) with a
+    // soft linebreak.
     text = text.split('\u200B').join('\r');
     this.processText(text);
   }
 
   processText(text: string) {
     let block = this.blockStack.slice(-1)[0];
-    let style = block.styles.slice(-1)[0];
-    let charMetaData = new CharacterMetadata({
+    let style = block.styleStack.slice(-1)[0];
+    let entity = block.entityStack.slice(-1)[0];
+    let charMetadata = CharacterMetadata.create({
       style: style,
-      entity: null,
+      entity: entity,
     });
     block.textFragments.push({
       text: text,
-      characterList: Repeat(charMetaData, text.length), // What type is returned from Repeat()?
+      characterMeta: Repeat(charMetadata, text.length),
     });
   }
 
@@ -244,43 +258,43 @@ class BlockGenerator {
   }
 }
 
-function trimLeadingNewline(text: string, characterList: CharacterMetaList): TextFragment {
+function trimLeadingNewline(text: string, characterMeta: CharacterMetaSeq): TextFragment {
   if (text.charAt(0) === '\n') {
     text = text.slice(1);
-    characterList = characterList.slice(1);
+    characterMeta = characterMeta.slice(1);
   }
-  return {text, characterList};
+  return {text, characterMeta};
 }
 
-function trimLeadingSpace(text: string, characterList: CharacterMetaList): TextFragment {
+function trimLeadingSpace(text: string, characterMeta: CharacterMetaSeq): TextFragment {
   while (text.charAt(0) === ' ') {
     text = text.slice(1);
-    characterList = characterList.slice(1);
+    characterMeta = characterMeta.slice(1);
   }
-  return {text, characterList};
+  return {text, characterMeta};
 }
 
-function trimTrailingSpace(text: string, characterList: CharacterMetaList): TextFragment {
+function trimTrailingSpace(text: string, characterMeta: CharacterMetaSeq): TextFragment {
   while (text.slice(-1) === ' ') {
     text = text.slice(0, -1);
-    characterList = characterList.slice(0, -1);
+    characterMeta = characterMeta.slice(0, -1);
   }
-  return {text, characterList};
+  return {text, characterMeta};
 }
 
-function collapseWhiteSpace(text: string, characterList: CharacterMetaList): TextFragment {
+function collapseWhiteSpace(text: string, characterMeta: CharacterMetaSeq): TextFragment {
   text = text.replace(/[ \t\r\n]/g, ' ');
-  ({text, characterList} = trimLeadingSpace(text, characterList));
-  ({text, characterList} = trimTrailingSpace(text, characterList));
+  ({text, characterMeta} = trimLeadingSpace(text, characterMeta));
+  ({text, characterMeta} = trimTrailingSpace(text, characterMeta));
   let i = text.length;
   while (i--) {
     if (text.charAt(i) === ' ' && text.charAt(i - 1) === ' ') {
       text = text.slice(0, i) + text.slice(i + 1);
-      characterList = characterList.slice(0, i)
-        .concat(characterList.slice(i + 1));
+      characterMeta = characterMeta.slice(0, i)
+        .concat(characterMeta.slice(i + 1));
     }
   }
-  return {text, characterList};
+  return {text, characterMeta};
 }
 
 function canHaveDepth(blockType: string): boolean {
@@ -297,41 +311,41 @@ function canHaveDepth(blockType: string): boolean {
 
 function concatFragments(fragments: Array<TextFragment>): TextFragment {
   let text = '';
-  let characterList = Seq(); // TODO: is this a List or a Seq or an ArraySeq?
+  let characterMeta = Seq();
   fragments.forEach((textFragment: TextFragment) => {
     text = text + textFragment.text;
-    characterList = characterList.concat(textFragment.characterList);
+    characterMeta = characterMeta.concat(textFragment.characterMeta);
   });
-  return {text, characterList};
+  return {text, characterMeta};
 }
 
 
-function addStyleFromTagName(styles: StyleSet, tagName: string): StyleSet {
+function addStyleFromTagName(styleSet: StyleSet, tagName: string): StyleSet {
   switch (tagName) {
     case 'b':
     case 'strong': {
-      styles = styles.add(BOLD);
+      styleSet = styleSet.add(BOLD);
       break;
     }
     case 'i':
     case 'em': {
-      styles = styles.add(ITALIC);
+      styleSet = styleSet.add(ITALIC);
       break;
     }
     case 'ins': {
-      styles = styles.add(UNDERLINE);
+      styleSet = styleSet.add(UNDERLINE);
       break;
     }
     case 'code': {
-      styles = styles.add(MONOSPACE);
+      styleSet = styleSet.add(MONOSPACE);
       break;
     }
     case 'del': {
-      styles = styles.add(STRIKETHROUGH);
+      styleSet = styleSet.add(STRIKETHROUGH);
       break;
     }
   }
-  return styles;
+  return styleSet;
 }
 
 function createBlockMap(blocks: Array<ContentBlock>): BlockMap {
