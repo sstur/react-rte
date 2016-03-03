@@ -18,6 +18,25 @@ import type {Node as SyntheticNode} from './SyntheticDOM';
 
 type DOMNode = SyntheticNode | Node;
 
+type CharacterMetaList = ArraySeq<CharacterMetadata>;
+type StyleSet = OrderedSet;
+type BlockMap = OrderedMap<string, ContentBlock>;
+
+type TextFragment = {
+  text: string;
+  characterList: CharacterMetaList;
+};
+
+type ParsedBlock = {
+  tagName: string;
+  textFragments: Array<TextFragment>;
+  type: string;
+  // a stack in which the last item represents the styles that will apply
+  // to any text node descendants
+  styles: Array<StyleSet>;
+  depth: number;
+};
+
 const {
   UNSTYLED,
   UNORDERED_LIST_ITEM,
@@ -28,8 +47,7 @@ const {
   CODE: CODE_BLOCK,
 } = BLOCK_TYPE;
 
-// Represent inline style NONE with an empty set.
-const NONE = OrderedSet();
+const NO_STYLE = OrderedSet();
 
 const {
   BOLD,
@@ -43,7 +61,7 @@ const EMPTY_BLOCK = new ContentBlock({
   key: genKey(),
   text: '',
   type: UNSTYLED,
-  characterList: List(),
+  characterList: List(), // TODO: Is this a List or a Seq or an ArraySeq?
   depth: 0,
 });
 
@@ -73,8 +91,8 @@ const SPECIAL_ELEMENTS = {
 };
 
 class BlockGenerator {
-  blockStack: Array<Object>;
-  blockList: Array<Object>;
+  blockStack: Array<ParsedBlock>;
+  blockList: Array<ParsedBlock>;
   depth: number;
 
   constructor() {
@@ -91,13 +109,8 @@ class BlockGenerator {
     this.processBlockElement(element);
     let contentBlocks = [];
     this.blockList.forEach((block) => {
-      let text = '';
-      let characterList = Seq();
-      block.textFragments.forEach((textFragment) => {
-        text = text + textFragment.text;
-        characterList = characterList.concat(textFragment.characterList);
-      });
-      // if this block contains only <br> (\r) then don't discard it
+      let {text, characterList} = concatFragments(block.textFragments);
+      // If this block contains only a soft linebreak then don't discard it
       let includeEmptyBlock = (text === '\r');
       if (block.tagName === 'pre') {
         ({text, characterList} = trimLeadingNewline(text, characterList));
@@ -111,7 +124,7 @@ class BlockGenerator {
             key: genKey(),
             text: text,
             type: block.type,
-            characterList: List(characterList),
+            characterList: List(characterList), // Is this a List or a Seq?
             depth: block.depth,
           })
         );
@@ -124,7 +137,7 @@ class BlockGenerator {
     }
   }
 
-  getBlockTypeFromTagName(tagName: string): number {
+  getBlockTypeFromTagName(tagName: string): string {
     switch (tagName) {
       case 'li': {
         let parent = this.blockStack.slice(-1)[0];
@@ -155,13 +168,13 @@ class BlockGenerator {
     let type = this.getBlockTypeFromTagName(tagName);
     let hasDepth = canHaveDepth(type);
     let allowRender = !SPECIAL_ELEMENTS.hasOwnProperty(tagName);
-    let block = {
+    let block: ParsedBlock = {
       tagName: tagName,
       textFragments: [],
       type: type,
       // a stack in which the last item represents the styles that will apply
       // to any text node descendants
-      styles: [NONE],
+      styles: [NO_STYLE],
       depth: hasDepth ? this.depth : 0,
     };
     if (allowRender) {
@@ -213,7 +226,7 @@ class BlockGenerator {
     });
     block.textFragments.push({
       text: text,
-      characterList: Repeat(charMetaData, text.length),
+      characterList: Repeat(charMetaData, text.length), // What type is returned from Repeat()?
     });
   }
 
@@ -231,7 +244,7 @@ class BlockGenerator {
   }
 }
 
-function trimLeadingNewline(text: string, characterList: ArraySeq): Object {
+function trimLeadingNewline(text: string, characterList: CharacterMetaList): TextFragment {
   if (text.charAt(0) === '\n') {
     text = text.slice(1);
     characterList = characterList.slice(1);
@@ -239,7 +252,7 @@ function trimLeadingNewline(text: string, characterList: ArraySeq): Object {
   return {text, characterList};
 }
 
-function trimLeadingSpace(text: string, characterList: ArraySeq): Object {
+function trimLeadingSpace(text: string, characterList: CharacterMetaList): TextFragment {
   while (text.charAt(0) === ' ') {
     text = text.slice(1);
     characterList = characterList.slice(1);
@@ -247,7 +260,7 @@ function trimLeadingSpace(text: string, characterList: ArraySeq): Object {
   return {text, characterList};
 }
 
-function trimTrailingSpace(text: string, characterList: ArraySeq): Object {
+function trimTrailingSpace(text: string, characterList: CharacterMetaList): TextFragment {
   while (text.slice(-1) === ' ') {
     text = text.slice(0, -1);
     characterList = characterList.slice(0, -1);
@@ -255,7 +268,7 @@ function trimTrailingSpace(text: string, characterList: ArraySeq): Object {
   return {text, characterList};
 }
 
-function collapseWhiteSpace(text: string, characterList: ArraySeq): Object {
+function collapseWhiteSpace(text: string, characterList: CharacterMetaList): TextFragment {
   text = text.replace(/[ \t\r\n]/g, ' ');
   ({text, characterList} = trimLeadingSpace(text, characterList));
   ({text, characterList} = trimTrailingSpace(text, characterList));
@@ -270,7 +283,7 @@ function collapseWhiteSpace(text: string, characterList: ArraySeq): Object {
   return {text, characterList};
 }
 
-function canHaveDepth(blockType: number): boolean {
+function canHaveDepth(blockType: string): boolean {
   switch (blockType) {
     case UNORDERED_LIST_ITEM:
     case ORDERED_LIST_ITEM: {
@@ -282,8 +295,18 @@ function canHaveDepth(blockType: number): boolean {
   }
 }
 
+function concatFragments(fragments: Array<TextFragment>): TextFragment {
+  let text = '';
+  let characterList = Seq(); // TODO: is this a List or a Seq or an ArraySeq?
+  fragments.forEach((textFragment: TextFragment) => {
+    text = text + textFragment.text;
+    characterList = characterList.concat(textFragment.characterList);
+  });
+  return {text, characterList};
+}
 
-function addStyleFromTagName(styles: OrderedSet, tagName: string): OrderedSet {
+
+function addStyleFromTagName(styles: StyleSet, tagName: string): StyleSet {
   switch (tagName) {
     case 'b':
     case 'strong': {
@@ -311,9 +334,7 @@ function addStyleFromTagName(styles: OrderedSet, tagName: string): OrderedSet {
   return styles;
 }
 
-function createOrderedMapFromBlockArray(
-  blocks: Array<ContentBlock>
-): OrderedMap<string, ContentBlock> {
+function createBlockMap(blocks: Array<ContentBlock>): BlockMap {
   return OrderedMap(
     blocks.map(
       (block) => [block.getKey(), block]
@@ -321,9 +342,7 @@ function createOrderedMapFromBlockArray(
   );
 }
 
-function createEmptySelectionState(
-  key: string
-): SelectionState {
+function createEmptySelectionState(key: string): SelectionState {
   return new SelectionState({
     anchorKey: key,
     anchorOffset: 0,
@@ -340,7 +359,7 @@ export default function stateFromElement(
   let blocks = new BlockGenerator().process(element);
   let selectionState = createEmptySelectionState(blocks[0].getKey());
   let contentState = new ContentState({
-    blockMap: createOrderedMapFromBlockArray(blocks),
+    blockMap: createBlockMap(blocks),
     selectionBefore: selectionState,
     selectionAfter: selectionState,
   });
