@@ -127,7 +127,7 @@ class BlockGenerator {
   getBlockTypeFromTagName(tagName: string): number {
     switch (tagName) {
       case 'li': {
-        var parent = this.blockStack.slice(-1)[0];
+        let parent = this.blockStack.slice(-1)[0];
         return (parent.tagName === 'ol') ?
           ORDERED_LIST_ITEM :
           UNORDERED_LIST_ITEM;

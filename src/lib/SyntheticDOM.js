@@ -33,7 +33,7 @@ export class ElementNode extends Node {
 
   constructor(name: string, attributes: Array<Attr>, childNodes: Array<Node>) {
     super(...arguments);
-    var isSelfClosing = (childNodes === SELF_CLOSING);
+    let isSelfClosing = (childNodes === SELF_CLOSING);
     this.nodeType = NODE_TYPE_ELEMENT;
     this.nodeName = name;
     this.attributes = attributes || [];
@@ -55,7 +55,7 @@ export class ElementNode extends Node {
   }
 
   toString(isXHTML: boolean): string {
-    var attributes = this.attributes.map(
+    let attributes = this.attributes.map(
       (attr) => attr[0] + (attr[1] ? '=' + escapeAttr(attr[1]) : '')
     ).join(' ');
     if (attributes.length) {
@@ -67,7 +67,7 @@ export class ElementNode extends Node {
     if (this.childNodes != null) {
 
     }
-    var childNodes = this.childNodes.map((node) => node.toString(isXHTML)).join('');
+    let childNodes = this.childNodes.map((node) => node.toString(isXHTML)).join('');
     return '<' + this.nodeName + attributes + '>' + childNodes + '</' + this.nodeName + '>';
   }
 }
