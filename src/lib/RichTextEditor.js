@@ -1,8 +1,9 @@
 /* @flow */
 import React, {Component} from 'react';
-import {Editor, EditorState, RichUtils} from 'draft-js';
+import {CompositeDecorator, Editor, EditorState, RichUtils} from 'draft-js';
 import EditorToolbar from './EditorToolbar';
 import EditorValue from './EditorValue';
+import LinkDecorator from './LinkDecorator';
 import cx from 'classnames';
 
 // Custom overrides for "code" style.
@@ -14,19 +15,6 @@ const styleMap = {
     padding: 2,
   },
 };
-
-
-function getBlockStyle(block) {
-  let result = 'RichTextEditor-block';
-  switch (block.getType()) {
-    case 'unstyled':
-      return result + ' RichTextEditor-paragraph';
-    case 'blockquote':
-      return result + ' RichTextEditor-blockquote';
-    default:
-      return result;
-  }
-}
 
 type ChangeHandler = (value: EditorValue) => any;
 
@@ -118,3 +106,34 @@ export default class RichTextEditor extends Component<Props> {
     this.refs.editor.focus();
   }
 }
+
+function getBlockStyle(block) {
+  let result = 'RichTextEditor-block';
+  switch (block.getType()) {
+    case 'unstyled':
+      return result + ' RichTextEditor-paragraph';
+    case 'blockquote':
+      return result + ' RichTextEditor-blockquote';
+    default:
+      return result;
+  }
+}
+
+const decorator = new CompositeDecorator([LinkDecorator]);
+
+function createEmptyValue(): EditorValue {
+  return EditorValue.createEmpty(decorator);
+}
+
+function createValueFromString(markup: string, format: string): EditorValue {
+  return EditorValue.createFromString(markup, format, decorator);
+}
+
+Object.assign(RichTextEditor, {
+  EditorValue,
+  decorator,
+  createEmptyValue,
+  createValueFromString,
+});
+
+export {EditorValue, decorator, createEmptyValue, createValueFromString};

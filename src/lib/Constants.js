@@ -13,6 +13,10 @@ export const BLOCK_TYPE = {
   MEDIA: 'media',
 };
 
+export const ENTITY_TYPE = {
+  LINK: 'LINK',
+};
+
 export const INLINE_STYLE = {
   BOLD: 'BOLD',
   CODE: 'CODE',

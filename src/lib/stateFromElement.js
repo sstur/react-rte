@@ -10,10 +10,11 @@ import {
   SelectionState,
 } from 'draft-js';
 import {List, OrderedMap, OrderedSet, Repeat, Seq, Stack} from 'immutable';
-import {BLOCK_TYPE, INLINE_STYLE} from './Constants';
+import {BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE} from './Constants';
 import {NODE_TYPE_ELEMENT, NODE_TYPE_TEXT} from './SyntheticDOM';
 
 import type {Node as SyntheticNode} from './SyntheticDOM';
+import type {DraftDecoratorType as Decorator} from 'draft-js/lib/DraftDecoratorType';
 
 type DOMNode = SyntheticNode | Node;
 
@@ -209,7 +210,7 @@ class BlockGenerator {
     if (tagName === 'a') {
       let href = element.getAttribute('href');
       if (href != null) {
-        entityKey = Entity.create('LINK', 'MUTABLE', {href});
+        entityKey = Entity.create(ENTITY_TYPE.LINK, 'MUTABLE', {href});
       }
     }
     block.entityStack.push(entityKey);
@@ -368,7 +369,8 @@ function createEmptySelectionState(key: string): SelectionState {
 }
 
 export default function stateFromElement(
-  element: DOMNode
+  element: DOMNode,
+  decorator: ?Decorator,
 ): EditorState {
   let blocks = new BlockGenerator().process(element);
   let selectionState = createEmptySelectionState(blocks[0].getKey());
@@ -381,7 +383,7 @@ export default function stateFromElement(
     currentContent: contentState,
     undoStack: Stack(),
     redoStack: Stack(),
-    decorator: null,
+    decorator: decorator,
     selection: selectionState,
   });
 }

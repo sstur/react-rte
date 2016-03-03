@@ -1,7 +1,7 @@
 /* @flow */
 import React, {Component} from 'react';
 import RichTextEditor from './lib/RichTextEditor';
-import EditorValue from './lib/EditorValue';
+import type {EditorValue} from './lib/RichTextEditor';
 
 type Props = {};
 type State = {
@@ -16,7 +16,7 @@ export default class EditorDemo extends Component<Props, State> {
   constructor() {
     super(...arguments);
     this.state = {
-      value: EditorValue.createEmpty(),
+      value: RichTextEditor.createEmptyValue(),
       format: 'html',
     };
     this._onChange = this._onChange.bind(this);
@@ -77,8 +77,9 @@ export default class EditorDemo extends Component<Props, State> {
 
   _onChangeSource(event: Object) {
     let source = event.target.value;
+    let oldValue = this.state.value;
     this.setState({
-      value: EditorValue.createFromString(source, this.state.format),
+      value: oldValue.setContentFromString(source, this.state.format),
     });
   }
 
