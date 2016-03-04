@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import RichTextEditor from './RichTextEditor';
 import type {EditorValue} from './RichTextEditor';
+import {convertToRaw} from 'draft-js';
 
 type Props = {};
 type State = {
@@ -19,6 +20,8 @@ export default class EditorDemo extends Component<Props, State> {
       value: RichTextEditor.createEmptyValue(),
       format: 'html',
     };
+    this._logState = this._logState.bind(this);
+    this._logStateRaw = this._logStateRaw.bind(this);
     this._onChange = this._onChange.bind(this);
     this._onChangeSource = this._onChangeSource.bind(this);
     this._onChangeFormat = this._onChangeFormat.bind(this);
@@ -67,8 +70,26 @@ export default class EditorDemo extends Component<Props, State> {
             onChange={this._onChangeSource}
           />
         </div>
+        <div className="row btn-row">
+          <span className="label">Debugging:</span>
+          <button className="btn" onClick={this._logState}>Log Content State</button>
+          <button className="btn" onClick={this._logStateRaw}>Log Raw</button>
+        </div>
       </div>
     );
+  }
+
+  _logState() {
+    let editorState = this.state.value.getEditorState();
+    let contentState = window.contentState = editorState.getCurrentContent().toJS();
+    console.log(contentState);
+  }
+
+  _logStateRaw() {
+    let editorState = this.state.value.getEditorState();
+    let contentState = editorState.getCurrentContent();
+    let rawContentState = window.rawContentState = convertToRaw(contentState);
+    console.log(JSON.stringify(rawContentState));
   }
 
   _onChange(value: EditorValue) {
