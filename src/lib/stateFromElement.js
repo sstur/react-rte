@@ -208,9 +208,9 @@ class BlockGenerator {
     block.styleStack.push(newStyle);
     let entityKey = null;
     if (tagName === 'a') {
-      let href = element.getAttribute('href');
-      if (href != null) {
-        entityKey = Entity.create(ENTITY_TYPE.LINK, 'MUTABLE', {href});
+      let url = element.getAttribute('href');
+      if (url != null) {
+        entityKey = Entity.create(ENTITY_TYPE.LINK, 'MUTABLE', {url});
       }
     }
     block.entityStack.push(entityKey);

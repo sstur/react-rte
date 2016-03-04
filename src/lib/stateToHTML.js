@@ -1,7 +1,8 @@
 /* @flow */
 
-import {BLOCK_TYPE, INLINE_STYLE} from './Constants';
+import {BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE} from './Constants';
 import Immutable, {OrderedSet} from 'immutable';
+import {Entity} from 'draft-js';
 
 import type {CharacterMetadata, ContentState, ContentBlock} from 'draft-js';
 import type {List} from 'immutable';
@@ -15,10 +16,6 @@ const {
   STRIKETHROUGH,
   UNDERLINE,
 } = INLINE_STYLE;
-
-// const {
-//   LINK,
-// } = Constants.ENTITY_TYPE;
 
 type CharacterMetaList = List<CharacterMetadata>;
 type EntityKey = ?string;
@@ -81,13 +78,13 @@ function encodeContent(text: string): string {
     .split('\n').join(BREAK + '\n');
 }
 
-// function encodeAttr(text: string): string {
-//   return text
-//     .split('&').join('&amp;')
-//     .split('<').join('&lt;')
-//     .split('>').join('&gt;')
-//     .split('"').join('&quot;');
-// }
+function encodeAttr(text: string): string {
+  return text
+    .split('&').join('&amp;')
+    .split('<').join('&lt;')
+    .split('>').join('&gt;')
+    .split('"').join('&quot;');
+}
 
 class MarkupGenerator {
   blocks: Array<ContentBlock>;
@@ -218,14 +215,13 @@ class MarkupGenerator {
         }
         return content;
       }).join('');
-      return content;
-      // let entity = entityKey ? DocumentEntity.get(entityKey) : null;
-      // if (entity) {
-      //   let data = entity.getData();
-      //   return `<a href="${encodeAttr(data.url)}">${content}</a>`;
-      // } else {
-      //   return content;
-      // }
+      let entity = entityKey ? Entity.get(entityKey) : null;
+      if (entity != null && entity.getType() === ENTITY_TYPE.LINK) {
+        let url = entity.getData().url || '';
+        return `<a href="${encodeAttr(url)}">${content}</a>`;
+      } else {
+        return content;
+      }
     }).join('');
   }
 
