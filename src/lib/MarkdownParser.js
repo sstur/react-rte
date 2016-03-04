@@ -660,7 +660,9 @@ Renderer.prototype.ins = function(childNode) {
 };
 
 Renderer.prototype.link = function(href, title, childNode) {
-  var attributes = ['href', href];
+  var attributes = [
+    ['href', href],
+  ];
   if (title) {
     attributes.push(['title', title]);
   }
