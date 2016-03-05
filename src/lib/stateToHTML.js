@@ -1,13 +1,11 @@
 /* @flow */
 
 import {BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE} from './Constants';
-import Immutable, {OrderedSet} from 'immutable';
 import {Entity} from 'draft-js';
+import getEntityRanges from './getEntityRanges';
 
-import type {CharacterMetadata, ContentState, ContentBlock} from 'draft-js';
-import type {List} from 'immutable';
-
-const EMPTY_SET = OrderedSet();
+import type {ContentState, ContentBlock} from 'draft-js';
+import type {CharacterMetaList} from './getEntityRanges';
 
 const {
   BOLD,
@@ -16,12 +14,6 @@ const {
   STRIKETHROUGH,
   UNDERLINE,
 } = INLINE_STYLE;
-
-type CharacterMetaList = List<CharacterMetadata>;
-type EntityKey = ?string;
-type Style = OrderedSet<string>;
-type StylePiece = [string, Style];
-type EntityPiece = [EntityKey, Array<StylePiece>];
 
 const INDENT = '  ';
 const BREAK = '<br/>';
@@ -128,7 +120,7 @@ class MarkupGenerator {
     let tag = getTag(blockType);
     this.indent();
     this.output.push(`<${tag}>${this.renderBlockContent(block)}`);
-    // look ahead and see if we will nest list
+    // Look ahead and see if we will nest list.
     let nextBlock = this.getNextBlock();
     if (
       canHaveDepth(blockType) &&
@@ -136,8 +128,8 @@ class MarkupGenerator {
       nextBlock.getDepth() === block.getDepth() + 1
     ) {
       this.output.push(`\n`);
-      // this is a litle hacky; temporarily stash our current wrapperTag and
-      // render child list(s)
+      // This is a litle hacky: temporarily stash our current wrapperTag and
+      // render child list(s).
       let thisWrapperTag = this.wrapperTag;
       this.wrapperTag = null;
       this.indentLevel += 1;
@@ -188,12 +180,12 @@ class MarkupGenerator {
   renderBlockContent(block: ContentBlock): string {
     let text = block.getText();
     if (text === '') {
-      // prevent element collapse if completely empty
+      // Prevent element collapse if completely empty.
       return BREAK;
     }
     text = this.preserveWhitespace(text);
     let charMetaList: CharacterMetaList = block.getCharacterList();
-    let entityPieces = this.getEntityPieces(text, charMetaList);
+    let entityPieces = getEntityRanges(text, charMetaList);
     return entityPieces.map(([entityKey, stylePieces]) => {
       let content = stylePieces.map(([text, style]) => {
         let content = encodeContent(text);
@@ -227,7 +219,7 @@ class MarkupGenerator {
 
   preserveWhitespace(text: string): string {
     let length = text.length;
-    // prevent leading/trailing/consecutive whitespace collapse
+    // Prevent leading/trailing/consecutive whitespace collapse.
     let newText = new Array(length);
     for (let i = 0; i < length; i++) {
       if (
@@ -242,60 +234,6 @@ class MarkupGenerator {
     return newText.join('');
   }
 
-  getEntityPieces(
-    text: string,
-    charMetaList: CharacterMetaList
-  ): Array<EntityPiece> {
-    // TODO: use EMPTY_SET here
-    let charEntity = null;
-    let prevCharEntity = null;
-    let pieces = [];
-    let pieceStart = 0;
-    for (let i = 0, len = text.length; i < len; i++) {
-      prevCharEntity = charEntity;
-      let meta = charMetaList.get(i);
-      charEntity = meta ? meta.getEntity() : null;
-      if (i > 0 && charEntity !== prevCharEntity) {
-        pieces.push([
-          prevCharEntity,
-          this.getStylePieces(
-            text.slice(pieceStart, i),
-            charMetaList.slice(pieceStart, i)
-          ),
-        ]);
-        pieceStart = i;
-      }
-    }
-    pieces.push([
-      charEntity,
-      this.getStylePieces(
-        text.slice(pieceStart),
-        charMetaList.slice(pieceStart)
-      ),
-    ]);
-    return pieces;
-  }
-
-  getStylePieces(
-    text: string,
-    charMetaList: CharacterMetaList
-  ): Array<StylePiece> {
-    let charStyle = EMPTY_SET;
-    let prevCharStyle = EMPTY_SET;
-    let pieces = [];
-    let pieceStart = 0;
-    for (let i = 0, len = text.length; i < len; i++) {
-      prevCharStyle = charStyle;
-      let meta = charMetaList.get(i);
-      charStyle = meta ? meta.getStyle() : EMPTY_SET;
-      if (i > 0 && !Immutable.is(charStyle, prevCharStyle)) {
-        pieces.push([text.slice(pieceStart, i), prevCharStyle]);
-        pieceStart = i;
-      }
-    }
-    pieces.push([text.slice(pieceStart), charStyle]);
-    return pieces;
-  }
 }
 
 export default function stateToHTML(content: ContentState): string {

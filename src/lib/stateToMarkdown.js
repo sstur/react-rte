@@ -1,11 +1,9 @@
 /* @flow */
 
 import {BLOCK_TYPE, INLINE_STYLE} from './Constants';
-import Immutable, {OrderedSet} from 'immutable';
+import {getStylePieces} from './getEntityRanges';
 
 import type {ContentState, ContentBlock} from 'draft-js';
-
-const EMPTY_SET = OrderedSet();
 
 const {
   BOLD,
@@ -86,7 +84,7 @@ class MarkupGenerator {
           lastBlockDepth !== blockDepth - 1
         ) {
           this.insertLineBreaks(1);
-          // insert an additional line break if following opposite list type
+          // Insert an additional line break if following opposite list type.
           if (lastBlockType === BLOCK_TYPE.ORDERED_LIST_ITEM) {
             this.insertLineBreaks(1);
           }
@@ -106,13 +104,13 @@ class MarkupGenerator {
           null;
         if (lastBlockType !== blockType && lastBlockDepth !== blockDepth - 1) {
           this.insertLineBreaks(1);
-          // insert an additional line break if following opposite list type
+          // Insert an additional line break if following opposite list type.
           if (lastBlockType === BLOCK_TYPE.UNORDERED_LIST_ITEM) {
             this.insertLineBreaks(1);
           }
         }
         let indent = ' '.repeat(blockDepth * 2);
-        // todo: figure out what to do with two-digit numbers
+        // TODO: figure out what to do with two-digit numbers
         let count = this.getListItemCount(block) % 10;
         this.output.push(
           indent + `${count}. ` + this.renderBlockContent(block) + '\n'
@@ -149,8 +147,8 @@ class MarkupGenerator {
   getListItemCount(block: ContentBlock): number {
     let blockType = block.getType();
     let blockDepth = block.getDepth();
-    // to decide if we need to start over we need to backtrack skipping list
-    // items that are of greater depth
+    // To decide if we need to start over we need to backtrack (skipping list
+    // items that are of greater depth)
     let index = this.currentBlock - 1;
     let prevBlock = this.blocks[index];
     while (
@@ -182,27 +180,15 @@ class MarkupGenerator {
   renderBlockContent(block: ContentBlock): string {
     let text = block.getText();
     if (text === '') {
-      // prevent element collapse if completely empty
+      // Prevent element collapse if completely empty.
+      // TODO: Replace with constant.
       return '\u200B';
     }
-    let charMeta = block.getCharacterList();
-    let charStyle = EMPTY_SET;
-    let prevCharStyle = EMPTY_SET;
-    let pieces = [];
-    let pieceStart = 0;
-    for (let i = 0, len = text.length; i < len; i++) {
-      prevCharStyle = charStyle;
-      let meta = charMeta.get(i);
-      charStyle = meta ? meta.getStyle() : EMPTY_SET;
-      if (i > 0 && !Immutable.is(charStyle, prevCharStyle)) {
-        pieces.push([text.slice(pieceStart, i), prevCharStyle]);
-        pieceStart = i;
-      }
-    }
-    pieces.push([text.slice(pieceStart), charStyle]);
+    let charMetaList = block.getCharacterList();
+    let pieces = getStylePieces(text, charMetaList);
     return pieces.map(([text, style]) => {
       if (!text) {
-        // don't allow empty inline elements
+        // Don't allow empty inline elements.
         return '';
       }
       text = escape(text);

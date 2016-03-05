@@ -34,8 +34,8 @@ type ParsedBlock = {
   tagName: string;
   textFragments: Array<TextFragment>;
   type: string;
-  // a stack in which the last item represents the styles that will apply
-  // to any text node descendants
+  // A stack in which the last item represents the styles that will apply
+  // to any text node descendants.
   styleStack: Array<StyleSet>;
   entityStack: Array<?Entity>;
   depth: number;
@@ -101,11 +101,11 @@ class BlockGenerator {
   depth: number;
 
   constructor() {
-    // this represents the hierarchy as we traverse nested elements; for
-    // example [body, ul, li] where we must know li's parent type (ul or ol)
+    // This represents the hierarchy as we traverse nested elements; for
+    // example [body, ul, li] where we must know li's parent type (ul or ol).
     this.blockStack = [];
-    // this is a linear list of blocks that will form the output; for example
-    // [body, p, li, li, blockquote]
+    // This is a linear list of blocks that will form the output; for example
+    // [body, p, li, li, blockquote].
     this.blockList = [];
     this.depth = 0;
   }
@@ -122,7 +122,7 @@ class BlockGenerator {
       } else {
         ({text, characterMeta} = collapseWhiteSpace(text, characterMeta));
       }
-      // discard empty blocks (unless otherwise specified)
+      // Discard empty blocks (unless otherwise specified).
       if (text.length || includeEmptyBlock) {
         contentBlocks.push(
           new ContentBlock({
