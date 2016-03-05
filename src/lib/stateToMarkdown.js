@@ -1,7 +1,8 @@
 /* @flow */
 
-import {BLOCK_TYPE, INLINE_STYLE} from './Constants';
-import {getStylePieces} from './getEntityRanges';
+import {BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE} from './Constants';
+import getEntityRanges from './getEntityRanges';
+import {Entity} from 'draft-js';
 
 import type {ContentState, ContentBlock} from 'draft-js';
 
@@ -14,20 +15,6 @@ const {
 } = INLINE_STYLE;
 
 const CODE_INDENT = '    ';
-
-function canHaveDepth(blockType: any): boolean {
-  switch (blockType) {
-    case BLOCK_TYPE.UNORDERED_LIST_ITEM:
-    case BLOCK_TYPE.ORDERED_LIST_ITEM:
-      return true;
-    default:
-      return false;
-  }
-}
-
-function escape(text) {
-  return text.replace(/[*_`]/g, '\\$&');
-}
 
 class MarkupGenerator {
   blocks: Array<ContentBlock>;
@@ -185,32 +172,62 @@ class MarkupGenerator {
       return '\u200B';
     }
     let charMetaList = block.getCharacterList();
-    let pieces = getStylePieces(text, charMetaList);
-    return pieces.map(([text, style]) => {
-      if (!text) {
+    let entityPieces = getEntityRanges(text, charMetaList);
+    return entityPieces.map(([entityKey, stylePieces]) => {
+      let content = stylePieces.map(([text, style]) => {
         // Don't allow empty inline elements.
-        return '';
+        if (!text) {
+          return '';
+        }
+        let content = encodeContent(text);
+        if (style.has(BOLD)) {
+          content = `**${content}**`;
+        }
+        if (style.has(UNDERLINE)) {
+          // TODO: encode `+`?
+          content = `++${content}++`;
+        }
+        if (style.has(ITALIC)) {
+          content = `_${content}_`;
+        }
+        if (style.has(STRIKETHROUGH)) {
+          // TODO: encode `~`?
+          content = `~~${content}~~`;
+        }
+        if (style.has(CODE)) {
+          content = '`' + content + '`';
+        }
+        return content;
+      }).join('');
+      let entity = entityKey ? Entity.get(entityKey) : null;
+      if (entity != null && entity.getType() === ENTITY_TYPE.LINK) {
+        let url = entity.getData().url || '';
+        return `[${content}](${encodeURL(url)})`;
+      } else {
+        return content;
       }
-      text = escape(text);
-      if (style.has(BOLD)) {
-        text = `**${text}**`;
-      }
-      if (style.has(UNDERLINE)) {
-        text = `++${text}++`;
-      }
-      if (style.has(ITALIC)) {
-        text = `_${text}_`;
-      }
-      if (style.has(STRIKETHROUGH)) {
-        text = `~~${text}~~`;
-      }
-      if (style.has(CODE)) {
-        text = '`' + text + '`';
-      }
-      return text;
     }).join('');
   }
+}
 
+function canHaveDepth(blockType: any): boolean {
+  switch (blockType) {
+    case BLOCK_TYPE.UNORDERED_LIST_ITEM:
+    case BLOCK_TYPE.ORDERED_LIST_ITEM:
+      return true;
+    default:
+      return false;
+  }
+}
+
+function encodeContent(text) {
+  return text.replace(/[*_`]/g, '\\$&');
+}
+
+// Encode chars that would normally be allowed in a URL but would conflict with
+// our markdown syntax: `[foo](http://foo/)`
+function encodeURL(url) {
+  return url.replace(/\)/g, '%29');
 }
 
 export default function stateToMarkdown(content: ContentState): string {

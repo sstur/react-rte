@@ -46,7 +46,7 @@ export default function getEntityRanges(
   return pieces;
 }
 
-export function getStylePieces(
+function getStylePieces(
   text: string,
   charMetaList: CharacterMetaList
 ): Array<StylePiece> {
