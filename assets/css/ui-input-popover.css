@@ -1,0 +1,26 @@
+.ui-input-popover {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 200px;
+  background: none #fdfdfd;
+  background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);
+  border: 1px solid #999;
+  border-radius: 2px;
+  box-sizing: border-box;
+  padding: 4px;
+}
+
+.ui-input-popover-input {
+  display: block;
+  width: 100%;
+  height: 32px;
+  background: none white;
+  border: 1px solid #999;
+  border-radius: 2px;
+  box-sizing: border-box;
+  padding: 3px 6px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 24px;
+}

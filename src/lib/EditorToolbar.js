@@ -8,6 +8,7 @@ import {
   BLOCK_TYPE_BUTTONS,
 } from './Constants';
 import StyleButton from './StyleButton';
+import LinkButton from './LinkButton';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
 
@@ -47,6 +48,7 @@ export default class EditorToolbar extends Component<Props> {
           />
         </div>
         {this._renderBlockTypeDropdown()}
+        <LinkButton />
         <div className="RichTextEditor-buttonGroup">
           {this._renderBlockTypeButtons()}
         </div>
