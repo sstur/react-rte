@@ -39,11 +39,11 @@ export default class RichTextEditor extends Component<Props> {
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
     let className = cx({
-      'RichTextEditor-editor': true,
-      'RichTextEditor-hidePlaceholder': this._shouldHidePlaceholder(),
+      'rte-editor': true,
+      'rte-hide-placeholder': this._shouldHidePlaceholder(),
     });
     return (
-      <div className="RichTextEditor-root">
+      <div className="rte-root">
         <EditorToolbar
           editorState={editorState}
           onChange={this._onChange}
@@ -108,12 +108,12 @@ export default class RichTextEditor extends Component<Props> {
 }
 
 function getBlockStyle(block) {
-  let result = 'RichTextEditor-block';
+  let result = 'rte-block';
   switch (block.getType()) {
     case 'unstyled':
-      return result + ' RichTextEditor-paragraph';
+      return result + ' rte-paragraph';
     case 'blockquote':
-      return result + ' RichTextEditor-blockquote';
+      return result + ' rte-blockquote';
     default:
       return result;
   }

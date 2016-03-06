@@ -1,0 +1,67 @@
+@import "/assets/css/draft.css";
+@import "/assets/css/ui-button.css";
+@import "/assets/css/ui-button-group.css";
+@import "/assets/css/ui-icon-button.css";
+@import "/assets/css/ui-dropdown.css";
+@import "/assets/css/ui-input-popover.css";
+@import "/assets/css/rte-toolbar.css";
+
+.rte-root {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.rte-editor {
+  border-top: 1px solid #ddd;
+  cursor: text;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.rte-editor .public-DraftEditorPlaceholder-root,
+.rte-editor .public-DraftEditor-content {
+  margin: 0 -10px -10px;
+  padding: 10px;
+}
+
+.rte-editor .public-DraftEditor-content {
+  height: 110px;
+  overflow: auto;
+}
+
+.rte-hide-placeholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+
+.rte-editor .rte-paragraph {
+  margin: 14px 0;
+}
+
+.rte-editor .rte-blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-family: 'Hoefler Text', 'Georgia', serif;
+  font-style: italic;
+  margin: 16px 0;
+  padding: 10px 20px;
+}
+
+.rte-editor .public-DraftStyleDefault-pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+  font-size: 16px;
+  padding: 20px;
+}
+
+/* There shouldn't be margin outside the first/last blocks */
+.rte-editor .rte-block:first-child {
+  margin-top: 0;
+}
+
+.rte-editor .rte-block:last-child {
+  margin-bottom: 0;
+}

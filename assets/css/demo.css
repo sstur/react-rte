@@ -1,11 +1,5 @@
 @import "/assets/css/normalize.css";
-@import "/assets/css/draft.css";
-@import "/assets/css/ui-button.css";
-@import "/assets/css/ui-button-group.css";
-@import "/assets/css/ui-icon-button.css";
-@import "/assets/css/ui-dropdown.css";
-@import "/assets/css/ui-input-popover.css";
-@import "/assets/css/rte-toolbar.css";
+@import "/assets/css/react-rte.css";
 
 html {
   height: 100%;
@@ -55,64 +49,4 @@ body::before, body::after {
   resize: none;
   white-space: pre;
   word-wrap: normal;
-}
-
-.RichTextEditor-root {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-family: 'Georgia', serif;
-  font-size: 14px;
-  padding: 10px;
-}
-
-.RichTextEditor-editor {
-  border-top: 1px solid #ddd;
-  cursor: text;
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-.RichTextEditor-editor .public-DraftEditorPlaceholder-root,
-.RichTextEditor-editor .public-DraftEditor-content {
-  margin: 0 -10px -10px;
-  padding: 10px;
-}
-
-.RichTextEditor-editor .public-DraftEditor-content {
-  height: 110px;
-  overflow: auto;
-}
-
-.RichTextEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
-  display: none;
-}
-
-.RichTextEditor-editor .RichTextEditor-paragraph {
-  margin: 14px 0;
-}
-
-.RichTextEditor-editor .RichTextEditor-blockquote {
-  border-left: 5px solid #eee;
-  color: #666;
-  font-family: 'Hoefler Text', 'Georgia', serif;
-  font-style: italic;
-  margin: 16px 0;
-  padding: 10px 20px;
-}
-
-.RichTextEditor-editor .public-DraftStyleDefault-pre {
-  background-color: rgba(0, 0, 0, 0.05);
-  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
-  font-size: 16px;
-  padding: 20px;
-}
-
-/* There shouldn't be margin outside the first/last blocks */
-.RichTextEditor-editor .RichTextEditor-block:first-child {
-  margin-top: 0;
-}
-
-.RichTextEditor-editor .RichTextEditor-block:last-child {
-  margin-bottom: 0;
 }
