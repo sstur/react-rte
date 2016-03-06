@@ -5,6 +5,8 @@ import IconButton from './IconButton';
 import InputPopover from './InputPopover';
 
 type Props = {
+  showPopover: boolean,
+  onTogglePopover: Function,
   onSubmit: Function;
 };
 
@@ -13,10 +15,6 @@ export default class PopoverIconButton extends Component<Props> {
 
   constructor() {
     super(...arguments);
-    this.state = {
-      showInput: false,
-    };
-    this._togglePopover = this._togglePopover.bind(this);
     this._hidePopover = this._hidePopover.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
   }
@@ -27,7 +25,7 @@ export default class PopoverIconButton extends Component<Props> {
       <div className="ui-button-wrap">
         <IconButton
           {...props}
-          onClick={this._togglePopover}
+          onClick={this.props.onTogglePopover}
         />
         {this._renderPopover()}
       </div>
@@ -35,7 +33,7 @@ export default class PopoverIconButton extends Component<Props> {
   }
 
   _renderPopover() {
-    if (!this.state.showInput) {
+    if (!this.props.showPopover) {
       return null;
     }
     return (
@@ -47,19 +45,13 @@ export default class PopoverIconButton extends Component<Props> {
   }
 
   _onSubmit() {
-    this._hidePopover();
     this.props.onSubmit(...arguments);
-  }
-
-  _togglePopover() {
-    this.setState({
-      showInput: !this.state.showInput,
-    });
+    this._hidePopover();
   }
 
   _hidePopover() {
-    this.setState({
-      showInput: false,
-    });
+    if (this.props.showPopover) {
+      this.props.onTogglePopover();
+    }
   }
 }

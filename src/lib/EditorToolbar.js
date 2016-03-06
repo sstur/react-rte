@@ -25,10 +25,14 @@ export default class EditorToolbar extends Component<Props> {
 
   constructor() {
     super(...arguments);
-    this._undo = this._undo.bind(this);
+    this.state = {
+      showLinkInput: false,
+    };
     this._redo = this._redo.bind(this);
     this._toggleBlockType = this._toggleBlockType.bind(this);
     this._toggleInlineStyle = this._toggleInlineStyle.bind(this);
+    this._toggleShowLinkInput = this._toggleShowLinkInput.bind(this);
+    this._undo = this._undo.bind(this);
   }
 
   render(): React.Element {
@@ -52,7 +56,10 @@ export default class EditorToolbar extends Component<Props> {
           {this._renderBlockTypeDropdown()}
         </ButtonGroup>
         <ButtonGroup>
-          <LinkButton />
+          <LinkButton
+            showInput={this.state.showLinkInput}
+            onToggle={this._toggleShowLinkInput}
+          />
         </ButtonGroup>
         <ButtonGroup>
           {this._renderBlockTypeButtons()}
@@ -106,6 +113,12 @@ export default class EditorToolbar extends Component<Props> {
         style={type.style}
       />
     ));
+  }
+
+  _toggleShowLinkInput() {
+    this.setState({
+      showLinkInput: !this.state.showLinkInput,
+    });
   }
 
   _getCurrentBlockType(): string {

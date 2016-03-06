@@ -4,6 +4,8 @@ import PopoverIconButton from '../ui/PopoverIconButton';
 
 type Props = {
   className: ?string;
+  showInput: boolean;
+  onToggle: Function;
 };
 
 export default class LinkButton extends Component<Props> {
@@ -20,6 +22,8 @@ export default class LinkButton extends Component<Props> {
         {...this.props}
         label="Link"
         iconName="link"
+        showPopover={this.props.showInput}
+        onTogglePopover={this.props.onToggle}
         onSubmit={this._setURL}
       />
     );
