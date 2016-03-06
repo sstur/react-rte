@@ -23,3 +23,7 @@
   cursor: pointer;
   white-space: nowrap;
 }
+
+.ui-button-active {
+  background: none #d8d8d8;
+}

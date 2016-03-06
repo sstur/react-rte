@@ -9,6 +9,7 @@ import {
 } from './Constants';
 import StyleButton from './StyleButton';
 import LinkButton from './LinkButton';
+import ButtonGroup from '../ui/ButtonGroup';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
 
@@ -33,7 +34,7 @@ export default class EditorToolbar extends Component<Props> {
   render(): React.Element {
     return (
       <div className="RichTextEditor-toolbar">
-        <div className="RichTextEditor-buttonGroup">
+        <ButtonGroup>
           <IconButton
             label="Undo"
             iconName="undo"
@@ -46,15 +47,15 @@ export default class EditorToolbar extends Component<Props> {
             onClick={this._redo}
             focusOnClick={false}
           />
-        </div>
+        </ButtonGroup>
         {this._renderBlockTypeDropdown()}
         <LinkButton />
-        <div className="RichTextEditor-buttonGroup">
+        <ButtonGroup>
           {this._renderBlockTypeButtons()}
-        </div>
-        <div className="RichTextEditor-buttonGroup">
+        </ButtonGroup>
+        <ButtonGroup>
           {this._renderInlineStyleButtons()}
-        </div>
+        </ButtonGroup>
       </div>
     );
   }

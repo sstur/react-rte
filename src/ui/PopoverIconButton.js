@@ -3,11 +3,8 @@
 import React, {Component} from 'react';
 import IconButton from './IconButton';
 import InputPopover from './InputPopover';
-import cx from 'classnames';
 
 type Props = {
-  active: boolean;
-  className: ?string;
   onSubmit: Function;
 };
 
@@ -26,15 +23,10 @@ export default class PopoverIconButton extends Component<Props> {
 
   render(): React.Element {
     let {props} = this;
-    let className = cx(props.className, {
-      'RichTextEditor-styleButton': true,
-      'RichTextEditor-activeButton': props.active,
-    });
     return (
       <div className="ui-button-wrap">
         <IconButton
           {...props}
-          className={className}
           onClick={this._togglePopover}
         />
         {this._renderPopover()}

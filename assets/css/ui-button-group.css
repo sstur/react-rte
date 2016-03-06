@@ -1,0 +1,32 @@
+.ui-button-group {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.ui-button-group:last-child {
+  margin-right: 0;
+}
+
+.ui-button-group .ui-button {
+  margin-right: 0;
+  border-radius: 0;
+}
+
+.ui-button-group .ui-button:focus {
+  position: relative;
+  z-index: 1;
+}
+
+.ui-button-group .ui-button:first-child {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.ui-button-group .ui-button + .ui-button {
+  border-left-width: 0;
+}
+
+.ui-button-group .ui-button:last-child {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}

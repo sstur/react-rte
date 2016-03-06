@@ -1,6 +1,7 @@
 @import "/assets/css/normalize.css";
 @import "/assets/css/draft.css";
 @import "/assets/css/ui-button.css";
+@import "/assets/css/ui-button-group.css";
 @import "/assets/css/ui-icon-button.css";
 @import "/assets/css/ui-dropdown.css";
 @import "/assets/css/ui-input-popover.css";
@@ -124,44 +125,6 @@ body::before, body::after {
 
 .RichTextEditor-toolbar .ui-dropdown {
   margin-right: 5px;
-}
-
-.RichTextEditor-buttonGroup {
-  display: inline-block;
-  margin-right: 5px;
-}
-
-.RichTextEditor-buttonGroup:last-child {
-  margin-right: 0;
-}
-
-.RichTextEditor-buttonGroup .ui-button {
-  margin-right: 0;
-}
-
-.RichTextEditor-buttonGroup .ui-button:focus {
-  position: relative;
-  z-index: 1;
-}
-
-.RichTextEditor-buttonGroup .ui-button:first-child {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.RichTextEditor-buttonGroup .ui-button + .ui-button:not(:last-child) {
-  border-radius: 0;
-  border-left-width: 0;
-}
-
-.RichTextEditor-buttonGroup .ui-button:last-child {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-left-width: 0;
-}
-
-.RichTextEditor-activeButton {
-  background: none #d8d8d8;
 }
 
 .RichTextEditor-toolbar .icon.undo {

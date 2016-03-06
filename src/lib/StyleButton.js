@@ -1,14 +1,10 @@
 /* @flow */
 import React, {Component} from 'react';
 import IconButton from '../ui/IconButton';
-import cx from 'classnames';
 
 type Props = {
-  active: boolean;
   style: string;
-  label: string;
   onToggle: (style: string) => any;
-  className: ?string;
 };
 
 export default class StyleButton extends Component<Props> {
@@ -16,30 +12,25 @@ export default class StyleButton extends Component<Props> {
 
   constructor() {
     super(...arguments);
-    this._onToggle = this._onToggle.bind(this);
+    this._onClick = this._onClick.bind(this);
   }
 
   render(): React.Element {
-    let {props} = this;
-    let className = cx(props.className, {
-      'RichTextEditor-styleButton': true,
-      'RichTextEditor-activeButton': props.active,
-    });
-    let iconName = props.style.toLowerCase();
+    let {style, ...otherProps} = this.props;
+    let iconName = style.toLowerCase();
     // `focusOnClick` will prevent the editor from losing focus when a control
     // button is clicked.
     return (
       <IconButton
-        className={className}
-        label={props.label}
+        {...otherProps}
         iconName={iconName}
-        onClick={this._onToggle}
+        onClick={this._onClick}
         focusOnClick={false}
       />
     );
   }
 
-  _onToggle() {
+  _onClick() {
     this.props.onToggle(this.props.style);
   }
 }
