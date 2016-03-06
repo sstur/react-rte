@@ -29,28 +29,28 @@ export default class LinkButton extends Component<Props> {
       'RichTextEditor-activeButton': props.active,
       'ui-link-button': true,
     });
-    return this._wrap(
-      <IconButton
-        className={className}
-        label="Link"
-        iconName="link"
-        onClick={this._togglePopover}
-      />
+    return (
+      <div className="ui-button-wrap">
+        <IconButton
+          className={className}
+          label="Link"
+          iconName="link"
+          onClick={this._togglePopover}
+        />
+        {this._renderPopover()}
+      </div>
     );
   }
 
-  _wrap(child) {
+  _renderPopover() {
     if (!this.state.showInput) {
-      return child;
+      return null;
     }
     return (
-      <div className="ui-button-wrap">
-        {child}
-        <InputPopover
-          onSubmit={this._setURL}
-          onCancel={this._hidePopover}
-        />
-      </div>
+      <InputPopover
+        onSubmit={this._setURL}
+        onCancel={this._hidePopover}
+      />
     );
   }
 
