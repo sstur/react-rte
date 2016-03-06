@@ -1,5 +1,6 @@
 .ui-button-group {
   display: inline-block;
+  vertical-align: top;
   margin-right: 5px;
 }
 

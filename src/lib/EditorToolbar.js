@@ -48,8 +48,12 @@ export default class EditorToolbar extends Component<Props> {
             focusOnClick={false}
           />
         </ButtonGroup>
-        {this._renderBlockTypeDropdown()}
-        <LinkButton />
+        <ButtonGroup>
+          {this._renderBlockTypeDropdown()}
+        </ButtonGroup>
+        <ButtonGroup>
+          <LinkButton />
+        </ButtonGroup>
         <ButtonGroup>
           {this._renderBlockTypeButtons()}
         </ButtonGroup>
