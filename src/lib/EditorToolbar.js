@@ -33,7 +33,7 @@ export default class EditorToolbar extends Component<Props> {
 
   render(): React.Element {
     return (
-      <div className="RichTextEditor-toolbar">
+      <div className="rte-toolbar">
         <ButtonGroup>
           <IconButton
             label="Undo"
