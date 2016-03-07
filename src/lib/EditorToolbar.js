@@ -108,7 +108,7 @@ export default class EditorToolbar extends Component<Props> {
     return BLOCK_TYPE_BUTTONS.map((type, index) => (
       <StyleButton
         key={String(index)}
-        active={type.style === blockType}
+        isActive={type.style === blockType}
         label={type.label}
         onToggle={this._toggleBlockType}
         style={type.style}
@@ -122,7 +122,7 @@ export default class EditorToolbar extends Component<Props> {
     return INLINE_STYLE_BUTTONS.map((type, index) => (
       <StyleButton
         key={String(index)}
-        active={currentStyle.has(type.style)}
+        isActive={currentStyle.has(type.style)}
         label={type.label}
         onToggle={this._toggleInlineStyle}
         style={type.style}

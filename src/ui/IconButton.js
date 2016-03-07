@@ -5,7 +5,7 @@ import cx from 'classnames';
 import Button from './Button';
 
 type Props = {
-  active: ?boolean;
+  isActive: ?boolean;
   className: ?string;
   iconName: string;
   label: string;
@@ -19,7 +19,7 @@ export default class IconButton extends Component<Props> {
     let {className, iconName, label, ...otherProps} = props;
     className = cx(className, {
       'ui-icon-button': true,
-      'ui-button-active': props.active,
+      'ui-button-active': props.isActive,
     });
     return (
       <Button {...otherProps} title={label} className={className}>
