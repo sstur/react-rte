@@ -2,6 +2,7 @@
 import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {EditorState, Entity, RichUtils} from 'draft-js';
 import {
   ENTITY_TYPE,
@@ -10,7 +11,7 @@ import {
   BLOCK_TYPE_BUTTONS,
 } from './Constants';
 import StyleButton from './StyleButton';
-import LinkButton from './LinkButton';
+import PopoverIconButton from '../ui/PopoverIconButton';
 import ButtonGroup from '../ui/ButtonGroup';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
@@ -23,6 +24,7 @@ type Props = {
   editorState: EditorState;
   keyEmitter: EventEmitter;
   onChange: ChangeHandler;
+  focusEditor: Function;
 };
 
 export default class EditorToolbar extends Component<Props> {
@@ -121,10 +123,12 @@ export default class EditorToolbar extends Component<Props> {
     let selection = editorState.getSelection();
     let hasSelection = !selection.isCollapsed();
     return (
-      <LinkButton
+      <PopoverIconButton
+        label="Link"
+        iconName="link"
         isDisabled={!hasSelection}
-        showInput={this.state.showLinkInput}
-        onToggle={this._toggleShowLinkInput}
+        showPopover={this.state.showLinkInput}
+        onTogglePopover={this._toggleShowLinkInput}
         onSubmit={this._setLink}
       />
     );
@@ -163,19 +167,38 @@ export default class EditorToolbar extends Component<Props> {
     }
   }
 
-  _toggleShowLinkInput() {
-    this.setState({
-      showLinkInput: !this.state.showLinkInput,
-    });
+  _toggleShowLinkInput(event: ?Object) {
+    let isShowing = this.state.showLinkInput;
+    // If this is a hide request, decide if we should focus the editor.
+    if (isShowing) {
+      let shouldFocusEditor = true;
+      if (event && event.type === 'click') {
+        let editorRoot = ReactDOM.findDOMNode(this).parentNode;
+        let {activeElement} = document;
+        let wasClickAway = (activeElement == null || activeElement === document.body);
+        if (!wasClickAway && !editorRoot.contains(activeElement)) {
+          shouldFocusEditor = false;
+        }
+      }
+      if (shouldFocusEditor) {
+        this.props.focusEditor();
+      }
+    }
+    this.setState({showLinkInput: !isShowing});
   }
 
   _setLink(url: string) {
     let {editorState} = this.props;
     let selection = editorState.getSelection();
     let entityKey = Entity.create(ENTITY_TYPE.LINK, 'MUTABLE', {url});
+    this.setState({showLinkInput: false});
     this.props.onChange(
       RichUtils.toggleLink(editorState, selection, entityKey)
     );
+    // Hacky: Wait to focus the editor so we don't lose selection.
+    setTimeout(() => {
+      this.props.focusEditor();
+    }, 50);
   }
 
   _getCurrentBlockType(): string {

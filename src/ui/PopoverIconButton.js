@@ -46,12 +46,11 @@ export default class PopoverIconButton extends Component<Props> {
 
   _onSubmit() {
     this.props.onSubmit(...arguments);
-    this._hidePopover();
   }
 
   _hidePopover() {
     if (this.props.showPopover) {
-      this.props.onTogglePopover();
+      this.props.onTogglePopover(...arguments);
     }
   }
 }

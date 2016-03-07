@@ -72,7 +72,8 @@ export default class InputPopover extends Component<Props> {
   _onDocumentClick(event: Object) {
     let rootNode = ReactDOM.findDOMNode(this);
     if (!rootNode.contains(event.target)) {
-      this.props.onCancel();
+      // Here we pass the event so the parent can manage focus.
+      this.props.onCancel(event);
     }
   }
 

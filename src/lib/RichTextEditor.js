@@ -52,6 +52,7 @@ export default class RichTextEditor extends Component<Props> {
           keyEmitter={this._keyEmitter}
           editorState={editorState}
           onChange={this._onChange}
+          focusEditor={this._focus}
         />
         <div className={className} onClick={this._focus}>
           <Editor
