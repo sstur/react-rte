@@ -22,13 +22,9 @@ export default class PopoverIconButton extends Component<Props> {
   render(): React.Element {
     let {props} = this;
     return (
-      <div className="ui-button-wrap">
-        <IconButton
-          {...props}
-          onClick={this.props.onTogglePopover}
-        />
+      <IconButton {...props} onClick={this.props.onTogglePopover}>
         {this._renderPopover()}
-      </div>
+      </IconButton>
     );
   }
 

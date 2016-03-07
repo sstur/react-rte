@@ -6,7 +6,7 @@ import {ENTITY_TYPE} from './Constants';
 import type {ContentBlock} from 'draft-js';
 
 type Props = {
-  children: React.Element,
+  children: React.Node,
   entityKey: string,
 };
 

@@ -1,7 +1,7 @@
 .ui-button-group {
   display: inline-block;
   vertical-align: top;
-  margin-right: 5px;
+  margin: 0 5px 5px 0;
   white-space: nowrap;
 }
 
@@ -9,26 +9,26 @@
   margin-right: 0;
 }
 
-.ui-button-group .ui-button {
+.ui-button-group > .ui-button-wrap > .ui-button {
   margin-right: 0;
   border-radius: 0;
 }
 
-.ui-button-group .ui-button:focus {
+.ui-button-group > .ui-button-wrap > .ui-button:focus {
   position: relative;
   z-index: 1;
 }
 
-.ui-button-group .ui-button:first-child {
+.ui-button-group > .ui-button-wrap:first-child > .ui-button {
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 }
 
-.ui-button-group .ui-button + .ui-button {
+.ui-button-group > .ui-button-wrap + .ui-button-wrap > .ui-button {
   border-left-width: 0;
 }
 
-.ui-button-group .ui-button:last-child {
+.ui-button-group > .ui-button-wrap:last-child > .ui-button {
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }

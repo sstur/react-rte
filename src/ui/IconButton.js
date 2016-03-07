@@ -6,6 +6,7 @@ import Button from './Button';
 
 type Props = {
   isActive: ?boolean;
+  children: React.Node;
   className: ?string;
   iconName: string;
   label: string;
@@ -22,10 +23,13 @@ export default class IconButton extends Component<Props> {
       'ui-button-active': props.isActive,
     });
     return (
-      <Button {...otherProps} title={label} className={className}>
-        <span className={'icon ' + iconName} />
-        {/* TODO: add text label here with aria-hidden */}
-      </Button>
+      <div className="ui-button-wrap">
+        <Button {...otherProps} title={label} className={className}>
+          <span className={'icon ' + iconName} />
+          {/* TODO: add text label here with aria-hidden */}
+        </Button>
+        {props.children}
+      </div>
     );
   }
 }
