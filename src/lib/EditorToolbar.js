@@ -53,28 +53,12 @@ export default class EditorToolbar extends Component<Props> {
   render(): React.Element {
     return (
       <div className="rte-toolbar">
-        <ButtonGroup>
-          <IconButton
-            label="Undo"
-            iconName="undo"
-            onClick={this._undo}
-            focusOnClick={false}
-          />
-          <IconButton
-            label="Redo"
-            iconName="redo"
-            onClick={this._redo}
-            focusOnClick={false}
-          />
-        </ButtonGroup>
+        {this._renderUndoRedo()}
         <ButtonGroup>
           {this._renderBlockTypeDropdown()}
         </ButtonGroup>
         <ButtonGroup>
-          <LinkButton
-            showInput={this.state.showLinkInput}
-            onToggle={this._toggleShowLinkInput}
-          />
+          {this._renderLinkButton()}
         </ButtonGroup>
         <ButtonGroup>
           {this._renderBlockTypeButtons()}
@@ -128,6 +112,43 @@ export default class EditorToolbar extends Component<Props> {
         style={type.style}
       />
     ));
+  }
+
+  _renderLinkButton(): React.Element {
+    let {editorState} = this.props;
+    let selection = editorState.getSelection();
+    let hasSelection = !selection.isCollapsed();
+    return (
+      <LinkButton
+        isDisabled={!hasSelection}
+        showInput={this.state.showLinkInput}
+        onToggle={this._toggleShowLinkInput}
+      />
+    );
+  }
+
+  _renderUndoRedo(): React.Element {
+    let {editorState} = this.props;
+    let canUndo = editorState.getUndoStack().size;
+    let canRedo = editorState.getRedoStack().size;
+    return (
+      <ButtonGroup>
+        <IconButton
+          label="Undo"
+          iconName="undo"
+          isDisabled={!canUndo}
+          onClick={this._undo}
+          focusOnClick={false}
+        />
+        <IconButton
+          label="Redo"
+          iconName="redo"
+          isDisabled={!canRedo}
+          onClick={this._redo}
+          focusOnClick={false}
+        />
+      </ButtonGroup>
+    );
   }
 
   _onKeypress(event: Object, eventFlags: Object) {

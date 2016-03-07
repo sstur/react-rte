@@ -24,6 +24,15 @@
   white-space: nowrap;
 }
 
+.ui-button:disabled {
+  cursor: not-allowed;
+  background: none transparent;
+}
+
+.ui-button:disabled > * {
+  opacity: .5;
+}
+
 .ui-button-active {
   background: none #d8d8d8;
 }

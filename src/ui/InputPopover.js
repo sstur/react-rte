@@ -14,7 +14,6 @@ export default class InputPopover extends Component<Props> {
 
   constructor() {
     super(...arguments);
-    this.state = {};
     this._onDocumentClick = this._onDocumentClick.bind(this);
     this._onDocumentKeydown = this._onDocumentKeydown.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
