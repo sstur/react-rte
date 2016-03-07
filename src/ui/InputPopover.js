@@ -1,6 +1,8 @@
 /* @flow */
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import IconButton from './IconButton';
+import ButtonGroup from './ButtonGroup';
 
 type Props = {
   onCancel: () => any;
@@ -33,12 +35,27 @@ export default class InputPopover extends Component<Props> {
   render(): React.Element {
     return (
       <form className="ui-input-popover" onSubmit={this._onSubmit}>
-        <div>
+        <div className="ui-input-popover-inner">
           <input
             ref={this._setInputRef}
             type="text"
+            placeholder="https://example.com/"
             className="ui-input-popover-input"
           />
+          <ButtonGroup className="ui-input-popover-button-group">
+            <IconButton
+              className="ui-input-popover-button"
+              label="Cancel"
+              iconName="cancel"
+              onClick={this.props.onCancel}
+            />
+            <IconButton
+              className="ui-input-popover-button"
+              label="Submit"
+              iconName="accept"
+              formSubmit={true}
+            />
+          </ButtonGroup>
         </div>
       </form>
     );

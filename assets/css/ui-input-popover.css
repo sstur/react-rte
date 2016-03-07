@@ -2,7 +2,7 @@
   position: absolute;
   top: calc(100% + 5px);
   left: 0;
-  width: 200px;
+  width: 260px;
   background: none #fdfdfd;
   background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);
   border: 1px solid #999;
@@ -11,16 +11,50 @@
   padding: 4px;
 }
 
+.ui-input-popover:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -10px;
+  left: 10px;
+  border: 5px solid transparent;
+  border-bottom-color: #999;
+}
+
+.ui-input-popover:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -9px;
+  left: 10px;
+  border: 5px solid transparent;
+  border-bottom-color: #fdfdfd;
+}
+
+.ui-input-popover-inner {
+  display: flex;
+}
+
 .ui-input-popover-input {
   display: block;
+  flex: 1 0;
   width: 100%;
-  height: 32px;
+  height: 30px;
   background: none white;
   border: 1px solid #999;
   border-radius: 2px;
   box-sizing: border-box;
-  padding: 3px 6px;
+  padding: 2px 6px;
   font-family: inherit;
   font-size: inherit;
   line-height: 24px;
+}
+
+.ui-input-popover-inner .ui-input-popover-button-group {
+  flex: 0 1;
+  margin-left: 4px;
 }

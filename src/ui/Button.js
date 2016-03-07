@@ -9,6 +9,7 @@ type Props = {
   children: ?any;
   className: ?string;
   focusOnClick: ?boolean;
+  formSubmit: ?boolean;
   onMouseDown: ?EventHandler;
 };
 
@@ -25,8 +26,9 @@ export default class Button extends Component<Props> {
     let {className, ...otherProps} = props;
     className = cx(className, 'ui-button');
     let onMouseDown = (props.focusOnClick === false) ? this._onMouseDownPreventDefault : props.onMouseDown;
+    let type = props.formSubmit ? 'submit' : 'button';
     return (
-      <button type="button" {...otherProps} onMouseDown={onMouseDown} className={className}>
+      <button type={type} {...otherProps} onMouseDown={onMouseDown} className={className}>
         {props.children}
       </button>
     );
