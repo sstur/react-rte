@@ -2,8 +2,9 @@
 import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 
 import React, {Component} from 'react';
-import {EditorState, RichUtils} from 'draft-js';
+import {EditorState, Entity, RichUtils} from 'draft-js';
 import {
+  ENTITY_TYPE,
   INLINE_STYLE_BUTTONS,
   BLOCK_TYPE_DROPDOWN,
   BLOCK_TYPE_BUTTONS,
@@ -34,6 +35,7 @@ export default class EditorToolbar extends Component<Props> {
     };
     this._onKeypress = this._onKeypress.bind(this);
     this._redo = this._redo.bind(this);
+    this._setLink = this._setLink.bind(this);
     this._toggleBlockType = this._toggleBlockType.bind(this);
     this._toggleInlineStyle = this._toggleInlineStyle.bind(this);
     this._toggleShowLinkInput = this._toggleShowLinkInput.bind(this);
@@ -123,6 +125,7 @@ export default class EditorToolbar extends Component<Props> {
         isDisabled={!hasSelection}
         showInput={this.state.showLinkInput}
         onToggle={this._toggleShowLinkInput}
+        onSubmit={this._setLink}
       />
     );
   }
@@ -164,6 +167,15 @@ export default class EditorToolbar extends Component<Props> {
     this.setState({
       showLinkInput: !this.state.showLinkInput,
     });
+  }
+
+  _setLink(url: string) {
+    let {editorState} = this.props;
+    let selection = editorState.getSelection();
+    let entityKey = Entity.create(ENTITY_TYPE.LINK, 'MUTABLE', {url});
+    this.props.onChange(
+      RichUtils.toggleLink(editorState, selection, entityKey)
+    );
   }
 
   _getCurrentBlockType(): string {

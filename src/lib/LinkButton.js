@@ -11,11 +11,6 @@ type Props = {
 export default class LinkButton extends Component<Props> {
   props: Props;
 
-  constructor() {
-    super(...arguments);
-    this._setURL = this._setURL.bind(this);
-  }
-
   render(): React.Element {
     return (
       <PopoverIconButton
@@ -24,12 +19,7 @@ export default class LinkButton extends Component<Props> {
         iconName="link"
         showPopover={this.props.showInput}
         onTogglePopover={this.props.onToggle}
-        onSubmit={this._setURL}
       />
     );
-  }
-
-  _setURL(url: string) {
-    console.log('add link', url);
   }
 }
