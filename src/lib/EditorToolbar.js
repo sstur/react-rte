@@ -61,17 +61,11 @@ export default class EditorToolbar extends Component<Props> {
   render(): React.Element {
     return (
       <div className="rte-toolbar">
-        {this._renderUndoRedo()}
-        <ButtonGroup>
-          {this._renderBlockTypeDropdown()}
-        </ButtonGroup>
+        {this._renderInlineStyleButtons()}
+        {this._renderBlockTypeButtons()}
         {this._renderLinkButtons()}
-        <ButtonGroup>
-          {this._renderBlockTypeButtons()}
-        </ButtonGroup>
-        <ButtonGroup>
-          {this._renderInlineStyleButtons()}
-        </ButtonGroup>
+        {this._renderBlockTypeDropdown()}
+        {this._renderUndoRedo()}
       </div>
     );
   }
@@ -85,17 +79,19 @@ export default class EditorToolbar extends Component<Props> {
       blockType = Array.from(choices.keys())[0];
     }
     return (
-      <Dropdown
-        choices={choices}
-        selectedKey={blockType}
-        onChange={this._selectBlockType}
-      />
+      <ButtonGroup>
+        <Dropdown
+          choices={choices}
+          selectedKey={blockType}
+          onChange={this._selectBlockType}
+        />
+      </ButtonGroup>
     );
   }
 
-  _renderBlockTypeButtons(): Array<React.Element> {
+  _renderBlockTypeButtons(): React.Element {
     let blockType = this._getCurrentBlockType();
-    return BLOCK_TYPE_BUTTONS.map((type, index) => (
+    let buttons = BLOCK_TYPE_BUTTONS.map((type, index) => (
       <StyleButton
         key={String(index)}
         isActive={type.style === blockType}
@@ -104,12 +100,15 @@ export default class EditorToolbar extends Component<Props> {
         style={type.style}
       />
     ));
+    return (
+      <ButtonGroup>{buttons}</ButtonGroup>
+    );
   }
 
-  _renderInlineStyleButtons(): Array<React.Element> {
+  _renderInlineStyleButtons(): React.Element {
     let {editorState} = this.props;
     let currentStyle = editorState.getCurrentInlineStyle();
-    return INLINE_STYLE_BUTTONS.map((type, index) => (
+    let buttons = INLINE_STYLE_BUTTONS.map((type, index) => (
       <StyleButton
         key={String(index)}
         isActive={currentStyle.has(type.style)}
@@ -118,6 +117,9 @@ export default class EditorToolbar extends Component<Props> {
         style={type.style}
       />
     ));
+    return (
+      <ButtonGroup>{buttons}</ButtonGroup>
+    );
   }
 
   _renderLinkButtons(): React.Element {
