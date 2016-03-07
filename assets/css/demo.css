@@ -16,6 +16,10 @@ body::before, body::after {
   display: table;
 }
 
+a {
+  color: #00e;
+}
+
 .editor-demo {
   width: 540px;
   margin: 10px auto;
