@@ -15,6 +15,8 @@ import PopoverIconButton from '../ui/PopoverIconButton';
 import ButtonGroup from '../ui/ButtonGroup';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
+import getEntityAtCursor from './getEntityAtCursor';
+import clearEntityForRange from './clearEntityForRange';
 
 import type {EventEmitter} from 'events';
 
@@ -37,6 +39,7 @@ export default class EditorToolbar extends Component<Props> {
     };
     this._onKeypress = this._onKeypress.bind(this);
     this._redo = this._redo.bind(this);
+    this._removeLink = this._removeLink.bind(this);
     this._selectBlockType = this._selectBlockType.bind(this);
     this._setLink = this._setLink.bind(this);
     this._toggleBlockType = this._toggleBlockType.bind(this);
@@ -62,9 +65,7 @@ export default class EditorToolbar extends Component<Props> {
         <ButtonGroup>
           {this._renderBlockTypeDropdown()}
         </ButtonGroup>
-        <ButtonGroup>
-          {this._renderLinkButton()}
-        </ButtonGroup>
+        {this._renderLinkButtons()}
         <ButtonGroup>
           {this._renderBlockTypeButtons()}
         </ButtonGroup>
@@ -119,26 +120,38 @@ export default class EditorToolbar extends Component<Props> {
     ));
   }
 
-  _renderLinkButton(): React.Element {
+  _renderLinkButtons(): React.Element {
     let {editorState} = this.props;
     let selection = editorState.getSelection();
+    let entity = this._getEntityAtCursor();
     let hasSelection = !selection.isCollapsed();
+    let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
+    let shouldShowLinkButton = hasSelection || isCursorOnLink;
     return (
-      <PopoverIconButton
-        label="Link"
-        iconName="link"
-        isDisabled={!hasSelection}
-        showPopover={this.state.showLinkInput}
-        onTogglePopover={this._toggleShowLinkInput}
-        onSubmit={this._setLink}
-      />
+      <ButtonGroup>
+        <PopoverIconButton
+          label="Link"
+          iconName="link"
+          isDisabled={!shouldShowLinkButton}
+          showPopover={this.state.showLinkInput}
+          onTogglePopover={this._toggleShowLinkInput}
+          onSubmit={this._setLink}
+        />
+        <IconButton
+          label="Remove Link"
+          iconName="remove-link"
+          isDisabled={!isCursorOnLink}
+          onClick={this._removeLink}
+          focusOnClick={false}
+        />
+      </ButtonGroup>
     );
   }
 
   _renderUndoRedo(): React.Element {
     let {editorState} = this.props;
-    let canUndo = editorState.getUndoStack().size;
-    let canRedo = editorState.getRedoStack().size;
+    let canUndo = editorState.getUndoStack().size !== 0;
+    let canRedo = editorState.getRedoStack().size !== 0;
     return (
       <ButtonGroup>
         <IconButton
@@ -198,6 +211,23 @@ export default class EditorToolbar extends Component<Props> {
       RichUtils.toggleLink(editorState, selection, entityKey)
     );
     this._focusEditor();
+  }
+
+  _removeLink() {
+    let {editorState} = this.props;
+    let entity = getEntityAtCursor(editorState);
+    if (entity != null) {
+      let {blockKey, startOffset, endOffset} = entity;
+      this.props.onChange(
+        clearEntityForRange(editorState, blockKey, startOffset, endOffset)
+      );
+    }
+  }
+
+  _getEntityAtCursor(): ?Entity {
+    let {editorState} = this.props;
+    let entity = getEntityAtCursor(editorState);
+    return (entity == null) ? null : Entity.get(entity.entityKey);
   }
 
   _getCurrentBlockType(): string {
