@@ -13,6 +13,7 @@
   z-index: 2;
   display: inline-block;
   box-sizing: border-box;
+  height: 30px;
   line-height: inherit;
   font-family: inherit;
   font-size: inherit;
@@ -35,7 +36,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  line-height: inherit;
+  line-height: 23px;
   border: 1px solid #999;
   border-radius: 2px;
   padding: 3px;
