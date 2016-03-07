@@ -41,8 +41,7 @@
 
 .ui-input-popover-input {
   display: block;
-  flex: 1 0;
-  width: 100%;
+  flex: 1 0 auto;
   height: 30px;
   background: none white;
   border: 1px solid #999;
@@ -55,7 +54,7 @@
 }
 
 .ui-input-popover-inner .ui-input-popover-button-group {
-  flex: 0 1;
+  flex: 0 1 auto;
   margin-left: 4px;
   margin-bottom: 0;
 }
