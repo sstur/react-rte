@@ -1,4 +1,5 @@
 /* @flow */
+import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 
 import React, {Component} from 'react';
 import {EditorState, RichUtils} from 'draft-js';
@@ -13,10 +14,13 @@ import ButtonGroup from '../ui/ButtonGroup';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
 
+import type {EventEmitter} from 'events';
+
 type ChangeHandler = (state: EditorState) => any;
 
 type Props = {
   editorState: EditorState;
+  keyEmitter: EventEmitter;
   onChange: ChangeHandler;
 };
 
@@ -28,11 +32,22 @@ export default class EditorToolbar extends Component<Props> {
     this.state = {
       showLinkInput: false,
     };
+    this._onKeypress = this._onKeypress.bind(this);
     this._redo = this._redo.bind(this);
     this._toggleBlockType = this._toggleBlockType.bind(this);
     this._toggleInlineStyle = this._toggleInlineStyle.bind(this);
     this._toggleShowLinkInput = this._toggleShowLinkInput.bind(this);
     this._undo = this._undo.bind(this);
+  }
+
+  componentWillMount() {
+    // Technically, we should also attach/detach event listeners when the
+    // `keyEmitter` prop changes.
+    this.props.keyEmitter.on('keypress', this._onKeypress);
+  }
+
+  componentWillUnmount() {
+    this.props.keyEmitter.removeListener('keypress', this._onKeypress);
   }
 
   render(): React.Element {
@@ -113,6 +128,15 @@ export default class EditorToolbar extends Component<Props> {
         style={type.style}
       />
     ));
+  }
+
+  _onKeypress(event: Object, eventFlags: Object) {
+    // Catch cmd+k for use with link insertion.
+    if (hasCommandModifier(event) && event.keyCode === 75) {
+      // TODO: Ensure there is some text selected.
+      this.setState({showLinkInput: true});
+      eventFlags.wasHandled = true;
+    }
   }
 
   _toggleShowLinkInput() {

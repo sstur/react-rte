@@ -1,10 +1,12 @@
 /* @flow */
 import React, {Component} from 'react';
 import {CompositeDecorator, Editor, EditorState, RichUtils} from 'draft-js';
+import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import EditorToolbar from './EditorToolbar';
 import EditorValue from './EditorValue';
 import LinkDecorator from './LinkDecorator';
 import cx from 'classnames';
+import {EventEmitter} from 'events';
 
 // Custom overrides for "code" style.
 const styleMap = {
@@ -28,8 +30,10 @@ export default class RichTextEditor extends Component<Props> {
 
   constructor() {
     super(...arguments);
+    this._keyEmitter = new EventEmitter();
     this._focus = this._focus.bind(this);
     this._handleReturn = this._handleReturn.bind(this);
+    this._customKeyHandler = this._customKeyHandler.bind(this);
     this._handleKeyCommand = this._handleKeyCommand.bind(this);
     this._onChange = this._onChange.bind(this);
   }
@@ -45,6 +49,7 @@ export default class RichTextEditor extends Component<Props> {
     return (
       <div className="rte-root">
         <EditorToolbar
+          keyEmitter={this._keyEmitter}
           editorState={editorState}
           onChange={this._onChange}
         />
@@ -54,6 +59,7 @@ export default class RichTextEditor extends Component<Props> {
             customStyleMap={styleMap}
             editorState={editorState}
             handleReturn={this._handleReturn}
+            keyBindingFn={this._customKeyHandler}
             handleKeyCommand={this._handleKeyCommand}
             onChange={this._onChange}
             placeholder="Tell a story..."
@@ -83,6 +89,17 @@ export default class RichTextEditor extends Component<Props> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  _customKeyHandler(event: Object): ?string {
+    // Allow toolbar to catch key combinations.
+    let eventFlags = {};
+    this._keyEmitter.emit('keypress', event, eventFlags);
+    if (eventFlags.wasHandled) {
+      return null;
+    } else {
+      return getDefaultKeyBinding(event);
     }
   }
 
