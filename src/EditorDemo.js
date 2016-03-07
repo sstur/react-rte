@@ -29,7 +29,7 @@ export default class EditorDemo extends Component<Props, State> {
     return (
       <div className="editor-demo">
         <div className="row">
-          <p>This is a demo of the <a href="https://github.com/sstur/react-rte"><code>react-rte</code></a> editor.</p>
+          <p>This is a demo of the <a href="https://github.com/sstur/react-rte">react-rte</a> editor.</p>
         </div>
         <div className="row">
           <RichTextEditor
