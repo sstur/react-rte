@@ -37,6 +37,7 @@ export default class EditorToolbar extends Component<Props> {
     };
     this._onKeypress = this._onKeypress.bind(this);
     this._redo = this._redo.bind(this);
+    this._selectBlockType = this._selectBlockType.bind(this);
     this._setLink = this._setLink.bind(this);
     this._toggleBlockType = this._toggleBlockType.bind(this);
     this._toggleInlineStyle = this._toggleInlineStyle.bind(this);
@@ -86,7 +87,7 @@ export default class EditorToolbar extends Component<Props> {
       <Dropdown
         choices={choices}
         selectedKey={blockType}
-        onChange={this._toggleBlockType}
+        onChange={this._selectBlockType}
       />
     );
   }
@@ -195,10 +196,7 @@ export default class EditorToolbar extends Component<Props> {
     this.props.onChange(
       RichUtils.toggleLink(editorState, selection, entityKey)
     );
-    // Hacky: Wait to focus the editor so we don't lose selection.
-    setTimeout(() => {
-      this.props.focusEditor();
-    }, 50);
+    this._focusEditor();
   }
 
   _getCurrentBlockType(): string {
@@ -208,6 +206,11 @@ export default class EditorToolbar extends Component<Props> {
       .getCurrentContent()
       .getBlockForKey(selection.getStartKey())
       .getType();
+  }
+
+  _selectBlockType() {
+    this._toggleBlockType(...arguments);
+    this._focusEditor();
   }
 
   _toggleBlockType(blockType: string) {
@@ -240,5 +243,12 @@ export default class EditorToolbar extends Component<Props> {
     this.props.onChange(
       EditorState.redo(editorState)
     );
+  }
+
+  _focusEditor() {
+    // Hacky: Wait to focus the editor so we don't lose selection.
+    setTimeout(() => {
+      this.props.focusEditor();
+    }, 50);
   }
 }
