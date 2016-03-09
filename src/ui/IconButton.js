@@ -25,7 +25,7 @@ export default class IconButton extends Component<Props> {
     return (
       <div className="ui-button-wrap">
         <Button {...otherProps} title={label} className={className}>
-          <span className={'icon ' + iconName} />
+          <span className={'icon icon-' + iconName} />
           {/* TODO: add text label here with aria-hidden */}
         </Button>
         {props.children}
