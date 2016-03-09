@@ -23,7 +23,7 @@ export default class StyleButton extends Component<Props> {
     return (
       <IconButton
         {...otherProps}
-        iconName={iconName}
+        iconName={'icon-' + iconName}
         onClick={this._onClick}
         focusOnClick={false}
       />
