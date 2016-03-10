@@ -196,6 +196,7 @@ class MarkupGenerator {
   }
 
   renderBlockContent(block: ContentBlock): string {
+    let blockType = block.getType();
     let text = block.getText();
     if (text === '') {
       // Prevent element collapse if completely empty.
@@ -221,7 +222,7 @@ class MarkupGenerator {
           content = `<del>${content}</del>`;
         }
         if (style.has(CODE)) {
-          content = `<code>${content}</code>`;
+          content = (blockType === BLOCK_TYPE.CODE) ? content : `<code>${content}</code>`;
         }
         return content;
       }).join('');
