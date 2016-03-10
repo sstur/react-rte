@@ -18,23 +18,23 @@ const {
 const INDENT = '  ';
 const BREAK = '<br/>';
 
-function getTag(blockType: number): string {
+function getTags(blockType: number): Array<string> {
   switch (blockType) {
     case BLOCK_TYPE.HEADER_ONE:
-      return 'h1';
+      return ['h1'];
     case BLOCK_TYPE.HEADER_TWO:
-      return 'h2';
+      return ['h2'];
     case BLOCK_TYPE.HEADER_THREE:
-      return 'h3';
+      return ['h3'];
     case BLOCK_TYPE.UNORDERED_LIST_ITEM:
     case BLOCK_TYPE.ORDERED_LIST_ITEM:
-      return 'li';
+      return ['li'];
     case BLOCK_TYPE.BLOCKQUOTE:
-      return 'blockquote';
+      return ['blockquote'];
     case BLOCK_TYPE.CODE:
-      return 'code';
+      return ['pre', 'code'];
     default:
-      return 'p';
+      return ['p'];
   }
 }
 
@@ -44,8 +44,6 @@ function getWrapperTag(blockType: number): ?string {
       return 'ul';
     case BLOCK_TYPE.ORDERED_LIST_ITEM:
       return 'ol';
-    case BLOCK_TYPE.CODE:
-      return 'pre';
     default:
       return null;
   }
@@ -117,9 +115,9 @@ class MarkupGenerator {
         this.openWrapperTag(newWrapperTag);
       }
     }
-    let tag = getTag(blockType);
     this.indent();
-    this.output.push(`<${tag}>${this.renderBlockContent(block)}`);
+    this.writeStartTag(blockType);
+    this.output.push(this.renderBlockContent(block));
     // Look ahead and see if we will nest list.
     let nextBlock = this.getNextBlock();
     if (
@@ -141,7 +139,7 @@ class MarkupGenerator {
     } else {
       this.currentBlock += 1;
     }
-    this.output.push(`</${tag}>\n`);
+    this.writeEndTag(blockType);
   }
 
   processBlocksAtDepth(depth: number) {
@@ -155,6 +153,26 @@ class MarkupGenerator {
 
   getNextBlock(): ContentBlock {
     return this.blocks[this.currentBlock + 1];
+  }
+
+  writeStartTag(blockType) {
+    let tags = getTags(blockType);
+    for (let tag of tags) {
+      this.output.push(`<${tag}>`);
+    }
+  }
+
+  writeEndTag(blockType) {
+    let tags = getTags(blockType);
+    if (tags.length === 1) {
+      this.output.push(`</${tags[0]}>\n`);
+    } else {
+      let output = [];
+      for (let tag of tags) {
+        output.unshift(`</${tag}>`);
+      }
+      this.output.push(output.join('') + '\n');
+    }
   }
 
   openWrapperTag(wrapperTag: string) {
