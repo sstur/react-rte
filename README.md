@@ -44,14 +44,18 @@ Basically, this is a 2016 approach to rich-text editing built on modern, battle-
 
 I'm happy to take pull requests for bug-fixes and improvements (and tests). If you have a feature you want to implement it's probably a good idea to open an issue first to see if it's already being worked on. Please match the code style of the rest of the project (ESLint should enforce this) and please include tests. Thanks!
 
+## Run the Demo
+Clone this project. Run `npm install`. Run `npm run build-demo` then point the server of your choice (like [serv][serv]) to /demo.html.
+
 ## License
 
 React-RTE is [BSD Licensed](/LICENSE).
 
 
-[rte]: https://www.google.com/search?q=web+based+rich+text+editor
 [ckeditor]: http://ckeditor.com/
-[tinymce]: https://www.tinymce.com/
 [draft-js]: https://facebook.github.io/draft-js/
 [immutablejs]: https://facebook.github.io/immutable-js/
 [react-rte-demo]: https://react-rte.org/demo
+[rte]: https://www.google.com/search?q=web+based+rich+text+editor
+[serv]: https://www.npmjs.com/package/serv
+[tinymce]: https://www.tinymce.com/

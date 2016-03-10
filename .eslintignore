@@ -1,2 +1,4 @@
 _*
-node_modules/
+assets/dist
+lib
+node_modules

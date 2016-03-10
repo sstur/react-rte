@@ -2,15 +2,18 @@
   "name": "react-rte",
   "version": "0.1.6",
   "description": "React Rich Text Editor",
-  "main": "main.js",
+  "main": "lib/lib/RichTextEditor.js",
   "dependencies": {
     "classnames": "^2.2.3",
     "draft-js": "^0.1.0",
-    "immutable": "^3.7.6",
+    "immutable": "^3.7.6"
+  },
+  "peerDependencies": {
     "react": "^0.14.7",
     "react-dom": "^0.14.7"
   },
   "devDependencies": {
+    "babel-cli": "^6.6.5",
     "babel-core": "^6.5.2",
     "babel-eslint": "^5.0.0",
     "babel-loader": "^6.2.3",
@@ -27,7 +30,12 @@
     "webpack": "^1.12.14"
   },
   "scripts": {
-    "test": "mocha test"
+    "build-demo": "webpack",
+    "build-lib": "babel src --out-dir lib",
+    "lint": "eslint --max-warnings 0 .",
+    "prepublish": "npm run build-lib",
+    "test": "npm run lint && npm run test-src",
+    "test-src": "mocha src/__tests__ src/**/__tests__"
   },
   "repository": {
     "type": "git",
