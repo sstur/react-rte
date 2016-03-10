@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build-demo": "webpack",
-    "build-lib": "babel src --out-dir lib",
+    "build-lib": "babel src --ignore '_*' --out-dir lib",
     "lint": "eslint --max-warnings 0 .",
     "prepublish": "npm run build-lib",
     "test": "npm run lint && npm run test-src",
