@@ -42,6 +42,16 @@
     "editor"
   ],
   "author": "sstur@me.com",
+  "contributors": [
+    {
+      "name": "Jordan Kohl",
+      "url": "https://github.com/simpixelated"
+    },
+    {
+      "name": "Simon Sturmer",
+      "url": "https://github.com/sstur"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sstur/react-rte/issues"
