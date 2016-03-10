@@ -1,5 +1,5 @@
 /* @flow */
-import {EditorState} from 'draft-js';
+import {ContentState, EditorState} from 'draft-js';
 import stateToHTML from './stateToHTML';
 import stateFromHTML from './stateFromHTML';
 import stateToMarkdown from './stateToMarkdown';
@@ -8,34 +8,14 @@ import stateFromMarkdown from './stateFromMarkdown';
 import type {DraftDecoratorType as Decorator} from 'draft-js/lib/DraftDecoratorType';
 
 type StringMap = {[key: string]: string};
-type ValueSource = EditorState | [string, string];
-
-const INIT_FROM_EMPTY = 'INIT_FROM_EMPTY';
-const INIT_FROM_STATE = 'INIT_FROM_STATE';
-const INIT_FROM_STRING = 'INIT_FROM_STRING';
 
 export default class EditorValue {
   _editorState: EditorState;
   _cache: StringMap;
 
-  constructor(initType: string, source: ValueSource, decorator: ?Decorator) {
-    this._cache = {};
-    switch (initType) {
-      case INIT_FROM_EMPTY: {
-        this._editorState = EditorState.createEmpty(decorator);
-        break;
-      }
-      case INIT_FROM_STATE: {
-        this._editorState = source;
-        break;
-      }
-      case INIT_FROM_STRING: {
-        let [markup, format] = source;
-        this._cache[format] = markup;
-        this._editorState = fromString(markup, format, decorator);
-        break;
-      }
-    }
+  constructor(editorState: EditorState, cache: StringMap = {}) {
+    this._cache = cache;
+    this._editorState = editorState;
   }
 
   getEditorState(): EditorState {
@@ -45,7 +25,7 @@ export default class EditorValue {
   setEditorState(editorState: EditorState): EditorValue {
     return (this._editorState === editorState) ?
       this :
-      new EditorValue(INIT_FROM_STATE, editorState);
+      new EditorValue(editorState);
   }
 
   toString(format: string): string {
@@ -57,21 +37,27 @@ export default class EditorValue {
   }
 
   setContentFromString(markup: string, format: string): EditorValue {
-    // TODO: Preserve undo/redo (and any content if it's possible).
-    let decorator = this._editorState.getDecorator();
-    return new EditorValue(INIT_FROM_STRING, [markup, format], decorator);
+    let editorState = EditorState.push(
+      this._editorState,
+      fromString(markup, format),
+      'secondary-paste'
+    );
+    return new EditorValue(editorState, {[format]: markup});
   }
 
   static createEmpty(decorator: ?Decorator): EditorValue {
-    return new EditorValue(INIT_FROM_EMPTY, null, decorator);
+    let editorState = EditorState.createEmpty(decorator);
+    return new EditorValue(editorState);
   }
 
-  static createFromState(editorState: EditorState, decorator: ?Decorator): EditorValue {
-    return new EditorValue(INIT_FROM_STATE, editorState, decorator);
+  static createFromState(editorState: EditorState): EditorValue {
+    return new EditorValue(editorState);
   }
 
   static createFromString(markup: string, format: string, decorator: ?Decorator): EditorValue {
-    return new EditorValue(INIT_FROM_STRING, [markup, format], decorator);
+    let contentState = fromString(markup, format);
+    let editorState = EditorState.createWithContent(contentState, decorator);
+    return new EditorValue(editorState, {[format]: markup});
   }
 }
 
@@ -90,13 +76,13 @@ function toString(editorState: EditorState, format: string): string {
   }
 }
 
-function fromString(markup: string, format: string, decorator: ?Decorator): EditorState {
+function fromString(markup: string, format: string): ContentState {
   switch (format) {
     case 'html': {
-      return stateFromHTML(markup, decorator);
+      return stateFromHTML(markup);
     }
     case 'markdown': {
-      return stateFromMarkdown(markup, decorator);
+      return stateFromMarkdown(markup);
     }
     default: {
       throw new Error('Format not supported: ' + format);

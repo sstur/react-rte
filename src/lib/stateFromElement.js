@@ -4,17 +4,15 @@ import {
   CharacterMetadata,
   ContentBlock,
   ContentState,
-  EditorState,
   Entity,
   genKey,
   SelectionState,
 } from 'draft-js';
-import {List, OrderedMap, OrderedSet, Repeat, Seq, Stack} from 'immutable';
+import {List, OrderedMap, OrderedSet, Repeat, Seq} from 'immutable';
 import {BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE} from './Constants';
 import {NODE_TYPE_ELEMENT, NODE_TYPE_TEXT} from './SyntheticDOM';
 
 import type {Node as SyntheticNode} from './SyntheticDOM';
-import type {DraftDecoratorType as Decorator} from 'draft-js/lib/DraftDecoratorType';
 
 type DOMNode = SyntheticNode | Node;
 
@@ -370,20 +368,12 @@ function createEmptySelectionState(key: string): SelectionState {
 
 export default function stateFromElement(
   element: DOMNode,
-  decorator: ?Decorator,
-): EditorState {
+): ContentState {
   let blocks = new BlockGenerator().process(element);
   let selectionState = createEmptySelectionState(blocks[0].getKey());
-  let contentState = new ContentState({
+  return new ContentState({
     blockMap: createBlockMap(blocks),
     selectionBefore: selectionState,
     selectionAfter: selectionState,
-  });
-  return EditorState.create({
-    currentContent: contentState,
-    undoStack: Stack(),
-    redoStack: Stack(),
-    decorator: decorator,
-    selection: selectionState,
   });
 }

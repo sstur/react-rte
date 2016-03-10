@@ -3,10 +3,9 @@
 import MarkdownParser from './MarkdownParser';
 import stateFromElement from './stateFromElement';
 
-import type {EditorState} from 'draft-js';
-import type {DraftDecoratorType as Decorator} from 'draft-js/lib/DraftDecoratorType';
+import type {ContentState} from 'draft-js';
 
-export default function stateFromMarkdown(markdown: string, decorator: ?Decorator): EditorState {
+export default function stateFromMarkdown(markdown: string): ContentState {
   let element = MarkdownParser.parse(markdown, {getAST: true});
-  return stateFromElement(element, decorator);
+  return stateFromElement(element);
 }
