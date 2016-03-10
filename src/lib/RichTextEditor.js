@@ -132,6 +132,8 @@ function getBlockStyle(block) {
       return result + ' rte-paragraph';
     case 'blockquote':
       return result + ' rte-blockquote';
+    case 'code-block':
+      return result + ' rte-code-block';
     default:
       return result;
   }
