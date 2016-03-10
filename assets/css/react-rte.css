@@ -48,12 +48,17 @@
 }
 
 .rte-editor .rte-code-block {
-  background-color: rgba(0, 0, 0, 0.05);
-  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+  background-color: #f3f3f3;
+  font-family: "Inconsolata", "Menlo", "Consolas", monospace;
   font-size: 16px;
   /* This should collapse with the margin around the parent <pre>. */
   margin: 14px 0;
   padding: 20px;
+}
+
+/* Hacky: Remove padding from inline <code> within code block. */
+.rte-editor .rte-code-block span[style] {
+  padding: 0 !important;
 }
 
 .rte-editor .rte-blockquote {
