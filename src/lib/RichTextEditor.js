@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {CompositeDecorator, Editor, EditorState, RichUtils} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
+import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import EditorToolbar from './EditorToolbar';
 import EditorValue from './EditorValue';
 import LinkDecorator from './LinkDecorator';
@@ -84,7 +85,7 @@ export default class RichTextEditor extends Component<Props> {
   }
 
   _handleReturn(event: Object): boolean {
-    if (event.shiftKey) {
+    if (isSoftNewlineEvent(event)) {
       let editorState = this.props.value.getEditorState();
       this._onChange(RichUtils.insertSoftNewline(editorState));
       return true;
