@@ -1,10 +1,10 @@
-@import "/assets/css/draft.css";
-@import "/assets/css/ui-button.css";
-@import "/assets/css/ui-button-group.css";
-@import "/assets/css/ui-icon-button.css";
-@import "/assets/css/ui-dropdown.css";
-@import "/assets/css/ui-input-popover.css";
-@import "/assets/css/rte-toolbar.css";
+@import "draft.css";
+@import "ui-button.css";
+@import "ui-button-group.css";
+@import "ui-icon-button.css";
+@import "ui-dropdown.css";
+@import "ui-input-popover.css";
+@import "rte-toolbar.css";
 
 .rte-root {
   background: #fff;
