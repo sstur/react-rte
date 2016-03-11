@@ -2,12 +2,18 @@
 import React, {Component} from 'react';
 import {CompositeDecorator, Editor, EditorState, RichUtils} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
+import changeBlockDepth from './changeBlockDepth';
+import changeBlockType from './changeBlockType';
+import isListItem from './isListItem';
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import EditorToolbar from './EditorToolbar';
 import EditorValue from './EditorValue';
 import LinkDecorator from './LinkDecorator';
 import cx from 'classnames';
 import {EventEmitter} from 'events';
+import {BLOCK_TYPE} from './Constants';
+
+import type {ContentBlock} from 'draft-js';
 
 // Custom overrides for "code" style.
 const styleMap = {
@@ -85,13 +91,27 @@ export default class RichTextEditor extends Component<Props> {
   }
 
   _handleReturn(event: Object): boolean {
+    let editorState = this.props.value.getEditorState();
     if (isSoftNewlineEvent(event)) {
-      let editorState = this.props.value.getEditorState();
       this._onChange(RichUtils.insertSoftNewline(editorState));
       return true;
-    } else {
-      return false;
     }
+    let selection = editorState.getSelection();
+    if (selection.isCollapsed()) {
+      // If the cursor is in an empty list item, handle as special case.
+      let contentState = editorState.getCurrentContent();
+      let blockKey = selection.getStartKey();
+      let block = contentState.getBlockForKey(blockKey);
+      if (isListItem(block) && block.getLength() === 0) {
+        let depth = block.getDepth();
+        let newState = (depth === 0) ?
+          changeBlockType(editorState, blockKey, BLOCK_TYPE.UNSTYLED) :
+          changeBlockDepth(editorState, blockKey, depth - 1);
+        this._onChange(newState);
+        return true;
+      }
+    }
+    return false;
   }
 
   _customKeyHandler(event: Object): ?string {
@@ -126,7 +146,7 @@ export default class RichTextEditor extends Component<Props> {
   }
 }
 
-function getBlockStyle(block) {
+function getBlockStyle(block: ContentBlock): string {
   let result = 'rte-block';
   switch (block.getType()) {
     case 'unstyled':
