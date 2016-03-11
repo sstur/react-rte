@@ -49,7 +49,7 @@ Clone this project. Run `npm install`. Run `npm run build-demo` then point the s
 
 ## License
 
-React-RTE is [BSD Licensed](/LICENSE).
+This software is [BSD Licensed](/LICENSE).
 
 
 [ckeditor]: http://ckeditor.com/
