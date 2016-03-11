@@ -103,7 +103,7 @@ class BlockGenerator {
     // example [body, ul, li] where we must know li's parent type (ul or ol).
     this.blockStack = [];
     // This is a linear list of blocks that will form the output; for example
-    // [body, p, li, li, blockquote].
+    // [p, li, li, blockquote].
     this.blockList = [];
     this.depth = 0;
   }
