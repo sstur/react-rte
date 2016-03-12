@@ -8,3 +8,5 @@
 
 [options]
 esproposal.class_static_fields=enable
+suppress_type=$FlowIssue
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue

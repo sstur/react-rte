@@ -12,9 +12,13 @@ import {List, OrderedMap, OrderedSet, Repeat, Seq} from 'immutable';
 import {BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE} from './Constants';
 import {NODE_TYPE_ELEMENT, NODE_TYPE_TEXT} from './SyntheticDOM';
 
-import type {Node as SyntheticNode} from './SyntheticDOM';
+import type {
+  Node as SyntheticNode,
+  ElementNode as SyntheticElement,
+} from './SyntheticDOM';
 
 type DOMNode = SyntheticNode | Node;
+type DOMElement = SyntheticElement | Element;
 
 type CharacterMetaSeq = Seq<CharacterMetadata>;
 type StyleSet = OrderedSet;
@@ -108,7 +112,7 @@ class BlockGenerator {
     this.depth = 0;
   }
 
-  process(element: DOMNode): Array<ContentBlock> {
+  process(element: DOMElement): Array<ContentBlock> {
     this.processBlockElement(element);
     let contentBlocks = [];
     this.blockList.forEach((block) => {
@@ -166,7 +170,7 @@ class BlockGenerator {
     }
   }
 
-  processBlockElement(element: DOMNode) {
+  processBlockElement(element: DOMElement) {
     let tagName = element.nodeName.toLowerCase();
     let type = this.getBlockTypeFromTagName(tagName);
     let hasDepth = canHaveDepth(type);
@@ -195,7 +199,7 @@ class BlockGenerator {
     }
   }
 
-  processInlineElement(element: DOMNode) {
+  processInlineElement(element: DOMElement) {
     let tagName = element.nodeName.toLowerCase();
     if (tagName === 'br') {
       return this.processText('\r');
@@ -245,11 +249,13 @@ class BlockGenerator {
 
   processNode(node: DOMNode) {
     if (node.nodeType === NODE_TYPE_ELEMENT) {
-      let tagName = node.nodeName.toLowerCase();
+      // $FlowIssue - Flow does not correctly refine type here.
+      let element: DOMElement = node;
+      let tagName = element.nodeName.toLowerCase();
       if (INLINE_ELEMENTS.hasOwnProperty(tagName)) {
-        this.processInlineElement(node);
+        this.processInlineElement(element);
       } else {
-        this.processBlockElement(node);
+        this.processBlockElement(element);
       }
     } else if (node.nodeType === NODE_TYPE_TEXT) {
       this.processTextNode(node);
@@ -367,7 +373,7 @@ function createEmptySelectionState(key: string): SelectionState {
 }
 
 export default function stateFromElement(
-  element: DOMNode,
+  element: DOMElement,
 ): ContentState {
   let blocks = new BlockGenerator().process(element);
   let selectionState = createEmptySelectionState(blocks[0].getKey());
