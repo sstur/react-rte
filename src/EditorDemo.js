@@ -1,7 +1,7 @@
 /* @flow */
 import React, {Component} from 'react';
-import RichTextEditor from './lib/RichTextEditor';
-import type {EditorValue} from './lib/RichTextEditor';
+import RichTextEditor from './RichTextEditor';
+import type {EditorValue} from './RichTextEditor';
 
 type Props = {};
 type State = {

@@ -2,7 +2,7 @@
   "name": "react-rte",
   "version": "0.1.7",
   "description": "React Rich Text Editor",
-  "main": "lib/lib/RichTextEditor.js",
+  "main": "lib/RichTextEditor.js",
   "dependencies": {
     "classnames": "^2.2.3",
     "draft-js": "^0.2.2",
