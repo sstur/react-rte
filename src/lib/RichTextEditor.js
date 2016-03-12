@@ -11,7 +11,7 @@ import EditorValue from './EditorValue';
 import LinkDecorator from './LinkDecorator';
 import cx from 'classnames';
 import {EventEmitter} from 'events';
-import {BLOCK_TYPE} from './Constants';
+import {BLOCK_TYPE} from 'draft-js-tools';
 
 import type {ContentBlock} from 'draft-js';
 

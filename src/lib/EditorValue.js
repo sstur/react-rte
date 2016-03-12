@@ -1,9 +1,9 @@
 /* @flow */
 import {ContentState, EditorState} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
-import stateFromHTML from './stateFromHTML';
-import stateToMarkdown from './stateToMarkdown';
-import stateFromMarkdown from './stateFromMarkdown';
+import {stateFromHTML} from 'draft-js-import-html';
+import {stateToMarkdown} from 'draft-js-export-markdown';
+import {stateFromMarkdown} from 'draft-js-import-markdown';
 
 import type {DraftDecoratorType as Decorator} from 'draft-js/lib/DraftDecoratorType';
 

@@ -1,6 +1,6 @@
 /* @flow */
 
-import {BLOCK_TYPE} from './Constants';
+import {BLOCK_TYPE} from 'draft-js-tools';
 
 import type {ContentBlock} from 'draft-js';
 

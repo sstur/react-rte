@@ -4,12 +4,12 @@ import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {EditorState, Entity, RichUtils} from 'draft-js';
+import {ENTITY_TYPE} from 'draft-js-tools';
 import {
-  ENTITY_TYPE,
   INLINE_STYLE_BUTTONS,
   BLOCK_TYPE_DROPDOWN,
   BLOCK_TYPE_BUTTONS,
-} from './Constants';
+} from './EditorToolbarConfig';
 import StyleButton from './StyleButton';
 import PopoverIconButton from '../ui/PopoverIconButton';
 import ButtonGroup from '../ui/ButtonGroup';
