@@ -66,6 +66,7 @@ export default class InputPopover extends Component<Props> {
 
   _onSubmit(event: Object) {
     event.preventDefault();
+    event.stopPropagation();
     this.props.onSubmit(this._inputRef.value);
   }
 
