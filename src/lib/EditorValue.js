@@ -1,6 +1,6 @@
 /* @flow */
 import {ContentState, EditorState} from 'draft-js';
-import stateToHTML from './stateToHTML';
+import {stateToHTML} from 'draft-js-export-html';
 import stateFromHTML from './stateFromHTML';
 import stateToMarkdown from './stateToMarkdown';
 import stateFromMarkdown from './stateFromMarkdown';
