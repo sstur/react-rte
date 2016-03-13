@@ -1,4 +1,4 @@
 _*
 !__tests__
-lib
-node_modules
+/lib
+/node_modules
