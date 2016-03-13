@@ -4,6 +4,7 @@ import {CompositeDecorator, Editor, EditorState, RichUtils} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
+import insertBlockAfter from './lib/insertBlockAfter';
 import isListItem from './lib/isListItem';
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import EditorToolbar from './lib/EditorToolbar';
@@ -91,14 +92,39 @@ export default class RichTextEditor extends Component<Props> {
   }
 
   _handleReturn(event: Object): boolean {
-    let editorState = this.props.value.getEditorState();
-    if (isSoftNewlineEvent(event)) {
-      this._onChange(RichUtils.insertSoftNewline(editorState));
+    if (this._handleReturnSoftNewline(event)) {
       return true;
     }
+    if (this._handleReturnEmptyListItem()) {
+      return true;
+    }
+    if (this._handleReturnSpecialBlock()) {
+      return true;
+    }
+    return false;
+  }
+
+  // `shift + return` should insert a soft newline.
+  _handleReturnSoftNewline(event: Object): boolean {
+    let editorState = this.props.value.getEditorState();
+    if (isSoftNewlineEvent(event)) {
+      let selection = editorState.getSelection();
+      if (selection.isCollapsed()) {
+        this._onChange(RichUtils.insertSoftNewline(editorState));
+        return true;
+      } else {
+        console.log('TODO: Delete selection and insert soft newline.');
+      }
+    }
+    return false;
+  }
+
+  // If the cursor is in an empty list item when return is pressed, then the
+  // block type should change to normal (end the list).
+  _handleReturnEmptyListItem(): boolean {
+    let editorState = this.props.value.getEditorState();
     let selection = editorState.getSelection();
     if (selection.isCollapsed()) {
-      // If the cursor is in an empty list item, handle as special case.
       let contentState = editorState.getCurrentContent();
       let blockKey = selection.getStartKey();
       let block = contentState.getBlockForKey(blockKey);
@@ -109,6 +135,31 @@ export default class RichTextEditor extends Component<Props> {
           changeBlockDepth(editorState, blockKey, depth - 1);
         this._onChange(newState);
         return true;
+      }
+    }
+    return false;
+  }
+
+  // If the cursor is at the end of a special block (any block type other than
+  // normal or list item) when return is pressed, new block should be normal.
+  _handleReturnSpecialBlock(): boolean {
+    let editorState = this.props.value.getEditorState();
+    let selection = editorState.getSelection();
+    if (selection.isCollapsed()) {
+      let contentState = editorState.getCurrentContent();
+      let blockKey = selection.getStartKey();
+      let block = contentState.getBlockForKey(blockKey);
+      if (!isListItem(block) && block.getType() !== BLOCK_TYPE.UNSTYLED) {
+        // If cursor is at end.
+        if (block.getLength() === selection.getStartOffset()) {
+          let newEditorState = insertBlockAfter(
+            editorState,
+            blockKey,
+            BLOCK_TYPE.UNSTYLED
+          );
+          this._onChange(newEditorState);
+          return true;
+        }
       }
     }
     return false;
