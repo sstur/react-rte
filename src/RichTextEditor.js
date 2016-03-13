@@ -1,6 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
-import {CompositeDecorator, Editor, EditorState, RichUtils} from 'draft-js';
+import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
@@ -111,10 +111,23 @@ export default class RichTextEditor extends Component<Props> {
       let selection = editorState.getSelection();
       if (selection.isCollapsed()) {
         this._onChange(RichUtils.insertSoftNewline(editorState));
-        return true;
       } else {
-        console.log('TODO: Delete selection and insert soft newline.');
+        let content = editorState.getCurrentContent();
+        let newContent = Modifier.removeRange(content, selection, 'forward');
+        let newSelection = newContent.getSelectionAfter();
+        let block = newContent.getBlockForKey(newSelection.getStartKey());
+        newContent = Modifier.insertText(
+          newContent,
+          newSelection,
+          '\n',
+          block.getInlineStyleAt(newSelection.getStartOffset()),
+          null,
+        );
+        this._onChange(
+          EditorState.push(editorState, newContent, 'insert-fragment')
+        );
       }
+      return true;
     }
     return false;
   }
