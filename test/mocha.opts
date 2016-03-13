@@ -1,2 +1,2 @@
---compilers js:babel-register
+--compilers js:babel-core/register
 src/__tests__/*.js src/**/__tests__/*.js
