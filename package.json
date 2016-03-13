@@ -1,6 +1,6 @@
 {
   "name": "react-rte",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "React Rich Text Editor",
   "main": "lib/RichTextEditor.js",
   "scripts": {
