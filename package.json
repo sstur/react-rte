@@ -3,6 +3,14 @@
   "version": "0.1.8",
   "description": "React Rich Text Editor",
   "main": "lib/RichTextEditor.js",
+  "scripts": {
+    "build-demo": "webpack",
+    "build-lib": "babel src --ignore '_*' --out-dir lib",
+    "lint": "eslint --max-warnings 0 .",
+    "prepublish": "npm run build-lib",
+    "test": "npm run lint && npm run test-src",
+    "test-src": "mocha src/__tests__/*.js src/**/__tests__/*.js"
+  },
   "dependencies": {
     "classnames": "^2.2.3",
     "draft-js": "^0.2.2",
@@ -32,15 +40,8 @@
     "eslint-plugin-react": "^4.1.0",
     "expect": "^1.14.0",
     "mocha": "^2.4.5",
+    "react-addons-test-utils": "^0.14.7",
     "webpack": "^1.12.14"
-  },
-  "scripts": {
-    "build-demo": "webpack",
-    "build-lib": "babel src --ignore '_*' --out-dir lib",
-    "lint": "eslint --max-warnings 0 .",
-    "prepublish": "npm run build-lib",
-    "test": "npm run lint && npm run test-src",
-    "test-src": "mocha src/__tests__ src/**/__tests__"
   },
   "repository": {
     "type": "git",
