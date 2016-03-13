@@ -9,7 +9,7 @@
     "lint": "eslint --max-warnings 0 .",
     "prepublish": "npm run build-lib",
     "test": "npm run lint && npm run test-src",
-    "test-src": "mocha src/__tests__/*.js src/**/__tests__/*.js"
+    "test-src": "mocha"
   },
   "dependencies": {
     "classnames": "^2.2.3",
