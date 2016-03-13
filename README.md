@@ -10,7 +10,7 @@ This is a UI component built completely in React that is meant to be a full-feat
 
 Try the editor here: [react-rte.org/demo][react-rte-demo]
 
-![Screenshot 1](https://dl.dropboxusercontent.com/u/341900/images/2016-03-08-073550.png)
+[![Screenshot 1](https://dl.dropboxusercontent.com/u/341900/images/2016-03-08-073550.png)][react-rte-demo]
 
 ## Details
 
