@@ -1,5 +1,5 @@
 _*
-lib
-node_modules
-src
-webpack.config.js
+/lib
+/node_modules
+/src
+/webpack.config.js

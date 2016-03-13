@@ -1,9 +1,6 @@
 /* @flow */
 
 import {EditorState} from 'draft-js';
-import {BLOCK_TYPE} from 'draft-js-tools';
-
-import type {ContentBlock} from 'draft-js';
 
 export default function changeBlockDepth(
   editorState: EditorState,
