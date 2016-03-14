@@ -11,6 +11,7 @@ import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
 import cx from 'classnames';
+import autobind from 'class-autobind';
 import {EventEmitter} from 'events';
 import {BLOCK_TYPE} from 'draft-js-tools';
 
@@ -39,11 +40,7 @@ export default class RichTextEditor extends Component<Props> {
   constructor() {
     super(...arguments);
     this._keyEmitter = new EventEmitter();
-    this._focus = this._focus.bind(this);
-    this._handleReturn = this._handleReturn.bind(this);
-    this._customKeyHandler = this._customKeyHandler.bind(this);
-    this._handleKeyCommand = this._handleKeyCommand.bind(this);
-    this._onChange = this._onChange.bind(this);
+    autobind(this);
   }
 
   render(): React.Element {

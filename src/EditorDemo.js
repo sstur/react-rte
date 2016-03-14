@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import RichTextEditor from './RichTextEditor';
 import type {EditorValue} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
+import autobind from 'class-autobind';
 
 type Props = {};
 type State = {
@@ -16,15 +17,11 @@ export default class EditorDemo extends Component<Props, State> {
 
   constructor() {
     super(...arguments);
+    autobind(this);
     this.state = {
       value: RichTextEditor.createEmptyValue(),
       format: 'html',
     };
-    this._logState = this._logState.bind(this);
-    this._logStateRaw = this._logStateRaw.bind(this);
-    this._onChange = this._onChange.bind(this);
-    this._onChangeSource = this._onChangeSource.bind(this);
-    this._onChangeFormat = this._onChangeFormat.bind(this);
   }
 
   render(): React.Element {

@@ -17,6 +17,7 @@ import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
 import getEntityAtCursor from './getEntityAtCursor';
 import clearEntityForRange from './clearEntityForRange';
+import autobind from 'class-autobind';
 
 import type {EventEmitter} from 'events';
 
@@ -34,18 +35,10 @@ export default class EditorToolbar extends Component<Props> {
 
   constructor() {
     super(...arguments);
+    autobind(this);
     this.state = {
       showLinkInput: false,
     };
-    this._onKeypress = this._onKeypress.bind(this);
-    this._redo = this._redo.bind(this);
-    this._removeLink = this._removeLink.bind(this);
-    this._selectBlockType = this._selectBlockType.bind(this);
-    this._setLink = this._setLink.bind(this);
-    this._toggleBlockType = this._toggleBlockType.bind(this);
-    this._toggleInlineStyle = this._toggleInlineStyle.bind(this);
-    this._toggleShowLinkInput = this._toggleShowLinkInput.bind(this);
-    this._undo = this._undo.bind(this);
   }
 
   componentWillMount() {

@@ -1,6 +1,7 @@
 /* @flow */
 import React, {Component} from 'react';
 import IconButton from '../ui/IconButton';
+import autobind from 'class-autobind';
 
 type Props = {
   style: string;
@@ -12,7 +13,7 @@ export default class StyleButton extends Component<Props> {
 
   constructor() {
     super(...arguments);
-    this._onClick = this._onClick.bind(this);
+    autobind(this);
   }
 
   render(): React.Element {

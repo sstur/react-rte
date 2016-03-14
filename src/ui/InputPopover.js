@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import IconButton from './IconButton';
 import ButtonGroup from './ButtonGroup';
+import autobind from 'class-autobind';
 
 type Props = {
   onCancel: () => any;
@@ -14,10 +15,7 @@ export default class InputPopover extends Component<Props> {
 
   constructor() {
     super(...arguments);
-    this._onDocumentClick = this._onDocumentClick.bind(this);
-    this._onDocumentKeydown = this._onDocumentKeydown.bind(this);
-    this._onSubmit = this._onSubmit.bind(this);
-    this._setInputRef = this._setInputRef.bind(this);
+    autobind(this);
   }
 
   componentDidMount() {

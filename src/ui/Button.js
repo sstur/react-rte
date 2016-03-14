@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import cx from 'classnames';
+import autobind from 'class-autobind';
 
 type EventHandler = (event: Event) => any;
 
@@ -19,7 +20,7 @@ export default class Button extends Component<Props> {
 
   constructor() {
     super(...arguments);
-    this._onMouseDownPreventDefault = this._onMouseDownPreventDefault.bind(this);
+    autobind(this);
   }
 
   render(): React.Element {
