@@ -17,6 +17,8 @@ import {BLOCK_TYPE} from 'draft-js-tools';
 
 import type {ContentBlock} from 'draft-js';
 
+const MAX_LIST_DEPTH = 2;
+
 // Custom overrides for "code" style.
 const styleMap = {
   CODE: {
@@ -67,6 +69,7 @@ export default class RichTextEditor extends Component<Props> {
             handleReturn={this._handleReturn}
             keyBindingFn={this._customKeyHandler}
             handleKeyCommand={this._handleKeyCommand}
+            onTab={this._onTab}
             onChange={this._onChange}
             placeholder="Tell a story..."
             ref="editor"
@@ -173,6 +176,14 @@ export default class RichTextEditor extends Component<Props> {
       }
     }
     return false;
+  }
+
+  _onTab(event: Object): ?string {
+    let editorState = this.props.value.getEditorState();
+    let newEditorState = RichUtils.onTab(event, editorState, MAX_LIST_DEPTH);
+    if (newEditorState !== editorState) {
+      this._onChange(newEditorState);
+    }
   }
 
   _customKeyHandler(event: Object): ?string {
