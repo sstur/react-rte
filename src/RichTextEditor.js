@@ -16,6 +16,8 @@ import {EventEmitter} from 'events';
 import {BLOCK_TYPE} from 'draft-js-tools';
 
 // $FlowIssue - Flow doesn't understand CSS Modules
+import './Draft.global.css';
+// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './RichTextEditor.css';
 
 import type {ContentBlock} from 'draft-js';

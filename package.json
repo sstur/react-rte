@@ -44,6 +44,7 @@
     "expect": "^1.14.0",
     "flow-bin": "0.20.1",
     "mocha": "^2.4.5",
+    "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^0.14.7",
     "rimraf": "^2.5.2",
     "style-loader": "^0.13.0",

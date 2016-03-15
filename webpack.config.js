@@ -12,17 +12,16 @@ module.exports = {
   },
   module: {
     loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel',
-      },
+      {test: /\.js$/, loader: 'babel'},
       {
         test: /\.css$/,
+        exclude: /\.global\.css$/,
         loaders: [
           'style?sourceMap',
           'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
         ],
       },
+      {test: /\.global\.css$/, loader: 'style!raw'},
     ],
   },
 };
