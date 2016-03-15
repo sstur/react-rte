@@ -1,5 +1,5 @@
 _*
 !__tests__
-/assets/dist
+/dist
 /lib
 /node_modules
