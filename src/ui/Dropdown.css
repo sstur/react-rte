@@ -1,4 +1,4 @@
-.ui-dropdown {
+.root {
   display: inline-block;
   position: relative;
   line-height: 22px;
@@ -8,7 +8,7 @@
   -ms-user-select: none;
 }
 
-.ui-dropdown select {
+.root select {
   position: relative;
   z-index: 2;
   display: inline-block;
@@ -28,7 +28,7 @@
   cursor: pointer;
 }
 
-.ui-dropdown .value {
+.root .value {
   display: block;
   position: absolute;
   z-index: 1;
@@ -46,8 +46,8 @@
   text-overflow: ellipsis;
 }
 
-.ui-dropdown .value::before,
-.ui-dropdown .value::after {
+.root .value::before,
+.root .value::after {
   display: block;
   content: "";
   position: absolute;
@@ -58,31 +58,31 @@
   border: 4px solid transparent;
 }
 
-.ui-dropdown .value::before {
+.root .value::before {
   margin-top: -10px;
   border-bottom-color: #555;
 }
 
-.ui-dropdown .value::after {
+.root .value::after {
   margin-top: 1px;
   border-top-color: #555;
 }
 
-.ui-dropdown select:focus + .value {
+.root select:focus + .value {
   border-color: #66afe9;
 }
 
 /* On Webkit we can style <select> to be transparant without turning off the
    default focus styles. This is better for accessibility. */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-  .ui-dropdown select {
+  .root select {
     opacity: 1;
     color: transparent;
     -webkit-appearance: none;
     border-left-width: 12px;
     border-right-width: 35px;
   }
-  .ui-dropdown select:focus + .value {
+  .root select:focus + .value {
     border-color: #999;
   }
 }

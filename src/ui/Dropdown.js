@@ -2,6 +2,9 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
 
+// $FlowIssue - Flow doesn't understand CSS Modules
+import styles from './Dropdown.css';
+
 type Props = {
   choices: Map<string, string>;
   selectedKey: ?string;
@@ -19,14 +22,14 @@ export default class Dropdown extends Component<Props> {
 
   render(): React.Element {
     let {choices, selectedKey, className, ...otherProps} = this.props;
-    className = cx(className, 'ui-button');
+    className = cx(className, styles.root);
     let selectedValue = (selectedKey == null) ? '' : choices.get(selectedKey);
     return (
-      <span className="ui-dropdown" title={selectedValue}>
+      <span className={className} title={selectedValue}>
         <select {...otherProps} value={selectedKey} onChange={this._onChange}>
           {this._renderChoices()}
         </select>
-        <span className="value">{selectedValue}</span>
+        <span className={styles.value}>{selectedValue}</span>
       </span>
     );
   }
