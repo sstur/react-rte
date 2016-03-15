@@ -15,6 +15,9 @@ import autobind from 'class-autobind';
 import {EventEmitter} from 'events';
 import {BLOCK_TYPE} from 'draft-js-tools';
 
+// $FlowIssue - Flow doesn't understand CSS Modules
+import styles from './RichTextEditor.css';
+
 import type {ContentBlock} from 'draft-js';
 
 const MAX_LIST_DEPTH = 2;
@@ -32,6 +35,7 @@ const styleMap = {
 type ChangeHandler = (value: EditorValue) => any;
 
 type Props = {
+  className: ?string;
   value: EditorValue;
   onChange: ChangeHandler;
 };
@@ -46,22 +50,25 @@ export default class RichTextEditor extends Component<Props> {
   }
 
   render(): React.Element {
-    let editorState = this.props.value.getEditorState();
-    // If the user changes block type before entering any text, we can
-    // either style the placeholder or hide it. Let's just hide it now.
-    let className = cx({
-      'rte-editor': true,
-      'rte-hide-placeholder': this._shouldHidePlaceholder(),
+    let {props} = this;
+    let editorState = props.value.getEditorState();
+    let className = cx(props.className, styles.root);
+
+    // If the user changes block type before entering any text, we can either
+    // style the placeholder or hide it. Let's just hide it for now.
+    let editorClassName = cx({
+      [styles.editor]: true,
+      [styles.hidePlaceholder]: this._shouldHidePlaceholder(),
     });
     return (
-      <div className="rte-root">
+      <div className={className}>
         <EditorToolbar
           keyEmitter={this._keyEmitter}
           editorState={editorState}
           onChange={this._onChange}
           focusEditor={this._focus}
         />
-        <div className={className}>
+        <div className={editorClassName}>
           <Editor
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
@@ -219,14 +226,14 @@ export default class RichTextEditor extends Component<Props> {
 }
 
 function getBlockStyle(block: ContentBlock): string {
-  let result = 'rte-block';
+  let result = styles.block;
   switch (block.getType()) {
     case 'unstyled':
-      return result + ' rte-paragraph';
+      return cx(result, styles.paragraph);
     case 'blockquote':
-      return result + ' rte-blockquote';
+      return cx(result, styles.blockquote);
     case 'code-block':
-      return result + ' rte-code-block';
+      return cx(result, styles.codeBlock);
     default:
       return result;
   }
