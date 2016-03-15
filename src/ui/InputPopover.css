@@ -1,4 +1,4 @@
-.ui-input-popover {
+.root {
   position: absolute;
   top: calc(100% + 5px);
   left: 0;
@@ -11,7 +11,7 @@
   padding: 4px;
 }
 
-.ui-input-popover:before {
+.root:before {
   content: "";
   display: block;
   position: absolute;
@@ -23,7 +23,7 @@
   border-bottom-color: #999;
 }
 
-.ui-input-popover:after {
+.root:after {
   content: "";
   display: block;
   position: absolute;
@@ -35,11 +35,11 @@
   border-bottom-color: #fdfdfd;
 }
 
-.ui-input-popover-inner {
+.inner {
   display: flex;
 }
 
-.ui-input-popover-input {
+.input {
   display: block;
   flex: 1 0 auto;
   height: 30px;
@@ -53,7 +53,7 @@
   line-height: 24px;
 }
 
-.ui-input-popover-inner .ui-input-popover-button-group {
+.inner .buttonGroup {
   flex: 0 1 auto;
   margin-left: 4px;
   margin-bottom: 0;

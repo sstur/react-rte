@@ -4,8 +4,13 @@ import ReactDOM from 'react-dom';
 import IconButton from './IconButton';
 import ButtonGroup from './ButtonGroup';
 import autobind from 'class-autobind';
+import cx from 'classnames';
+
+// $FlowIssue - Flow doesn't understand CSS Modules
+import styles from './InputPopover.css';
 
 type Props = {
+  className: ?string;
   onCancel: () => any;
   onSubmit: (value: string) => any;
 };
@@ -30,24 +35,24 @@ export default class InputPopover extends Component<Props> {
   }
 
   render(): React.Element {
+    let {props} = this;
+    let className = cx(props.className, styles.root);
     return (
-      <form className="ui-input-popover" onSubmit={this._onSubmit}>
-        <div className="ui-input-popover-inner">
+      <form className={className} onSubmit={this._onSubmit}>
+        <div className={styles.inner}>
           <input
             ref={this._setInputRef}
             type="text"
             placeholder="https://example.com/"
-            className="ui-input-popover-input"
+            className={styles.input}
           />
-          <ButtonGroup className="ui-input-popover-button-group">
+          <ButtonGroup className={styles.buttonGroup}>
             <IconButton
-              className="ui-input-popover-button"
               label="Cancel"
               iconName="cancel"
-              onClick={this.props.onCancel}
+              onClick={props.onCancel}
             />
             <IconButton
-              className="ui-input-popover-button"
               label="Submit"
               iconName="accept"
               formSubmit={true}
