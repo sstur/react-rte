@@ -1,34 +1,36 @@
-.ui-button-group {
+.root {
   display: inline-block;
   vertical-align: top;
   margin: 0 5px 5px 0;
   white-space: nowrap;
 }
 
-.ui-button-group:last-child {
+.root:last-child {
   margin-right: 0;
 }
 
-.ui-button-group > .ui-button-wrap > .ui-button {
+/* TODO: remove all this child selector and tag selector stuff. */
+
+.root > div > button {
   margin-right: 0;
   border-radius: 0;
 }
 
-.ui-button-group > .ui-button-wrap > .ui-button:focus {
+.root > div > button:focus {
   position: relative;
   z-index: 1;
 }
 
-.ui-button-group > .ui-button-wrap:first-child > .ui-button {
+.root > div:first-child > button {
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 }
 
-.ui-button-group > .ui-button-wrap + .ui-button-wrap > .ui-button {
+.root > div + div > button {
   border-left-width: 0;
 }
 
-.ui-button-group > .ui-button-wrap:last-child > .ui-button {
+.root > div:last-child > button {
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }

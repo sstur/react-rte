@@ -1,0 +1,6 @@
+.root {
+  display: inline-block;
+  position: relative;
+  /* This ensures the popover will show on top of the editor. */
+  z-index: 10;
+}

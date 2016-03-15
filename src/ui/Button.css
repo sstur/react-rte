@@ -1,11 +1,4 @@
-.ui-button-wrap {
-  display: inline-block;
-  position: relative;
-  /* This ensures the popover will show on top of the editor. */
-  z-index: 10;
-}
-
-.ui-button {
+.root {
   display: inline-block;
   margin: 0 5px 0 0;
   padding: 3px 8px;
@@ -24,11 +17,11 @@
   white-space: nowrap;
 }
 
-.ui-button:disabled {
+.root:disabled {
   cursor: not-allowed;
   background: none transparent;
 }
 
-.ui-button:disabled > * {
+.root:disabled > * {
   opacity: .5;
 }

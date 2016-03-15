@@ -19,6 +19,9 @@ import getEntityAtCursor from './getEntityAtCursor';
 import clearEntityForRange from './clearEntityForRange';
 import autobind from 'class-autobind';
 
+// $FlowIssue - Flow doesn't understand CSS Modules
+import styles from './EditorToolbar.css';
+
 import type {EventEmitter} from 'events';
 
 type ChangeHandler = (state: EditorState) => any;
@@ -53,7 +56,7 @@ export default class EditorToolbar extends Component<Props> {
 
   render(): React.Element {
     return (
-      <div className="rte-toolbar">
+      <div className={styles.root}>
         {this._renderInlineStyleButtons()}
         {this._renderBlockTypeButtons()}
         {this._renderLinkButtons()}

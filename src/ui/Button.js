@@ -4,6 +4,9 @@ import React, {Component} from 'react';
 import cx from 'classnames';
 import autobind from 'class-autobind';
 
+// $FlowIssue - Flow doesn't understand CSS Modules
+import styles from './Button.css';
+
 type EventHandler = (event: Event) => any;
 
 type Props = {
@@ -26,7 +29,7 @@ export default class Button extends Component<Props> {
   render(): React.Element {
     let {props} = this;
     let {className, isDisabled, ...otherProps} = props;
-    className = cx(className, 'ui-button');
+    className = cx(className, styles.root);
     let onMouseDown = (props.focusOnClick === false) ? this._onMouseDownPreventDefault : props.onMouseDown;
     let type = props.formSubmit ? 'submit' : 'button';
     return (
