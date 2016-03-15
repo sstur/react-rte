@@ -12,6 +12,7 @@ describe('RichTextEditor', () => {
     renderer.render(<RichTextEditor value={value} />);
     let output = renderer.getRenderOutput();
     expect(output.type).toEqual('div');
-    expect(output.props.className).toEqual('rte-root');
+    expect(output.props.className).toBeA('string');
+    expect(output.props.className).toInclude('RichTextEditor__root');
   });
 });
