@@ -33,13 +33,12 @@ Basically, this is a 2016 approach to rich-text editing built on modern, battle-
 
 ## TODO
 
- - Allow toolbar customization using props
- - Better test coverage
  - Support images
- - Fix some issues with Markdown parsing (possibly move to `remark` parser)
- - Use CSS Modules
- - Internationalization support
+ - Better test coverage
+ - Allow toolbar customization using props
  - Documentation for using this editor in your projects
+ - Fix some issues with Markdown parsing (migrate to `remark` parser)
+ - Internationalization
  - Better icons and overall design
 
 ## Contribute
