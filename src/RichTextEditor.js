@@ -55,7 +55,8 @@ export default class RichTextEditor extends Component<Props> {
     let {props} = this;
     let editorState = props.value.getEditorState();
     let className = cx(props.className, styles.root);
-
+    let placeholder = props.placeholder ? props.placeholder : 'Tell a Story';
+    
     // If the user changes block type before entering any text, we can either
     // style the placeholder or hide it. Let's just hide it for now.
     let editorClassName = cx({
@@ -80,7 +81,7 @@ export default class RichTextEditor extends Component<Props> {
             handleKeyCommand={this._handleKeyCommand}
             onTab={this._onTab}
             onChange={this._onChange}
-            placeholder="Tell a story..."
+            placeholder={placeholder}
             ref="editor"
             spellCheck={true}
           />
