@@ -4,8 +4,6 @@
 
 This is a UI component built completely in React that is meant to be a full-featured textarea replacement similar to [CKEditor][ckeditor], [TinyMCE][tinymce] and other [rich text "WYSIWYG" editors][rte]. It's based on the excellent, open source [Draft.js][draft-js] from Facebook which is performant and production-tested.
 
-**Note: this is in early stage development. Do not use yet.**
-
 ## Demo
 
 Try the editor here: [react-rte.org/demo][react-rte-demo]
@@ -17,9 +15,9 @@ Try the editor here: [react-rte.org/demo][react-rte-demo]
 
     $ npm install --save react-rte
 
-`RichTextEditor` is the main editor component. It is comprised of the draft-js `<Editor>`, some handy UI components (e.g. toolbar) and some helpful abstractions around getting and setting content with HTML/Markdown.
+`RichTextEditor` is the main editor component. It is comprised of the Draft.js `<Editor>`, some UI components (e.g. toolbar) and some helpful abstractions around getting and setting content with HTML/Markdown.
 
-This component is designed to be used like a textarea except that instead of `value` being a string, it is an object with `toString` on it. Creating a `value` from a string is also easy using
+`RichTextEditor` is designed to be used like a `textarea` except that instead of `value` being a string, it is an object with `toString` on it. Creating a `value` from a string is also easy using `createValueFromString(markup, 'html')`.
 
 ### Example Usage:
 
@@ -63,9 +61,9 @@ class MyStatefulEditor extends Component {
 
 ## Motivation
 
-In short, this is a 2016 approach to rich-text editing built on modern, battle-hardened components and, importantly, we do NOT store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
+In short, this is a 2016 approach to rich text editing built on modern, battle-hardened components and, importantly, we do not store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
 
-This editor is built on [Draft.js][draft-js] from Facebook. Draft is more of a low-level framework (`contentEditable` abstraction), however this component is intended to be a fully polished UI component that you can reach for when you need to replace a `<textarea/>` in your application to support bold, italic, links, lists, etc.
+This editor is built on [Draft.js][draft-js] from Facebook. Draft.js is more of a low-level framework (`contentEditable` abstraction), however this component is intended to be a fully polished UI component that you can reach for when you need to replace a `<textarea/>` in your application to support bold, italic, links, lists, etc.
 
 The data model in Draft.js allows us to represent the document in a way that is mostly agnostic to the view/render layer or the textual representation (html/markdown) you choose. This data model encapsulates the content/state of the editor and is based on [Immutable.js][immutablejs] to be both performant and easy to reason about.
 
@@ -82,9 +80,9 @@ The data model in Draft.js allows us to represent the document in a way that is 
 
 Unlike typical rich text editors (such as [CKEditor][ckeditor] and [TinyMCE][tinymce]) we keep our content state in a well-architected data model instead of in the view. One important advantage of separating our data model from our view is deterministic output.
 
-Say, for instance, you select some text and add bold style. Then you add italic style. Or what if you add italic first and then add bold. The result should be the same either way: text that has both bold and italic style. But in the browser's view (Document Object Model) is this represented with a `<strong>` inside of an `<em>` or vice versa. Does it depend on the order in which you added the styles? In many web-based editors it DOES depend on the order of your actions. That means your output, when serialized to HTML is non-deterministic. To documents that look exactly the same will have different, sometimes unpredictable, HTML representations.
+Say, for instance, you select some text and add bold style. Then you add italic style. Or what if you add italic first and then bold. The result should be the same either way: the text range has both bold and italic style. But in the browser's view (Document Object Model) is this represented with a `<strong>` inside of an `<em>` or vice versa? Does it depend on the order in which you added the styles? In many web-based editors the HTML output *does* depend on the order of your actions. That means your output is non-deterministic. Two documents that look exactly the same in the editor will have different, sometimes unpredictable, HTML representations.
 
-In this editor we use a pure, deterministic function to convert document state to HTML output. So no matter how you *arrived at* the state, the output will be predictable. This makes everything easier to reason about. In our case, the `<strong>` will go inside the `<em>` every time.
+In this editor we use a pure, deterministic function to convert document state to HTML output. No matter how you *arrived at* the state, the output will be predictable. This makes everything easier to reason about. In our case, the `<strong>` will go inside the `<em>` every time.
 
 ## API
 
@@ -93,14 +91,14 @@ In this editor we use a pure, deterministic function to convert document state t
   * `onChange`: A function that will be called with the "value" of the editor whenever it is changed. The value has a `toString` method which accepts a single `format` argument (either 'html' or 'markdown').
 
 ### Other Props
-  All the props you can pass to Draft.js `Editor` can be passed to `RichTextEditor` (with the exception of `editorState` which will be generated internally based on your `value` prop).
+  All the props you can pass to Draft.js `Editor` can be passed to `RichTextEditor` (with the exception of `editorState` which will be generated internally based on the `value` prop).
 
 ### EditorValue Class
 In Draft.js `EditorState` contains not only the document contents but the entire state of the editor including cursor position and selection. This is helpful for many reasons including undo/redo. To make things easier for you, we have wrapped the state of the editor in an `EditorValue` instance with helpful methods to convert to/from a HTML or Markdown. An instance of this class should be passed to `RichTextEditor` in the `value` prop.
 
 The `EditorValue` class has certain optimizations built in. So let's say you are showing the HTML of the editor contents in your view. If you change your cursor position, that will trigger an `onChange` event (because, remember, cursor position is part of `EditorState`) and you will need to call `toString()` to render your view. However, `EditorValue` is smart enough to know that the *content* didn't actually change since last `toString()` so it will return a cached version of the HTML.
 
-Optimization tip: Try to call `editorValue.toString()` only when you actually need to convert it to string. If you can keep passing around the `editorValue` without calling `toString` it will be very performant.
+Optimization tip: Try to call `editorValue.toString()` only when you actually need to convert it to a string. If you can keep passing around the `editorValue` without calling `toString` it will be very performant.
 
 ### Example with ES5 and no JSX
 ```javascript
@@ -163,7 +161,7 @@ Currently the UI (toolbar and link dialog, etc) is not very customizable. We pla
 I'm happy to take pull requests for bug-fixes and improvements (and tests). If you have a feature you want to implement it's probably a good idea to open an issue first to see if it's already being worked on. Please match the code style of the rest of the project (ESLint should enforce this) and please include tests. Thanks!
 
 ## Run the Demo
-Clone this project. Run `npm install`. Run `npm run build-demo` then point the server of your choice (like [serv][serv]) to /demo.html.
+Clone this project. Run `npm install`. Run `npm run build-demo` then point the server of your choice (like [serv][serv]) to `/demo.html`.
 
 ## License
 
