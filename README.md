@@ -156,6 +156,25 @@ Other limitations include missing features such as: text-alignment and text colo
 
 Currently the UI (toolbar and link dialog, etc) is not very customizable. We plan to accept props for theming the UI as well as customizing which toolbar items are shown.
 
+React versions < 15 will log the following superfluous warning: 
+
+> A component is contentEditable and contains children managed by
+> React. It is now your responsibility to guarantee that none of
+> those nodes are unexpectedly modified or duplicated. This is
+> probably not intentional.
+
+As all nodes are managed internally by Draft, this is not a problem and this [warning can be safely ignored](https://github.com/facebook/draft-js/issues/53). You can suppress this warning's display completely by duck-punching `console.error` before instantiating your component:
+
+```javascript
+let _error = console.error;
+console.error = (...args) => {
+  let message = args[0];
+  if (typeof message !== 'string' || message.indexOf('component is `contentEditable`') === -1) {
+    _error.apply(console, args);
+  }
+};
+```
+
 ## Contribute
 
 I'm happy to take pull requests for bug-fixes and improvements (and tests). If you have a feature you want to implement it's probably a good idea to open an issue first to see if it's already being worked on. Please match the code style of the rest of the project (ESLint should enforce this) and please include tests. Thanks!
