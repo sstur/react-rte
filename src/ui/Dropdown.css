@@ -76,13 +76,19 @@
    default focus styles. This is better for accessibility. */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   .root select {
-    opacity: 1;
     color: transparent;
+    opacity: 1;
     -webkit-appearance: none;
     border-left-width: 12px;
     border-right-width: 35px;
   }
+
+  .root select:focus{
+    color: inherit;
+  }
+
   .root select:focus + .value {
     border-color: #999;
+    color: transparent;
   }
 }
