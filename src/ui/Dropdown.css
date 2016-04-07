@@ -82,7 +82,13 @@
     border-left-width: 12px;
     border-right-width: 35px;
   }
+
+  .root select:focus{
+    color: inherit;
+  }
+
   .root select:focus + .value {
     border-color: #999;
+    color: transparent;
   }
 }
