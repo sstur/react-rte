@@ -36,6 +36,7 @@ export default class EditorDemo extends Component<Props, State> {
           <RichTextEditor
             value={value}
             onChange={this._onChange}
+            placeholder="Tell a story"
           />
         </div>
         <div className="row">
