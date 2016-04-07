@@ -76,7 +76,7 @@
    default focus styles. This is better for accessibility. */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   .root select {
-    opacity: 1;    
+    opacity: 1;
     color: transparent;
     -webkit-appearance: none;
     border-left-width: 12px;
