@@ -156,7 +156,7 @@ Other limitations include missing features such as: text-alignment and text colo
 
 Currently the UI (toolbar and link dialog, etc) is not very customizable. We plan to accept props for theming the UI as well as customizing which toolbar items are shown.
 
-React versions < 15 will log the following superfluous warning: 
+React prior v15 will log the following superfluous warning:
 
 > A component is contentEditable and contains children managed by
 > React. It is now your responsibility to guarantee that none of
@@ -166,13 +166,13 @@ React versions < 15 will log the following superfluous warning:
 As all nodes are managed internally by Draft, this is not a problem and this [warning can be safely ignored](https://github.com/facebook/draft-js/issues/53). You can suppress this warning's display completely by duck-punching `console.error` before instantiating your component:
 
 ```javascript
-let _error = console.error;
-console.error = (...args) => {
-  let message = args[0];
-  if (typeof message !== 'string' || message.indexOf('component is `contentEditable`') === -1) {
-    _error.apply(console, args);
-  }
-};
+console.error = (function(_error) {
+  return function(message) {
+    if (typeof message !== 'string' || message.indexOf('component is `contentEditable`') === -1) {
+      _error.apply(console, arguments);
+    }
+  };
+})(console.error);
 ```
 
 ## Contribute
