@@ -3,9 +3,15 @@
   <head>
     <title>Redirecting...</title>
     <meta http-equiv="Cache-Control" content="private, no-cache, must-revalidate, max-age=0" />
-    <meta http-equiv="Refresh" content="0;url=/demo" />
+    <script>
+      function onload() {
+        var hostname = document.location.hostname;
+        var destination = (hostname === 'react-rte.org') ? '/demo' : '/demo.html';
+        location.replace(destination);
+      }
+    </script>
   </head>
-  <body onload="location.replace(document.getElementsByTagName('meta')[1].content.slice(6))">
+  <body onload="onload()">
     <noscript><p>Redirecting...</p></noscript>
   </body>
 </html>
