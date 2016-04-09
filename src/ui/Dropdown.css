@@ -77,18 +77,17 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   .root select {
     opacity: 1;
-    color: transparent;
+    color: inherit;
     -webkit-appearance: none;
     border-left-width: 12px;
     border-right-width: 35px;
   }
 
-  .root select:focus{
-    color: inherit;
+  .root select + .value {
+    color: transparent;
   }
 
   .root select:focus + .value {
     border-color: #999;
-    color: transparent;
   }
 }
