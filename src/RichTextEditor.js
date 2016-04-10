@@ -10,6 +10,7 @@ import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
+import ImageDecorator from './lib/ImageDecorator';
 import cx from 'classnames';
 import autobind from 'class-autobind';
 import {EventEmitter} from 'events';
@@ -20,7 +21,7 @@ import './Draft.global.css';
 // $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './RichTextEditor.css';
 
-import type {ContentBlock} from 'draft-js';
+import type {ContentBlock, Entity} from 'draft-js';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -221,10 +222,32 @@ export default class RichTextEditor extends Component {
 
   _onChange(editorState: EditorState) {
     let {onChange, value} = this.props;
-    if (onChange != null) {
-      let newValue = value.setEditorState(editorState);
-      onChange(newValue);
+    if (onChange == null) {
+      return;
     }
+    let newValue = value.setEditorState(editorState);
+    let newEditorState = newValue.getEditorState();
+    let selection = newEditorState.getSelection();
+    let contentState = newEditorState.getCurrentContent();
+    let startBlock = contentState.getBlockForKey(selection.getStartKey());
+    let endBlock = contentState.getBlockForKey(selection.getEndKey());
+    if (startBlock && startBlock === endBlock) {
+      this._checkForImageSelection(selection, startBlock);
+    }
+    onChange(newValue);
+  }
+
+  _checkForImageSelection(selection, block) {
+    ImageDecorator.strategy(
+      block,
+      (start, end) => {
+        if (start === selection.getStartOffset() &&
+            end === selection.getEndOffset()) {
+          console.log('image selected')
+          this.setState({transparentSelection: true});
+        }
+      }
+    );
   }
 
   _focus() {
@@ -246,7 +269,7 @@ function getBlockStyle(block: ContentBlock): string {
   }
 }
 
-const decorator = new CompositeDecorator([LinkDecorator]);
+const decorator = new CompositeDecorator([LinkDecorator, ImageDecorator]);
 
 function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);
