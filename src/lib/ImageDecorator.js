@@ -11,7 +11,7 @@ function findImageEntities(contentBlock: ContentBlock, callback: EntityRangeCall
     const entityKey = character.getEntity();
     return (
       entityKey != null &&
-      Entity.get(entityKey).getType() === 'IMAGE'
+      Entity.get(entityKey).getType() === ENTITY_TYPE.IMAGE
     );
   }, callback);
 }

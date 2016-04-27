@@ -153,7 +153,7 @@ export default class EditorToolbar extends Component<Props> {
     let selection = editorState.getSelection();
     let entity = this._getEntityAtCursor();
     let hasSelection = !selection.isCollapsed();
-    let isCursorOnImage = (entity != null && entity.type === 'IMAGE');
+    let isCursorOnImage = (entity != null && entity.type === ENTITY_TYPE.IMAGE);
     let shouldShowImageButton = hasSelection || isCursorOnImage;
     return (
       <ButtonGroup>
@@ -247,7 +247,7 @@ export default class EditorToolbar extends Component<Props> {
   _setImage(src: string) {
     let {editorState} = this.props;
     let selection = editorState.getSelection();
-    let entityKey = Entity.create('IMAGE', 'IMMUTABLE', {src});
+    let entityKey = Entity.create(ENTITY_TYPE.IMAGE, 'IMMUTABLE', {src});
     this.setState({showImageInput: false});
     this.props.onChange(
       RichUtils.toggleLink(editorState, selection, entityKey)
