@@ -41,6 +41,7 @@ export default class EditorToolbar extends Component<Props> {
     autobind(this);
     this.state = {
       showLinkInput: false,
+      showImageInput: false,
     };
   }
 
@@ -60,6 +61,7 @@ export default class EditorToolbar extends Component<Props> {
         {this._renderInlineStyleButtons()}
         {this._renderBlockTypeButtons()}
         {this._renderLinkButtons()}
+        {this._renderImageButton()}
         {this._renderBlockTypeDropdown()}
         {this._renderUndoRedo()}
       </div>
@@ -146,6 +148,27 @@ export default class EditorToolbar extends Component<Props> {
     );
   }
 
+  _renderImageButton(): React.Element {
+    const {editorState} = this.props;
+    let selection = editorState.getSelection();
+    let entity = this._getEntityAtCursor();
+    let hasSelection = !selection.isCollapsed();
+    let isCursorOnImage = (entity != null && entity.type === ENTITY_TYPE.IMAGE);
+    let shouldShowImageButton = hasSelection || isCursorOnImage;
+    return (
+      <ButtonGroup>
+        <PopoverIconButton
+          label="Image"
+          iconName="image"
+          isDisabled={!shouldShowImageButton}
+          showPopover={this.state.showImageInput}
+          onTogglePopover={this._toggleShowImageInput}
+          onSubmit={this._setImage}
+        />
+      </ButtonGroup>
+    );
+  }
+
   _renderUndoRedo(): React.Element {
     let {editorState} = this.props;
     let canUndo = editorState.getUndoStack().size !== 0;
@@ -198,6 +221,38 @@ export default class EditorToolbar extends Component<Props> {
       }
     }
     this.setState({showLinkInput: !isShowing});
+  }
+
+  _toggleShowImageInput(event: ?Object) {
+    let isShowing = this.state.showImageInput;
+    // If this is a hide request, decide if we should focus the editor.
+    if (isShowing) {
+      let shouldFocusEditor = true;
+      if (event && event.type === 'click') {
+        // TODO: Use a better way to get the editor root node.
+        let editorRoot = ReactDOM.findDOMNode(this).parentNode;
+        let {activeElement} = document;
+        let wasClickAway = (activeElement == null || activeElement === document.body);
+        if (!wasClickAway && !editorRoot.contains(activeElement)) {
+          shouldFocusEditor = false;
+        }
+      }
+      if (shouldFocusEditor) {
+        this.props.focusEditor();
+      }
+    }
+    this.setState({showImageInput: !isShowing});
+  }
+
+  _setImage(src: string) {
+    let {editorState} = this.props;
+    let selection = editorState.getSelection();
+    let entityKey = Entity.create(ENTITY_TYPE.IMAGE, 'IMMUTABLE', {src});
+    this.setState({showImageInput: false});
+    this.props.onChange(
+      RichUtils.toggleLink(editorState, selection, entityKey)
+    );
+    this._focusEditor();
   }
 
   _setLink(url: string) {
