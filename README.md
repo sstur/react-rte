@@ -180,7 +180,7 @@ console.error = (function(_error) {
 I'm happy to take pull requests for bug-fixes and improvements (and tests). If you have a feature you want to implement it's probably a good idea to open an issue first to see if it's already being worked on. Please match the code style of the rest of the project (ESLint should enforce this) and please include tests. Thanks!
 
 ## Run the Demo
-Clone this project. Run `npm install`. Run `npm run build-demo` then point the server of your choice (like [serv][serv]) to `/demo.html`.
+Clone this project. Run `npm install`. Run `npm run build-dist` then point the server of your choice (like [serv][serv]) to `/demo.html`.
 
 ## License
 
