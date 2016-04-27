@@ -4,6 +4,7 @@ import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils} from 'draf
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
+import getBlocksInSelection from './lib/getBlocksInSelection';
 import insertBlockAfter from './lib/insertBlockAfter';
 import isListItem from './lib/isListItem';
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
@@ -21,7 +22,7 @@ import './Draft.global.css';
 // $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './RichTextEditor.css';
 
-import type {ContentBlock, Entity} from 'draft-js';
+import {ContentBlock, Entity} from 'draft-js';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -227,27 +228,38 @@ export default class RichTextEditor extends Component {
     }
     let newValue = value.setEditorState(editorState);
     let newEditorState = newValue.getEditorState();
-    let selection = newEditorState.getSelection();
-    let contentState = newEditorState.getCurrentContent();
-    let startBlock = contentState.getBlockForKey(selection.getStartKey());
-    let endBlock = contentState.getBlockForKey(selection.getEndKey());
-    if (startBlock && startBlock === endBlock) {
-      this._checkForImageSelection(selection, startBlock);
-    }
+    this._handleInlineImageSelection(newEditorState);
     onChange(newValue);
   }
 
-  _checkForImageSelection(selection, block) {
-    ImageDecorator.strategy(
-      block,
-      (start, end) => {
-        if (start === selection.getStartOffset() &&
-            end === selection.getEndOffset()) {
-          console.log('image selected')
-          this.setState({transparentSelection: true});
-        }
-      }
+  _handleInlineImageSelection(editorState: EditorState) {
+    let selection = editorState.getSelection();
+    let blocks = getBlocksInSelection(editorState);
+
+    const selectImage = (block, offset) => {
+      const imageKey = block.getEntityAt(offset);
+      Entity.mergeData(imageKey, {selected: true});
+    };
+
+    let isInMiddleBlock = (index) => index > 0 && index < blocks.size - 1;
+    let isWithinStartBlockSelection = (offset, index) => (
+      index === 0 && offset > selection.getStartOffset()
     );
+    let isWithinEndBlockSelection = (offset, index) => (
+      index === blocks.size - 1 && offset < selection.getEndOffset()
+    );
+
+    blocks.toIndexedSeq().forEach((block, index) => {
+      ImageDecorator.strategy(
+        block,
+        (offset) => {
+          if (isWithinStartBlockSelection(offset, index) ||
+              isInMiddleBlock(index) ||
+              isWithinEndBlockSelection(offset, index)) {
+            selectImage(block, offset);
+          }
+        });
+    });
   }
 
   _focus() {
