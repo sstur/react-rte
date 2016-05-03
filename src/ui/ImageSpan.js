@@ -18,7 +18,6 @@ type Props = {
 };
 
 type State = {
-  resizing: boolean;
   width: number;
   height: number;
 };
@@ -33,7 +32,6 @@ export default class ImageSpan extends Component {
     const entity = Entity.get(this.props.entityKey);
     const {width, height} = entity.getData();
     this.state = {
-      resizing: false,
       width,
       height,
     };
@@ -45,13 +43,12 @@ export default class ImageSpan extends Component {
     const image = new Image();
     const {src} = entity.getData();
     image.src = src;
-
-    const self = this;
     image.onload = () => {
       if (width == null || height == null) {
-        self.setState({width: image.width, height: image.height});
+        // TODO: isMounted?
+        this.setState({width: image.width, height: image.height});
         Entity.mergeData(
-          self.props.entityKey,
+          this.props.entityKey,
           {
             width: image.width,
             height: image.height,
@@ -64,19 +61,16 @@ export default class ImageSpan extends Component {
   }
 
   render() {
-    const {width, height/*, resizing*/} = this.state;
+    const {width, height} = this.state;
     let {className} = this.props;
     const entity = Entity.get(this.props.entityKey);
     const {src, selected} = entity.getData();
-
-    // const resizingStyles = resizing ? styles.resize : {};
 
     className = cx(className, {
       [styles.root]: true,
       [styles.selected]: selected,
     });
     const imageStyle = {
-      //...resizingStyles,
       verticalAlign: 'bottom',
       backgroundImage: `url("${src}")`,
       backgroundSize: `${width}px ${height}px`,
@@ -87,32 +81,19 @@ export default class ImageSpan extends Component {
       letterSpacing: width,
     };
 
-    const imageSpan = (
+    return (
       <span
         className={className}
         style={imageStyle}
-        onClick={this._handleImageSpanClick}
-        >
+        onClick={this._onClick}
+      >
         {this.props.children}
       </span>
     );
-
-    // const view = resizing ?
-    //   <Resizable width={width} height={height}
-    //     minConstraints={[100, 100]} maxConstraints={[1000, 1000]}
-    //     onResize={this._handleResize}
-    //     lockAspectRatio
-    //     styles={{handle: styles.resizeInlineImageHandle}}
-    //     contentEditable={false}>
-    //     {imageSpan}
-    //   </Resizable> :
-    //   imageSpan;
-
-    return imageSpan;
   }
 
-  _handleImageSpanClick() {
-    this.setState({resizing: !this.state.resizing});
+  _onClick() {
+    console.log('image click');
   }
 
   _handleResize(event: Object, data: Object) {
