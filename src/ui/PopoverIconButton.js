@@ -3,20 +3,21 @@
 import React, {Component} from 'react';
 import IconButton from './IconButton';
 import InputPopover from './InputPopover';
+import autobind from 'class-autobind';
 
 type Props = {
+  iconName: string;
   showPopover: boolean,
   onTogglePopover: Function,
   onSubmit: Function;
 };
 
-export default class PopoverIconButton extends Component<Props> {
+export default class PopoverIconButton extends Component {
   props: Props;
 
   constructor() {
     super(...arguments);
-    this._hidePopover = this._hidePopover.bind(this);
-    this._onSubmit = this._onSubmit.bind(this);
+    autobind(this);
   }
 
   render(): React.Element {

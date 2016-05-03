@@ -1,6 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
-import RichTextEditor from './RichTextEditor';
+import RichTextEditor, {createEmptyValue} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
@@ -12,7 +12,7 @@ type State = {
   format: string;
 };
 
-export default class EditorDemo extends Component<Props, State> {
+export default class EditorDemo extends Component {
   props: Props;
   state: State;
 
@@ -20,7 +20,7 @@ export default class EditorDemo extends Component<Props, State> {
     super(...arguments);
     autobind(this);
     this.state = {
-      value: RichTextEditor.createEmptyValue(),
+      value: createEmptyValue(),
       format: 'html',
     };
   }

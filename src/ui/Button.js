@@ -9,16 +9,19 @@ import styles from './Button.css';
 
 type EventHandler = (event: Event) => any;
 
+// TODO: Use a more specific type here.
+type ReactNode = any;
+
 type Props = {
-  children: ?any;
-  className: ?string;
-  focusOnClick: ?boolean;
-  formSubmit: ?boolean;
-  isDisabled: ?boolean;
-  onMouseDown: ?EventHandler;
+  children?: ReactNode;
+  className?: string;
+  focusOnClick?: boolean;
+  formSubmit?: boolean;
+  isDisabled?: boolean;
+  onMouseDown?: EventHandler;
 };
 
-export default class Button extends Component<Props> {
+export default class Button extends Component {
   props: Props;
 
   constructor() {

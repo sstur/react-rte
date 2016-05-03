@@ -10,13 +10,14 @@ import cx from 'classnames';
 import styles from './InputPopover.css';
 
 type Props = {
-  className: ?string;
+  className?: string;
   onCancel: () => any;
   onSubmit: (value: string) => any;
 };
 
-export default class InputPopover extends Component<Props> {
+export default class InputPopover extends Component {
   props: Props;
+  _inputRef: ?Object;
 
   constructor() {
     super(...arguments);
@@ -26,7 +27,9 @@ export default class InputPopover extends Component<Props> {
   componentDidMount() {
     document.addEventListener('click', this._onDocumentClick);
     document.addEventListener('keydown', this._onDocumentKeydown);
-    this._inputRef.focus();
+    if (this._inputRef) {
+      this._inputRef.focus();
+    }
   }
 
   componentWillUnmount() {
@@ -70,7 +73,8 @@ export default class InputPopover extends Component<Props> {
   _onSubmit(event: Object) {
     event.preventDefault();
     event.stopPropagation();
-    this.props.onSubmit(this._inputRef.value);
+    let value = this._inputRef ? this._inputRef.value : '';
+    this.props.onSubmit(value);
   }
 
   _onDocumentClick(event: Object) {

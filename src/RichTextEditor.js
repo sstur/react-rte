@@ -13,7 +13,7 @@ import LinkDecorator from './lib/LinkDecorator';
 import cx from 'classnames';
 import autobind from 'class-autobind';
 import {EventEmitter} from 'events';
-import {BLOCK_TYPE} from 'draft-js-tools';
+import {BLOCK_TYPE} from 'draft-js-utils';
 
 // $FlowIssue - Flow doesn't understand CSS Modules
 import './Draft.global.css';
@@ -37,13 +37,15 @@ const styleMap = {
 type ChangeHandler = (value: EditorValue) => any;
 
 type Props = {
-  className: ?string;
+  className?: string;
   value: EditorValue;
-  onChange: ChangeHandler;
+  onChange?: ChangeHandler;
+  placeholder?: string;
 };
 
-export default class RichTextEditor extends Component<Props> {
+export default class RichTextEditor extends Component {
   props: Props;
+  _keyEmitter: EventEmitter;
 
   constructor() {
     super(...arguments);
@@ -218,8 +220,11 @@ export default class RichTextEditor extends Component<Props> {
   }
 
   _onChange(editorState: EditorState) {
-    let newValue = this.props.value.setEditorState(editorState);
-    this.props.onChange(newValue);
+    let {onChange, value} = this.props;
+    if (onChange != null) {
+      let newValue = value.setEditorState(editorState);
+      onChange(newValue);
+    }
   }
 
   _focus() {
@@ -251,6 +256,7 @@ function createValueFromString(markup: string, format: string): EditorValue {
   return EditorValue.createFromString(markup, format, decorator);
 }
 
+// $FlowIssue - This should probably not be done this way.
 Object.assign(RichTextEditor, {
   EditorValue,
   decorator,

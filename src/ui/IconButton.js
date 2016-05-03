@@ -8,20 +8,23 @@ import ButtonWrap from './ButtonWrap';
 // $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './IconButton.css';
 
+// TODO: Use a more specific type here.
+type ReactNode = any;
+
 type Props = {
-  isActive: ?boolean;
-  children: React.Node;
-  className: ?string;
   iconName: string;
-  label: string;
+  isActive?: boolean;
+  children?: ReactNode;
+  className?: string;
+  label?: string;
 };
 
-export default class IconButton extends Component<Props> {
+export default class IconButton extends Component {
   props: Props;
 
   render(): React.Element {
     let {props} = this;
-    let {className, iconName, label, ...otherProps} = props;
+    let {className, iconName, label, children, ...otherProps} = props;
     className = cx(className, {
       [styles.root]: true,
       [styles.isActive]: props.isActive,
@@ -32,7 +35,7 @@ export default class IconButton extends Component<Props> {
           <span className={styles['icon-' + iconName]} />
           {/* TODO: add text label here with aria-hidden */}
         </Button>
-        {props.children}
+        {children}
       </ButtonWrap>
     );
   }

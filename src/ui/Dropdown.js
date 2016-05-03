@@ -1,5 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
+import autobind from 'class-autobind';
 import cx from 'classnames';
 
 // $FlowIssue - Flow doesn't understand CSS Modules
@@ -9,15 +10,15 @@ type Props = {
   choices: Map<string, string>;
   selectedKey: ?string;
   onChange: (selectedKey: string) => any;
-  className: string;
+  className?: string;
 };
 
-export default class Dropdown extends Component<Props> {
+export default class Dropdown extends Component {
   props: Props;
 
   constructor() {
     super(...arguments);
-    this._onChange = this._onChange.bind(this);
+    autobind(this);
   }
 
   render(): React.Element {

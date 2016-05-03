@@ -7,7 +7,7 @@ import cx from 'classnames';
 import styles from './ButtonGroup.css';
 
 type Props = {
-  className: ?string;
+  className?: string;
 };
 
 export default function ButtonGroup(props_: Props): React.Element {

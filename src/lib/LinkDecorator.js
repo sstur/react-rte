@@ -1,12 +1,15 @@
 /* @flow */
 import React from 'react';
 import {Entity} from 'draft-js';
-import {ENTITY_TYPE} from 'draft-js-tools';
+import {ENTITY_TYPE} from 'draft-js-utils';
 
 import type {ContentBlock} from 'draft-js';
 
+// TODO: Use a more specific type here.
+type ReactNode = any;
+
 type Props = {
-  children: React.Node,
+  children: ReactNode,
   entityKey: string,
 };
 
