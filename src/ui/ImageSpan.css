@@ -1,8 +1,6 @@
 .root {
-  color: transparent;
   background-repeat: no-repeat;
   display: inline-block;
-  text-align: right;
   cursor: pointer;
 }
 
