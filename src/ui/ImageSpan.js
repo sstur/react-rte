@@ -1,8 +1,9 @@
 /* @flow */
 
+import autobind from 'class-autobind';
+import cx from 'classnames';
 import React, {Component} from 'react';
 import {Entity} from 'draft-js';
-import cx from 'classnames';
 
 // $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './ImageSpan.css';
@@ -28,6 +29,7 @@ export default class ImageSpan extends Component {
 
   constructor(props: Props) {
     super(props);
+    autobind(this);
     const entity = Entity.get(this.props.entityKey);
     const {width, height} = entity.getData();
     this.state = {
