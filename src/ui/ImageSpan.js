@@ -72,7 +72,7 @@ export default class ImageSpan extends Component {
       backgroundImage: `url("${src}")`,
       backgroundSize: `${width}px ${height}px`,
       lineHeight: `${height}px`,
-      fontSize: `${height}`,
+      fontSize: `${height}px`,
       width,
       height,
       letterSpacing: width,
