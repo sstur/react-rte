@@ -3,7 +3,7 @@ import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {EditorState, Entity, RichUtils} from 'draft-js';
+import {EditorState, Entity, RichUtils, Modifier} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
 import {
   INLINE_STYLE_BUTTONS,
@@ -155,18 +155,11 @@ export default class EditorToolbar extends Component {
   }
 
   _renderImageButton(): React.Element {
-    const {editorState} = this.props;
-    let selection = editorState.getSelection();
-    let entity = this._getEntityAtCursor();
-    let hasSelection = !selection.isCollapsed();
-    let isCursorOnImage = (entity != null && entity.type === ENTITY_TYPE.IMAGE);
-    let shouldShowImageButton = hasSelection || isCursorOnImage;
     return (
       <ButtonGroup>
         <PopoverIconButton
           label="Image"
           iconName="image"
-          isDisabled={!shouldShowImageButton}
           showPopover={this.state.showImageInput}
           onTogglePopover={this._toggleShowImageInput}
           onSubmit={this._setImage}
@@ -252,11 +245,13 @@ export default class EditorToolbar extends Component {
 
   _setImage(src: string) {
     let {editorState} = this.props;
+    let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
     let entityKey = Entity.create(ENTITY_TYPE.IMAGE, 'IMMUTABLE', {src});
+    const updatedContent = Modifier.insertText(contentState, selection, ' ', null, entityKey);
     this.setState({showImageInput: false});
     this.props.onChange(
-      RichUtils.toggleLink(editorState, selection, entityKey)
+      EditorState.push(editorState, updatedContent)
     );
     this._focusEditor();
   }

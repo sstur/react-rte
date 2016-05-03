@@ -75,10 +75,14 @@ export default class ImageSpan extends Component {
     });
     const imageStyle = {
       //...resizingStyles,
+      verticalAlign: 'bottom',
       backgroundImage: `url("${src}")`,
       backgroundSize: `${width}px ${height}px`,
+      lineHeight: `${height}px`,
+      fontSize: `${height}`,
       width,
       height,
+      letterSpacing: width,
     };
 
     const imageSpan = (
