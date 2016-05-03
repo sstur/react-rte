@@ -35,6 +35,7 @@ type Props = {
 
 type State = {
   showLinkInput: boolean;
+  showImageInput: boolean;
 };
 
 export default class EditorToolbar extends Component {

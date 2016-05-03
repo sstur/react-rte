@@ -7,31 +7,34 @@ import cx from 'classnames';
 // $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './ImageSpan.css';
 
+// TODO: Use a more specific type here.
+type ReactNode = any;
+
 type Props = {
-  children: React.Node;
+  children: ReactNode;
   entityKey: string;
-  className: ?string;
+  className?: string;
+};
+
+type State = {
+  resizing: boolean;
+  width: number;
+  height: number;
 };
 
 export default class ImageSpan extends Component {
+  props: Props;
+  state: State;
+
   constructor(props: Props) {
     super(props);
     const entity = Entity.get(this.props.entityKey);
     const {width, height} = entity.getData();
-    this.state = {resizing: false, width, height};
-  }
-
-  _handleImageSpanClick = () => {
-    this.setState({resizing: !this.state.resizing});
-  }
-
-  _handleResize = (event, {size}) => {
-    const {width, height} = size;
-    this.setState({width, height});
-    Entity.mergeData(
-      this.props.entityKey,
-      {width, height}
-    );
+    this.state = {
+      resizing: false,
+      width,
+      height,
+    };
   }
 
   componentDidMount() {
@@ -59,12 +62,12 @@ export default class ImageSpan extends Component {
   }
 
   render() {
-    const {resizing, width, height} = this.state;
+    const {width, height/*, resizing*/} = this.state;
     let {className} = this.props;
     const entity = Entity.get(this.props.entityKey);
     const {src, selected} = entity.getData();
 
-    const resizingStyles = resizing ? styles.resize : {};
+    // const resizingStyles = resizing ? styles.resize : {};
 
     className = cx(className, {
       [styles.root]: true,
@@ -100,5 +103,18 @@ export default class ImageSpan extends Component {
     //   imageSpan;
 
     return imageSpan;
+  }
+
+  _handleImageSpanClick() {
+    this.setState({resizing: !this.state.resizing});
+  }
+
+  _handleResize(event: Object, data: Object) {
+    const {width, height} = data.size;
+    this.setState({width, height});
+    Entity.mergeData(
+      this.props.entityKey,
+      {width, height}
+    );
   }
 }
