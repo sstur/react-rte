@@ -64,12 +64,9 @@ export default class ImageSpan extends Component {
     const {width, height} = this.state;
     let {className} = this.props;
     const entity = Entity.get(this.props.entityKey);
-    const {src, selected} = entity.getData();
+    const {src} = entity.getData();
 
-    className = cx(className, {
-      [styles.root]: true,
-      [styles.selected]: selected,
-    });
+    className = cx(className, styles.root);
     const imageStyle = {
       verticalAlign: 'bottom',
       backgroundImage: `url("${src}")`,
