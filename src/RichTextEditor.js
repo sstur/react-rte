@@ -54,10 +54,8 @@ export default class RichTextEditor extends Component {
   }
 
   render(): React.Element {
-    let {props} = this;
-    let editorState = props.value.getEditorState();
-    let className = cx(props.className, styles.root);
-    let placeholder = props.placeholder ? props.placeholder : '';
+    let {value, className, placeholder, ...otherProps} = this.props;
+    let editorState = value.getEditorState();
     // If the user changes block type before entering any text, we can either
     // style the placeholder or hide it. Let's just hide it for now.
     let editorClassName = cx({
@@ -65,7 +63,7 @@ export default class RichTextEditor extends Component {
       [styles.hidePlaceholder]: this._shouldHidePlaceholder(),
     });
     return (
-      <div className={className}>
+      <div className={cx(className, styles.root)}>
         <EditorToolbar
           keyEmitter={this._keyEmitter}
           editorState={editorState}
@@ -74,6 +72,7 @@ export default class RichTextEditor extends Component {
         />
         <div className={editorClassName}>
           <Editor
+            {...otherProps}
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
