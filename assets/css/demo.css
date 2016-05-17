@@ -91,3 +91,7 @@ a {
   white-space: pre;
   word-wrap: normal;
 }
+
+.editor-demo .react-rte-demo .public-DraftEditor-content {
+  min-height: 110px;
+}
