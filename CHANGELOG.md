@@ -1,3 +1,33 @@
+v0.1.17
+
+  - Remove hard-coded height from RichTextEditor.css
+
+v0.1.16
+
+  - Update peerDependencies to allow React 0.14
+  - Pass extra props to <Editor />
+
+v0.1.15
+
+  - Update Flow and fix some Flow errors
+
+v0.1.14
+
+  - Update README about building demo
+
+v0.1.13
+
+  - Updates to demo including better display on mobile
+  - Remove console.error hack
+  - Minor style fixes to dropdown component
+
+v0.1.12
+
+  - Updates to README
+  - CSS fix for transparent dropdown options. Fixes #26
+  - Fix placeholder text that was hard-coded in component
+  - Update contributors
+
 v0.1.11
 
   - Add onTab handler for list indent
