@@ -16,7 +16,7 @@
   "dependencies": {
     "class-autobind": "^0.1.2",
     "classnames": "^2.2.5",
-    "draft-js": "^0.5.0 || ^0.6.0 || ^0.7.0",
+    "draft-js": ">=0.5.0",
     "draft-js-export-html": "^0.1.13",
     "draft-js-export-markdown": "^0.1.5",
     "draft-js-import-html": "^0.1.9",
