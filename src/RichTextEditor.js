@@ -38,6 +38,8 @@ type ChangeHandler = (value: EditorValue) => any;
 
 type Props = {
   className?: string;
+  toolbarClassName?: string;
+  editorClassName?: string;
   value: EditorValue;
   onChange?: ChangeHandler;
   placeholder?: string;
@@ -54,23 +56,25 @@ export default class RichTextEditor extends Component {
   }
 
   render(): React.Element {
-    let {value, className, placeholder, ...otherProps} = this.props;
+    let {value, className, toolbarClassName, editorClassName, placeholder, ...otherProps} = this.props;
     let editorState = value.getEditorState();
+
     // If the user changes block type before entering any text, we can either
     // style the placeholder or hide it. Let's just hide it for now.
-    let editorClassName = cx({
+    let combinedEditorClassName = cx({
       [styles.editor]: true,
       [styles.hidePlaceholder]: this._shouldHidePlaceholder(),
-    });
+    }, editorClassName);
     return (
-      <div className={cx(className, styles.root)}>
+      <div className={cx(styles.root, className)}>
         <EditorToolbar
+          className={toolbarClassName}
           keyEmitter={this._keyEmitter}
           editorState={editorState}
           onChange={this._onChange}
           focusEditor={this._focus}
         />
-        <div className={editorClassName}>
+        <div className={combinedEditorClassName}>
           <Editor
             {...otherProps}
             blockStyleFn={getBlockStyle}

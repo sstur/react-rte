@@ -18,6 +18,7 @@ import IconButton from '../ui/IconButton';
 import getEntityAtCursor from './getEntityAtCursor';
 import clearEntityForRange from './clearEntityForRange';
 import autobind from 'class-autobind';
+import cx from 'classnames';
 
 // $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './EditorToolbar.css';
@@ -27,6 +28,7 @@ import type {EventEmitter} from 'events';
 type ChangeHandler = (state: EditorState) => any;
 
 type Props = {
+  className?: string;
   editorState: EditorState;
   keyEmitter: EventEmitter;
   onChange: ChangeHandler;
@@ -60,8 +62,9 @@ export default class EditorToolbar extends Component {
   }
 
   render(): React.Element {
+    const {className} = this.props;
     return (
-      <div className={styles.root}>
+      <div className={cx(styles.root, className)}>
         {this._renderInlineStyleButtons()}
         {this._renderBlockTypeButtons()}
         {this._renderLinkButtons()}
