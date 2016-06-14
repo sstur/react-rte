@@ -11,6 +11,7 @@ import styles from './InputPopover.css';
 
 type Props = {
   className?: string;
+  data: ?Object;
   onCancel: () => any;
   onSubmit: (value: string) => any;
 };
@@ -40,6 +41,7 @@ export default class InputPopover extends Component {
   render(): React.Element {
     let {props} = this;
     let className = cx(props.className, styles.root);
+    let defaultValue = props.data && props.data.url;
     return (
       <form className={className} onSubmit={this._onSubmit}>
         <div className={styles.inner}>
@@ -48,6 +50,7 @@ export default class InputPopover extends Component {
             type="text"
             placeholder="https://example.com/"
             className={styles.input}
+            defaultValue={defaultValue}
           />
           <ButtonGroup className={styles.buttonGroup}>
             <IconButton
