@@ -27,6 +27,7 @@ export default class EditorDemo extends Component {
 
   render(): React.Element {
     let {value, format} = this.state;
+
     return (
       <div className="editor-demo">
         <div className="row">
@@ -38,6 +39,8 @@ export default class EditorDemo extends Component {
             onChange={this._onChange}
             className="react-rte-demo"
             placeholder="Tell a story"
+            toolbarClassName="demo-toolbar"
+            editorClassName="demo-editor"
           />
         </div>
         <div className="row">
