@@ -43,7 +43,7 @@ type Props = {
   value: EditorValue;
   onChange?: ChangeHandler;
   placeholder?: string;
-  customStyleMap?: {};
+  customStyleMap?: {[style: string]: {[key: string]: any}};
 };
 
 export default class RichTextEditor extends Component {
@@ -59,6 +59,7 @@ export default class RichTextEditor extends Component {
   render(): React.Element {
     let {value, className, toolbarClassName, editorClassName, placeholder, customStyleMap, ...otherProps} = this.props;
     let editorState = value.getEditorState();
+    customStyleMap = customStyleMap ? {...styleMap, ...customStyleMap} : styleMap;
 
     // If the user changes block type before entering any text, we can either
     // style the placeholder or hide it. Let's just hide it for now.
@@ -79,7 +80,7 @@ export default class RichTextEditor extends Component {
           <Editor
             {...otherProps}
             blockStyleFn={getBlockStyle}
-            customStyleMap={Object.assign(styleMap, customStyleMap)}
+            customStyleMap={customStyleMap}
             editorState={editorState}
             handleReturn={this._handleReturn}
             keyBindingFn={this._customKeyHandler}
