@@ -43,6 +43,7 @@ type Props = {
   value: EditorValue;
   onChange?: ChangeHandler;
   placeholder?: string;
+  customStyleMap?: {};
 };
 
 export default class RichTextEditor extends Component {
@@ -56,7 +57,7 @@ export default class RichTextEditor extends Component {
   }
 
   render(): React.Element {
-    let {value, className, toolbarClassName, editorClassName, placeholder, ...otherProps} = this.props;
+    let {value, className, toolbarClassName, editorClassName, placeholder, customStyleMap, ...otherProps} = this.props;
     let editorState = value.getEditorState();
 
     // If the user changes block type before entering any text, we can either
@@ -78,7 +79,7 @@ export default class RichTextEditor extends Component {
           <Editor
             {...otherProps}
             blockStyleFn={getBlockStyle}
-            customStyleMap={styleMap}
+            customStyleMap={Object.assign(styleMap, customStyleMap)}
             editorState={editorState}
             handleReturn={this._handleReturn}
             keyBindingFn={this._customKeyHandler}
