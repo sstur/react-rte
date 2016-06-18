@@ -1,3 +1,2 @@
 --compilers js:babel-core/register
 --require ./test/init.js
-src/__tests__/*.js src/**/__tests__/*.js
