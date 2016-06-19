@@ -1,0 +1,29 @@
+.root {
+  background-repeat: no-repeat;
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.resize {
+  border: 1px dashed #78a300;
+  position: relative;
+  max-width: 100%;
+  display: inline-block;
+  line-height: 0;
+  top: -1px;
+  left: -1px,
+}
+
+.resizeHandle {
+  cursor: nwse-resize;
+  position: absolute;
+  z-index: 2;
+  line-height: 1;
+  bottom: -4px;
+  right: -5px;
+  border: 1px solid white;
+  background-color: #78a300;
+  width: 8px;
+  height: 8px;
+}
