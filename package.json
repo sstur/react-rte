@@ -1,6 +1,6 @@
 {
   "name": "react-rte-image",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "React Rich Text Editor",
   "main": "dist/react-rte.js",
   "scripts": {
@@ -54,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sstur/react-rte.git"
+    "url": "git+https://github.com/zerocho/react-rte.git"
   },
   "keywords": [
     "reactjs",
@@ -64,28 +64,10 @@
     "richtext",
     "editor"
   ],
-  "author": "sstur@me.com",
-  "contributors": [
-    {
-      "name": "Adam J. McIntyre",
-      "url": "https://github.com/amcintyre-cs"
-    },
-    {
-      "name": "Harris Brakmic",
-      "url": "https://github.com/brakmic"
-    },
-    {
-      "name": "Jordan Kohl",
-      "url": "https://github.com/simpixelated"
-    },
-    {
-      "name": "Simon Sturmer",
-      "url": "https://github.com/sstur"
-    }
-  ],
-  "license": "ISC",
+  "author": "zerohch0@gmail.com",
+  "license": "BSD",
   "bugs": {
-    "url": "https://github.com/sstur/react-rte/issues"
+    "url": "https://github.com/zerocho/react-rte/issues"
   },
-  "homepage": "https://github.com/sstur/react-rte#readme"
+  "homepage": "https://github.com/zerocho/react-rte#readme"
 }
