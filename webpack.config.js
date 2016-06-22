@@ -2,7 +2,7 @@
 var path = require('path');
 
 var loaders = [
-  {test: /\.js$/, loader: 'babel'},
+  {test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
   {
     test: /\.css$/,
     exclude: /\.global\.css$/,
