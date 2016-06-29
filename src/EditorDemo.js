@@ -10,6 +10,7 @@ type Props = {};
 type State = {
   value: EditorValue;
   format: string;
+  readOnly: boolean;
 };
 
 export default class EditorDemo extends Component {
@@ -22,6 +23,7 @@ export default class EditorDemo extends Component {
     this.state = {
       value: createEmptyValue(),
       format: 'html',
+      readOnly: true,
     };
   }
 
@@ -41,7 +43,18 @@ export default class EditorDemo extends Component {
             placeholder="Tell a story"
             toolbarClassName="demo-toolbar"
             editorClassName="demo-editor"
+            readOnly={this.state.readOnly}
           />
+        </div>
+        <div className="row">
+          <label className="radio-item">
+            <input
+              type="checkbox"
+              onChange={this._onChangeReadOnly}
+              checked={this.state.readOnly}
+            />
+            <span>readOnly</span>
+          </label>
         </div>
         <div className="row">
           <label className="radio-item">
@@ -109,5 +122,9 @@ export default class EditorDemo extends Component {
 
   _onChangeFormat(event: Object) {
     this.setState({format: event.target.value});
+  }
+
+  _onChangeReadOnly(event: Object) {
+    this.setState({readOnly: event.target.checked});
   }
 }
