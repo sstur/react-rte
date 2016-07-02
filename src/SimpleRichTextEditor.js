@@ -27,15 +27,18 @@ export default class SimpleRichTextEditor extends Component {
   }
 
   componentWillMount() {
-    this._updateStateFromProps(this.props);
+    this._updateStateFromProps(null, this.props);
   }
 
   componentWillReceiveProps(newProps: Props) {
-    this._updateStateFromProps(newProps);
+    this._updateStateFromProps(this.props, newProps);
   }
 
-  _updateStateFromProps(props: Props) {
-    let {value, format} = props;
+  _updateStateFromProps(oldProps: ?Props, newProps: Props) {
+    let {value, format} = newProps;
+    if (oldProps != null && oldProps.value === value && oldProps.format === format) {
+      return;
+    }
     let {editorValue} = this.state;
     this.setState({
       editorValue: editorValue.setContentFromString(value, format),
