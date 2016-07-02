@@ -21,9 +21,11 @@ export default class PopoverIconButton extends Component {
   }
 
   render(): React.Element {
-    let {props} = this;
+    /* eslint-disable no-unused-vars */
+    let {onTogglePopover, showPopover, ...props} = this.props;
+    /* eslint-enable */
     return (
-      <IconButton {...props} onClick={this.props.onTogglePopover}>
+      <IconButton {...props} onClick={onTogglePopover}>
         {this._renderPopover()}
       </IconButton>
     );
