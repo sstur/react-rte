@@ -24,10 +24,10 @@ export default class IconButton extends Component {
 
   render(): React.Element {
     let {props} = this;
-    let {className, iconName, label, children, ...otherProps} = props;
+    let {className, iconName, label, children, isActive, ...otherProps} = props;
     className = cx(className, {
       [styles.root]: true,
-      [styles.isActive]: props.isActive,
+      [styles.isActive]: isActive,
     });
     return (
       <ButtonWrap>
