@@ -17,7 +17,7 @@ export default class StyleButton extends Component {
   }
 
   render(): React.Element {
-    let {style, ...otherProps} = this.props;
+    let {style, onToggle, ...otherProps} = this.props; // eslint-disable-line no-unused-vars
     let iconName = style.toLowerCase();
     // `focusOnClick` will prevent the editor from losing focus when a control
     // button is clicked.
