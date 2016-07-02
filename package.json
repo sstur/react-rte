@@ -1,6 +1,6 @@
 {
   "name": "react-rte-image",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "React Rich Text Editor",
   "main": "dist/react-rte.js",
   "scripts": {
@@ -14,12 +14,12 @@
     "test-src": "mocha src/__tests__/*.js src/**/__tests__/*.js"
   },
   "dependencies": {
-    "class-autobind": "^0.1.2",
+    "class-autobind": "^0.1.4",
     "classnames": "^2.2.5",
     "draft-js": "^0.7.0",
-    "draft-js-export-html": "^0.2.2",
+    "draft-js-export-html": "^0.3.0",
     "draft-js-export-markdown": "^0.2.0",
-    "draft-js-import-html": "^0.1.10",
+    "draft-js-import-html": "^0.2.0",
     "draft-js-import-markdown": "^0.1.6",
     "draft-js-utils": "^0.1.5",
     "immutable": "^3.8.1"
