@@ -72,7 +72,7 @@ export default class InputPopover extends Component {
   }
 
   _onInputKeyPress(event: Object) {
-    if (event.keyCode === 13) {
+    if (event.which === 13) {
       // Avoid submitting a <form> somewhere up the element tree.
       event.preventDefault();
       this._onSubmit();
