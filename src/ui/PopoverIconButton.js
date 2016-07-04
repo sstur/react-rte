@@ -21,9 +21,7 @@ export default class PopoverIconButton extends Component {
   }
 
   render(): React.Element {
-    /* eslint-disable no-unused-vars */
-    let {onTogglePopover, showPopover, ...props} = this.props;
-    /* eslint-enable */
+    let {onTogglePopover, showPopover, ...props} = this.props; // eslint-disable-line no-unused-vars
     return (
       <IconButton {...props} onClick={onTogglePopover}>
         {this._renderPopover()}
