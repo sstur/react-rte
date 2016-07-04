@@ -41,13 +41,14 @@ export default class InputPopover extends Component {
     let {props} = this;
     let className = cx(props.className, styles.root);
     return (
-      <form className={className} onSubmit={this._onSubmit}>
+      <div className={className}>
         <div className={styles.inner}>
           <input
             ref={this._setInputRef}
             type="text"
             placeholder="https://example.com/"
             className={styles.input}
+            onKeyPress={this._onInputKeyPress}
           />
           <ButtonGroup className={styles.buttonGroup}>
             <IconButton
@@ -58,11 +59,11 @@ export default class InputPopover extends Component {
             <IconButton
               label="Submit"
               iconName="accept"
-              formSubmit={true}
+              onClick={this._onSubmit}
             />
           </ButtonGroup>
         </div>
-      </form>
+      </div>
     );
   }
 
@@ -70,9 +71,15 @@ export default class InputPopover extends Component {
     this._inputRef = inputElement;
   }
 
-  _onSubmit(event: Object) {
-    event.preventDefault();
-    event.stopPropagation();
+  _onInputKeyPress(event: Object) {
+    if (event.which === 13) {
+      // Avoid submitting a <form> somewhere up the element tree.
+      event.preventDefault();
+      this._onSubmit();
+    }
+  }
+
+  _onSubmit() {
     let value = this._inputRef ? this._inputRef.value : '';
     this.props.onSubmit(value);
   }
