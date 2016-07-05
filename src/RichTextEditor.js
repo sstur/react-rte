@@ -44,6 +44,7 @@ type Props = {
   onChange?: ChangeHandler;
   placeholder?: string;
   customStyleMap?: {[style: string]: {[key: string]: any}};
+  readOnly?: boolean;
 };
 
 export default class RichTextEditor extends Component {
@@ -57,7 +58,7 @@ export default class RichTextEditor extends Component {
   }
 
   render(): React.Element {
-    let {value, className, toolbarClassName, editorClassName, placeholder, customStyleMap, ...otherProps} = this.props;
+    let {value, className, toolbarClassName, editorClassName, placeholder, customStyleMap, readOnly, ...otherProps} = this.props;
     let editorState = value.getEditorState();
     customStyleMap = customStyleMap ? {...styleMap, ...customStyleMap} : styleMap;
 
@@ -69,13 +70,14 @@ export default class RichTextEditor extends Component {
     }, editorClassName);
     return (
       <div className={cx(styles.root, className)}>
+        {!readOnly &&
         <EditorToolbar
           className={toolbarClassName}
           keyEmitter={this._keyEmitter}
           editorState={editorState}
           onChange={this._onChange}
           focusEditor={this._focus}
-        />
+        />}
         <div className={combinedEditorClassName}>
           <Editor
             {...otherProps}
@@ -90,6 +92,7 @@ export default class RichTextEditor extends Component {
             placeholder={placeholder}
             ref="editor"
             spellCheck={true}
+            readOnly={readOnly}
           />
         </div>
       </div>
