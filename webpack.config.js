@@ -1,5 +1,6 @@
 /*eslint-env node */
 var path = require('path');
+var webpack = require('webpack');
 
 var loaders = [
   {
@@ -30,6 +31,16 @@ module.exports = [{
     'react-dom': 'react-dom',
   },
   module: {loaders: loaders},
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: true,
+      comments: true,
+      mangle: false,
+      compress: {
+        dead_code: true,
+      },
+    }),
+  ],
 }, {
   entry: './src/demo.js',
   output: {
