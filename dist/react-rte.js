@@ -19507,8 +19507,10 @@ module.exports =
 	    value: function render() {
 	      var _props = this.props;
 	      var style = _props.style;
+	      var onToggle = _props.onToggle;
 
-	      var otherProps = _objectWithoutProperties(_props, ['style']);
+	      var otherProps = _objectWithoutProperties(_props, ['style', 'onToggle']); // eslint-disable-line no-unused-vars
+
 
 	      var iconName = style.toLowerCase();
 	      // `focusOnClick` will prevent the editor from losing focus when a control
@@ -19601,10 +19603,11 @@ module.exports =
 	      var iconName = props.iconName;
 	      var label = props.label;
 	      var children = props.children;
+	      var isActive = props.isActive;
 
-	      var otherProps = _objectWithoutProperties(props, ['className', 'iconName', 'label', 'children']);
+	      var otherProps = _objectWithoutProperties(props, ['className', 'iconName', 'label', 'children', 'isActive']);
 
-	      className = (0, _classnames2.default)(className, (_cx = {}, _defineProperty(_cx, _IconButton2.default.root, true), _defineProperty(_cx, _IconButton2.default.isActive, props.isActive), _cx));
+	      className = (0, _classnames2.default)(className, (_cx = {}, _defineProperty(_cx, _IconButton2.default.root, true), _defineProperty(_cx, _IconButton2.default.isActive, isActive), _cx));
 	      return _react2.default.createElement(
 	        _ButtonWrap2.default,
 	        null,
@@ -19740,12 +19743,14 @@ module.exports =
 	      var props = this.props;
 	      var className = props.className;
 	      var isDisabled = props.isDisabled;
+	      var focusOnClick = props.focusOnClick;
+	      var formSubmit = props.formSubmit;
 
-	      var otherProps = _objectWithoutProperties(props, ['className', 'isDisabled']);
+	      var otherProps = _objectWithoutProperties(props, ['className', 'isDisabled', 'focusOnClick', 'formSubmit']);
 
 	      className = (0, _classnames2.default)(className, _Button2.default.root);
-	      var onMouseDown = props.focusOnClick === false ? this._onMouseDownPreventDefault : props.onMouseDown;
-	      var type = props.formSubmit ? 'submit' : 'button';
+	      var onMouseDown = focusOnClick === false ? this._onMouseDownPreventDefault : props.onMouseDown;
+	      var type = formSubmit ? 'submit' : 'button';
 	      return _react2.default.createElement(
 	        'button',
 	        _extends({ type: type }, otherProps, { onMouseDown: onMouseDown, className: className, disabled: isDisabled }),
@@ -20345,6 +20350,8 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -20366,11 +20373,18 @@ module.exports =
 	  _createClass(PopoverIconButton, [{
 	    key: 'render',
 	    value: function render() {
-	      var props = this.props;
+	      /* eslint-disable no-unused-vars */
+	      var _props = this.props;
+	      var onTogglePopover = _props.onTogglePopover;
+	      var showPopover = _props.showPopover;
+
+	      var props = _objectWithoutProperties(_props, ['onTogglePopover', 'showPopover']);
+	      /* eslint-enable */
+
 
 	      return _react2.default.createElement(
 	        _IconButton2.default,
-	        _extends({}, props, { onClick: this.props.onTogglePopover }),
+	        _extends({}, props, { onClick: onTogglePopover }),
 	        this._renderPopover()
 	      );
 	    }
@@ -20388,17 +20402,17 @@ module.exports =
 	  }, {
 	    key: '_onSubmit',
 	    value: function _onSubmit() {
-	      var _props;
+	      var _props2;
 
-	      (_props = this.props).onSubmit.apply(_props, arguments);
+	      (_props2 = this.props).onSubmit.apply(_props2, arguments);
 	    }
 	  }, {
 	    key: '_hidePopover',
 	    value: function _hidePopover() {
 	      if (this.props.showPopover) {
-	        var _props2;
+	        var _props3;
 
-	        (_props2 = this.props).onTogglePopover.apply(_props2, arguments);
+	        (_props3 = this.props).onTogglePopover.apply(_props3, arguments);
 	      }
 	    }
 	  }]);
@@ -20493,8 +20507,8 @@ module.exports =
 
 	      var className = (0, _classnames2.default)(props.className, _InputPopover2.default.root);
 	      return _react2.default.createElement(
-	        'form',
-	        { className: className, onSubmit: this._onSubmit },
+	        'div',
+	        { className: className },
 	        _react2.default.createElement(
 	          'div',
 	          { className: _InputPopover2.default.inner },
@@ -20502,7 +20516,8 @@ module.exports =
 	            ref: this._setInputRef,
 	            type: 'text',
 	            placeholder: 'https://example.com/',
-	            className: _InputPopover2.default.input
+	            className: _InputPopover2.default.input,
+	            onKeyPress: this._onInputKeyPress
 	          }),
 	          _react2.default.createElement(
 	            _ButtonGroup2.default,
@@ -20515,7 +20530,7 @@ module.exports =
 	            _react2.default.createElement(_IconButton2.default, {
 	              label: 'Submit',
 	              iconName: 'accept',
-	              formSubmit: true
+	              onClick: this._onSubmit
 	            })
 	          )
 	        )
@@ -20527,10 +20542,17 @@ module.exports =
 	      this._inputRef = inputElement;
 	    }
 	  }, {
+	    key: '_onInputKeyPress',
+	    value: function _onInputKeyPress(event) {
+	      if (event.which === 13) {
+	        // Avoid submitting a <form> somewhere up the element tree.
+	        event.preventDefault();
+	        this._onSubmit();
+	      }
+	    }
+	  }, {
 	    key: '_onSubmit',
-	    value: function _onSubmit(event) {
-	      event.preventDefault();
-	      event.stopPropagation();
+	    value: function _onSubmit() {
 	      var value = this._inputRef ? this._inputRef.value : '';
 	      this.props.onSubmit(value);
 	    }
