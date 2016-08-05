@@ -1,5 +1,6 @@
 /*eslint-env node */
 var path = require('path');
+var webpack = require('webpack');
 
 var loaders = [
   {
@@ -37,4 +38,14 @@ module.exports = [{
     filename: 'demo.js',
   },
   module: {loaders: loaders},
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: true,
+      comments: true,
+      mangle: false,
+      compress: {
+        dead_code: true,
+      },
+    }),
+  ],
 }];
