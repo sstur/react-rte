@@ -94,15 +94,15 @@ module.exports =
 
 	var _EditorToolbar2 = _interopRequireDefault(_EditorToolbar);
 
-	var _EditorValue = __webpack_require__(184);
+	var _EditorValue = __webpack_require__(183);
 
 	var _EditorValue2 = _interopRequireDefault(_EditorValue);
 
-	var _LinkDecorator = __webpack_require__(199);
+	var _LinkDecorator = __webpack_require__(198);
 
 	var _LinkDecorator2 = _interopRequireDefault(_LinkDecorator);
 
-	var _ImageDecorator = __webpack_require__(200);
+	var _ImageDecorator = __webpack_require__(199);
 
 	var _ImageDecorator2 = _interopRequireDefault(_ImageDecorator);
 
@@ -114,13 +114,13 @@ module.exports =
 
 	var _classAutobind2 = _interopRequireDefault(_classAutobind);
 
-	var _events = __webpack_require__(204);
+	var _events = __webpack_require__(203);
 
 	var _draftJsUtils = __webpack_require__(147);
 
-	__webpack_require__(205);
+	__webpack_require__(204);
 
-	var _RichTextEditor = __webpack_require__(207);
+	var _RichTextEditor = __webpack_require__(206);
 
 	var _RichTextEditor2 = _interopRequireDefault(_RichTextEditor);
 
@@ -19049,15 +19049,15 @@ module.exports =
 
 	var _StyleButton2 = _interopRequireDefault(_StyleButton);
 
-	var _PopoverIconButton = __webpack_require__(170);
+	var _PopoverIconButton = __webpack_require__(169);
 
 	var _PopoverIconButton2 = _interopRequireDefault(_PopoverIconButton);
 
-	var _ButtonGroup = __webpack_require__(172);
+	var _ButtonGroup = __webpack_require__(171);
 
 	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
 
-	var _Dropdown = __webpack_require__(177);
+	var _Dropdown = __webpack_require__(176);
 
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
@@ -19065,11 +19065,11 @@ module.exports =
 
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 
-	var _getEntityAtCursor2 = __webpack_require__(180);
+	var _getEntityAtCursor2 = __webpack_require__(179);
 
 	var _getEntityAtCursor3 = _interopRequireDefault(_getEntityAtCursor2);
 
-	var _clearEntityForRange = __webpack_require__(181);
+	var _clearEntityForRange = __webpack_require__(180);
 
 	var _clearEntityForRange2 = _interopRequireDefault(_clearEntityForRange);
 
@@ -19081,7 +19081,7 @@ module.exports =
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _EditorToolbar = __webpack_require__(182);
+	var _EditorToolbar = __webpack_require__(181);
 
 	var _EditorToolbar2 = _interopRequireDefault(_EditorToolbar);
 
@@ -19559,11 +19559,11 @@ module.exports =
 
 	var _Button2 = _interopRequireDefault(_Button);
 
-	var _ButtonWrap = __webpack_require__(165);
+	var _ButtonWrap = __webpack_require__(164);
 
 	var _ButtonWrap2 = _interopRequireDefault(_ButtonWrap);
 
-	var _IconButton = __webpack_require__(168);
+	var _IconButton = __webpack_require__(167);
 
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 
@@ -19841,14 +19841,14 @@ module.exports =
 	var content = __webpack_require__(162);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Button.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Button.css");
+			module.hot.accept("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Button.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Button.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -19859,78 +19859,14 @@ module.exports =
 
 /***/ },
 /* 162 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".Button__root___1t9vg {\r\n  display: inline-block;\r\n  margin: 0 5px 0 0;\r\n  padding: 3px 8px;\r\n  height: 30px;\r\n  line-height: 22px;\r\n  box-sizing: border-box;\r\n  background: none #fdfdfd;\r\n  background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);\r\n  border: 1px solid #999;\r\n  border-radius: 2px;\r\n  color: #333;\r\n  text-decoration: none;\r\n  font-size: inherit;\r\n  font-family: inherit;\r\n  cursor: pointer;\r\n  white-space: nowrap;\r\n}\r\n\r\n.Button__root___1t9vg:disabled {\r\n  cursor: not-allowed;\r\n  background: none transparent;\r\n}\r\n\r\n.Button__root___1t9vg:disabled > * {\r\n  opacity: .5;\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
+	module.exports = {
 		"root": "Button__root___1t9vg"
 	};
 
 /***/ },
 /* 163 */
-/***/ function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
-
-/***/ },
-/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -20182,7 +20118,7 @@ module.exports =
 
 
 /***/ },
-/* 165 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20206,7 +20142,7 @@ module.exports =
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _ButtonWrap = __webpack_require__(166);
+	var _ButtonWrap = __webpack_require__(165);
 
 	var _ButtonWrap2 = _interopRequireDefault(_ButtonWrap);
 
@@ -20218,23 +20154,23 @@ module.exports =
 	}
 
 /***/ },
-/* 166 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(167);
+	var content = __webpack_require__(166);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ButtonWrap.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ButtonWrap.css");
+			module.hot.accept("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ButtonWrap.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ButtonWrap.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20242,41 +20178,33 @@ module.exports =
 		// When the module is disposed, remove the <style> tags
 		module.hot.dispose(function() { update(); });
 	}
+
+/***/ },
+/* 166 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"root": "ButtonWrap__root___2qgcQ"
+	};
 
 /***/ },
 /* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".ButtonWrap__root___2qgcQ {\r\n  display: inline-block;\r\n  position: relative;\r\n  /* This ensures the popover will show on top of the editor. */\r\n  z-index: 10;\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
-		"root": "ButtonWrap__root___2qgcQ"
-	};
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(169);
+	var content = __webpack_require__(168);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./IconButton.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./IconButton.css");
+			module.hot.accept("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./IconButton.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./IconButton.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20286,18 +20214,10 @@ module.exports =
 	}
 
 /***/ },
-/* 169 */
-/***/ function(module, exports, __webpack_require__) {
+/* 168 */
+/***/ function(module, exports) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".IconButton__root___2awWb {\r\n  padding-left: 3px;\r\n  padding-right: 3px;\r\n}\r\n\r\n.IconButton__icon___2DdFx {\r\n  display: inline-block;\r\n  width: 22px;\r\n  height: 22px;\r\n  background-position: center center;\r\n  background-repeat: no-repeat;\r\n  background-size: 18px;\r\n}\r\n\r\n.IconButton__isActive___2rZ4Z {\r\n  background: none #d8d8d8;\r\n}\r\n\r\n.IconButton__icon-undo___2w6D8 {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTcuODU2IDI0YzIuNjY1LTQuODMgMy4xMTUtMTIuMTk1LTcuMzU2LTExLjk1VjE4bC05LTkgOS05djUuODJDMjMuMDM4IDUuNDk1IDI0LjQzNSAxNi44OSAxNy44NTYgMjR6Ii8+PC9zdmc+\");\r\n  background-size: 14px;\r\n}\r\n.IconButton__icon-redo___Uq9D7 {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTMuNSA1LjgyVjBsOSA5LTkgOXYtNS45NUMzLjAzIDExLjgwNiAzLjQ3OCAxOS4xNyA2LjE0NCAyNC0uNDM2IDE2Ljg5Ljk2MiA1LjQ5NCAxMy41IDUuODJ6Ii8+PC9zdmc+\");\r\n  background-size: 14px;\r\n}\r\n\r\n.IconButton__icon-unordered-list-item___1cs8c {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNNC42NTYgMy4zNDRIMTR2MS4zMTNINC42NTZWMy4zNDR6bTAgNS4zMTJWNy4zNDNIMTR2MS4zMTNINC42NTZ6bTAgNHYtMS4zMTNIMTR2MS4zMTNINC42NTZ6bS0yLTEuNTNxLjM3NSAwIC42NC4yNXQuMjY3LjYyNC0uMjY2LjYyNS0uNjQuMjUtLjYyNi0uMjVUMS43OCAxMnQuMjUtLjYyNS42MjYtLjI1em0wLTguMTI2cS40MDYgMCAuNzAzLjI4dC4yOTYuNzItLjI5Ny43Mi0uNzA0LjI4LS43MDMtLjI4VDEuNjU2IDR0LjI5Ny0uNzIuNzAzLS4yOHptMCA0cS40MDYgMCAuNzAzLjI4dC4yOTYuNzItLjI5Ny43Mi0uNzA0LjI4LS43MDMtLjI4VDEuNjU2IDh0LjI5Ny0uNzIuNzAzLS4yOHoiLz48L3N2Zz4=\");\r\n}\r\n.IconButton__icon-ordered-list-item___3JgbM {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNNC42NTYgOC42NTZWNy4zNDNIMTR2MS4zMTNINC42NTZ6bTAgNHYtMS4zMTNIMTR2MS4zMTNINC42NTZ6bTAtOS4zMTJIMTR2MS4zMTNINC42NTZWMy4zNDR6bS0zLjMxMiA0di0uNjg4aDJ2LjYyNWwtMS4yMiAxLjM3NmgxLjIydi42ODhoLTJWOC43MmwxLjE4OC0xLjM3NkgxLjM0NHptLjY1Ni0ydi0yaC0uNjU2di0uNjg4aDEuMzEzdjIuNjg4SDJ6bS0uNjU2IDZ2LS42ODhoMnYyLjY4OGgtMnYtLjY4OGgxLjMxM3YtLjMxM0gydi0uNjg4aC42NTd2LS4zMTNIMS4zNDR6Ii8+PC9zdmc+\");\r\n}\r\n.IconButton__icon-blockquote___uz2D0 {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNOS4zNDQgMTEuMzQ0bDEuMzEzLTIuNjg4aC0ydi00aDR2NGwtMS4zMTMgMi42ODhoLTJ6bS01LjM0NCAwbDEuMzQ0LTIuNjg4aC0ydi00aDR2NEw2IDExLjM0NEg0eiIvPjwvc3ZnPg==\");\r\n}\r\n\r\n.IconButton__icon-bold___FMXgD {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNOSAxMC4zNDRxLjQzOCAwIC43Mi0uMjk3dC4yOC0uNzAzLS4yOC0uNzAzVDkgOC4zNDVINi42NTZ2Mkg5em0tMi4zNDQtNnYyaDJxLjQwNiAwIC43MDMtLjI5N3QuMjk2LS43MDMtLjI5Ny0uNzAzLS43MDQtLjI5NmgtMnptMy43NSAyLjg0NHExLjQzOC42NTYgMS40MzggMi4yOCAwIDEuMDY0LS43MDMgMS43OThUOS4zNzYgMTJoLTQuNzJWMi42NTZoNC4xOXExLjEyNCAwIDEuODkuNzh0Ljc2NiAxLjkwNy0xLjA5MyAxLjg0NHoiLz48L3N2Zz4=\");\r\n}\r\n.IconButton__icon-italic___2Tb_j {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNNi42NTYgMi42NTZIMTJ2MmgtMS44NzVMNy44NzUgMTBoMS40N3YySDR2LTJoMS44NzVsMi4yNS01LjM0NGgtMS40N3YtMnoiLz48L3N2Zz4=\");\r\n}\r\n.IconButton__icon-underline___23t7Y {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNMy4zNDQgMTIuNjU2aDkuMzEzVjE0SDMuMzQ0di0xLjM0NHpNOCAxMS4zNDRxLTEuNjU2IDAtMi44MjgtMS4xNzJUNCA3LjM0NFYyaDEuNjU2djUuMzQ0cTAgLjk3LjY4OCAxLjY0VDggOS42NTh0MS42NTYtLjY3Mi42ODgtMS42NFYySDEydjUuMzQ0UTEyIDkgMTAuODI4IDEwLjE3MlQ4IDExLjM0NHoiLz48L3N2Zz4=\");\r\n}\r\n.IconButton__icon-strikethrough___1Uq4O {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjMuNTcgMTJxLjE5IDAgLjMxLjEydC4xMi4zMXYuODU2cTAgLjE4OC0uMTIuMzA4dC0uMzEuMTJILjQzcS0uMTg4IDAtLjMwOC0uMTJUMCAxMy4yODZ2LS44NTdxMC0uMTkuMTItLjMxVC40MjggMTJIMjMuNTd6bS0xNy4xLS44NTdxLS4zNzYtLjQ3LS42ODQtMS4wNy0uNjQzLTEuMy0uNjQzLTIuNTIgMC0yLjQyMyAxLjc5NS00LjEzNyAxLjc4LTEuNyA1LjI2My0xLjcuNjcgMCAyLjIzOC4yNTMuODg0LjE2IDIuMzcuNjQyLjEzNS41MS4yODIgMS41OC4xODggMS42NDcuMTg4IDIuNDUgMCAuMjQyLS4wNjcuNjA0bC0uMTYuMDQtMS4xMjUtLjA4LS4xODgtLjAyN3EtLjY3LTEuOTk3LTEuMzgtMi43NDctMS4xNzgtMS4yMi0yLjgxMi0xLjIyLTEuNTI3IDAtMi40MzguNzktLjg5Ny43NzgtLjg5NyAxLjk1NiAwIC45NzcuODg0IDEuODc0dDMuNzM3IDEuNzI4cS45MjUuMjY4IDIuMzE4Ljg4NC43NzcuMzc1IDEuMjcyLjY5Nkg2LjQ3em02Ljc5IDMuNDI4aDUuNTAzcS4wOTQuNTIzLjA5NCAxLjIzMyAwIDEuNDg3LS41NSAyLjg0LS4zMDcuNzM2LS45NSAxLjM5Mi0uNDk2LjQ3LTEuNDYgMS4wODUtMS4wNy42NDMtMi4wNS44ODQtMS4wNy4yOC0yLjcxOC4yOC0xLjUyOCAwLTIuNjEzLS4zMDdsLTEuODc1LS41MzZxLS43NjMtLjIxMy0uOTY0LS4zNzQtLjEwNy0uMTA3LS4xMDctLjI5NXYtLjE3M3EwLTEuNDQ2LS4wMjYtMi4wOS0uMDEzLS40IDAtLjkxbC4wMjctLjQ5NnYtLjU4OGwxLjM2Ny0uMDI3cS4yLjQ1NS40MDIuOTV0LjMuNzUuMTY3LjM2M3EuNDcuNzYzIDEuMDcgMS4yNi41NzcuNDggMS40MDcuNzYyLjc5LjI5NSAxLjc2OC4yOTUuODU3IDAgMS44NjItLjM2MiAxLjAzLS4zNDggMS42MzQtMS4xNTIuNjMtLjgxNi42My0xLjcyNyAwLTEuMTI1LTEuMDg2LTIuMTAzLS40NTUtLjM4OC0xLjgzNS0uOTV6Ii8+PC9zdmc+\");\r\n  background-size: 14px;\r\n}\r\n.IconButton__icon-code___LWqTN {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTE2IDExNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEuNDE0Ij48ZyBmaWxsLXJ1bGU9Im5vbnplcm8iPjxwYXRoIGQ9Ik0yMi40NjQgMjguNDhjMCAyLjg5NS4zNDQgNS45MDUuODA2IDkuMDIuMzQyIDMuMDEuNjkgNi4wMi42OSA4LjkxNyAwIDMuNTYyLS45MTcgNy43OS04Ljk1NSA3LjkxMnY3LjIzNmM4LjAzNi4xMTUgOC45NTYgNC42NzIgOC45NTYgNy45MTIgMCAyLjg4Ni0uMzQ4IDUuNzgzLS42OSA4Ljc4Ny0uNDYyIDMuMDEzLS44MDYgNi4xMzQtLjgwNiA4LjkyIDAgMTEuMjM4IDcuMTA2IDE1LjI1MiAxNy4wODcgMTUuMjUyaDMuMzJ2LTcuOTEyaC0yLjA2MmMtNS43MjYgMC04LjAyNS0zLjIzMy04LjAyNS04Ljc5NiAwLTIuMjM2LjM0NC00LjU3LjgwNi03LjAyMy4yMjctMi40MzguNjg0LTUuMTIuNjg0LTguMTIuMTE1LTcuNzkyLTMuMzItMTEuMjUzLTkuMTc0LTEyLjU4NnYtLjIyNWM1Ljg1NC0xLjMzMiA5LjI5My00LjY3NiA5LjE3LTEyLjQ3IDAtMi44OTUtLjQ1Ny01LjU2NS0uNjg0LTguMDI0LS40NjItMi40NC0uODA3LTQuNzc3LS44MDctNy4wMTIgMC01LjQ1IDIuMDU4LTguNjg4IDguMDI0LTguNjg4aDIuMDY2di04LjAxNGgtMy4zMmMtMTAuMjA1LS4wMDMtMTcuMDg2IDQuNDQ0LTE3LjA4NiAxNC45MTV6TTkyLjA2IDQ2LjQxN2MwLTIuODkzLjQ1My01LjkwMy44MDMtOC45MTguMzQzLTMuMTE0Ljc5Ny02LjEyLjc5Ny05LjAyIDAtMTAuNDctNi44NzUtMTQuOTE3LTE3LjA4LTE0LjkxN2gtMy4zMjd2OC4wMTdoMi4wNmM1Ljg1Mi4xMTQgNy45MSAzLjIzMyA3LjkxIDguNjg4IDAgMi4yMy0uMzQyIDQuNTY1LS42ODUgNy4wMTItLjM1IDIuNDU1LS42OTIgNS4xMjYtLjY5MiA4LjAyNC0uMTA1IDcuNzk3IDMuMzI3IDExLjEzNiA5LjA1NiAxMi40N3YuMjIyYy01LjcyIDEuMzMzLTkuMTYgNC43OTYtOS4wNTYgMTIuNTg3IDAgMyAuMzQyIDUuNjg2LjY5MiA4LjEyLjM0MyAyLjQ1NS42ODYgNC43OS42ODYgNy4wMjUgMCA1LjU1NC0yLjE4IDguNjgtNy45MTIgOC43ODhoLTIuMDZ2Ny45MTJoMy4zMjVjOS45NzUgMCAxNy4wNzYtNC4wMSAxNy4wNzYtMTUuMjUgMC0yLjc4My0uNDU0LTUuOS0uNzk2LTguOTE0LS4zNDctMy4wMS0uODA1LTUuOS0uODA1LTguNzk1IDAtMy4yMzMgMS4wMzUtNy43OSA4Ljk0My03LjkxM1Y1NC4zMmMtNy45MDQtLjExMi04LjkzNS00LjM0LTguOTM1LTcuOTAzeiIvPjwvZz48L3N2Zz4=\");\r\n}\r\n\r\n.IconButton__icon-link___2I96k {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMiIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDIyIDI0Ij48cGF0aCBkPSJNMTkuNSAxNi4yODZxMC0uNTM2LS4zNzUtLjkxbC0yLjc4Ni0yLjc4N3EtLjM3Ni0uMzc2LS45MTItLjM3Ni0uNTYzIDAtLjk2NC40M2wuMjU0LjI0N3EuMjE0LjIwOC4yODguMjl0LjIuMjUzLjE3NS4zNDIuMDQ4LjM2OHEwIC41MzYtLjM3NS45MXQtLjkxLjM3NnEtLjIwMiAwLS4zNy0uMDQ4dC0uMzQtLjE3NC0uMjU1LS4yLS4yODgtLjI5LS4yNDgtLjI1M3EtLjQ0Mi40MTUtLjQ0Mi45NzggMCAuNTM2LjM3NS45MWwyLjc2IDIuNzczcS4zNi4zNjIuOTEuMzYyLjUzNiAwIC45MS0uMzQ4bDEuOTctMS45NTVxLjM3NS0uMzc1LjM3NS0uODk3em0tOS40MTUtOS40NDJxMC0uNTM2LS4zNzUtLjkxTDYuOTUgMy4xNnEtLjM3NC0uMzc0LS45MS0uMzc0LS41MjIgMC0uOTEuMzYyTDMuMTYgNS4xMDNxLS4zNzUuMzc1LS4zNzUuODk3IDAgLjUzNi4zNzUuOTFsMi43ODYgMi43ODdxLjM2Mi4zNjIuOTEuMzYyLjU2NCAwIC45NjUtLjQxNmwtLjI1My0uMjQ4cS0uMjEzLS4yMDgtLjI4OC0uMjg4dC0uMjAyLS4yNTQtLjE3NC0uMzQyLS4wNDctLjM2OHEwLS41MzYuMzc1LS45MXQuOTEtLjM3NnEuMjAyIDAgLjM3LjA0N3QuMzQuMTc0LjI1NS4yLjI4OC4yODguMjQ4LjI1NHEuNDQyLS40MTUuNDQyLS45Nzh6bTExLjk4NiA5LjQ0MnEwIDEuNjA3LTEuMTM3IDIuNzJsLTEuOTcgMS45NTRxLTEuMTEgMS4xMTItMi43MTggMS4xMTItMS42MiAwLTIuNzMyLTEuMTM4bC0yLjc2LTIuNzcycS0xLjExLTEuMTEyLTEuMTEtMi43MiAwLTEuNjQ2IDEuMTc4LTIuNzk4bC0xLjE3OC0xLjE4cS0xLjE1MiAxLjE4LTIuNzg2IDEuMTgtMS42MDcgMC0yLjczMi0xLjEyNUwxLjMzOCA4LjczMlEuMjEzIDcuNjA4LjIxMyA2VDEuMzUgMy4yODNsMS45Ny0xLjk1NVE0LjQzMi4yMTUgNi4wNC4yMTVxMS42MiAwIDIuNzMgMS4xMzhsMi43NiAyLjc3MnExLjExMiAxLjExMiAxLjExMiAyLjcyIDAgMS42NDYtMS4xOCAyLjc5OGwxLjE4IDEuMThxMS4xNTItMS4xOCAyLjc4Ni0xLjE4IDEuNjA3IDAgMi43MzIgMS4xMjVsMi43ODYgMi43ODZxMS4xMjUgMS4xMjUgMS4xMjUgMi43MzJ6Ii8+PC9zdmc+\");\r\n  background-size: 14px;\r\n}\r\n\r\n.IconButton__icon-remove-link___2BnS8 {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMiIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDIyIDI0Ij48cGF0aCBkPSJNNS44OCAxNy4wMjJsLTMuNDMgMy40M3EtLjEzNC4xMi0uMzA4LjEyLS4xNiAwLS4zMDgtLjEyLS4xMi0uMTM1LS4xMi0uMzF0LjEyLS4zMDdsMy40My0zLjQzcS4xMzMtLjEyLjMwNy0uMTJ0LjMxLjEycS4xMi4xMzUuMTIuMzF0LS4xMi4zMDd6bTIuMjYzLjU1djQuMjg1cTAgLjE4OC0uMTIuMzA4dC0uMzEuMTItLjMwNy0uMTItLjEyLS4zMDhWMTcuNTdxMC0uMTg3LjEyLS4zMDd0LjMwOC0uMTIuMzA4LjEyLjEyLjMwOHptLTMtM3EwIC4xODctLjEyLjMwN3QtLjMxLjEySC40M3EtLjE4OCAwLS4zMDgtLjEyVDAgMTQuNTd0LjEyLS4zMDcuMzA4LS4xMmg0LjI4NnEuMTg4IDAgLjMwOC4xMnQuMTIuMzA4em0xNi45MjggMS43MTRxMCAxLjYwNy0xLjEzNyAyLjcybC0xLjk3IDEuOTU0cS0xLjExIDEuMTEyLTIuNzE4IDEuMTEyLTEuNjIgMC0yLjczMi0xLjEzOEw5LjA0IDE2LjQ0N3EtLjI4LS4yOC0uNTYzLS43NWwzLjItLjI0IDMuNjU3IDMuNjdxLjM2Mi4zNi45MS4zNjd0LjkxMi0uMzU1bDEuOTctMS45NTZxLjM3NC0uMzc1LjM3NC0uODk3IDAtLjUzNi0uMzc1LS45MWwtMy42Ny0zLjY4NC4yNC0zLjJxLjQ3LjI4Ljc1LjU2Mmw0LjUgNC41cTEuMTI2IDEuMTUyIDEuMTI2IDIuNzMyek0xMy44MSA2LjU5bC0zLjIuMjRMNi45NSAzLjE2cS0uMzc0LS4zNzUtLjkxLS4zNzUtLjUyMiAwLS45MS4zNjJMMy4xNiA1LjEwMnEtLjM3NS4zNzUtLjM3NS44OTcgMCAuNTM1LjM3NS45MWwzLjY3IDMuNjctLjI0IDMuMjE0cS0uNDctLjI4LS43NS0uNTYzbC00LjUtNC41US4yMTMgNy41OC4yMTMgNnEwLTEuNjA4IDEuMTM4LTIuNzJsMS45Ny0xLjk1NVE0LjQzLjIxMyA2LjA0LjIxM3ExLjYyIDAgMi43MzIgMS4xMzhsNC40NzMgNC40ODhxLjI4LjI4LjU2My43NXptOC40NzggMS4xMjRxMCAuMTg4LS4xMi4zMDh0LS4zMS4xMmgtNC4yODVxLS4xODcgMC0uMzA3LS4xMnQtLjEyLS4zMDguMTItLjMwOC4zMDgtLjEyaDQuMjg3cS4xODggMCAuMzA4LjEydC4xMi4zMDh6TTE1IC40M3Y0LjI4NXEwIC4xODgtLjEyLjMwOHQtLjMxLjEyLS4zMDctLjEyLS4xMi0uMzA4Vi40M3EwLS4xOS4xMi0uMzFUMTQuNTcgMHQuMzEuMTIuMTIuMzF6bTUuNDUgMi4wMmwtMy40MjggMy40M3EtLjE0Ny4xMi0uMzA4LjEydC0uMzA4LS4xMnEtLjEyLS4xMzQtLjEyLS4zMDh0LjEyLS4zMDhsMy40My0zLjQzcS4xMzMtLjEyLjMwNy0uMTJ0LjMwOC4xMnEuMTIyLjEzNS4xMjIuMzF0LS4xMi4zMDd6Ii8+PC9zdmc+\");\r\n  background-size: 14px;\r\n}\r\n\r\n.IconButton__icon-image___2NVj8 {\r\n  background-image: url(\"data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNTMzLjMzMyA1MzMuMzM0IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MzMuMzMzIDUzMy4zMzQ7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNNDY2LjY2NywxMDBoLTQwMHYzMzMuMzMzaDQwMFYxMDB6IE01MzMuMzMzLDMzLjMzM0w1MzMuMzMzLDMzLjMzM1Y1MDBIMFYzMy4zMzNINTMzLjMzM3ogTTQzMy4zMzMsNDAwSDEwMHYtNjYuNjY3ICAgbDEwMC0xNjYuNjY3bDEzNi45NzksMTY2LjY2N2w5Ni4zNTQtNjYuNjY2VjMwMFY0MDB6IE0zMzMuMzMzLDE4My4zMzNjMCwyNy42MTQsMjIuMzg2LDUwLDUwLDUwczUwLTIyLjM4Niw1MC01MHMtMjIuMzg2LTUwLTUwLTUwICAgUzMzMy4zMzMsMTU1LjcxOSwzMzMuMzMzLDE4My4zMzN6IiBmaWxsPSIjMDAwMDAwIi8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==\");\r\n  background-size: 14px;\r\n}\r\n\r\n.IconButton__icon-cancel___1A6y8 {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjMuNzggMTkuMjhMMTYuNSAxMmw3LjI4LTcuMjhhLjc0OC43NDggMCAwIDAgMC0xLjA2TDIwLjM0LjIxOGEuNzUuNzUgMCAwIDAtMS4wNi0uMDAyTDEyIDcuNDk4IDQuNzE3LjIyYS43NDguNzQ4IDAgMCAwLTEuMDYgMEwuMjE3IDMuNjZhLjc1Ljc1IDAgMCAwIDAgMS4wNkw3LjQ5NyAxMmwtNy4yOCA3LjI4YS43NDguNzQ4IDAgMCAwIDAgMS4wNmwzLjQ0IDMuNDRhLjc1Ljc1IDAgMCAwIDEuMDYuMDAybDcuMjgtNy4yOCA3LjI4MiA3LjI4Yy4wNzguMDc4LjE3LjEzNS4yNjguMTcuMjY3LjEuNTguMDQ0Ljc5My0uMTdsMy40NC0zLjQ0YS43NS43NSAwIDAgMCAwLTEuMDZ6Ii8+PC9zdmc+\");\r\n  background-size: 13px;\r\n}\r\n\r\n.IconButton__icon-accept___2elsq {\r\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjAuMjUgM0w5IDE0LjI1IDMuNzUgOSAwIDEyLjc1bDkgOSAxNS0xNXoiLz48L3N2Zz4=\");\r\n  background-size: 13px;\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
+	module.exports = {
 		"root": "IconButton__root___2awWb",
 		"icon": "IconButton__icon___2DdFx",
 		"isActive": "IconButton__isActive___2rZ4Z",
@@ -20319,7 +20239,7 @@ module.exports =
 	};
 
 /***/ },
-/* 170 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20340,7 +20260,7 @@ module.exports =
 
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 
-	var _InputPopover = __webpack_require__(171);
+	var _InputPopover = __webpack_require__(170);
 
 	var _InputPopover2 = _interopRequireDefault(_InputPopover);
 
@@ -20373,13 +20293,11 @@ module.exports =
 	  _createClass(PopoverIconButton, [{
 	    key: 'render',
 	    value: function render() {
-	      /* eslint-disable no-unused-vars */
 	      var _props = this.props;
 	      var onTogglePopover = _props.onTogglePopover;
 	      var showPopover = _props.showPopover;
 
-	      var props = _objectWithoutProperties(_props, ['onTogglePopover', 'showPopover']);
-	      /* eslint-enable */
+	      var props = _objectWithoutProperties(_props, ['onTogglePopover', 'showPopover']); // eslint-disable-line no-unused-vars
 
 
 	      return _react2.default.createElement(
@@ -20423,7 +20341,7 @@ module.exports =
 	exports.default = PopoverIconButton;
 
 /***/ },
-/* 171 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20446,7 +20364,7 @@ module.exports =
 
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 
-	var _ButtonGroup = __webpack_require__(172);
+	var _ButtonGroup = __webpack_require__(171);
 
 	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
 
@@ -20458,7 +20376,7 @@ module.exports =
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _InputPopover = __webpack_require__(175);
+	var _InputPopover = __webpack_require__(174);
 
 	var _InputPopover2 = _interopRequireDefault(_InputPopover);
 
@@ -20580,7 +20498,7 @@ module.exports =
 	exports.default = InputPopover;
 
 /***/ },
-/* 172 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20604,7 +20522,7 @@ module.exports =
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _ButtonGroup = __webpack_require__(173);
+	var _ButtonGroup = __webpack_require__(172);
 
 	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
 
@@ -20616,23 +20534,23 @@ module.exports =
 	}
 
 /***/ },
-/* 173 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(174);
+	var content = __webpack_require__(173);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ButtonGroup.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ButtonGroup.css");
+			module.hot.accept("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ButtonGroup.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ButtonGroup.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20640,41 +20558,33 @@ module.exports =
 		// When the module is disposed, remove the <style> tags
 		module.hot.dispose(function() { update(); });
 	}
+
+/***/ },
+/* 173 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"root": "ButtonGroup__root___2nXYD"
+	};
 
 /***/ },
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".ButtonGroup__root___2nXYD {\r\n  display: inline-block;\r\n  vertical-align: top;\r\n  margin: 0 5px 5px 0;\r\n  white-space: nowrap;\r\n}\r\n\r\n.ButtonGroup__root___2nXYD:last-child {\r\n  margin-right: 0;\r\n}\r\n\r\n/* TODO: remove all this child selector and tag selector stuff. */\r\n\r\n.ButtonGroup__root___2nXYD > div > button {\r\n  margin-right: 0;\r\n  border-radius: 0;\r\n}\r\n\r\n.ButtonGroup__root___2nXYD > div > button:focus {\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n.ButtonGroup__root___2nXYD > div:first-child > button {\r\n  border-top-left-radius: 2px;\r\n  border-bottom-left-radius: 2px;\r\n}\r\n\r\n.ButtonGroup__root___2nXYD > div + div > button {\r\n  border-left-width: 0;\r\n}\r\n\r\n.ButtonGroup__root___2nXYD > div:last-child > button {\r\n  border-top-right-radius: 2px;\r\n  border-bottom-right-radius: 2px;\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
-		"root": "ButtonGroup__root___2nXYD"
-	};
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(176);
+	var content = __webpack_require__(175);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./InputPopover.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./InputPopover.css");
+			module.hot.accept("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./InputPopover.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./InputPopover.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20684,18 +20594,10 @@ module.exports =
 	}
 
 /***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
+/* 175 */
+/***/ function(module, exports) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".InputPopover__root___sAIh7 {\r\n  position: absolute;\r\n  top: calc(100% + 5px);\r\n  left: 0;\r\n  width: 260px;\r\n  background: none #fdfdfd;\r\n  background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);\r\n  border: 1px solid #999;\r\n  border-radius: 2px;\r\n  box-sizing: border-box;\r\n  padding: 4px;\r\n}\r\n\r\n.InputPopover__root___sAIh7:before {\r\n  content: \"\";\r\n  display: block;\r\n  position: absolute;\r\n  width: 0;\r\n  height: 0;\r\n  top: -10px;\r\n  left: 10px;\r\n  border: 5px solid transparent;\r\n  border-bottom-color: #999;\r\n}\r\n\r\n.InputPopover__root___sAIh7:after {\r\n  content: \"\";\r\n  display: block;\r\n  position: absolute;\r\n  width: 0;\r\n  height: 0;\r\n  top: -9px;\r\n  left: 10px;\r\n  border: 5px solid transparent;\r\n  border-bottom-color: #fdfdfd;\r\n}\r\n\r\n.InputPopover__inner___1sUSg {\r\n  display: flex;\r\n}\r\n\r\n.InputPopover__input___3QwmQ {\r\n  display: block;\r\n  flex: 1 0 auto;\r\n  height: 30px;\r\n  background: none white;\r\n  border: 1px solid #999;\r\n  border-radius: 2px;\r\n  box-sizing: border-box;\r\n  padding: 2px 6px;\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  line-height: 24px;\r\n}\r\n\r\n.InputPopover__inner___1sUSg .InputPopover__buttonGroup___3zSkK {\r\n  flex: 0 1 auto;\r\n  margin-left: 4px;\r\n  margin-bottom: 0;\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
+	module.exports = {
 		"root": "InputPopover__root___sAIh7",
 		"inner": "InputPopover__inner___1sUSg",
 		"input": "InputPopover__input___3QwmQ",
@@ -20703,7 +20605,7 @@ module.exports =
 	};
 
 /***/ },
-/* 177 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20730,7 +20632,7 @@ module.exports =
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _Dropdown = __webpack_require__(178);
+	var _Dropdown = __webpack_require__(177);
 
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
@@ -20818,23 +20720,23 @@ module.exports =
 	exports.default = Dropdown;
 
 /***/ },
-/* 178 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(179);
+	var content = __webpack_require__(178);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Dropdown.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Dropdown.css");
+			module.hot.accept("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Dropdown.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Dropdown.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20844,24 +20746,16 @@ module.exports =
 	}
 
 /***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
+/* 178 */
+/***/ function(module, exports) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".Dropdown__root___1B9ta {\r\n  display: inline-block;\r\n  position: relative;\r\n  line-height: 22px;\r\n  vertical-align: top;\r\n  -webkit-user-select: none;\r\n  -moz-user-select: none;\r\n  -ms-user-select: none;\r\n}\r\n\r\n.Dropdown__root___1B9ta select {\r\n  position: relative;\r\n  z-index: 2;\r\n  display: inline-block;\r\n  box-sizing: border-box;\r\n  height: 30px;\r\n  line-height: inherit;\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  color: inherit;\r\n  margin: 0;\r\n  padding: 0;\r\n  border: 4px solid transparent;\r\n  border-right-width: 10px;\r\n  border-left-width: 5px;\r\n  background: none transparent;\r\n  opacity: 0;\r\n  cursor: pointer;\r\n}\r\n\r\n.Dropdown__root___1B9ta .Dropdown__value___3gCvl {\r\n  display: block;\r\n  position: absolute;\r\n  z-index: 1;\r\n  left: 0;\r\n  top: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  line-height: 23px;\r\n  border: 1px solid #999;\r\n  border-radius: 2px;\r\n  padding: 3px;\r\n  padding-right: 33px;\r\n  padding-left: 12px;\r\n  white-space: nowrap;\r\n  text-overflow: ellipsis;\r\n}\r\n\r\n.Dropdown__root___1B9ta .Dropdown__value___3gCvl::before,\r\n.Dropdown__root___1B9ta .Dropdown__value___3gCvl::after {\r\n  display: block;\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 50%;\r\n  right: 10px;\r\n  width: 0;\r\n  height: 0;\r\n  border: 4px solid transparent;\r\n}\r\n\r\n.Dropdown__root___1B9ta .Dropdown__value___3gCvl::before {\r\n  margin-top: -10px;\r\n  border-bottom-color: #555;\r\n}\r\n\r\n.Dropdown__root___1B9ta .Dropdown__value___3gCvl::after {\r\n  margin-top: 1px;\r\n  border-top-color: #555;\r\n}\r\n\r\n.Dropdown__root___1B9ta select:focus + .Dropdown__value___3gCvl {\r\n  border-color: #66afe9;\r\n}\r\n\r\n/* On Webkit we can style <select> to be transparant without turning off the\r\n   default focus styles. This is better for accessibility. */\r\n@media screen and (-webkit-min-device-pixel-ratio:0) {\r\n  .Dropdown__root___1B9ta select {\r\n    opacity: 1;\r\n    color: inherit;\r\n    -webkit-appearance: none;\r\n    border-left-width: 12px;\r\n    border-right-width: 35px;\r\n  }\r\n\r\n  .Dropdown__root___1B9ta select + .Dropdown__value___3gCvl {\r\n    color: transparent;\r\n  }\r\n\r\n  .Dropdown__root___1B9ta select:focus + .Dropdown__value___3gCvl {\r\n    border-color: #999;\r\n  }\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
+	module.exports = {
 		"root": "Dropdown__root___1B9ta",
 		"value": "Dropdown__value___3gCvl"
 	};
 
 /***/ },
-/* 180 */
+/* 179 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20923,7 +20817,7 @@ module.exports =
 	}
 
 /***/ },
-/* 181 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20954,23 +20848,23 @@ module.exports =
 	}
 
 /***/ },
-/* 182 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(183);
+	var content = __webpack_require__(182);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./EditorToolbar.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./EditorToolbar.css");
+			module.hot.accept("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./EditorToolbar.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./EditorToolbar.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20980,23 +20874,15 @@ module.exports =
 	}
 
 /***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
+/* 182 */
+/***/ function(module, exports) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".EditorToolbar__root___1VC2v {\r\n  font-family: 'Helvetica', sans-serif;\r\n  font-size: 14px;\r\n  margin-bottom: -5px;\r\n  user-select: none;\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
+	module.exports = {
 		"root": "EditorToolbar__root___1VC2v"
 	};
 
 /***/ },
-/* 184 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21009,13 +20895,13 @@ module.exports =
 
 	var _draftJs = __webpack_require__(2);
 
-	var _draftJsExportHtml = __webpack_require__(185);
+	var _draftJsExportHtml = __webpack_require__(184);
 
-	var _draftJsImportHtml = __webpack_require__(187);
+	var _draftJsImportHtml = __webpack_require__(186);
 
-	var _draftJsExportMarkdown = __webpack_require__(194);
+	var _draftJsExportMarkdown = __webpack_require__(193);
 
-	var _draftJsImportMarkdown = __webpack_require__(196);
+	var _draftJsImportMarkdown = __webpack_require__(195);
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -21118,7 +21004,7 @@ module.exports =
 	}
 
 /***/ },
-/* 185 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21127,7 +21013,7 @@ module.exports =
 	  value: true
 	});
 
-	var _stateToHTML = __webpack_require__(186);
+	var _stateToHTML = __webpack_require__(185);
 
 	Object.defineProperty(exports, 'stateToHTML', {
 	  enumerable: true,
@@ -21139,7 +21025,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 186 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21587,7 +21473,7 @@ module.exports =
 	}
 
 /***/ },
-/* 187 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21596,7 +21482,7 @@ module.exports =
 	  value: true
 	});
 
-	var _stateFromHTML = __webpack_require__(188);
+	var _stateFromHTML = __webpack_require__(187);
 
 	Object.defineProperty(exports, 'stateFromHTML', {
 	  enumerable: true,
@@ -21608,7 +21494,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21618,9 +21504,9 @@ module.exports =
 	});
 	exports.default = stateFromHTML;
 
-	var _draftJsImportElement = __webpack_require__(189);
+	var _draftJsImportElement = __webpack_require__(188);
 
-	var _parseHTML = __webpack_require__(193);
+	var _parseHTML = __webpack_require__(192);
 
 	var _parseHTML2 = _interopRequireDefault(_parseHTML);
 
@@ -21633,7 +21519,7 @@ module.exports =
 	}
 
 /***/ },
-/* 189 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21642,7 +21528,7 @@ module.exports =
 	  value: true
 	});
 
-	var _stateFromElement = __webpack_require__(190);
+	var _stateFromElement = __webpack_require__(189);
 
 	Object.defineProperty(exports, 'stateFromElement', {
 	  enumerable: true,
@@ -21654,7 +21540,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21667,7 +21553,7 @@ module.exports =
 
 	exports.default = stateFromElement;
 
-	var _replaceTextWithMeta3 = __webpack_require__(191);
+	var _replaceTextWithMeta3 = __webpack_require__(190);
 
 	var _replaceTextWithMeta4 = _interopRequireDefault(_replaceTextWithMeta3);
 
@@ -21677,7 +21563,7 @@ module.exports =
 
 	var _draftJsUtils = __webpack_require__(147);
 
-	var _syntheticDom = __webpack_require__(192);
+	var _syntheticDom = __webpack_require__(191);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22139,7 +22025,7 @@ module.exports =
 	}
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22181,7 +22067,7 @@ module.exports =
 	}
 
 /***/ },
-/* 192 */
+/* 191 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22373,7 +22259,7 @@ module.exports =
 	}
 
 /***/ },
-/* 193 */
+/* 192 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22395,7 +22281,7 @@ module.exports =
 	}
 
 /***/ },
-/* 194 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22404,7 +22290,7 @@ module.exports =
 	  value: true
 	});
 
-	var _stateToMarkdown = __webpack_require__(195);
+	var _stateToMarkdown = __webpack_require__(194);
 
 	Object.defineProperty(exports, 'stateToMarkdown', {
 	  enumerable: true,
@@ -22416,7 +22302,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 195 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22699,7 +22585,7 @@ module.exports =
 	}
 
 /***/ },
-/* 196 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22708,7 +22594,7 @@ module.exports =
 	  value: true
 	});
 
-	var _stateFromMarkdown = __webpack_require__(197);
+	var _stateFromMarkdown = __webpack_require__(196);
 
 	Object.defineProperty(exports, 'stateFromMarkdown', {
 	  enumerable: true,
@@ -22720,7 +22606,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 197 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22730,11 +22616,11 @@ module.exports =
 	});
 	exports.default = stateFromMarkdown;
 
-	var _MarkdownParser = __webpack_require__(198);
+	var _MarkdownParser = __webpack_require__(197);
 
 	var _MarkdownParser2 = _interopRequireDefault(_MarkdownParser);
 
-	var _draftJsImportElement = __webpack_require__(189);
+	var _draftJsImportElement = __webpack_require__(188);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22744,7 +22630,7 @@ module.exports =
 	}
 
 /***/ },
-/* 198 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22753,7 +22639,7 @@ module.exports =
 	  value: true
 	});
 
-	var _syntheticDom = __webpack_require__(192);
+	var _syntheticDom = __webpack_require__(191);
 
 	var hasOwnProperty = Object.prototype.hasOwnProperty; /**
 	                                                       * Ported from:
@@ -23575,7 +23461,7 @@ module.exports =
 	exports.default = MarkdownParser;
 
 /***/ },
-/* 199 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23622,7 +23508,7 @@ module.exports =
 	};
 
 /***/ },
-/* 200 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23631,7 +23517,7 @@ module.exports =
 	  value: true
 	});
 
-	var _ImageSpan = __webpack_require__(201);
+	var _ImageSpan = __webpack_require__(200);
 
 	var _ImageSpan2 = _interopRequireDefault(_ImageSpan);
 
@@ -23654,7 +23540,7 @@ module.exports =
 	};
 
 /***/ },
-/* 201 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23679,7 +23565,7 @@ module.exports =
 
 	var _draftJs = __webpack_require__(2);
 
-	var _ImageSpan = __webpack_require__(202);
+	var _ImageSpan = __webpack_require__(201);
 
 	var _ImageSpan2 = _interopRequireDefault(_ImageSpan);
 
@@ -23809,23 +23695,23 @@ module.exports =
 	exports.default = ImageSpan;
 
 /***/ },
-/* 202 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(203);
+	var content = __webpack_require__(202);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ImageSpan.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ImageSpan.css");
+			module.hot.accept("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ImageSpan.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./ImageSpan.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -23835,25 +23721,17 @@ module.exports =
 	}
 
 /***/ },
-/* 203 */
-/***/ function(module, exports, __webpack_require__) {
+/* 202 */
+/***/ function(module, exports) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".ImageSpan__root___UNCON {\r\n  background-repeat: no-repeat;\r\n  display: inline-block;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n}\r\n\r\n.ImageSpan__resize___2PEqf {\r\n  border: 1px dashed #78a300;\r\n  position: relative;\r\n  max-width: 100%;\r\n  display: inline-block;\r\n  line-height: 0;\r\n  top: -1px;\r\n  left: -1px,\r\n}\r\n\r\n.ImageSpan__resizeHandle___2JBaV {\r\n  cursor: nwse-resize;\r\n  position: absolute;\r\n  z-index: 2;\r\n  line-height: 1;\r\n  bottom: -4px;\r\n  right: -5px;\r\n  border: 1px solid white;\r\n  background-color: #78a300;\r\n  width: 8px;\r\n  height: 8px;\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
+	module.exports = {
 		"root": "ImageSpan__root___UNCON",
 		"resize": "ImageSpan__resize___2PEqf",
 		"resizeHandle": "ImageSpan__resizeHandle___2JBaV"
 	};
 
 /***/ },
-/* 204 */
+/* 203 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -24157,16 +24035,16 @@ module.exports =
 
 
 /***/ },
-/* 205 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(206);
+	var content = __webpack_require__(205);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {});
+	var update = __webpack_require__(163)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -24183,29 +24061,29 @@ module.exports =
 	}
 
 /***/ },
-/* 206 */
+/* 205 */
 /***/ function(module, exports) {
 
 	module.exports = "/**\r\n * We inherit the height of the container by default\r\n */\r\n\r\n.DraftEditor-root,\r\n.DraftEditor-editorContainer,\r\n.public-DraftEditor-content {\r\n  height: inherit;\r\n  text-align: initial;\r\n}\r\n\r\n.DraftEditor-root {\r\n  position: relative;\r\n}\r\n\r\n/**\r\n * Zero-opacity background used to allow focus in IE. Otherwise, clicks\r\n * fall through to the placeholder.\r\n */\r\n\r\n.DraftEditor-editorContainer {\r\n  background-color: rgba(255, 255, 255, 0);\r\n  /* Repair mysterious missing Safari cursor */\r\n  border-left: 0.1px solid transparent;\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n.public-DraftEditor-content {\r\n  outline: none;\r\n  white-space: pre-wrap;\r\n}\r\n\r\n.public-DraftEditor-block {\r\n  position: relative;\r\n}\r\n\r\n.DraftEditor-alignLeft .public-DraftEditor-block {\r\n  text-align: left;\r\n}\r\n\r\n.DraftEditor-alignLeft .public-DraftEditorPlaceholder-root {\r\n  left: 0;\r\n  text-align: left;\r\n}\r\n\r\n.DraftEditor-alignCenter .public-DraftEditor-block {\r\n  text-align: center;\r\n}\r\n\r\n.DraftEditor-alignCenter .public-DraftEditorPlaceholder-root {\r\n  margin: 0 auto;\r\n  text-align: center;\r\n  width: 100%;\r\n}\r\n\r\n.DraftEditor-alignRight .public-DraftEditor-block {\r\n  text-align: right;\r\n}\r\n\r\n.DraftEditor-alignRight .public-DraftEditorPlaceholder-root {\r\n  right: 0;\r\n  text-align: right;\r\n}\r\n/**\r\n * @providesModule DraftEditorPlaceholder\r\n */\r\n\r\n.public-DraftEditorPlaceholder-root {\r\n  color: #9197a3;\r\n  position: absolute;\r\n  z-index: 0;\r\n}\r\n\r\n.public-DraftEditorPlaceholder-hasFocus {\r\n  color: #bdc1c9;\r\n}\r\n\r\n.DraftEditorPlaceholder-hidden {\r\n  display: none;\r\n}\r\n/**\r\n * @providesModule DraftStyleDefault\r\n */\r\n\r\n.public-DraftStyleDefault-block {\r\n  position: relative;\r\n  white-space: pre-wrap;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-ltr {\r\n  direction: ltr;\r\n  text-align: left;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-rtl {\r\n  direction: rtl;\r\n  text-align: right;\r\n}\r\n\r\n/**\r\n * These rules provide appropriate text direction for counter pseudo-elements.\r\n */\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-listLTR {\r\n  direction: ltr;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-listRTL {\r\n  direction: rtl;\r\n}\r\n\r\n/**\r\n * Default spacing for list container elements. Override with CSS as needed.\r\n */\r\n\r\n.public-DraftStyleDefault-ul,\r\n.public-DraftStyleDefault-ol {\r\n  margin: 16px 0;\r\n  padding: 0;\r\n}\r\n\r\n/**\r\n * Default counters and styles are provided for five levels of nesting.\r\n * If you require nesting beyond that level, you should use your own CSS\r\n * classes to do so. If you care about handling RTL languages, the rules you\r\n * create should look a lot like these.\r\n */\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-listLTR {\r\n  margin-left: 1.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-listRTL {\r\n  margin-right: 1.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-listLTR {\r\n  margin-left: 3em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-listRTL {\r\n  margin-right: 3em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-listLTR {\r\n  margin-left: 4.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-listRTL {\r\n  margin-right: 4.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-listLTR {\r\n  margin-left: 6em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-listRTL {\r\n  margin-right: 6em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-listLTR {\r\n  margin-left: 7.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-listRTL {\r\n  margin-right: 7.5em;\r\n}\r\n\r\n/**\r\n * Only use `square` list-style after the first two levels.\r\n */\r\n\r\n.public-DraftStyleDefault-unorderedListItem {\r\n  list-style-type: square;\r\n  position: relative;\r\n}\r\n\r\n.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth0 {\r\n  list-style-type: disc;\r\n}\r\n\r\n.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth1 {\r\n  list-style-type: circle;\r\n}\r\n\r\n/**\r\n * Ordered list item counters are managed with CSS, since all list nesting is\r\n * purely visual.\r\n */\r\n\r\n.public-DraftStyleDefault-orderedListItem {\r\n  list-style-type: none;\r\n  position: relative;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listLTR:before {\r\n  left: -36px;\r\n  position: absolute;\r\n  text-align: right;\r\n  width: 30px;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listRTL:before {\r\n  position: absolute;\r\n  right: -36px;\r\n  text-align: left;\r\n  width: 30px;\r\n}\r\n\r\n/**\r\n * Counters are reset in JavaScript. If you need different counter styles,\r\n * override these rules. If you need more nesting, create your own rules to\r\n * do so.\r\n */\r\n\r\n.public-DraftStyleDefault-orderedListItem:before {\r\n  content: counter(ol0) \". \";\r\n  counter-increment: ol0;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth1:before {\r\n  content: counter(ol1) \". \";\r\n  counter-increment: ol1;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth2:before {\r\n  content: counter(ol2) \". \";\r\n  counter-increment: ol2;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth3:before {\r\n  content: counter(ol3) \". \";\r\n  counter-increment: ol3;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth4:before {\r\n  content: counter(ol4) \". \";\r\n  counter-increment: ol4;\r\n}\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-reset {\r\n  counter-reset: ol0;\r\n}\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-reset {\r\n  counter-reset: ol1;\r\n}\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-reset {\r\n  counter-reset: ol2;\r\n}\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-reset {\r\n  counter-reset: ol3;\r\n}\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-reset {\r\n  counter-reset: ol4;\r\n}\r\n"
 
 /***/ },
-/* 207 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(208);
+	var content = __webpack_require__(207);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(164)(content, {"sourceMap":true});
+	var update = __webpack_require__(163)(content, {"sourceMap":true});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./RichTextEditor.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./RichTextEditor.css");
+			module.hot.accept("!!./../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./RichTextEditor.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/locals.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./RichTextEditor.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -24215,18 +24093,10 @@ module.exports =
 	}
 
 /***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
+/* 207 */
+/***/ function(module, exports) {
 
-	exports = module.exports = __webpack_require__(163)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".RichTextEditor__root___33zoV {\r\n  background: #fff;\r\n  border: 1px solid #ddd;\r\n  border-radius: 3px;\r\n  font-family: 'Georgia', serif;\r\n  font-size: 14px;\r\n  padding: 10px;\r\n}\r\n\r\n.RichTextEditor__editor___1VEsr {\r\n  border-top: 1px solid #ddd;\r\n  cursor: text;\r\n  font-size: 16px;\r\n  margin-top: 10px;\r\n}\r\n\r\n.RichTextEditor__editor___1VEsr .public-DraftEditorPlaceholder-root,\r\n.RichTextEditor__editor___1VEsr .public-DraftEditor-content {\r\n  margin: 0 -10px -10px;\r\n  padding: 10px;\r\n}\r\n\r\n.RichTextEditor__editor___1VEsr .public-DraftEditor-content {\r\n  overflow: auto;\r\n}\r\n\r\n.RichTextEditor__hidePlaceholder___3Kk-t .public-DraftEditorPlaceholder-root {\r\n  display: none;\r\n}\r\n\r\n.RichTextEditor__editor___1VEsr .RichTextEditor__paragraph___fFnY4 {\r\n  margin: 14px 0;\r\n}\r\n\r\n/* Consecutive code blocks are nested inside a single parent <pre> (like <li>\r\n  inside <ul>). Unstyle the parent and style the children. */\r\n.RichTextEditor__editor___1VEsr pre {\r\n  margin: 14px 0;\r\n}\r\n\r\n.RichTextEditor__editor___1VEsr .RichTextEditor__codeBlock___uySV1 {\r\n  background-color: #f3f3f3;\r\n  font-family: \"Inconsolata\", \"Menlo\", \"Consolas\", monospace;\r\n  font-size: 16px;\r\n  /* This should collapse with the margin around the parent <pre>. */\r\n  margin: 14px 0;\r\n  padding: 20px;\r\n}\r\n\r\n/* Hacky: Remove padding from inline <code> within code block. */\r\n.RichTextEditor__editor___1VEsr .RichTextEditor__codeBlock___uySV1 span[style] {\r\n  padding: 0 !important;\r\n}\r\n\r\n.RichTextEditor__editor___1VEsr .RichTextEditor__blockquote___2j6X- {\r\n  border-left: 5px solid #eee;\r\n  color: #666;\r\n  font-family: 'Hoefler Text', 'Georgia', serif;\r\n  font-style: italic;\r\n  margin: 16px 0;\r\n  padding: 10px 20px;\r\n}\r\n\r\n/* There shouldn't be margin outside the first/last blocks */\r\n.RichTextEditor__editor___1VEsr .RichTextEditor__block___3k2zv:first-child,\r\n.RichTextEditor__editor___1VEsr pre:first-child,\r\n.RichTextEditor__editor___1VEsr ul:first-child,\r\n.RichTextEditor__editor___1VEsr ol:first-child {\r\n  margin-top: 0;\r\n}\r\n.RichTextEditor__editor___1VEsr .RichTextEditor__block___3k2zv:last-child,\r\n.RichTextEditor__editor___1VEsr pre:last-child,\r\n.RichTextEditor__editor___1VEsr ul:last-child,\r\n.RichTextEditor__editor___1VEsr ol:last-child {\r\n  margin-bottom: 0;\r\n}\r\n", ""]);
-
-	// exports
-	exports.locals = {
+	module.exports = {
 		"root": "RichTextEditor__root___33zoV",
 		"editor": "RichTextEditor__editor___1VEsr",
 		"hidePlaceholder": "RichTextEditor__hidePlaceholder___3Kk-t",
