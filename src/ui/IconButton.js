@@ -22,7 +22,7 @@ type Props = {
 export default class IconButton extends Component {
   props: Props;
 
-  render(): React.Element {
+  render() {
     let {props} = this;
     let {className, iconName, label, children, isActive, ...otherProps} = props;
     className = cx(className, {

@@ -45,7 +45,7 @@ export default class SimpleRichTextEditor extends Component {
     });
   }
 
-  render(): React.Element {
+  render() {
     let {value, format, onChange, ...otherProps} = this.props; // eslint-disable-line no-unused-vars
     return (
       <RichTextEditor

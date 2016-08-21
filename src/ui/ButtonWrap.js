@@ -10,7 +10,7 @@ type Props = {
   className?: string;
 };
 
-export default function ButtonWrap(props: Props): React.Element {
+export default function ButtonWrap(props: Props) {
   let className = cx(props.className, styles.root);
   return <div {...props} className={className} />;
 }

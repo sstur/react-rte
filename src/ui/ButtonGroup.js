@@ -10,7 +10,7 @@ type Props = {
   className?: string;
 };
 
-export default function ButtonGroup(props_: Props): React.Element {
+export default function ButtonGroup(props_: Props) {
   let className = cx(props_.className, styles.root);
   return (
     <div {...props_} className={className} />

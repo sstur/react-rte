@@ -29,7 +29,7 @@ export default class Button extends Component {
     autobind(this);
   }
 
-  render(): React.Element {
+  render() {
     let {props} = this;
     let {className, isDisabled, focusOnClick, formSubmit, ...otherProps} = props;
     className = cx(className, styles.root);

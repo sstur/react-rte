@@ -37,7 +37,7 @@ export default class InputPopover extends Component {
     document.removeEventListener('keydown', this._onDocumentKeydown);
   }
 
-  render(): React.Element {
+  render() {
     let {props} = this;
     let className = cx(props.className, styles.root);
     return (
