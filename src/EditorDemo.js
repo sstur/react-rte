@@ -23,11 +23,11 @@ export default class EditorDemo extends Component {
     this.state = {
       value: createEmptyValue(),
       format: 'html',
-      readOnly: true,
+      readOnly: false,
     };
   }
 
-  render(): React.Element {
+  render() {
     let {value, format} = this.state;
 
     return (
@@ -49,16 +49,6 @@ export default class EditorDemo extends Component {
         <div className="row">
           <label className="radio-item">
             <input
-              type="checkbox"
-              onChange={this._onChangeReadOnly}
-              checked={this.state.readOnly}
-            />
-            <span>readOnly</span>
-          </label>
-        </div>
-        <div className="row">
-          <label className="radio-item">
-            <input
               type="radio"
               name="format"
               value="html"
@@ -76,6 +66,14 @@ export default class EditorDemo extends Component {
               onChange={this._onChangeFormat}
             />
             <span>Markdown</span>
+          </label>
+          <label className="radio-item">
+            <input
+              type="checkbox"
+              onChange={this._onChangeReadOnly}
+              checked={this.state.readOnly}
+            />
+            <span>Editor is read-only</span>
           </label>
         </div>
         <div className="row">
