@@ -44,6 +44,7 @@ type Props = {
   onChange?: ChangeHandler;
   placeholder?: string;
   customStyleMap?: {[style: string]: {[key: string]: any}};
+  handleReturn?: (event: Object) => boolean;
 };
 
 export default class RichTextEditor extends Component {
@@ -108,6 +109,10 @@ export default class RichTextEditor extends Component {
   }
 
   _handleReturn(event: Object): boolean {
+    let {handleReturn} = this.props;
+    if (handleReturn != null && handleReturn(event)) {
+      return true;
+    }
     if (this._handleReturnSoftNewline(event)) {
       return true;
     }
