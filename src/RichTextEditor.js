@@ -46,6 +46,7 @@ type Props = {
   customStyleMap?: {[style: string]: {[key: string]: any}};
   handleReturn?: (event: Object) => boolean;
   readOnly?: boolean;
+  disabled?: boolean; // Alias of readOnly
 };
 
 export default class RichTextEditor extends Component {
@@ -58,8 +59,18 @@ export default class RichTextEditor extends Component {
     autobind(this);
   }
 
-  render(): React.Element {
-    let {value, className, toolbarClassName, editorClassName, placeholder, customStyleMap, readOnly, ...otherProps} = this.props;
+  render() {
+    let {
+      value,
+      className,
+      toolbarClassName,
+      editorClassName,
+      placeholder,
+      customStyleMap,
+      readOnly,
+      disabled,
+      ...otherProps,
+    } = this.props;
     let editorState = value.getEditorState();
     customStyleMap = customStyleMap ? {...styleMap, ...customStyleMap} : styleMap;
 
@@ -69,16 +80,24 @@ export default class RichTextEditor extends Component {
       [styles.editor]: true,
       [styles.hidePlaceholder]: this._shouldHidePlaceholder(),
     }, editorClassName);
-    return (
-      <div className={cx(styles.root, className)}>
-        {!readOnly &&
+    if (readOnly == null) {
+      readOnly = disabled;
+    }
+    let editorToolbar;
+    if (!readOnly) {
+      editorToolbar = (
         <EditorToolbar
           className={toolbarClassName}
           keyEmitter={this._keyEmitter}
           editorState={editorState}
           onChange={this._onChange}
           focusEditor={this._focus}
-        />}
+        />
+      );
+    }
+    return (
+      <div className={cx(styles.root, className)}>
+        {editorToolbar}
         <div className={combinedEditorClassName}>
           <Editor
             {...otherProps}
