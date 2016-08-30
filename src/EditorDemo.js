@@ -67,14 +67,6 @@ export default class EditorDemo extends Component {
             />
             <span>Markdown</span>
           </label>
-          <label className="radio-item">
-            <input
-              type="checkbox"
-              onChange={this._onChangeReadOnly}
-              checked={this.state.readOnly}
-            />
-            <span>Editor is read-only</span>
-          </label>
         </div>
         <div className="row">
           <textarea
@@ -83,11 +75,6 @@ export default class EditorDemo extends Component {
             value={value.toString(format)}
             onChange={this._onChangeSource}
           />
-        </div>
-        <div className="row btn-row">
-          <span className="label">Debugging:</span>
-          <button className="btn" onClick={this._logState}>Log Content State</button>
-          <button className="btn" onClick={this._logStateRaw}>Log Raw</button>
         </div>
       </div>
     );
