@@ -1,6 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
-import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils} from 'draft-js';
+import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, SelectionState} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
@@ -154,6 +154,23 @@ export default class RichTextEditor extends Component {
       let selection = editorState.getSelection();
       if (selection.isCollapsed()) {
         this._onChange(RichUtils.insertSoftNewline(editorState));
+        // 2 soft newlines mean a new block
+        let contentState = editorState.getCurrentContent();
+        let blockKey = selection.getStartKey();
+        let block = contentState.getBlockForKey(blockKey);
+        let blockText = block.getText();
+        // if last char of block text is a newline
+        if (blockText.length > 0 && blockText.charCodeAt(blockText.length - 1) === 10) {
+          // remove the extra newline char
+          var deleteSelection = selection.merge({anchorOffset: blockText.length - 1, focusOffset: blockText.length});
+          var newContent = Modifier.removeRange(contentState, deleteSelection, 'forward');
+          // and split into a new block
+          let newSelection = newContent.getSelectionAfter();
+          newContent = Modifier.splitBlock(newContent, newSelection);
+          this._onChange(
+            EditorState.push(editorState, newContent, 'insert-fragment')
+          );
+        }
       } else {
         let content = editorState.getCurrentContent();
         let newContent = Modifier.removeRange(content, selection, 'forward');
