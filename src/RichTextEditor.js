@@ -6,7 +6,7 @@ import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
 import insertBlockAfter from './lib/insertBlockAfter';
 import isListItem from './lib/isListItem';
-import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
+import isSoftNewlineEvent from './lib/isSoftNewlineEvent';
 import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
