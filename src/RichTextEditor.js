@@ -157,12 +157,17 @@ export default class RichTextEditor extends Component {
         // 2 soft newlines mean a new block
         let contentState = editorState.getCurrentContent();
         let blockKey = selection.getStartKey();
+        let selectionFocusOffset = selection.getFocusOffset();
         let block = contentState.getBlockForKey(blockKey);
         let blockText = block.getText();
-        // if last char of block text is a newline
-        if (blockText.length > 0 && blockText.charCodeAt(blockText.length - 1) === 10) {
+        // if last char at focus offset is a newline
+        let charCodeAtOffset = blockText.charCodeAt(selectionFocusOffset - 1);
+        if (charCodeAtOffset === 10) {
           // remove the extra newline char
-          var deleteSelection = selection.merge({anchorOffset: blockText.length - 1, focusOffset: blockText.length});
+          var deleteSelection = selection.merge({
+            anchorOffset: selectionFocusOffset - 1,
+            focusOffset: selectionFocusOffset,
+          });
           var newContent = Modifier.removeRange(contentState, deleteSelection, 'forward');
           // and split into a new block
           let newSelection = newContent.getSelectionAfter();
