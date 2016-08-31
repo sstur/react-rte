@@ -6,7 +6,7 @@ import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
 import insertBlockAfter from './lib/insertBlockAfter';
 import isListItem from './lib/isListItem';
-import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
+import isSoftNewlineEvent from './lib/isSoftNewlineEvent';
 import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
@@ -147,13 +147,35 @@ export default class RichTextEditor extends Component {
     return false;
   }
 
-  // `shift + return` should insert a soft newline.
+  // `return` should insert a soft newline.
   _handleReturnSoftNewline(event: Object): boolean {
     let editorState = this.props.value.getEditorState();
     if (isSoftNewlineEvent(event)) {
       let selection = editorState.getSelection();
       if (selection.isCollapsed()) {
         this._onChange(RichUtils.insertSoftNewline(editorState));
+        // 2 soft newlines mean a new block
+        let contentState = editorState.getCurrentContent();
+        let blockKey = selection.getStartKey();
+        let selectionFocusOffset = selection.getFocusOffset();
+        let block = contentState.getBlockForKey(blockKey);
+        let blockText = block.getText();
+        // if last char at focus offset is a newline
+        let charCodeAtOffset = blockText.charCodeAt(selectionFocusOffset - 1);
+        if (charCodeAtOffset === 10) {
+          // remove the extra newline char
+          var deleteSelection = selection.merge({
+            anchorOffset: selectionFocusOffset - 1,
+            focusOffset: selectionFocusOffset,
+          });
+          var newContent = Modifier.removeRange(contentState, deleteSelection, 'forward');
+          // and split into a new block
+          let newSelection = newContent.getSelectionAfter();
+          newContent = Modifier.splitBlock(newContent, newSelection);
+          this._onChange(
+            EditorState.push(editorState, newContent, 'insert-fragment')
+          );
+        }
       } else {
         let content = editorState.getCurrentContent();
         let newContent = Modifier.removeRange(content, selection, 'forward');

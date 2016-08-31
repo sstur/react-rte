@@ -6,9 +6,9 @@
   line-height: 22px;
   box-sizing: border-box;
   background: none #fdfdfd;
-  background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);
-  border: 1px solid #999;
-  border-radius: 2px;
+  /*background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);*/
+  border: none;
+  /*border-radius: 2px;*/
   color: #333;
   text-decoration: none;
   font-size: inherit;
