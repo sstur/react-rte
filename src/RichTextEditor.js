@@ -147,7 +147,7 @@ export default class RichTextEditor extends Component {
     return false;
   }
 
-  // `shift + return` should insert a soft newline.
+  // `return` should insert a soft newline.
   _handleReturnSoftNewline(event: Object): boolean {
     let editorState = this.props.value.getEditorState();
     if (isSoftNewlineEvent(event)) {
