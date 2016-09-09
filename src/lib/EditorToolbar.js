@@ -68,8 +68,6 @@ export default class EditorToolbar extends Component {
         {this._renderInlineStyleButtons()}
         {this._renderBlockTypeButtons()}
         {this._renderLinkButtons()}
-        {this._renderBlockTypeDropdown()}
-        {this._renderUndoRedo()}
       </div>
     );
   }
