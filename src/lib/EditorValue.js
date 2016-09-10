@@ -6,6 +6,8 @@ import {stateToMarkdown} from 'draft-js-export-markdown';
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 
 import type {DraftDecoratorType as Decorator} from 'draft-js/lib/DraftDecoratorType';
+import type {Options} from 'draft-js-import-html';
+export type {Options};
 
 type StringMap = {[key: string]: string};
 
@@ -36,10 +38,10 @@ export default class EditorValue {
     return (this._cache[format] = toString(this.getEditorState(), format));
   }
 
-  setContentFromString(markup: string, format: string): EditorValue {
+  setContentFromString(markup: string, format: string, options: ?Options): EditorValue {
     let editorState = EditorState.push(
       this._editorState,
-      fromString(markup, format),
+      fromString(markup, format, options),
       'secondary-paste'
     );
     return new EditorValue(editorState, {[format]: markup});
@@ -54,8 +56,8 @@ export default class EditorValue {
     return new EditorValue(editorState);
   }
 
-  static createFromString(markup: string, format: string, decorator: ?Decorator): EditorValue {
-    let contentState = fromString(markup, format);
+  static createFromString(markup: string, format: string, decorator: ?Decorator, options: ?Options): EditorValue {
+    let contentState = fromString(markup, format, options);
     let editorState = EditorState.createWithContent(contentState, decorator);
     return new EditorValue(editorState, {[format]: markup});
   }
@@ -76,10 +78,10 @@ function toString(editorState: EditorState, format: string): string {
   }
 }
 
-function fromString(markup: string, format: string): ContentState {
+function fromString(markup: string, format: string, options: ?Options): ContentState {
   switch (format) {
     case 'html': {
-      return stateFromHTML(markup);
+      return stateFromHTML(markup, options);
     }
     case 'markdown': {
       return stateFromMarkdown(markup);
