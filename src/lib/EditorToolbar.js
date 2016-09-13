@@ -102,6 +102,7 @@ export default class EditorToolbar extends Component {
         label={type.label}
         onToggle={this._toggleBlockType}
         style={type.style}
+        onFocus={this.props.focusEditor}
       />
     ));
     return (
@@ -119,6 +120,7 @@ export default class EditorToolbar extends Component {
         label={type.label}
         onToggle={this._toggleInlineStyle}
         style={type.style}
+        onFocus={this.props.focusEditor}
       />
     ));
     return (

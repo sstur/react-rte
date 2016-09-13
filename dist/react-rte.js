@@ -14656,6 +14656,7 @@ module.exports =
 	          label: type.label,
 	          onToggle: _this2._toggleBlockType,
 	          style: type.style,
+	          onFocus: _this2.props.focusEditor,
 	          __self: _this2
 	        });
 	      });
@@ -14682,6 +14683,7 @@ module.exports =
 	          label: type.label,
 	          onToggle: _this3._toggleInlineStyle,
 	          style: type.style,
+	          onFocus: _this3.props.focusEditor,
 	          __self: _this3
 	        });
 	      });
