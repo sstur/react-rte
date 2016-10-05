@@ -3,7 +3,6 @@
 import React from 'react';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './ButtonWrap.css';
 
 type Props = {

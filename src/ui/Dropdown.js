@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import autobind from 'class-autobind';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './Dropdown.css';
 
 type Props = {

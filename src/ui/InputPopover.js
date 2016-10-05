@@ -6,7 +6,6 @@ import ButtonGroup from './ButtonGroup';
 import autobind from 'class-autobind';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './InputPopover.css';
 
 type Props = {

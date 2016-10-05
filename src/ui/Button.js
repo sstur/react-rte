@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import cx from 'classnames';
 import autobind from 'class-autobind';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './Button.css';
 
 type EventHandler = (event: Event) => any;

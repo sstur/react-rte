@@ -12,12 +12,10 @@ import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
 import cx from 'classnames';
 import autobind from 'class-autobind';
-import {EventEmitter} from 'events';
+import EventEmitter from 'events';
 import {BLOCK_TYPE} from 'draft-js-utils';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import './Draft.global.css';
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './RichTextEditor.css';
 
 import type {ContentBlock} from 'draft-js';

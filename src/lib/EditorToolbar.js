@@ -20,10 +20,9 @@ import clearEntityForRange from './clearEntityForRange';
 import autobind from 'class-autobind';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './EditorToolbar.css';
 
-import type {EventEmitter} from 'events';
+import type EventEmitter from 'events';
 
 type ChangeHandler = (state: EditorState) => any;
 
