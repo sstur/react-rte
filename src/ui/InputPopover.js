@@ -6,7 +6,6 @@ import ButtonGroup from './ButtonGroup';
 import autobind from 'class-autobind';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './InputPopover.css';
 
 type Props = {
@@ -37,7 +36,7 @@ export default class InputPopover extends Component {
     document.removeEventListener('keydown', this._onDocumentKeydown);
   }
 
-  render(): React.Element {
+  render() {
     let {props} = this;
     let className = cx(props.className, styles.root);
     return (

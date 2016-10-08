@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import autobind from 'class-autobind';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './Dropdown.css';
 
 type Props = {
@@ -21,7 +20,7 @@ export default class Dropdown extends Component {
     autobind(this);
   }
 
-  render(): React.Element {
+  render() {
     let {choices, selectedKey, className, ...otherProps} = this.props;
     className = cx(className, styles.root);
     let selectedValue = (selectedKey == null) ? '' : choices.get(selectedKey);
@@ -40,7 +39,7 @@ export default class Dropdown extends Component {
     this.props.onChange(value);
   }
 
-  _renderChoices(): Array<React.Element> {
+  _renderChoices() {
     let {choices} = this.props;
     let entries = Array.from(choices.entries());
     return entries.map(([key, text]) => (

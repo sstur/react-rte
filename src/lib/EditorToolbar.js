@@ -20,10 +20,9 @@ import clearEntityForRange from './clearEntityForRange';
 import autobind from 'class-autobind';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './EditorToolbar.css';
 
-import type {EventEmitter} from 'events';
+import type EventEmitter from 'events';
 
 type ChangeHandler = (state: EditorState) => any;
 
@@ -63,7 +62,7 @@ export default class EditorToolbar extends Component {
     this.props.keyEmitter.removeListener('keypress', this._onKeypress);
   }
 
-  render(): React.Element {
+  render() {
     const {className} = this.props;
     return (
       <div className={cx(styles.root, className)}>
@@ -77,7 +76,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderBlockTypeDropdown(): React.Element {
+  _renderBlockTypeDropdown() {
     let blockType = this._getCurrentBlockType();
     let choices = new Map(
       BLOCK_TYPE_DROPDOWN.map((type) => [type.style, type.label])
@@ -96,7 +95,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderBlockTypeButtons(): React.Element {
+  _renderBlockTypeButtons() {
     let blockType = this._getCurrentBlockType();
     let buttons = BLOCK_TYPE_BUTTONS.map((type, index) => (
       <StyleButton
@@ -112,7 +111,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderInlineStyleButtons(): React.Element {
+  _renderInlineStyleButtons() {
     let {editorState} = this.props;
     let currentStyle = editorState.getCurrentInlineStyle();
     let buttons = INLINE_STYLE_BUTTONS.map((type, index) => (
@@ -129,7 +128,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderLinkButtons(): React.Element {
+  _renderLinkButtons() {
     let {editorState} = this.props;
     let selection = editorState.getSelection();
     let entity = this._getEntityAtCursor();
@@ -171,7 +170,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderUndoRedo(): React.Element {
+  _renderUndoRedo() {
     let {editorState} = this.props;
     let canUndo = editorState.getUndoStack().size !== 0;
     let canRedo = editorState.getRedoStack().size !== 0;

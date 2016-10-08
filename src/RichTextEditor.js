@@ -14,12 +14,10 @@ import LinkDecorator from './lib/LinkDecorator';
 import ImageDecorator from './lib/ImageDecorator';
 import cx from 'classnames';
 import autobind from 'class-autobind';
-import {EventEmitter} from 'events';
+import EventEmitter from 'events';
 import {BLOCK_TYPE} from 'draft-js-utils';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import './Draft.global.css';
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './RichTextEditor.css';
 
 import {ContentBlock, Entity} from 'draft-js';
@@ -46,6 +44,9 @@ type Props = {
   onChange?: ChangeHandler;
   placeholder?: string;
   customStyleMap?: {[style: string]: {[key: string]: any}};
+  handleReturn?: (event: Object) => boolean;
+  readOnly?: boolean;
+  disabled?: boolean; // Alias of readOnly
 };
 
 export default class RichTextEditor extends Component {
@@ -58,8 +59,18 @@ export default class RichTextEditor extends Component {
     autobind(this);
   }
 
-  render(): React.Element {
-    let {value, className, toolbarClassName, editorClassName, placeholder, customStyleMap, ...otherProps} = this.props;
+  render() {
+    let {
+      value,
+      className,
+      toolbarClassName,
+      editorClassName,
+      placeholder,
+      customStyleMap,
+      readOnly,
+      disabled,
+      ...otherProps,
+    } = this.props;
     let editorState = value.getEditorState();
     customStyleMap = customStyleMap ? {...styleMap, ...customStyleMap} : styleMap;
 
@@ -69,8 +80,12 @@ export default class RichTextEditor extends Component {
       [styles.editor]: true,
       [styles.hidePlaceholder]: this._shouldHidePlaceholder(),
     }, editorClassName);
-    return (
-      <div className={cx(styles.root, className)}>
+    if (readOnly == null) {
+      readOnly = disabled;
+    }
+    let editorToolbar;
+    if (!readOnly) {
+      editorToolbar = (
         <EditorToolbar
           className={toolbarClassName}
           keyEmitter={this._keyEmitter}
@@ -78,6 +93,11 @@ export default class RichTextEditor extends Component {
           onChange={this._onChange}
           focusEditor={this._focus}
         />
+      );
+    }
+    return (
+      <div className={cx(styles.root, className)}>
+        {editorToolbar}
         <div className={combinedEditorClassName}>
           <Editor
             {...otherProps}
@@ -92,6 +112,7 @@ export default class RichTextEditor extends Component {
             placeholder={placeholder}
             ref="editor"
             spellCheck={true}
+            readOnly={readOnly}
           />
         </div>
       </div>
@@ -110,6 +131,10 @@ export default class RichTextEditor extends Component {
   }
 
   _handleReturn(event: Object): boolean {
+    let {handleReturn} = this.props;
+    if (handleReturn != null && handleReturn(event)) {
+      return true;
+    }
     if (this._handleReturnSoftNewline(event)) {
       return true;
     }

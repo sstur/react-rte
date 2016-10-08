@@ -1,6 +1,4 @@
 [ignore]
-.*node_modules/babel.*
-.*node_modules/fbjs.*
 
 [include]
 
@@ -8,5 +6,7 @@
 
 [options]
 esproposal.class_static_fields=enable
+module.system=haste
+
 suppress_type=$FlowIssue
 suppress_comment=\\(.\\|\n\\)*\\$FlowIssue

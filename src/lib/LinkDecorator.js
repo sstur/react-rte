@@ -15,7 +15,7 @@ type Props = {
 
 type EntityRangeCallback = (start: number, end: number) => void;
 
-function Link(props_: Props): React.Element {
+function Link(props_: Props) {
   const {url} = Entity.get(props_.entityKey).getData();
   return (
     <a href={url}>{props_.children}</a>
