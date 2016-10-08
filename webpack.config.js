@@ -13,7 +13,7 @@ var loaders = [
     exclude: /\.global\.css$/,
     loaders: [
       'style?sourceMap',
-      'css/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+      'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
     ],
   },
   {test: /\.global\.css$/, loader: 'style!raw'},
@@ -31,16 +31,6 @@ module.exports = [{
     'react-dom': 'react-dom',
   },
   module: {loaders: loaders},
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: true,
-      comments: true,
-      mangle: false,
-      compress: {
-        dead_code: true,
-      },
-    }),
-  ],
 }, {
   entry: './src/demo.js',
   output: {
@@ -49,6 +39,11 @@ module.exports = [{
   },
   module: {loaders: loaders},
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("production")
+      }
+    }),
     new webpack.optimize.UglifyJsPlugin({
       beautify: true,
       comments: true,
