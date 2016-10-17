@@ -17,6 +17,8 @@ type State = {
 export default class SimpleRichTextEditor extends Component {
   props: Props;
   state: State;
+  // The [format, value] of what's currently displayed in the <RichTextEditor />
+  _currentValue: ?[string, string];
 
   constructor() {
     super(...arguments);
@@ -27,22 +29,26 @@ export default class SimpleRichTextEditor extends Component {
   }
 
   componentWillMount() {
-    this._updateStateFromProps(null, this.props);
+    this._updateStateFromProps(this.props);
   }
 
   componentWillReceiveProps(newProps: Props) {
-    this._updateStateFromProps(this.props, newProps);
+    this._updateStateFromProps(newProps);
   }
 
-  _updateStateFromProps(oldProps: ?Props, newProps: Props) {
+  _updateStateFromProps(newProps: Props) {
     let {value, format} = newProps;
-    if (oldProps != null && oldProps.value === value && oldProps.format === format) {
-      return;
+    if (this._currentValue != null) {
+      let [currentValue, currentFormat] = this._currentValue;
+      if (format === currentFormat && value === currentValue) {
+        return;
+      }
     }
     let {editorValue} = this.state;
     this.setState({
       editorValue: editorValue.setContentFromString(value, format),
     });
+    this._currentValue = [format, value];
   }
 
   render() {
@@ -64,8 +70,12 @@ export default class SimpleRichTextEditor extends Component {
       return;
     }
     let oldContentState = oldEditorValue ? oldEditorValue.getEditorState().getCurrentContent() : null;
-    if (oldContentState !== editorValue.getEditorState().getCurrentContent()) {
+    let newContentState = editorValue.getEditorState().getCurrentContent();
+    if (oldContentState !== newContentState) {
       let stringValue = editorValue.toString(format);
+      // Optimization so when onChange passes us new props we don't need
+      // to parse anything unnecessarily.
+      this._currentValue = [format, stringValue];
       onChange(stringValue);
     }
   }
