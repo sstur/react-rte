@@ -58,7 +58,13 @@ export default class SimpleRichTextEditor extends Component {
 
   _onChange(editorValue: EditorValue) {
     let {format, onChange} = this.props;
-    if (onChange != null) {
+    let oldEditorValue = this.state.editorValue;
+    this.setState({editorValue});
+    if (onChange == null) {
+      return;
+    }
+    let oldContentState = oldEditorValue ? oldEditorValue.getEditorState().getCurrentContent() : null;
+    if (oldContentState !== editorValue.getEditorState().getCurrentContent()) {
       let stringValue = editorValue.toString(format);
       onChange(stringValue);
     }
