@@ -67,7 +67,7 @@ export default class RichTextEditor extends Component {
       customStyleMap,
       readOnly,
       disabled,
-      ...otherProps,
+      ...otherProps // eslint-disable-line comma-dangle
     } = this.props;
     let editorState = value.getEditorState();
     customStyleMap = customStyleMap ? {...styleMap, ...customStyleMap} : styleMap;
