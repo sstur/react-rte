@@ -73,7 +73,7 @@ export default class SimpleRichTextEditor extends Component {
       // Optimization so if we receive new props we don't need
       // to parse anything unnecessarily.
       this._currentValue = [format, stringValue];
-      if (onChange) {
+      if (onChange && stringValue !== this.props.value) {
         onChange(stringValue);
       }
     }
