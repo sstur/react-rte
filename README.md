@@ -69,6 +69,8 @@ render() {
   // Supported inline styles: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Inline-Styles.md
   // Supported block types: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Custom-Block-Render.md#draft-default-block-render-map
   const toolbarConfig = {
+    hideLinkButtons: true,
+    hideBlockTypeDropdown: false,
     INLINE_STYLE_BUTTONS: [
       {label: 'Bold', style: 'BOLD', className: 'custom-css-class'},
       {label: 'Italic', style: 'ITALIC'},
