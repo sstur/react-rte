@@ -84,13 +84,15 @@ export default class ImageSpan extends Component {
         style={imageStyle}
         onClick={this._onClick}
       >
-        {this.props.children}
+        <span style={{opacity: '0'}}>
+          {this.props.children}
+        </span>
       </span>
     );
   }
 
   _onClick() {
-    console.log('image click');
+    console.log('image clicked');
   }
 
   _handleResize(event: Object, data: Object) {

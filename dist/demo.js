@@ -12417,7 +12417,7 @@ function(module, exports, __webpack_require__) {
         return _inherits(RichTextEditor, _Component), _createClass(RichTextEditor, [ {
             key: "render",
             value: function() {
-                var _cx, _props = this.props, value = _props.value, className = _props.className, toolbarClassName = _props.toolbarClassName, editorClassName = _props.editorClassName, placeholder = _props.placeholder, customStyleMap = _props.customStyleMap, readOnly = _props.readOnly, disabled = _props.disabled, otherProps = _objectWithoutProperties(_props, [ "value", "className", "toolbarClassName", "editorClassName", "placeholder", "customStyleMap", "readOnly", "disabled" ]), editorState = value.getEditorState();
+                var _cx, _props = this.props, value = _props.value, className = _props.className, toolbarClassName = _props.toolbarClassName, editorClassName = _props.editorClassName, placeholder = _props.placeholder, customStyleMap = _props.customStyleMap, readOnly = _props.readOnly, disabled = _props.disabled, toolbarConfig = _props.toolbarConfig, otherProps = _objectWithoutProperties(_props, [ "value", "className", "toolbarClassName", "editorClassName", "placeholder", "customStyleMap", "readOnly", "disabled", "toolbarConfig" ]), editorState = value.getEditorState();
                 customStyleMap = customStyleMap ? _extends({}, styleMap, customStyleMap) : styleMap;
                 // If the user changes block type before entering any text, we can either
                 // style the placeholder or hide it. Let's just hide it for now.
@@ -12431,7 +12431,8 @@ function(module, exports, __webpack_require__) {
                     keyEmitter: this._keyEmitter,
                     editorState: editorState,
                     onChange: this._onChange,
-                    focusEditor: this._focus
+                    focusEditor: this._focus,
+                    toolbarConfig: toolbarConfig
                 })), _react2["default"].createElement("div", {
                     className: (0, _classnames2["default"])(_RichTextEditor2["default"].root, className)
                 }, editorToolbar, _react2["default"].createElement("div", {
@@ -12539,7 +12540,7 @@ function(module, exports, __webpack_require__) {
             value: function(editorState) {
                 var selection = editorState.getSelection(), blocks = (0, _getBlocksInSelection2["default"])(editorState), selectImage = function(block, offset) {
                     var imageKey = block.getEntityAt(offset);
-                    _draftJs.Entity.mergeData(imageKey, {
+                    Entity.mergeData(imageKey, {
                         selected: !0
                     });
                 }, isInMiddleBlock = function(index) {
@@ -25829,7 +25830,7 @@ function(module, exports, __webpack_require__) {
             return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), 
             Constructor;
         };
-    }(), _KeyBindingUtil = __webpack_require__(250), _react = __webpack_require__(1), _react2 = _interopRequireDefault(_react), _reactDom = __webpack_require__(34), _reactDom2 = _interopRequireDefault(_reactDom), _draftJs = __webpack_require__(166), _draftJsUtils = __webpack_require__(299), _EditorToolbarConfig = __webpack_require__(307), _StyleButton = __webpack_require__(308), _StyleButton2 = _interopRequireDefault(_StyleButton), _PopoverIconButton = __webpack_require__(322), _PopoverIconButton2 = _interopRequireDefault(_PopoverIconButton), _ButtonGroup = __webpack_require__(324), _ButtonGroup2 = _interopRequireDefault(_ButtonGroup), _Dropdown = __webpack_require__(329), _Dropdown2 = _interopRequireDefault(_Dropdown), _IconButton = __webpack_require__(309), _IconButton2 = _interopRequireDefault(_IconButton), _getEntityAtCursor2 = __webpack_require__(332), _getEntityAtCursor3 = _interopRequireDefault(_getEntityAtCursor2), _clearEntityForRange = __webpack_require__(333), _clearEntityForRange2 = _interopRequireDefault(_clearEntityForRange), _classAutobind = __webpack_require__(312), _classAutobind2 = _interopRequireDefault(_classAutobind), _classnames = __webpack_require__(310), _classnames2 = _interopRequireDefault(_classnames), _EditorToolbar = __webpack_require__(334), _EditorToolbar2 = _interopRequireDefault(_EditorToolbar), EditorToolbar = function(_Component) {
+    }(), _KeyBindingUtil = __webpack_require__(250), _react = __webpack_require__(1), _react2 = _interopRequireDefault(_react), _reactDom = __webpack_require__(34), _reactDom2 = _interopRequireDefault(_reactDom), _draftJs = __webpack_require__(166), _draftJsUtils = __webpack_require__(299), _EditorToolbarConfig = __webpack_require__(307), _EditorToolbarConfig2 = _interopRequireDefault(_EditorToolbarConfig), _StyleButton = __webpack_require__(308), _StyleButton2 = _interopRequireDefault(_StyleButton), _PopoverIconButton = __webpack_require__(322), _PopoverIconButton2 = _interopRequireDefault(_PopoverIconButton), _ButtonGroup = __webpack_require__(324), _ButtonGroup2 = _interopRequireDefault(_ButtonGroup), _Dropdown = __webpack_require__(329), _Dropdown2 = _interopRequireDefault(_Dropdown), _IconButton = __webpack_require__(309), _IconButton2 = _interopRequireDefault(_IconButton), _getEntityAtCursor2 = __webpack_require__(332), _getEntityAtCursor3 = _interopRequireDefault(_getEntityAtCursor2), _clearEntityForRange = __webpack_require__(333), _clearEntityForRange2 = _interopRequireDefault(_clearEntityForRange), _classAutobind = __webpack_require__(312), _classAutobind2 = _interopRequireDefault(_classAutobind), _classnames = __webpack_require__(310), _classnames2 = _interopRequireDefault(_classnames), _EditorToolbar = __webpack_require__(334), _EditorToolbar2 = _interopRequireDefault(_EditorToolbar), EditorToolbar = function(_Component) {
         function EditorToolbar() {
             _classCallCheck(this, EditorToolbar);
             var _this = _possibleConstructorReturn(this, (EditorToolbar.__proto__ || Object.getPrototypeOf(EditorToolbar)).apply(this, arguments));
@@ -25853,16 +25854,41 @@ function(module, exports, __webpack_require__) {
         }, {
             key: "render",
             value: function() {
-                var className = this.props.className;
+                var _this2 = this, _props = this.props, className = _props.className, toolbarConfig = _props.toolbarConfig;
+                null == toolbarConfig && (toolbarConfig = _EditorToolbarConfig2["default"]);
+                var display = toolbarConfig.display || _EditorToolbarConfig2["default"].display, buttonsGroups = display.map(function(groupName) {
+                    switch (groupName) {
+                      case "INLINE_STYLE_BUTTONS":
+                        return _this2._renderInlineStyleButtons(toolbarConfig);
+
+                      case "BLOCK_TYPE_DROPDOWN":
+                        return _this2._renderBlockTypeButtons(toolbarConfig);
+
+                      case "LINK_BUTTONS":
+                        return _this2._renderLinkButtons();
+
+                      case "IMAGE_BUTTON":
+                        return _this2._renderImageButton();
+
+                      case "BLOCK_TYPE_BUTTONS":
+                        return _this2._renderBlockTypeDropdown(toolbarConfig);
+
+                      case "HISTORY_BUTTONS":
+                        return _this2._renderUndoRedo();
+                    }
+                });
                 return _react2["default"].createElement("div", {
                     className: (0, _classnames2["default"])(_EditorToolbar2["default"].root, className)
-                }, this._renderInlineStyleButtons(), this._renderBlockTypeButtons(), this._renderLinkButtons(), this._renderImageButton(), this._renderBlockTypeDropdown(), this._renderUndoRedo());
+                }, buttonsGroups);
             }
         }, {
             key: "_renderBlockTypeDropdown",
-            value: function() {
-                var blockType = this._getCurrentBlockType(), choices = new Map(_EditorToolbarConfig.BLOCK_TYPE_DROPDOWN.map(function(type) {
-                    return [ type.style, type.label ];
+            value: function(toolbarConfig) {
+                var blockType = this._getCurrentBlockType(), choices = new Map((toolbarConfig.BLOCK_TYPE_DROPDOWN || []).map(function(type) {
+                    return [ type.style, {
+                        label: type.label,
+                        className: type.className
+                    } ];
                 }));
                 return choices.has(blockType) || (blockType = Array.from(choices.keys())[0]), _react2["default"].createElement(_ButtonGroup2["default"], null, _react2["default"].createElement(_Dropdown2["default"], {
                     choices: choices,
@@ -25872,28 +25898,30 @@ function(module, exports, __webpack_require__) {
             }
         }, {
             key: "_renderBlockTypeButtons",
-            value: function() {
-                var _this2 = this, blockType = this._getCurrentBlockType(), buttons = _EditorToolbarConfig.BLOCK_TYPE_BUTTONS.map(function(type, index) {
+            value: function(toolbarConfig) {
+                var _this3 = this, blockType = this._getCurrentBlockType(), buttons = (toolbarConfig.BLOCK_TYPE_BUTTONS || []).map(function(type, index) {
                     return _react2["default"].createElement(_StyleButton2["default"], {
                         key: String(index),
                         isActive: type.style === blockType,
                         label: type.label,
-                        onToggle: _this2._toggleBlockType,
-                        style: type.style
+                        onToggle: _this3._toggleBlockType,
+                        style: type.style,
+                        className: type.className
                     });
                 });
                 return _react2["default"].createElement(_ButtonGroup2["default"], null, buttons);
             }
         }, {
             key: "_renderInlineStyleButtons",
-            value: function() {
-                var _this3 = this, editorState = this.props.editorState, currentStyle = editorState.getCurrentInlineStyle(), buttons = _EditorToolbarConfig.INLINE_STYLE_BUTTONS.map(function(type, index) {
+            value: function(toolbarConfig) {
+                var _this4 = this, editorState = this.props.editorState, currentStyle = editorState.getCurrentInlineStyle(), buttons = (toolbarConfig.INLINE_STYLE_BUTTONS || []).map(function(type, index) {
                     return _react2["default"].createElement(_StyleButton2["default"], {
                         key: String(index),
                         isActive: currentStyle.has(type.style),
                         label: type.label,
-                        onToggle: _this3._toggleInlineStyle,
-                        style: type.style
+                        onToggle: _this4._toggleInlineStyle,
+                        style: type.style,
+                        className: type.className
                     });
                 });
                 return _react2["default"].createElement(_ButtonGroup2["default"], null, buttons);
@@ -26064,10 +26092,10 @@ function(module, exports, __webpack_require__) {
         }, {
             key: "_focusEditor",
             value: function() {
-                var _this4 = this;
+                var _this5 = this;
                 // Hacky: Wait to focus the editor so we don't lose selection.
                 setTimeout(function() {
-                    _this4.props.focusEditor();
+                    _this5.props.focusEditor();
                 }, 50);
             }
         } ]), EditorToolbar;
@@ -26092,6 +26120,9 @@ function(module, exports) {
     }, {
         label: "Monospace",
         style: "CODE"
+    }, {
+        label: "Underline",
+        style: "UNDERLINE"
     } ], BLOCK_TYPE_DROPDOWN = exports.BLOCK_TYPE_DROPDOWN = [ {
         label: "Normal",
         style: "unstyled"
@@ -26116,12 +26147,13 @@ function(module, exports) {
     }, {
         label: "Blockquote",
         style: "blockquote"
-    } ];
-    exports["default"] = {
+    } ], EditorToolbarConfig = {
+        display: [ "INLINE_STYLE_BUTTONS", "BLOCK_TYPE_DROPDOWN", "LINK_BUTTONS", "IMAGE_BUTTON", "BLOCK_TYPE_BUTTONS", "HISTORY_BUTTONS" ],
         INLINE_STYLE_BUTTONS: INLINE_STYLE_BUTTONS,
         BLOCK_TYPE_DROPDOWN: BLOCK_TYPE_DROPDOWN,
         BLOCK_TYPE_BUTTONS: BLOCK_TYPE_BUTTONS
     };
+    exports["default"] = EditorToolbarConfig;
 }, /* 308 */
 /***/
 function(module, exports, __webpack_require__) {
@@ -27091,7 +27123,7 @@ function(module, exports, __webpack_require__) {
             value: function() {
                 var _props = this.props, choices = _props.choices, selectedKey = _props.selectedKey, className = _props.className, otherProps = _objectWithoutProperties(_props, [ "choices", "selectedKey", "className" ]);
                 className = (0, _classnames2["default"])(className, _Dropdown2["default"].root);
-                var selectedValue = null == selectedKey ? "" : choices.get(selectedKey);
+                var selectedItem = null == selectedKey ? null : choices.get(selectedKey), selectedValue = selectedItem && selectedItem.label || "";
                 return _react2["default"].createElement("span", {
                     className: className,
                     title: selectedValue
@@ -27113,11 +27145,12 @@ function(module, exports, __webpack_require__) {
             value: function() {
                 var choices = this.props.choices, entries = Array.from(choices.entries());
                 return entries.map(function(_ref) {
-                    var _ref2 = _slicedToArray(_ref, 2), key = _ref2[0], text = _ref2[1];
+                    var _ref2 = _slicedToArray(_ref, 2), key = _ref2[0], _ref2$ = _ref2[1], label = _ref2$.label, className = _ref2$.className;
                     return _react2["default"].createElement("option", {
                         key: key,
-                        value: key
-                    }, text);
+                        value: key,
+                        className: className
+                    }, label);
                 });
             }
         } ]), Dropdown;
@@ -27140,7 +27173,7 @@ function(module, exports, __webpack_require__) {
 function(module, exports, __webpack_require__) {
     exports = module.exports = __webpack_require__(315)(), // imports
     // module
-    exports.push([ module.id, '.Dropdown__root___1B9ta{display:inline-block;position:relative;line-height:22px;vertical-align:top;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}.Dropdown__root___1B9ta select{position:relative;z-index:2;display:inline-block;box-sizing:border-box;height:30px;line-height:inherit;font-family:inherit;font-size:inherit;color:inherit;margin:0;padding:0;border:4px solid transparent;border-right-width:10px;border-left-width:5px;background:none transparent;opacity:0;cursor:pointer}.Dropdown__root___1B9ta .Dropdown__value___3gCvl{display:block;position:absolute;z-index:1;left:0;top:0;right:0;bottom:0;line-height:23px;border:1px solid #999;border-radius:2px;padding:3px;padding-right:33px;padding-left:12px;white-space:nowrap;text-overflow:ellipsis}.Dropdown__root___1B9ta .Dropdown__value___3gCvl:after,.Dropdown__root___1B9ta .Dropdown__value___3gCvl:before{display:block;content:"";position:absolute;top:50%;right:10px;width:0;height:0;border:4px solid transparent}.Dropdown__root___1B9ta .Dropdown__value___3gCvl:before{margin-top:-10px;border-bottom-color:#555}.Dropdown__root___1B9ta .Dropdown__value___3gCvl:after{margin-top:1px;border-top-color:#555}.Dropdown__root___1B9ta select:focus+.Dropdown__value___3gCvl{border-color:#66afe9}@media screen and (-webkit-min-device-pixel-ratio:0){.Dropdown__root___1B9ta select{opacity:1;color:inherit;-webkit-appearance:none;border-left-width:12px;border-right-width:35px}.Dropdown__root___1B9ta select+.Dropdown__value___3gCvl{color:transparent}.Dropdown__root___1B9ta select:focus+.Dropdown__value___3gCvl{border-color:#999}}', "" ]), 
+    exports.push([ module.id, '.Dropdown__root___1B9ta{display:inline-block;position:relative;line-height:22px;vertical-align:top;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.Dropdown__root___1B9ta select{position:relative;z-index:2;display:inline-block;box-sizing:border-box;height:30px;line-height:inherit;font-family:inherit;font-size:inherit;color:inherit;margin:0;padding:0;border:4px solid transparent;border-right-width:10px;border-left-width:5px;background:none transparent;opacity:0;cursor:pointer}.Dropdown__root___1B9ta .Dropdown__value___3gCvl{display:block;position:absolute;z-index:1;left:0;top:0;right:0;bottom:0;line-height:23px;border:1px solid #999;border-radius:2px;padding:3px;padding-right:33px;padding-left:12px;white-space:nowrap;text-overflow:ellipsis}.Dropdown__root___1B9ta .Dropdown__value___3gCvl:after,.Dropdown__root___1B9ta .Dropdown__value___3gCvl:before{display:block;content:"";position:absolute;top:50%;right:10px;width:0;height:0;border:4px solid transparent}.Dropdown__root___1B9ta .Dropdown__value___3gCvl:before{margin-top:-10px;border-bottom-color:#555}.Dropdown__root___1B9ta .Dropdown__value___3gCvl:after{margin-top:1px;border-top-color:#555}.Dropdown__root___1B9ta select:focus+.Dropdown__value___3gCvl{border-color:#66afe9}@media screen and (-webkit-min-device-pixel-ratio:0){.Dropdown__root___1B9ta select{opacity:1;color:inherit;-webkit-appearance:none;border-left-width:12px;border-right-width:35px}.Dropdown__root___1B9ta select+.Dropdown__value___3gCvl{color:transparent}.Dropdown__root___1B9ta select:focus+.Dropdown__value___3gCvl{border-color:#999}}', "" ]), 
     // exports
     exports.locals = {
         root: "Dropdown__root___1B9ta",
@@ -27212,7 +27245,7 @@ function(module, exports, __webpack_require__) {
 function(module, exports, __webpack_require__) {
     exports = module.exports = __webpack_require__(315)(), // imports
     // module
-    exports.push([ module.id, ".EditorToolbar__root___1VC2v{font-family:Helvetica,sans-serif;font-size:14px;margin-bottom:-5px;user-select:none}", "" ]), 
+    exports.push([ module.id, ".EditorToolbar__root___1VC2v{font-family:Helvetica,sans-serif;font-size:14px;margin:0 10px;padding:10px 0 5px;border-bottom:1px solid #ddd;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}", "" ]), 
     // exports
     exports.locals = {
         root: "EditorToolbar__root___1VC2v"
@@ -29986,7 +30019,7 @@ function(module, exports, __webpack_require__) {
 }, /* 364 */
 /***/
 function(module, exports) {
-    module.exports = '/**\r\n * We inherit the height of the container by default\r\n */\r\n\r\n.DraftEditor-root,\r\n.DraftEditor-editorContainer,\r\n.public-DraftEditor-content {\r\n  height: inherit;\r\n  text-align: initial;\r\n}\r\n\r\n.DraftEditor-root {\r\n  position: relative;\r\n}\r\n\r\n/**\r\n * Zero-opacity background used to allow focus in IE. Otherwise, clicks\r\n * fall through to the placeholder.\r\n */\r\n\r\n.DraftEditor-editorContainer {\r\n  background-color: rgba(255, 255, 255, 0);\r\n  /* Repair mysterious missing Safari cursor */\r\n  border-left: 0.1px solid transparent;\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n.public-DraftEditor-content {\r\n  outline: none;\r\n  white-space: pre-wrap;\r\n}\r\n\r\n.public-DraftEditor-block {\r\n  position: relative;\r\n}\r\n\r\n.DraftEditor-alignLeft .public-DraftEditor-block {\r\n  text-align: left;\r\n}\r\n\r\n.DraftEditor-alignLeft .public-DraftEditorPlaceholder-root {\r\n  left: 0;\r\n  text-align: left;\r\n}\r\n\r\n.DraftEditor-alignCenter .public-DraftEditor-block {\r\n  text-align: center;\r\n}\r\n\r\n.DraftEditor-alignCenter .public-DraftEditorPlaceholder-root {\r\n  margin: 0 auto;\r\n  text-align: center;\r\n  width: 100%;\r\n}\r\n\r\n.DraftEditor-alignRight .public-DraftEditor-block {\r\n  text-align: right;\r\n}\r\n\r\n.DraftEditor-alignRight .public-DraftEditorPlaceholder-root {\r\n  right: 0;\r\n  text-align: right;\r\n}\r\n/**\r\n * @providesModule DraftEditorPlaceholder\r\n */\r\n\r\n.public-DraftEditorPlaceholder-root {\r\n  color: #9197a3;\r\n  position: absolute;\r\n  z-index: 0;\r\n}\r\n\r\n.public-DraftEditorPlaceholder-hasFocus {\r\n  color: #bdc1c9;\r\n}\r\n\r\n.DraftEditorPlaceholder-hidden {\r\n  display: none;\r\n}\r\n/**\r\n * @providesModule DraftStyleDefault\r\n */\r\n\r\n.public-DraftStyleDefault-block {\r\n  position: relative;\r\n  white-space: pre-wrap;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-ltr {\r\n  direction: ltr;\r\n  text-align: left;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-rtl {\r\n  direction: rtl;\r\n  text-align: right;\r\n}\r\n\r\n/**\r\n * These rules provide appropriate text direction for counter pseudo-elements.\r\n */\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-listLTR {\r\n  direction: ltr;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-listRTL {\r\n  direction: rtl;\r\n}\r\n\r\n/**\r\n * Default spacing for list container elements. Override with CSS as needed.\r\n */\r\n\r\n.public-DraftStyleDefault-ul,\r\n.public-DraftStyleDefault-ol {\r\n  margin: 16px 0;\r\n  padding: 0;\r\n}\r\n\r\n/**\r\n * Default counters and styles are provided for five levels of nesting.\r\n * If you require nesting beyond that level, you should use your own CSS\r\n * classes to do so. If you care about handling RTL languages, the rules you\r\n * create should look a lot like these.\r\n */\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-listLTR {\r\n  margin-left: 1.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-listRTL {\r\n  margin-right: 1.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-listLTR {\r\n  margin-left: 3em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-listRTL {\r\n  margin-right: 3em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-listLTR {\r\n  margin-left: 4.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-listRTL {\r\n  margin-right: 4.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-listLTR {\r\n  margin-left: 6em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-listRTL {\r\n  margin-right: 6em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-listLTR {\r\n  margin-left: 7.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-listRTL {\r\n  margin-right: 7.5em;\r\n}\r\n\r\n/**\r\n * Only use `square` list-style after the first two levels.\r\n */\r\n\r\n.public-DraftStyleDefault-unorderedListItem {\r\n  list-style-type: square;\r\n  position: relative;\r\n}\r\n\r\n.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth0 {\r\n  list-style-type: disc;\r\n}\r\n\r\n.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth1 {\r\n  list-style-type: circle;\r\n}\r\n\r\n/**\r\n * Ordered list item counters are managed with CSS, since all list nesting is\r\n * purely visual.\r\n */\r\n\r\n.public-DraftStyleDefault-orderedListItem {\r\n  list-style-type: none;\r\n  position: relative;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listLTR:before {\r\n  left: -36px;\r\n  position: absolute;\r\n  text-align: right;\r\n  width: 30px;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listRTL:before {\r\n  position: absolute;\r\n  right: -36px;\r\n  text-align: left;\r\n  width: 30px;\r\n}\r\n\r\n/**\r\n * Counters are reset in JavaScript. If you need different counter styles,\r\n * override these rules. If you need more nesting, create your own rules to\r\n * do so.\r\n */\r\n\r\n.public-DraftStyleDefault-orderedListItem:before {\r\n  content: counter(ol0) ". ";\r\n  counter-increment: ol0;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth1:before {\r\n  content: counter(ol1) ". ";\r\n  counter-increment: ol1;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth2:before {\r\n  content: counter(ol2) ". ";\r\n  counter-increment: ol2;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth3:before {\r\n  content: counter(ol3) ". ";\r\n  counter-increment: ol3;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth4:before {\r\n  content: counter(ol4) ". ";\r\n  counter-increment: ol4;\r\n}\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-reset {\r\n  counter-reset: ol0;\r\n}\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-reset {\r\n  counter-reset: ol1;\r\n}\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-reset {\r\n  counter-reset: ol2;\r\n}\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-reset {\r\n  counter-reset: ol3;\r\n}\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-reset {\r\n  counter-reset: ol4;\r\n}\r\n';
+    module.exports = '/**\r\n * We inherit the height of the container by default\r\n */\r\n\r\n.DraftEditor-root,\r\n.DraftEditor-editorContainer,\r\n.public-DraftEditor-content {\r\n  height: inherit;\r\n  text-align: initial;\r\n}\r\n\r\n.DraftEditor-root {\r\n  position: relative;\r\n}\r\n\r\n/**\r\n * Zero-opacity background used to allow focus in IE. Otherwise, clicks\r\n * fall through to the placeholder.\r\n */\r\n\r\n.DraftEditor-editorContainer {\r\n  background-color: rgba(255, 255, 255, 0);\r\n  /* Repair mysterious missing Safari cursor */\r\n  border: 1px solid transparent;\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n.public-DraftEditor-content {\r\n  outline: none;\r\n  white-space: pre-wrap;\r\n}\r\n\r\n.public-DraftEditor-block {\r\n  position: relative;\r\n}\r\n\r\n.DraftEditor-alignLeft .public-DraftEditor-block {\r\n  text-align: left;\r\n}\r\n\r\n.DraftEditor-alignLeft .public-DraftEditorPlaceholder-root {\r\n  left: 0;\r\n  text-align: left;\r\n}\r\n\r\n.DraftEditor-alignCenter .public-DraftEditor-block {\r\n  text-align: center;\r\n}\r\n\r\n.DraftEditor-alignCenter .public-DraftEditorPlaceholder-root {\r\n  margin: 0 auto;\r\n  text-align: center;\r\n  width: 100%;\r\n}\r\n\r\n.DraftEditor-alignRight .public-DraftEditor-block {\r\n  text-align: right;\r\n}\r\n\r\n.DraftEditor-alignRight .public-DraftEditorPlaceholder-root {\r\n  right: 0;\r\n  text-align: right;\r\n}\r\n/**\r\n * @providesModule DraftEditorPlaceholder\r\n */\r\n\r\n.public-DraftEditorPlaceholder-root {\r\n  color: #9197a3;\r\n  position: absolute;\r\n  z-index: 0;\r\n}\r\n\r\n.public-DraftEditorPlaceholder-hasFocus {\r\n  color: #bdc1c9;\r\n}\r\n\r\n.DraftEditorPlaceholder-hidden {\r\n  display: none;\r\n}\r\n/**\r\n * @providesModule DraftStyleDefault\r\n */\r\n\r\n.public-DraftStyleDefault-block {\r\n  position: relative;\r\n  white-space: pre-wrap;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-ltr {\r\n  direction: ltr;\r\n  text-align: left;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-rtl {\r\n  direction: rtl;\r\n  text-align: right;\r\n}\r\n\r\n/**\r\n * These rules provide appropriate text direction for counter pseudo-elements.\r\n */\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-listLTR {\r\n  direction: ltr;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-listRTL {\r\n  direction: rtl;\r\n}\r\n\r\n/**\r\n * Default spacing for list container elements. Override with CSS as needed.\r\n */\r\n\r\n.public-DraftStyleDefault-ul,\r\n.public-DraftStyleDefault-ol {\r\n  margin: 16px 0;\r\n  padding: 0;\r\n}\r\n\r\n/**\r\n * Default counters and styles are provided for five levels of nesting.\r\n * If you require nesting beyond that level, you should use your own CSS\r\n * classes to do so. If you care about handling RTL languages, the rules you\r\n * create should look a lot like these.\r\n */\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-listLTR {\r\n  margin-left: 1.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-listRTL {\r\n  margin-right: 1.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-listLTR {\r\n  margin-left: 3em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-listRTL {\r\n  margin-right: 3em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-listLTR {\r\n  margin-left: 4.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-listRTL {\r\n  margin-right: 4.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-listLTR {\r\n  margin-left: 6em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-listRTL {\r\n  margin-right: 6em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-listLTR {\r\n  margin-left: 7.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-listRTL {\r\n  margin-right: 7.5em;\r\n}\r\n\r\n/**\r\n * Only use `square` list-style after the first two levels.\r\n */\r\n\r\n.public-DraftStyleDefault-unorderedListItem {\r\n  list-style-type: square;\r\n  position: relative;\r\n}\r\n\r\n.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth0 {\r\n  list-style-type: disc;\r\n}\r\n\r\n.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth1 {\r\n  list-style-type: circle;\r\n}\r\n\r\n/**\r\n * Ordered list item counters are managed with CSS, since all list nesting is\r\n * purely visual.\r\n */\r\n\r\n.public-DraftStyleDefault-orderedListItem {\r\n  list-style-type: none;\r\n  position: relative;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listLTR:before {\r\n  left: -36px;\r\n  position: absolute;\r\n  text-align: right;\r\n  width: 30px;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listRTL:before {\r\n  position: absolute;\r\n  right: -36px;\r\n  text-align: left;\r\n  width: 30px;\r\n}\r\n\r\n/**\r\n * Counters are reset in JavaScript. If you need different counter styles,\r\n * override these rules. If you need more nesting, create your own rules to\r\n * do so.\r\n */\r\n\r\n.public-DraftStyleDefault-orderedListItem:before {\r\n  content: counter(ol0) ". ";\r\n  counter-increment: ol0;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth1:before {\r\n  content: counter(ol1) ". ";\r\n  counter-increment: ol1;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth2:before {\r\n  content: counter(ol2) ". ";\r\n  counter-increment: ol2;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth3:before {\r\n  content: counter(ol3) ". ";\r\n  counter-increment: ol3;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth4:before {\r\n  content: counter(ol4) ". ";\r\n  counter-increment: ol4;\r\n}\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-reset {\r\n  counter-reset: ol0;\r\n}\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-reset {\r\n  counter-reset: ol1;\r\n}\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-reset {\r\n  counter-reset: ol2;\r\n}\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-reset {\r\n  counter-reset: ol3;\r\n}\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-reset {\r\n  counter-reset: ol4;\r\n}\r\n';
 }, /* 365 */
 /***/
 function(module, exports, __webpack_require__) {
@@ -30004,7 +30037,7 @@ function(module, exports, __webpack_require__) {
 function(module, exports, __webpack_require__) {
     exports = module.exports = __webpack_require__(315)(), // imports
     // module
-    exports.push([ module.id, ".RichTextEditor__root___33zoV{background:#fff;border:1px solid #ddd;border-radius:3px;font-family:Georgia,serif;font-size:14px;padding:10px}.RichTextEditor__editor___1VEsr{border-top:1px solid #ddd;cursor:text;font-size:16px;margin-top:10px}.RichTextEditor__editor___1VEsr .public-DraftEditor-content,.RichTextEditor__editor___1VEsr .public-DraftEditorPlaceholder-root{margin:0 -10px -10px;padding:10px}.RichTextEditor__editor___1VEsr .public-DraftEditor-content{overflow:auto}.RichTextEditor__hidePlaceholder___3Kk-t .public-DraftEditorPlaceholder-root{display:none}.RichTextEditor__editor___1VEsr .RichTextEditor__paragraph___fFnY4,.RichTextEditor__editor___1VEsr pre{margin:14px 0}.RichTextEditor__editor___1VEsr .RichTextEditor__codeBlock___uySV1{background-color:#f3f3f3;font-family:Inconsolata,Menlo,Consolas,monospace;font-size:16px;margin:14px 0;padding:20px}.RichTextEditor__editor___1VEsr .RichTextEditor__codeBlock___uySV1 span[style]{padding:0!important}.RichTextEditor__editor___1VEsr .RichTextEditor__blockquote___2j6X-{border-left:5px solid #eee;color:#666;font-family:Hoefler Text,Georgia,serif;font-style:italic;margin:16px 0;padding:10px 20px}.RichTextEditor__editor___1VEsr .RichTextEditor__block___3k2zv:first-child,.RichTextEditor__editor___1VEsr ol:first-child,.RichTextEditor__editor___1VEsr pre:first-child,.RichTextEditor__editor___1VEsr ul:first-child{margin-top:0}.RichTextEditor__editor___1VEsr .RichTextEditor__block___3k2zv:last-child,.RichTextEditor__editor___1VEsr ol:last-child,.RichTextEditor__editor___1VEsr pre:last-child,.RichTextEditor__editor___1VEsr ul:last-child{margin-bottom:0}", "" ]), 
+    exports.push([ module.id, ".RichTextEditor__root___33zoV{background:#fff;border:1px solid #ddd;border-radius:3px;font-family:Georgia,serif;font-size:14px}.RichTextEditor__editor___1VEsr{cursor:text;font-size:16px}.RichTextEditor__editor___1VEsr .public-DraftEditor-content,.RichTextEditor__editor___1VEsr .public-DraftEditorPlaceholder-root{margin:0;padding:9px}.RichTextEditor__editor___1VEsr .public-DraftEditor-content{overflow:auto}.RichTextEditor__hidePlaceholder___3Kk-t .public-DraftEditorPlaceholder-root{display:none}.RichTextEditor__editor___1VEsr .RichTextEditor__paragraph___fFnY4,.RichTextEditor__editor___1VEsr pre{margin:14px 0}.RichTextEditor__editor___1VEsr .RichTextEditor__codeBlock___uySV1{background-color:#f3f3f3;font-family:Inconsolata,Menlo,Consolas,monospace;font-size:16px;margin:14px 0;padding:20px}.RichTextEditor__editor___1VEsr .RichTextEditor__codeBlock___uySV1 span[style]{padding:0!important}.RichTextEditor__editor___1VEsr .RichTextEditor__blockquote___2j6X-{border-left:5px solid #eee;color:#666;font-family:Hoefler Text,Georgia,serif;font-style:italic;margin:16px 0;padding:10px 20px}.RichTextEditor__editor___1VEsr .RichTextEditor__block___3k2zv:first-child,.RichTextEditor__editor___1VEsr ol:first-child,.RichTextEditor__editor___1VEsr pre:first-child,.RichTextEditor__editor___1VEsr ul:first-child{margin-top:0}.RichTextEditor__editor___1VEsr .RichTextEditor__block___3k2zv:last-child,.RichTextEditor__editor___1VEsr ol:last-child,.RichTextEditor__editor___1VEsr pre:last-child,.RichTextEditor__editor___1VEsr ul:last-child{margin-bottom:0}", "" ]), 
     // exports
     exports.locals = {
         root: "RichTextEditor__root___33zoV",
