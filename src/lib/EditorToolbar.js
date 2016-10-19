@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {EditorState, Entity, RichUtils} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
-import EditorToolbarConfig from './EditorToolbarConfig';
+import DefaultToolbarConfig from './EditorToolbarConfig';
 import StyleButton from './StyleButton';
 import PopoverIconButton from '../ui/PopoverIconButton';
 import ButtonGroup from '../ui/ButtonGroup';
@@ -62,10 +62,10 @@ export default class EditorToolbar extends Component {
     const {className, toolbarConfig} = this.props;
     return (
       <div className={cx(styles.root, className)}>
-        {this._renderInlineStyleButtons(toolbarConfig || EditorToolbarConfig)}
-        {this._renderBlockTypeButtons(toolbarConfig || EditorToolbarConfig)}
+        {this._renderInlineStyleButtons(toolbarConfig || DefaultToolbarConfig)}
+        {this._renderBlockTypeButtons(toolbarConfig || DefaultToolbarConfig)}
         {this._renderLinkButtons()}
-        {this._renderBlockTypeDropdown(toolbarConfig || EditorToolbarConfig)}
+        {this._renderBlockTypeDropdown(toolbarConfig || DefaultToolbarConfig)}
         {this._renderUndoRedo()}
       </div>
     );
