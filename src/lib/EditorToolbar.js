@@ -5,11 +5,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {EditorState, Entity, RichUtils} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
-import {
-  INLINE_STYLE_BUTTONS,
-  BLOCK_TYPE_DROPDOWN,
-  BLOCK_TYPE_BUTTONS,
-} from './EditorToolbarConfig';
+import DefaultToolbarConfig from './EditorToolbarConfig';
 import StyleButton from './StyleButton';
 import PopoverIconButton from '../ui/PopoverIconButton';
 import ButtonGroup from '../ui/ButtonGroup';
@@ -23,6 +19,7 @@ import cx from 'classnames';
 import styles from './EditorToolbar.css';
 
 import type EventEmitter from 'events';
+import type {ToolbarConfig} from './EditorToolbarConfig';
 
 type ChangeHandler = (state: EditorState) => any;
 
@@ -32,6 +29,7 @@ type Props = {
   keyEmitter: EventEmitter;
   onChange: ChangeHandler;
   focusEditor: Function;
+  toolbarConfig: ToolbarConfig;
 };
 
 type State = {
@@ -61,22 +59,22 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    const {className} = this.props;
+    const {className, toolbarConfig} = this.props;
     return (
       <div className={cx(styles.root, className)}>
-        {this._renderInlineStyleButtons()}
-        {this._renderBlockTypeButtons()}
+        {this._renderInlineStyleButtons(toolbarConfig || DefaultToolbarConfig)}
+        {this._renderBlockTypeButtons(toolbarConfig || DefaultToolbarConfig)}
         {this._renderLinkButtons()}
-        {this._renderBlockTypeDropdown()}
+        {this._renderBlockTypeDropdown(toolbarConfig || DefaultToolbarConfig)}
         {this._renderUndoRedo()}
       </div>
     );
   }
 
-  _renderBlockTypeDropdown() {
+  _renderBlockTypeDropdown(toolbarConfig: ToolbarConfig) {
     let blockType = this._getCurrentBlockType();
     let choices = new Map(
-      BLOCK_TYPE_DROPDOWN.map((type) => [type.style, type.label])
+      (toolbarConfig.BLOCK_TYPE_DROPDOWN || []).map((type) => [type.style, {label: type.label, className: type.className}])
     );
     if (!choices.has(blockType)) {
       blockType = Array.from(choices.keys())[0];
@@ -92,15 +90,16 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderBlockTypeButtons() {
+  _renderBlockTypeButtons(toolbarConfig: ToolbarConfig) {
     let blockType = this._getCurrentBlockType();
-    let buttons = BLOCK_TYPE_BUTTONS.map((type, index) => (
+    let buttons = (toolbarConfig.BLOCK_TYPE_BUTTONS || []).map((type, index) => (
       <StyleButton
         key={String(index)}
         isActive={type.style === blockType}
         label={type.label}
         onToggle={this._toggleBlockType}
         style={type.style}
+        className={type.className}
       />
     ));
     return (
@@ -108,16 +107,17 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderInlineStyleButtons() {
+  _renderInlineStyleButtons(toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let currentStyle = editorState.getCurrentInlineStyle();
-    let buttons = INLINE_STYLE_BUTTONS.map((type, index) => (
+    let buttons = (toolbarConfig.INLINE_STYLE_BUTTONS || []).map((type, index) => (
       <StyleButton
         key={String(index)}
         isActive={currentStyle.has(type.style)}
         label={type.label}
         onToggle={this._toggleInlineStyle}
         style={type.style}
+        className={type.className}
       />
     ));
     return (

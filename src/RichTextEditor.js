@@ -19,6 +19,7 @@ import './Draft.global.css';
 import styles from './RichTextEditor.css';
 
 import type {ContentBlock} from 'draft-js';
+import type {ToolbarConfig} from './lib/EditorToolbarConfig';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -45,6 +46,7 @@ type Props = {
   handleReturn?: (event: Object) => boolean;
   readOnly?: boolean;
   disabled?: boolean; // Alias of readOnly
+  toolbarConfig?: ToolbarConfig;
 };
 
 export default class RichTextEditor extends Component {
@@ -67,6 +69,7 @@ export default class RichTextEditor extends Component {
       customStyleMap,
       readOnly,
       disabled,
+      toolbarConfig,
       ...otherProps // eslint-disable-line comma-dangle
     } = this.props;
     let editorState = value.getEditorState();
@@ -90,6 +93,7 @@ export default class RichTextEditor extends Component {
           editorState={editorState}
           onChange={this._onChange}
           focusEditor={this._focus}
+          toolbarConfig={toolbarConfig}
         />
       );
     }
