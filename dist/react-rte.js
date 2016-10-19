@@ -29937,13 +29937,17 @@ module.exports =
 	          style: imageStyle,
 	          onClick: this._onClick
 	        },
-	        this.props.children
+	        _react2.default.createElement(
+	          'span',
+	          { style: { opacity: '0' } },
+	          this.props.children
+	        )
 	      );
 	    }
 	  }, {
 	    key: '_onClick',
 	    value: function _onClick() {
-	      console.log('image click');
+	      console.log('image clicked');
 	    }
 	  }, {
 	    key: '_handleResize',
