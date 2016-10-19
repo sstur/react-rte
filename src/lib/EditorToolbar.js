@@ -19,6 +19,7 @@ import cx from 'classnames';
 import styles from './EditorToolbar.css';
 
 import type EventEmitter from 'events';
+import type {ToolbarConfig} from './EditorToolbarConfig';
 
 type ChangeHandler = (state: EditorState) => any;
 
@@ -28,7 +29,7 @@ type Props = {
   keyEmitter: EventEmitter;
   onChange: ChangeHandler;
   focusEditor: Function;
-  toolbarConfig: EditorToolbarConfig;
+  toolbarConfig: ToolbarConfig;
 };
 
 type State = {
@@ -70,7 +71,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderBlockTypeDropdown(toolbarConfig: EditorToolbarConfig) {
+  _renderBlockTypeDropdown(toolbarConfig: ToolbarConfig) {
     let blockType = this._getCurrentBlockType();
     let choices = new Map(
       (toolbarConfig.BLOCK_TYPE_DROPDOWN || []).map((type) => [type.style, {label: type.label, className: type.className}])
@@ -89,7 +90,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderBlockTypeButtons(toolbarConfig: EditorToolbarConfig) {
+  _renderBlockTypeButtons(toolbarConfig: ToolbarConfig) {
     let blockType = this._getCurrentBlockType();
     let buttons = (toolbarConfig.BLOCK_TYPE_BUTTONS || []).map((type, index) => (
       <StyleButton
@@ -106,7 +107,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderInlineStyleButtons(toolbarConfig: EditorToolbarConfig) {
+  _renderInlineStyleButtons(toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let currentStyle = editorState.getCurrentInlineStyle();
     let buttons = (toolbarConfig.INLINE_STYLE_BUTTONS || []).map((type, index) => (

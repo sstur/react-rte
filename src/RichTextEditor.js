@@ -14,12 +14,12 @@ import cx from 'classnames';
 import autobind from 'class-autobind';
 import EventEmitter from 'events';
 import {BLOCK_TYPE} from 'draft-js-utils';
-import EditorToolbarConfig from './lib/EditorToolbarConfig';
 
 import './Draft.global.css';
 import styles from './RichTextEditor.css';
 
 import type {ContentBlock} from 'draft-js';
+import type {ToolbarConfig} from './lib/EditorToolbarConfig';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -46,7 +46,7 @@ type Props = {
   handleReturn?: (event: Object) => boolean;
   readOnly?: boolean;
   disabled?: boolean; // Alias of readOnly
-  toolbarConfig?: EditorToolbarConfig;
+  toolbarConfig?: ToolbarConfig;
 };
 
 export default class RichTextEditor extends Component {

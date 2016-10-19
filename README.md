@@ -64,13 +64,13 @@ class MyStatefulEditor extends Component {
 
 ```javascript
 
-render () {
+render() {
   // The toolbarConfig object allows you to specify custom buttons, reorder buttons and to add custom css classes.
   // Supported inline styles: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Inline-Styles.md
   // Supported block types: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Custom-Block-Render.md#draft-default-block-render-map
   const toolbarConfig = {
     INLINE_STYLE_BUTTONS: [
-      {label: 'Bold', style: 'BOLD', className: 'custom-css-class},
+      {label: 'Bold', style: 'BOLD', className: 'custom-css-class'},
       {label: 'Italic', style: 'ITALIC'},
       {label: 'Underline', style: 'UNDERLINE'}
     ],
@@ -86,9 +86,7 @@ render () {
     ]
   };
   return (
-    <RichTextEditor
-      toolbarConfig={toolbarConfig}
-    />
+    <RichTextEditor toolbarConfig={toolbarConfig} />
   );
 }
 

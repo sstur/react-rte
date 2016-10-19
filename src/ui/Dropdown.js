@@ -5,8 +5,13 @@ import cx from 'classnames';
 
 import styles from './Dropdown.css';
 
+type Choice = {
+  label: string;
+  className?: string;
+};
+
 type Props = {
-  choices: Map<string, {label:string, className?:string}>;
+  choices: Map<string, Choice>;
   selectedKey: ?string;
   onChange: (selectedKey: string) => any;
   className?: string;
@@ -23,8 +28,8 @@ export default class Dropdown extends Component {
   render() {
     let {choices, selectedKey, className, ...otherProps} = this.props;
     className = cx(className, styles.root);
-    let selectedValue = (selectedKey == null) ? '' : choices.get(selectedKey);
-    selectedValue = (selectedValue == null) ? '' : selectedValue.label || '';
+    let selectedItem = (selectedKey == null) ? null : choices.get(selectedKey);
+    let selectedValue = selectedItem && selectedItem.label || '';
     return (
       <span className={className} title={selectedValue}>
         <select {...otherProps} value={selectedKey} onChange={this._onChange}>
