@@ -64,8 +64,8 @@ export default class EditorToolbar extends Component {
       <div className={cx(styles.root, className)}>
         {this._renderInlineStyleButtons(toolbarConfig || DefaultToolbarConfig)}
         {this._renderBlockTypeButtons(toolbarConfig || DefaultToolbarConfig)}
-        {this._renderLinkButtons()}
-        {this._renderBlockTypeDropdown(toolbarConfig || DefaultToolbarConfig)}
+        {toolbarConfig && toolbarConfig.hideLinkButtons ? null : this._renderLinkButtons()}
+        {toolbarConfig && toolbarConfig.hideBlockTypeDropdown ? null : this._renderBlockTypeDropdown(toolbarConfig || DefaultToolbarConfig)}
         {this._renderUndoRedo()}
       </div>
     );
