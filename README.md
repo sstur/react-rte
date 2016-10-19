@@ -59,6 +59,41 @@ class MyStatefulEditor extends Component {
 }
 ```
 
+
+### Toolbar Customization
+
+```javascript
+
+render () {
+  // The toolbarConfig object allows you to specify custom buttons, reorder buttons and to add custom css classes.
+  // Supported inline styles: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Inline-Styles.md
+  // Supported block types: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Custom-Block-Render.md#draft-default-block-render-map
+  const toolbarConfig = {
+    INLINE_STYLE_BUTTONS: [
+      {label: 'Bold', style: 'BOLD', className: 'custom-css-class},
+      {label: 'Italic', style: 'ITALIC'},
+      {label: 'Underline', style: 'UNDERLINE'}
+    ],
+    BLOCK_TYPE_DROPDOWN: [
+      {label: 'Normal', style: 'unstyled'},
+      {label: 'Heading Large', style: 'header-one'},
+      {label: 'Heading Medium', style: 'header-two'},
+      {label: 'Heading Small', style: 'header-three'}
+    ],
+    BLOCK_TYPE_BUTTONS: [
+      {label: 'UL', style: 'unordered-list-item'},
+      {label: 'OL', style: 'ordered-list-item'}
+    ]
+  };
+  return (
+    <RichTextEditor
+      toolbarConfig={toolbarConfig}
+    />
+  );
+}
+
+```
+
 ## Motivation
 
 In short, this is a 2016 approach to rich text editing built on modern, battle-hardened components and, importantly, we do not store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
@@ -142,7 +177,6 @@ React.createClass({
 
  - Support images
  - Better test coverage
- - Allow toolbar customization using props
  - Documentation for using this editor in your projects
  - Fix some issues with Markdown parsing (migrate to `remark` parser)
  - Internationalization

@@ -3,6 +3,7 @@ export const INLINE_STYLE_BUTTONS = [
   {label: 'Italic', style: 'ITALIC'},
   {label: 'Strikethrough', style: 'STRIKETHROUGH'},
   {label: 'Monospace', style: 'CODE'},
+  {label: 'Underline', style: 'UNDERLINE'},
 ];
 
 export const BLOCK_TYPE_DROPDOWN = [
