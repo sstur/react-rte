@@ -59,14 +59,33 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    const {className, toolbarConfig} = this.props;
+    let {className, toolbarConfig} = this.props;
+    if (toolbarConfig == null) {
+      toolbarConfig = DefaultToolbarConfig;
+    }
+    let display = toolbarConfig.display || DefaultToolbarConfig.display;
+    let buttonsGroups = display.map((groupName) => {
+      switch (groupName) {
+        case 'INLINE_STYLE_BUTTONS': {
+          return this._renderInlineStyleButtons(toolbarConfig);
+        }
+        case 'BLOCK_TYPE_DROPDOWN': {
+          return this._renderBlockTypeButtons(toolbarConfig);
+        }
+        case 'LINK_BUTTONS': {
+          return this._renderLinkButtons();
+        }
+        case 'BLOCK_TYPE_BUTTONS': {
+          return this._renderBlockTypeDropdown(toolbarConfig);
+        }
+        case 'HISTORY_BUTTONS': {
+          return this._renderUndoRedo();
+        }
+      }
+    });
     return (
       <div className={cx(styles.root, className)}>
-        {this._renderInlineStyleButtons(toolbarConfig || DefaultToolbarConfig)}
-        {this._renderBlockTypeButtons(toolbarConfig || DefaultToolbarConfig)}
-        {toolbarConfig && toolbarConfig.hideLinkButtons ? null : this._renderLinkButtons()}
-        {toolbarConfig && toolbarConfig.hideBlockTypeDropdown ? null : this._renderBlockTypeDropdown(toolbarConfig || DefaultToolbarConfig)}
-        {this._renderUndoRedo()}
+        {buttonsGroups}
       </div>
     );
   }

@@ -8,7 +8,10 @@ export type StyleConfig = {
 
 export type StyleConfigList = Array<StyleConfig>;
 
+export type GroupName = 'INLINE_STYLE_BUTTONS' | 'BLOCK_TYPE_DROPDOWN' | 'LINK_BUTTONS' | 'BLOCK_TYPE_BUTTONS' | 'HISTORY_BUTTONS';
+
 export type ToolbarConfig = {
+  display: Array<GroupName>;
   INLINE_STYLE_BUTTONS: StyleConfigList;
   BLOCK_TYPE_DROPDOWN: StyleConfigList;
   BLOCK_TYPE_BUTTONS: StyleConfigList;
@@ -36,6 +39,7 @@ export const BLOCK_TYPE_BUTTONS: StyleConfigList = [
 ];
 
 let EditorToolbarConfig: ToolbarConfig = {
+  display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'LINK_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'HISTORY_BUTTONS'],
   INLINE_STYLE_BUTTONS,
   BLOCK_TYPE_DROPDOWN,
   BLOCK_TYPE_BUTTONS,
