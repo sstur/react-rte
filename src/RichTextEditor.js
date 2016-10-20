@@ -48,6 +48,7 @@ type Props = {
   readOnly?: boolean;
   disabled?: boolean; // Alias of readOnly
   toolbarConfig?: ToolbarConfig;
+  blockStyleFn?: Function;
 };
 
 export default class RichTextEditor extends Component {
@@ -71,6 +72,7 @@ export default class RichTextEditor extends Component {
       readOnly,
       disabled,
       toolbarConfig,
+      blockStyleFn,
       ...otherProps // eslint-disable-line comma-dangle
     } = this.props;
     let editorState = value.getEditorState();
@@ -104,7 +106,7 @@ export default class RichTextEditor extends Component {
         <div className={combinedEditorClassName}>
           <Editor
             {...otherProps}
-            blockStyleFn={getBlockStyle}
+            blockStyleFn={getBlockStyle(blockStyleFn)}
             customStyleMap={customStyleMap}
             editorState={editorState}
             handleReturn={this._handleReturn}
@@ -267,7 +269,13 @@ export default class RichTextEditor extends Component {
   }
 }
 
-function getBlockStyle(block: ContentBlock): string {
+const getBlockStyle = (blockStyleFn?: Function): Function => (block: ContentBlock): string => {
+  if (blockStyleFn) {
+    const result = blockStyleFn(block);
+    if (result) {
+      return result;
+    }
+  }
   let result = styles.block;
   switch (block.getType()) {
     case 'unstyled':
@@ -279,7 +287,7 @@ function getBlockStyle(block: ContentBlock): string {
     default:
       return result;
   }
-}
+};
 
 const decorator = new CompositeDecorator([LinkDecorator]);
 
