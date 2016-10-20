@@ -20,7 +20,7 @@ import styles from './RichTextEditor.css';
 
 import type {ContentBlock} from 'draft-js';
 import type {ToolbarConfig} from './lib/EditorToolbarConfig';
-import type {Options} from './lib/EditorValue';
+import type {ImportOptions} from './lib/EditorValue';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -287,7 +287,7 @@ function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);
 }
 
-function createValueFromString(markup: string, format: string, options?: Options): EditorValue {
+function createValueFromString(markup: string, format: string, options?: ImportOptions): EditorValue {
   return EditorValue.createFromString(markup, format, decorator, options);
 }
 
