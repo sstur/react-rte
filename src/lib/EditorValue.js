@@ -38,7 +38,7 @@ export default class EditorValue {
     return (this._cache[format] = toString(this.getEditorState(), format));
   }
 
-  setContentFromString(markup: string, format: string, options: ?Options): EditorValue {
+  setContentFromString(markup: string, format: string, options?: Options): EditorValue {
     let editorState = EditorState.push(
       this._editorState,
       fromString(markup, format, options),
@@ -56,7 +56,7 @@ export default class EditorValue {
     return new EditorValue(editorState);
   }
 
-  static createFromString(markup: string, format: string, decorator: ?Decorator, options: ?Options): EditorValue {
+  static createFromString(markup: string, format: string, decorator: ?Decorator, options?: Options): EditorValue {
     let contentState = fromString(markup, format, options);
     let editorState = EditorState.createWithContent(contentState, decorator);
     return new EditorValue(editorState, {[format]: markup});
@@ -78,7 +78,7 @@ function toString(editorState: EditorState, format: string): string {
   }
 }
 
-function fromString(markup: string, format: string, options: ?Options): ContentState {
+function fromString(markup: string, format: string, options?: Options): ContentState {
   switch (format) {
     case 'html': {
       return stateFromHTML(markup, options);

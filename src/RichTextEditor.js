@@ -287,7 +287,7 @@ function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);
 }
 
-function createValueFromString(markup: string, format: string, options: ?Options): EditorValue {
+function createValueFromString(markup: string, format: string, options?: Options): EditorValue {
   return EditorValue.createFromString(markup, format, decorator, options);
 }
 
