@@ -69,13 +69,13 @@ export default class EditorToolbar extends Component {
         case 'INLINE_STYLE_BUTTONS': {
           return this._renderInlineStyleButtons(toolbarConfig);
         }
-        case 'BLOCK_TYPE_DROPDOWN': {
+        case 'BLOCK_TYPE_BUTTONS': {
           return this._renderBlockTypeButtons(toolbarConfig);
         }
         case 'LINK_BUTTONS': {
           return this._renderLinkButtons();
         }
-        case 'BLOCK_TYPE_BUTTONS': {
+        case 'BLOCK_TYPE_DROPDOWN': {
           return this._renderBlockTypeDropdown(toolbarConfig);
         }
         case 'HISTORY_BUTTONS': {
