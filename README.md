@@ -188,8 +188,6 @@ Currently the biggest limitation is that images are not supported. There is a pl
 
 Other limitations include missing features such as: text-alignment and text color. These are coming soon.
 
-Currently the UI (toolbar and link dialog, etc) is not very customizable. We plan to accept props for theming the UI as well as customizing which toolbar items are shown.
-
 React prior v15 will log the following superfluous warning:
 
 > A component is contentEditable and contains children managed by
