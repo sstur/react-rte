@@ -69,22 +69,22 @@ export default class EditorToolbar extends Component {
     let buttonsGroups = display.map((groupName) => {
       switch (groupName) {
         case 'INLINE_STYLE_BUTTONS': {
-          return this._renderInlineStyleButtons(toolbarConfig);
+          return this._renderInlineStyleButtons(groupName, toolbarConfig);
         }
         case 'BLOCK_TYPE_DROPDOWN': {
-          return this._renderBlockTypeButtons(toolbarConfig);
+          return this._renderBlockTypeDropdown(groupName, toolbarConfig);
         }
         case 'LINK_BUTTONS': {
-          return this._renderLinkButtons();
+          return this._renderLinkButtons(groupName, toolbarConfig);
         }
         case 'IMAGE_BUTTON': {
-          return this._renderImageButton();
+          return this._renderImageButton(groupName, toolbarConfig);
         }
         case 'BLOCK_TYPE_BUTTONS': {
-          return this._renderBlockTypeDropdown(toolbarConfig);
+          return this._renderBlockTypeButtons(groupName, toolbarConfig);
         }
         case 'HISTORY_BUTTONS': {
-          return this._renderUndoRedo();
+          return this._renderUndoRedo(groupName, toolbarConfig);
         }
       }
     });
@@ -95,7 +95,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderBlockTypeDropdown(toolbarConfig: ToolbarConfig) {
+  _renderBlockTypeDropdown(name: string, toolbarConfig: ToolbarConfig) {
     let blockType = this._getCurrentBlockType();
     let choices = new Map(
       (toolbarConfig.BLOCK_TYPE_DROPDOWN || []).map((type) => [type.style, {label: type.label, className: type.className}])
@@ -104,7 +104,7 @@ export default class EditorToolbar extends Component {
       blockType = Array.from(choices.keys())[0];
     }
     return (
-      <ButtonGroup>
+      <ButtonGroup key={name}>
         <Dropdown
           choices={choices}
           selectedKey={blockType}
@@ -114,7 +114,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderBlockTypeButtons(toolbarConfig: ToolbarConfig) {
+  _renderBlockTypeButtons(name: string, toolbarConfig: ToolbarConfig) {
     let blockType = this._getCurrentBlockType();
     let buttons = (toolbarConfig.BLOCK_TYPE_BUTTONS || []).map((type, index) => (
       <StyleButton
@@ -127,11 +127,11 @@ export default class EditorToolbar extends Component {
       />
     ));
     return (
-      <ButtonGroup>{buttons}</ButtonGroup>
+      <ButtonGroup key={name}>{buttons}</ButtonGroup>
     );
   }
 
-  _renderInlineStyleButtons(toolbarConfig: ToolbarConfig) {
+  _renderInlineStyleButtons(name: string, toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let currentStyle = editorState.getCurrentInlineStyle();
     let buttons = (toolbarConfig.INLINE_STYLE_BUTTONS || []).map((type, index) => (
@@ -145,11 +145,11 @@ export default class EditorToolbar extends Component {
       />
     ));
     return (
-      <ButtonGroup>{buttons}</ButtonGroup>
+      <ButtonGroup key={name}>{buttons}</ButtonGroup>
     );
   }
 
-  _renderLinkButtons() {
+  _renderLinkButtons(name: string) {
     let {editorState} = this.props;
     let selection = editorState.getSelection();
     let entity = this._getEntityAtCursor();
@@ -157,7 +157,7 @@ export default class EditorToolbar extends Component {
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     return (
-      <ButtonGroup>
+      <ButtonGroup key={name}>
         <PopoverIconButton
           label="Link"
           iconName="link"
@@ -177,9 +177,9 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderImageButton(): React.Element {
+  _renderImageButton(name: string): React.Element {
     return (
-      <ButtonGroup>
+      <ButtonGroup key={name}>
         <PopoverIconButton
           label="Image"
           iconName="image"
@@ -191,12 +191,12 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderUndoRedo() {
+  _renderUndoRedo(name: string) {
     let {editorState} = this.props;
     let canUndo = editorState.getUndoStack().size !== 0;
     let canRedo = editorState.getRedoStack().size !== 0;
     return (
-      <ButtonGroup>
+      <ButtonGroup key={name}>
         <IconButton
           label="Undo"
           iconName="undo"

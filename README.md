@@ -1,8 +1,10 @@
 # React Rich Text Editor
 
 This is a forked version of react-rte#image-support(by sstur).
+There is an **image button** which can upload images by **url**.
 I'll remove this package if original package adopts image-support feature.
 [Original Package](https://github.com/sstur/react-rte)
+
 
 ## Getting Started
 
@@ -18,7 +20,7 @@ render() {
   // Supported block types: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Custom-Block-Render.md#draft-default-block-render-map
   const toolbarConfig = {
     // Optionally specify the groups to display (displayed in the order listed).
-    display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'LINK_BUTTONS', 'IMAGE_BUTTON', BLOCK_TYPE_BUTTONS', 'HISTORY_BUTTONS'],
+    display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'IMAGE_BUTTON', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
     INLINE_STYLE_BUTTONS: [
       {label: 'Bold', style: 'BOLD', className: 'custom-css-class'},
       {label: 'Italic', style: 'ITALIC'},
@@ -47,7 +49,7 @@ Clone this project. Run `npm install`. Run `npm run build-dist` then point the s
 
 ## License
 
-This software is [BSD Licensed](/LICENSE).
+This software is [ISC Licensed](/LICENSE).
 
 
 [ckeditor]: http://ckeditor.com/
