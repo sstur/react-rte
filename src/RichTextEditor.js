@@ -12,6 +12,7 @@ import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
 import ImageDecorator from './lib/ImageDecorator';
+import composite from './lib/composite';
 import cx from 'classnames';
 import autobind from 'class-autobind';
 import EventEmitter from 'events';
@@ -22,7 +23,7 @@ import styles from './RichTextEditor.css';
 
 import type {ContentBlock, Entity} from 'draft-js';
 import type {ToolbarConfig} from './lib/EditorToolbarConfig';
-import type {Options} from './lib/EditorValue';
+import type {ImportOptions} from './lib/EditorValue';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -50,6 +51,7 @@ type Props = {
   readOnly?: boolean;
   disabled?: boolean; // Alias of readOnly
   toolbarConfig?: ToolbarConfig;
+  blockStyleFn?: (block: ContentBlock) => ?string;
 };
 
 export default class RichTextEditor extends Component {
@@ -73,6 +75,7 @@ export default class RichTextEditor extends Component {
       readOnly,
       disabled,
       toolbarConfig,
+      blockStyleFn,
       ...otherProps // eslint-disable-line comma-dangle
     } = this.props;
     let editorState = value.getEditorState();
@@ -106,7 +109,7 @@ export default class RichTextEditor extends Component {
         <div className={combinedEditorClassName}>
           <Editor
             {...otherProps}
-            blockStyleFn={getBlockStyle}
+            blockStyleFn={composite(defaultBlockStyleFn, blockStyleFn)}
             customStyleMap={customStyleMap}
             editorState={editorState}
             handleReturn={this._handleReturn}
@@ -302,7 +305,7 @@ export default class RichTextEditor extends Component {
   }
 }
 
-function getBlockStyle(block: ContentBlock): string {
+function defaultBlockStyleFn(block: ContentBlock): string {
   let result = styles.block;
   switch (block.getType()) {
     case 'unstyled':
@@ -322,7 +325,7 @@ function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);
 }
 
-function createValueFromString(markup: string, format: string, options?: Options): EditorValue {
+function createValueFromString(markup: string, format: string, options?: ImportOptions): EditorValue {
   return EditorValue.createFromString(markup, format, decorator, options);
 }
 
