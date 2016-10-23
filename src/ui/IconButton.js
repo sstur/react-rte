@@ -7,9 +7,6 @@ import ButtonWrap from './ButtonWrap';
 
 import styles from './IconButton.css';
 
-// TODO: Use a more specific type here.
-type ReactNode = any;
-
 type Props = {
   iconName: string;
   isActive?: boolean;

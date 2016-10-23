@@ -8,9 +8,6 @@ import styles from './Button.css';
 
 type EventHandler = (event: Event) => any;
 
-// TODO: Use a more specific type here.
-type ReactNode = any;
-
 type Props = {
   children?: ReactNode;
   className?: string;
