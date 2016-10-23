@@ -9,9 +9,9 @@ type Props = {
   className?: string;
 };
 
-export default function ButtonGroup(props_: Props) {
-  let className = cx(props_.className, styles.root);
+export default function ButtonGroup(props: Props) {
+  let className = cx(props.className, styles.root);
   return (
-    <div {...props_} className={className} />
+    <div {...props} className={className} />
   );
 }
