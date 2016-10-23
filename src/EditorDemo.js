@@ -1,6 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
-import RichTextEditor, {createEmptyValue} from './RichTextEditor';
+import RichTextEditor, {createValueFromString} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
@@ -21,7 +21,7 @@ export default class EditorDemo extends Component {
     super(...arguments);
     autobind(this);
     this.state = {
-      value: createEmptyValue(),
+      value: createValueFromString('<p><img src="/goat.png"/></p>', 'html'),
       format: 'html',
       readOnly: false,
     };
