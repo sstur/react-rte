@@ -50,6 +50,7 @@ type Props = {
   disabled?: boolean; // Alias of readOnly
   toolbarConfig?: ToolbarConfig;
   blockStyleFn?: (block: ContentBlock) => ?string;
+  autoFocus?: boolean;
 };
 
 export default class RichTextEditor extends Component {
@@ -60,6 +61,16 @@ export default class RichTextEditor extends Component {
     super(...arguments);
     this._keyEmitter = new EventEmitter();
     autobind(this);
+  }
+
+  componentDidMount() {
+    const {autoFocus} = this.props;
+
+    if (!autoFocus) {
+      return;
+    }
+
+    this._focus();
   }
 
   render() {
