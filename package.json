@@ -11,7 +11,7 @@
     "typecheck": "flow",
     "prepublish": "npm run build",
     "test": "npm run lint && npm run typecheck && npm run test-src",
-    "test-src": "mocha 'src/**/__tests__/*.js'"
+    "test-src": "mocha \"src/**/__tests__/*.js\""
   },
   "dependencies": {
     "class-autobind": "^0.1.4",
