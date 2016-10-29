@@ -127,6 +127,8 @@ In this editor we use a pure, deterministic function to convert document state t
 
 ### Other Props
   All the props you can pass to Draft.js `Editor` can be passed to `RichTextEditor` (with the exception of `editorState` which will be generated internally based on the `value` prop).
+  
+  * `autoFocus`: setting this to true will automatically focus input into the editor when the component is mounted
 
 ### EditorValue Class
 In Draft.js `EditorState` contains not only the document contents but the entire state of the editor including cursor position and selection. This is helpful for many reasons including undo/redo. To make things easier for you, we have wrapped the state of the editor in an `EditorValue` instance with helpful methods to convert to/from a HTML or Markdown. An instance of this class should be passed to `RichTextEditor` in the `value` prop.
