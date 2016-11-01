@@ -74,7 +74,7 @@ function toString(editorState: EditorState, format: string, options?: ExportOpti
       return stateToMarkdown(contentState);
     }
     case 'raw': {
-      return convertToRaw(contentState);
+      return JSON.stringify(convertToRaw(contentState));
     }
     default: {
       throw new Error('Format not supported: ' + format);
@@ -91,7 +91,7 @@ function fromString(markup: string, format: string, options?: ImportOptions): Co
       return stateFromMarkdown(markup);
     }
     case 'raw': {
-      return convertFromRaw(markup);
+      return convertFromRaw(JSON.parse(markup));
     }
     default: {
       throw new Error('Format not supported: ' + format);
