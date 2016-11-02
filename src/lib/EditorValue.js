@@ -1,5 +1,5 @@
 /* @flow */
-import {ContentState, EditorState} from 'draft-js';
+import {ContentState, EditorState, convertToRaw, convertFromRaw} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
 import {stateFromHTML} from 'draft-js-import-html';
 import {stateToMarkdown} from 'draft-js-export-markdown';
@@ -73,6 +73,9 @@ function toString(editorState: EditorState, format: string, options?: ExportOpti
     case 'markdown': {
       return stateToMarkdown(contentState);
     }
+    case 'raw': {
+      return JSON.stringify(convertToRaw(contentState));
+    }
     default: {
       throw new Error('Format not supported: ' + format);
     }
@@ -86,6 +89,9 @@ function fromString(markup: string, format: string, options?: ImportOptions): Co
     }
     case 'markdown': {
       return stateFromMarkdown(markup);
+    }
+    case 'raw': {
+      return convertFromRaw(JSON.parse(markup));
     }
     default: {
       throw new Error('Format not supported: ' + format);
