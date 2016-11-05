@@ -1,0 +1,20 @@
+.image {
+  display: inline-block;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: right;
+  vertical-align: bottom;
+  _outline: 1px solid blue;
+  _outline-offset: -1px;
+  _background-color: rgba(0, 0, 0, .2);
+}
+.image::-moz-selection {
+  background-color: rgba(122, 183, 254, 0.59);
+}
+.selected {
+
+}

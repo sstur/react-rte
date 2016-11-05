@@ -13,7 +13,7 @@ type Props = {
 type EntityRangeCallback = (start: number, end: number) => void;
 
 function Link(props: Props) {
-  const {url} = Entity.get(props.entityKey).getData();
+  let {url} = Entity.get(props.entityKey).getData();
   return (
     <a href={url}>{props.children}</a>
   );
@@ -21,7 +21,7 @@ function Link(props: Props) {
 
 function findLinkEntities(contentBlock: ContentBlock, callback: EntityRangeCallback) {
   contentBlock.findEntityRanges((character) => {
-    const entityKey = character.getEntity();
+    let entityKey = character.getEntity();
     return (
       entityKey != null &&
       Entity.get(entityKey).getType() === ENTITY_TYPE.LINK

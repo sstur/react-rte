@@ -10,6 +10,7 @@ import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
+import ImageDecorator from './lib/ImageDecorator';
 import composite from './lib/composite';
 import cx from 'classnames';
 import autobind from 'class-autobind';
@@ -295,7 +296,7 @@ function defaultBlockStyleFn(block: ContentBlock): string {
   }
 }
 
-const decorator = new CompositeDecorator([LinkDecorator]);
+const decorator = new CompositeDecorator([LinkDecorator, ImageDecorator]);
 
 function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);

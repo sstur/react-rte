@@ -21,7 +21,7 @@ export default class EditorDemo extends Component {
     super(...arguments);
     autobind(this);
     this.state = {
-      value: createValueFromString('<p><img src="/goat.png"/></p>', 'html'),
+      value: createValueFromString('<p>Hello<img src="/goat.png"/>goat.</p>', 'html'),
       format: 'html',
       readOnly: false,
     };
