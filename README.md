@@ -10,6 +10,51 @@ I'll remove this package if original package adopts image-support feature.
 
     $ npm install --save react-rte-image
 
+`RichTextEditor` is the main editor component. It is comprised of the Draft.js `<Editor>`, some UI components (e.g. toolbar) and some helpful abstractions around getting and setting content with HTML/Markdown.
+
+`RichTextEditor` is designed to be used like a `textarea` except that instead of `value` being a string, it is an object with `toString` on it. Creating a `value` from a string is also easy using `createValueFromString(markup, 'html')`.
+
+### Example Usage:
+
+This example uses newer JavaScript and JSX. For an example in old JavaScript, [see below](#example-with-es5-and-no-jsx).
+
+```javascript
+import React, {Component, PropTypes} from 'react';
+import RichTextEditor from 'react-rte-image';
+
+class MyStatefulEditor extends Component {
+  static propTypes = {
+    onChange: PropTypes.func
+  };
+
+  state = {
+    value: RichTextEditor.createEmptyValue()
+  }
+
+  onChange = (value) => {
+    this.setState({value});
+    if (this.props.onChange) {
+      // Send the changes up to the parent component as an HTML string.
+      // This is here to demonstrate using `.toString()` but in a real app it
+      // would be better to avoid generating a string on each change.
+      this.props.onChange(
+        value.toString('html')
+      );
+    }
+  };
+
+  render () {
+    return (
+      <RichTextEditor
+        value={this.state.value}
+        onChange={this.onChange}
+      />
+    );
+  }
+}
+```
+
+
 ### Toolbar Customization
 
 ```javascript
