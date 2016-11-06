@@ -3,7 +3,7 @@
 This is a forked version of react-rte#image-support(by sstur).
 There is an **image button** which can upload images by **url**.
 I'll remove this package if original package adopts image-support feature.
-[Original Package](https://github.com/sstur/react-rte)
+[Original Package](https://npmjs.com/package/react-rte)
 
 
 ## Getting Started
