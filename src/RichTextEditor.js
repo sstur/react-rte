@@ -15,7 +15,6 @@ import cx from 'classnames';
 import autobind from 'class-autobind';
 import EventEmitter from 'events';
 import {BLOCK_TYPE} from 'draft-js-utils';
-import {assign} from 'es6-object-assign';
 
 import './Draft.global.css';
 import styles from './RichTextEditor.css';
@@ -306,11 +305,12 @@ function createValueFromString(markup: string, format: string, options?: ImportO
   return EditorValue.createFromString(markup, format, decorator, options);
 }
 
-assign(RichTextEditor, {
+RichTextEditor = {
+  ...RichTextEditor,
   EditorValue,
   decorator,
   createEmptyValue,
   createValueFromString,
-});
+};
 
 export {EditorValue, decorator, createEmptyValue, createValueFromString};

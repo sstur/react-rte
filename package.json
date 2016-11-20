@@ -23,7 +23,6 @@
     "draft-js-import-html": "^0.3.2",
     "draft-js-import-markdown": "^0.2.1",
     "draft-js-utils": "^0.1.7",
-    "es6-object-assign": "^1.0.3",
     "immutable": "^3.8.1"
   },
   "peerDependencies": {
