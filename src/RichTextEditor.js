@@ -305,7 +305,7 @@ function createValueFromString(markup: string, format: string, options?: ImportO
   return EditorValue.createFromString(markup, format, decorator, options);
 }
 
-RichTextEditor = {
+RichTextEditor = { // eslint-disable-line no-class-assign
   ...RichTextEditor,
   EditorValue,
   decorator,
