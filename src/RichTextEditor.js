@@ -23,6 +23,10 @@ import type {ContentBlock} from 'draft-js';
 import type {ToolbarConfig} from './lib/EditorToolbarConfig';
 import type {ImportOptions} from './lib/EditorValue';
 
+import ButtonGroup from './ui/ButtonGroup';
+import Button from './ui/Button';
+import Dropdown from './ui/Dropdown';
+
 const MAX_LIST_DEPTH = 2;
 
 // Custom overrides for "code" style.
@@ -315,5 +319,11 @@ Object.assign(RichTextEditor, {
   createEmptyValue,
   createValueFromString,
 });
+
+export const UI = {
+  ButtonGroup,
+  Button,
+  Dropdown,
+}
 
 export {EditorValue, decorator, createEmptyValue, createValueFromString};
