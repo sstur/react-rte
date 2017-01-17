@@ -320,10 +320,12 @@ Object.assign(RichTextEditor, {
   createValueFromString,
 });
 
-export const UI = {
+export {
+  EditorValue,
+  decorator,
+  createEmptyValue,
+  createValueFromString,
   ButtonGroup,
   Button,
   Dropdown,
-}
-
-export {EditorValue, decorator, createEmptyValue, createValueFromString};
+};

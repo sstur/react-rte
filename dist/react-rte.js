@@ -126,7 +126,7 @@ function(module, exports, __webpack_require__) {
     }
     Object.defineProperty(exports, "__esModule", {
         value: !0
-    }), exports.createValueFromString = exports.createEmptyValue = exports.decorator = exports.EditorValue = exports.UI = void 0;
+    }), exports.Dropdown = exports.Button = exports.ButtonGroup = exports.createValueFromString = exports.createEmptyValue = exports.decorator = exports.EditorValue = void 0;
     var _extends = Object.assign || function(target) {
         for (var i = 1; i < arguments.length; i++) {
             var source = arguments[i];
@@ -304,14 +304,10 @@ function(module, exports, __webpack_require__) {
         decorator: decorator,
         createEmptyValue: createEmptyValue,
         createValueFromString: createValueFromString
-    });
-    exports.UI = {
-        ButtonGroup: _ButtonGroup2.default,
-        Button: _Button2.default,
-        Dropdown: _Dropdown2.default
-    };
-    exports.EditorValue = _EditorValue2.default, exports.decorator = decorator, exports.createEmptyValue = createEmptyValue, 
-    exports.createValueFromString = createValueFromString;
+    }), exports.EditorValue = _EditorValue2.default, exports.decorator = decorator, 
+    exports.createEmptyValue = createEmptyValue, exports.createValueFromString = createValueFromString, 
+    exports.ButtonGroup = _ButtonGroup2.default, exports.Button = _Button2.default, 
+    exports.Dropdown = _Dropdown2.default;
 }, /* 1 */
 /***/
 function(module, exports) {

@@ -21769,7 +21769,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.createValueFromString = exports.createEmptyValue = exports.decorator = exports.EditorValue = exports.UI = undefined;
+	exports.Dropdown = exports.Button = exports.ButtonGroup = exports.createValueFromString = exports.createEmptyValue = exports.decorator = exports.EditorValue = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -22156,16 +22156,13 @@
 	  createValueFromString: createValueFromString
 	});
 
-	var UI = exports.UI = {
-	  ButtonGroup: _ButtonGroup2.default,
-	  Button: _Button2.default,
-	  Dropdown: _Dropdown2.default
-	};
-
 	exports.EditorValue = _EditorValue2.default;
 	exports.decorator = decorator;
 	exports.createEmptyValue = createEmptyValue;
 	exports.createValueFromString = createValueFromString;
+	exports.ButtonGroup = _ButtonGroup2.default;
+	exports.Button = _Button2.default;
+	exports.Dropdown = _Dropdown2.default;
 
 /***/ },
 /* 180 */
