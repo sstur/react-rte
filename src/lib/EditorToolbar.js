@@ -37,6 +37,7 @@ type State = {
   showLinkInput: boolean;
 };
 
+
 export default class EditorToolbar extends Component {
   props: Props;
   state: State;
@@ -87,7 +88,8 @@ export default class EditorToolbar extends Component {
     return (
       <div className={cx(styles.root, className)}>
         {buttonsGroups}
-        {this.props.customControls.map( f => {
+        {this.props.customControls && 
+          this.props.customControls.map( f => {
           switch (typeof f) {
             case 'function':
               return f(
