@@ -4,6 +4,11 @@ import RichTextEditor, {createEmptyValue} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
+import ButtonGroup from './ui/ButtonGroup';
+import Button from './ui/Button';
+import Dropdown from './ui/Dropdown';
+import IconButton from './ui/IconButton';
+
 import type {EditorValue} from './RichTextEditor';
 
 type Props = {};
@@ -44,6 +49,34 @@ export default class EditorDemo extends Component {
             toolbarClassName="demo-toolbar"
             editorClassName="demo-editor"
             readOnly={this.state.readOnly}
+            customControls={[
+              (handleChange, getValue) => {
+                let choices = new Map(
+                  [
+                    {value: '1', label: 1},
+                    {value: '2', label: 2},
+                    {value: '3', label: 3}
+                  ].map((choice) => [choice.value, {label: choice.label}])
+                );
+                return (
+                  <ButtonGroup key={1}>
+                    <Dropdown
+                      choices={choices}
+                      selectedKey={getValue('some-state')}
+                      onChange={(val) => { handleChange('some-state', val); alert(val) }}
+                    />
+                  </ButtonGroup>
+              )},
+
+              <ButtonGroup key={2}>
+                <IconButton
+                  label="Remove Link"
+                  iconName="remove-link"
+                  focusOnClick={false}
+                  onClick={() => alert('You pressed a button')}
+                />
+              </ButtonGroup>
+            ]}
           />
         </div>
         <div className="row">

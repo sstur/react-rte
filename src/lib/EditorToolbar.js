@@ -30,6 +30,7 @@ type Props = {
   onChange: ChangeHandler;
   focusEditor: Function;
   toolbarConfig: ToolbarConfig;
+  customControls: Array<object>
 };
 
 type State = {
@@ -59,7 +60,7 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    let {className, toolbarConfig} = this.props;
+    let {className, toolbarConfig, customControls} = this.props;
     if (toolbarConfig == null) {
       toolbarConfig = DefaultToolbarConfig;
     }
@@ -86,6 +87,18 @@ export default class EditorToolbar extends Component {
     return (
       <div className={cx(styles.root, className)}>
         {buttonsGroups}
+        {this.props.customControls.map( f => {
+          switch (typeof f) {
+            case 'function':
+              return f(
+                (key, value) =>
+                  this.setState({['customControl' + key]: value}), 
+                  (key) => this.state['customControl' + key]
+              )
+            default:
+              return f;
+          }
+        })}
       </div>
     );
   }
