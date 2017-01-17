@@ -318,6 +318,9 @@ Object.assign(RichTextEditor, {
   decorator,
   createEmptyValue,
   createValueFromString,
+  ButtonGroup,
+  Button,
+  Dropdown,
 });
 
 export {

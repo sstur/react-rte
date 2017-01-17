@@ -303,7 +303,10 @@ function(module, exports, __webpack_require__) {
         EditorValue: _EditorValue2.default,
         decorator: decorator,
         createEmptyValue: createEmptyValue,
-        createValueFromString: createValueFromString
+        createValueFromString: createValueFromString,
+        ButtonGroup: _ButtonGroup2.default,
+        Button: _Button2.default,
+        Dropdown: _Dropdown2.default
     }), exports.EditorValue = _EditorValue2.default, exports.decorator = decorator, 
     exports.createEmptyValue = createEmptyValue, exports.createValueFromString = createValueFromString, 
     exports.ButtonGroup = _ButtonGroup2.default, exports.Button = _Button2.default, 

@@ -22153,7 +22153,10 @@
 	  EditorValue: _EditorValue2.default,
 	  decorator: decorator,
 	  createEmptyValue: createEmptyValue,
-	  createValueFromString: createValueFromString
+	  createValueFromString: createValueFromString,
+	  ButtonGroup: _ButtonGroup2.default,
+	  Button: _Button2.default,
+	  Dropdown: _Dropdown2.default
 	});
 
 	exports.EditorValue = _EditorValue2.default;
