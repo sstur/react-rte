@@ -45238,7 +45238,7 @@
 	        'div',
 	        { className: (0, _classnames2.default)(_EditorToolbar2.default.root, className) },
 	        buttonsGroups,
-	        this.props.customControls.map(function (f) {
+	        this.props.customControls && this.props.customControls.map(function (f) {
 	          switch (typeof f === 'undefined' ? 'undefined' : _typeof(f)) {
 	            case 'function':
 	              return f(function (key, value) {

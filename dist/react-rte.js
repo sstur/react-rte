@@ -14090,7 +14090,7 @@ function(module, exports, __webpack_require__) {
                 });
                 return _react2.default.createElement("div", {
                     className: (0, _classnames2.default)(_EditorToolbar2.default.root, className)
-                }, buttonsGroups, this.props.customControls.map(function(f) {
+                }, buttonsGroups, this.props.customControls && this.props.customControls.map(function(f) {
                     switch ("undefined" == typeof f ? "undefined" : _typeof(f)) {
                       case "function":
                         return f(function(key, value) {
