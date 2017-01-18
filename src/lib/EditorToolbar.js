@@ -61,7 +61,7 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    let {className, toolbarConfig, customControls} = this.props;
+    let {className, toolbarConfig, customControls, editorState} = this.props;
     if (toolbarConfig == null) {
       toolbarConfig = DefaultToolbarConfig;
     }
@@ -88,14 +88,13 @@ export default class EditorToolbar extends Component {
     return (
       <div className={cx(styles.root, className)}>
         {buttonsGroups}
-        {this.props.customControls && 
-          this.props.customControls.map( f => {
+        {customControls && customControls.map((f) => {
           switch (typeof f) {
             case 'function':
               return f(
-                (key, value) =>
-                  this.setState({['customControl' + key]: value}), 
-                  (key) => this.state['customControl' + key]
+                (key, value) => this.setState({['customControl' + key]: value}),
+                (key) => this.state['customControl' + key],
+                editorState
               )
             default:
               return f;

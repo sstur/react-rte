@@ -21604,7 +21604,7 @@
 	            toolbarClassName: 'demo-toolbar',
 	            editorClassName: 'demo-editor',
 	            readOnly: this.state.readOnly,
-	            customControls: [function (handleChange, getValue) {
+	            customControls: [function (handleChange, getValue, editorState) {
 	              var choices = new Map([{ value: '1', label: 1 }, { value: '2', label: 2 }, { value: '3', label: 3 }].map(function (choice) {
 	                return [choice.value, { label: choice.label }];
 	              }));
@@ -21615,7 +21615,8 @@
 	                  choices: choices,
 	                  selectedKey: getValue('some-state'),
 	                  onChange: function onChange(val) {
-	                    handleChange('some-state', val);alert(val);
+	                    handleChange('some-state', val);
+	                    alert(editorState.getSelection().getFocusOffset());
 	                  }
 	                })
 	              );
@@ -45204,7 +45205,8 @@
 	      var _props = this.props,
 	          className = _props.className,
 	          toolbarConfig = _props.toolbarConfig,
-	          customControls = _props.customControls;
+	          customControls = _props.customControls,
+	          editorState = _props.editorState;
 
 	      if (toolbarConfig == null) {
 	        toolbarConfig = _EditorToolbarConfig2.default;
@@ -45238,14 +45240,14 @@
 	        'div',
 	        { className: (0, _classnames2.default)(_EditorToolbar2.default.root, className) },
 	        buttonsGroups,
-	        this.props.customControls && this.props.customControls.map(function (f) {
+	        customControls && customControls.map(function (f) {
 	          switch (typeof f === 'undefined' ? 'undefined' : _typeof(f)) {
 	            case 'function':
 	              return f(function (key, value) {
 	                return _this2.setState(_defineProperty({}, 'customControl' + key, value));
 	              }, function (key) {
 	                return _this2.state['customControl' + key];
-	              });
+	              }, editorState);
 	            default:
 	              return f;
 	          }

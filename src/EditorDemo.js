@@ -50,7 +50,7 @@ export default class EditorDemo extends Component {
             editorClassName="demo-editor"
             readOnly={this.state.readOnly}
             customControls={[
-              (handleChange, getValue) => {
+              (handleChange, getValue, editorState) => {
                 let choices = new Map(
                   [
                     {value: '1', label: 1},
@@ -63,11 +63,13 @@ export default class EditorDemo extends Component {
                     <Dropdown
                       choices={choices}
                       selectedKey={getValue('some-state')}
-                      onChange={(val) => { handleChange('some-state', val); alert(val) }}
+                      onChange={(val) => {
+                        handleChange('some-state', val);
+                        alert(editorState.getSelection().getFocusOffset());
+                      }}
                     />
                   </ButtonGroup>
               )},
-
               <ButtonGroup key={2}>
                 <IconButton
                   label="Remove Link"

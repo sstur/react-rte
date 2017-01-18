@@ -14067,8 +14067,7 @@ function(module, exports, __webpack_require__) {
         }, {
             key: "render",
             value: function() {
-                var _this2 = this, _props = this.props, className = _props.className, toolbarConfig = _props.toolbarConfig;
-                _props.customControls;
+                var _this2 = this, _props = this.props, className = _props.className, toolbarConfig = _props.toolbarConfig, customControls = _props.customControls, editorState = _props.editorState;
                 null == toolbarConfig && (toolbarConfig = _EditorToolbarConfig2.default);
                 var display = toolbarConfig.display || _EditorToolbarConfig2.default.display, buttonsGroups = display.map(function(groupName) {
                     switch (groupName) {
@@ -14090,14 +14089,14 @@ function(module, exports, __webpack_require__) {
                 });
                 return _react2.default.createElement("div", {
                     className: (0, _classnames2.default)(_EditorToolbar2.default.root, className)
-                }, buttonsGroups, this.props.customControls && this.props.customControls.map(function(f) {
+                }, buttonsGroups, customControls && customControls.map(function(f) {
                     switch ("undefined" == typeof f ? "undefined" : _typeof(f)) {
                       case "function":
                         return f(function(key, value) {
                             return _this2.setState(_defineProperty({}, "customControl" + key, value));
                         }, function(key) {
                             return _this2.state["customControl" + key];
-                        });
+                        }, editorState);
 
                       default:
                         return f;
