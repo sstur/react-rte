@@ -199,9 +199,11 @@ export default class EditorToolbar extends Component {
   _onKeypress(event: Object, eventFlags: Object) {
     // Catch cmd+k for use with link insertion.
     if (hasCommandModifier(event) && event.keyCode === 75) {
-      // TODO: Ensure there is some text selected.
-      this.setState({showLinkInput: true});
-      eventFlags.wasHandled = true;
+      let {editorState} = this.props;
+      if (!editorState.getSelection().isCollapsed()) {
+        this.setState({showLinkInput: true});
+        eventFlags.wasHandled = true; 
+      }
     }
   }
 
