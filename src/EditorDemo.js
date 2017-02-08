@@ -5,7 +5,6 @@ import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
 import ButtonGroup from './ui/ButtonGroup';
-import Button from './ui/Button';
 import Dropdown from './ui/Dropdown';
 import IconButton from './ui/IconButton';
 
@@ -50,12 +49,12 @@ export default class EditorDemo extends Component {
             editorClassName="demo-editor"
             readOnly={this.state.readOnly}
             customControls={[
-              (handleChange, getValue, editorState) => {
+              (handleChange, getValue, editorState) => { // eslint-disable-line
                 let choices = new Map(
                   [
                     {value: '1', label: 1},
                     {value: '2', label: 2},
-                    {value: '3', label: 3}
+                    {value: '3', label: 3},
                   ].map((choice) => [choice.value, {label: choice.label}])
                 );
                 return (
@@ -63,21 +62,19 @@ export default class EditorDemo extends Component {
                     <Dropdown
                       choices={choices}
                       selectedKey={getValue('some-state')}
-                      onChange={(val) => {
-                        handleChange('some-state', val);
-                        alert(editorState.getSelection().getFocusOffset());
-                      }}
+                      onChange={(val) => handleChange('some-state', val)}
                     />
                   </ButtonGroup>
-              )},
+                );
+              },
               <ButtonGroup key={2}>
                 <IconButton
                   label="Remove Link"
                   iconName="remove-link"
                   focusOnClick={false}
-                  onClick={() => alert('You pressed a button')}
+                  onClick={() => alert('You pressed a button')} // eslint-disable-line
                 />
-              </ButtonGroup>
+              </ButtonGroup>,
             ]}
           />
         </div>

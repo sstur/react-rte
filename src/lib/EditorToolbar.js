@@ -30,7 +30,7 @@ type Props = {
   onChange: ChangeHandler;
   focusEditor: Function;
   toolbarConfig: ToolbarConfig;
-  customControls: Array<object>
+  customControls: Array<Object>
 };
 
 type State = {
@@ -95,7 +95,7 @@ export default class EditorToolbar extends Component {
                 (key, value) => this.setState({['customControl' + key]: value}),
                 (key) => this.state['customControl' + key],
                 editorState
-              )
+              );
             default:
               return f;
           }
