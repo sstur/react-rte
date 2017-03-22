@@ -312,12 +312,12 @@ function createValueFromString(markup: string, format: string, options?: ImportO
   return EditorValue.createFromString(markup, format, decorator, options);
 }
 
-// $FlowIssue - This should probably not be done this way.
-Object.assign(RichTextEditor, {
+RichTextEditor = { // eslint-disable-line no-class-assign
+  ...RichTextEditor,
   EditorValue,
   decorator,
   createEmptyValue,
   createValueFromString,
-});
+};
 
 export {EditorValue, decorator, createEmptyValue, createValueFromString};
