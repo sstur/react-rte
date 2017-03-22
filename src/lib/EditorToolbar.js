@@ -30,6 +30,7 @@ type Props = {
   onChange: ChangeHandler;
   focusEditor: Function;
   toolbarConfig: ToolbarConfig;
+  rootStyle?: Object;
 };
 
 type State = {
@@ -59,7 +60,7 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    let {className, toolbarConfig} = this.props;
+    let {className, toolbarConfig, rootStyle} = this.props;
     if (toolbarConfig == null) {
       toolbarConfig = DefaultToolbarConfig;
     }
@@ -84,7 +85,7 @@ export default class EditorToolbar extends Component {
       }
     });
     return (
-      <div className={cx(styles.root, className)}>
+      <div className={cx(styles.root, className)} style={rootStyle}>
         {buttonsGroups}
       </div>
     );
