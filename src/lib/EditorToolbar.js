@@ -203,7 +203,7 @@ export default class EditorToolbar extends Component {
       let {editorState} = this.props;
       if (!editorState.getSelection().isCollapsed()) {
         this.setState({showLinkInput: true});
-        eventFlags.wasHandled = true; 
+        eventFlags.wasHandled = true;
       }
     }
   }
