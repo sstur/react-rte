@@ -4,7 +4,7 @@ var path = require('path');
 var loaders = [
   {
     test: /\.js$/,
-    loader: 'babel',
+    loader: 'babel-loader',
     exclude: /node_modules/,
   },
   {
