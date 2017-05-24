@@ -5,7 +5,7 @@ var webpack = require('webpack');
 var loaders = [
   {
     test: /\.js$/,
-    loader: 'babel-loader',
+    loader: 'babel',
     exclude: /node_modules/,
   },
   {
@@ -20,7 +20,7 @@ var loaders = [
 ];
 
 module.exports = [{
-  entry: './src/RichTextEditor.js',
+  entry: ['babel-polyfill', './src/RichTextEditor.js'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'react-rte.js',
