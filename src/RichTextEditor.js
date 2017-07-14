@@ -51,6 +51,7 @@ type Props = {
   toolbarConfig?: ToolbarConfig;
   blockStyleFn?: (block: ContentBlock) => ?string;
   autoFocus?: boolean;
+  keyBindingFn: (event: Object) => ?string;
   rootStyle?: Object;
   editorStyle?: Object;
   toolbarStyle?: Object;
@@ -88,6 +89,7 @@ export default class RichTextEditor extends Component {
       disabled,
       toolbarConfig,
       blockStyleFn,
+      keyBindingFn,
       rootStyle,
       toolbarStyle,
       editorStyle,
@@ -129,7 +131,7 @@ export default class RichTextEditor extends Component {
             customStyleMap={customStyleMap}
             editorState={editorState}
             handleReturn={this._handleReturn}
-            keyBindingFn={this._customKeyHandler}
+            keyBindingFn={keyBindingFn || this._customKeyHandler}
             handleKeyCommand={this._handleKeyCommand}
             onTab={this._onTab}
             onChange={this._onChange}
