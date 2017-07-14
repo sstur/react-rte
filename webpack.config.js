@@ -20,7 +20,7 @@ var loaders = [
 ];
 
 module.exports = [{
-  entry: './src/RichTextEditor.js',
+  entry: ['babel-polyfill', './src/RichTextEditor.js'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'react-rte.js',
@@ -50,7 +50,7 @@ module.exports = [{
   entry: './src/demo.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'demo.js',
+    filename: '[name].js',
   },
   module: {loaders: loaders},
 }];

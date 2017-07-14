@@ -30,7 +30,8 @@ type Props = {
   onChange: ChangeHandler;
   focusEditor: Function;
   toolbarConfig: ToolbarConfig;
-  customControls: Array<Object>
+  customControls: Array<Object>;
+  rootStyle?: Object;
 };
 
 type State = {
@@ -61,7 +62,7 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    let {className, toolbarConfig, customControls, editorState} = this.props;
+    let {className, toolbarConfig, rootStyle, customControls, editorState} = this.props;
     if (toolbarConfig == null) {
       toolbarConfig = DefaultToolbarConfig;
     }
@@ -86,7 +87,7 @@ export default class EditorToolbar extends Component {
       }
     });
     return (
-      <div className={cx(styles.root, className)}>
+      <div className={cx(styles.root, className)} style={rootStyle}>
         {buttonsGroups}
         {customControls && customControls.map((f) => {
           switch (typeof f) {
@@ -213,9 +214,11 @@ export default class EditorToolbar extends Component {
   _onKeypress(event: Object, eventFlags: Object) {
     // Catch cmd+k for use with link insertion.
     if (hasCommandModifier(event) && event.keyCode === 75) {
-      // TODO: Ensure there is some text selected.
-      this.setState({showLinkInput: true});
-      eventFlags.wasHandled = true;
+      let {editorState} = this.props;
+      if (!editorState.getSelection().isCollapsed()) {
+        this.setState({showLinkInput: true});
+        eventFlags.wasHandled = true;
+      }
     }
   }
 
