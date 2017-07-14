@@ -53,6 +53,9 @@ type Props = {
   toolbarConfig?: ToolbarConfig;
   blockStyleFn?: (block: ContentBlock) => ?string;
   autoFocus?: boolean;
+  rootStyle?: Object;
+  editorStyle?: Object;
+  toolbarStyle?: Object;
 };
 
 export default class RichTextEditor extends Component {
@@ -87,6 +90,9 @@ export default class RichTextEditor extends Component {
       disabled,
       toolbarConfig,
       blockStyleFn,
+      rootStyle,
+      toolbarStyle,
+      editorStyle,
       ...otherProps // eslint-disable-line comma-dangle
     } = this.props;
     let editorState = value.getEditorState();
@@ -105,6 +111,7 @@ export default class RichTextEditor extends Component {
     if (!readOnly) {
       editorToolbar = (
         <EditorToolbar
+          rootStyle={toolbarStyle}
           className={toolbarClassName}
           keyEmitter={this._keyEmitter}
           editorState={editorState}
@@ -115,9 +122,9 @@ export default class RichTextEditor extends Component {
       );
     }
     return (
-      <div className={cx(styles.root, className)}>
+      <div className={cx(styles.root, className)} style={rootStyle}>
         {editorToolbar}
-        <div className={combinedEditorClassName}>
+        <div className={combinedEditorClassName} style={editorStyle}>
           <Editor
             {...otherProps}
             blockStyleFn={composite(defaultBlockStyleFn, blockStyleFn)}

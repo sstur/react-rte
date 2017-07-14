@@ -96,7 +96,7 @@ Clone this project. Run `npm install`. Run `npm run build-dist` then point the s
 
 This software is [ISC Licensed](/LICENSE).
 
-
+[react-rte]: https://npmjs.com/package/react-rte
 [ckeditor]: http://ckeditor.com/
 [draft-js]: https://facebook.github.io/draft-js/
 [immutablejs]: https://facebook.github.io/immutable-js/
