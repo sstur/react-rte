@@ -51,7 +51,7 @@ type Props = {
   toolbarConfig?: ToolbarConfig;
   blockStyleFn?: (block: ContentBlock) => ?string;
   autoFocus?: boolean;
-  keyBindingFn: (event: Object) => ?string;
+  keyBindingFn?: (event: Object) => ?string;
   rootStyle?: Object;
   editorStyle?: Object;
   toolbarStyle?: Object;
