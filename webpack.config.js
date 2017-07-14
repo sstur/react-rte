@@ -49,7 +49,7 @@ module.exports = [{
 }, {
   entry: './src/demo.js',
   output: {
-    path: path.join(__dirname, 'assets/dist'),
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js',
   },
   module: {loaders: loaders},
