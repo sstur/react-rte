@@ -18,7 +18,7 @@
     "babel-runtime": "^6.23.0",
     "class-autobind": "^0.1.4",
     "classnames": "^2.2.5",
-    "draft-js": "^0.9.1",
+    "draft-js": "^0.10.0",
     "draft-js-export-html": "^0.5.4",
     "draft-js-export-markdown": "^0.2.2",
     "draft-js-import-html": "^0.3.2",
