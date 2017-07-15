@@ -145,9 +145,9 @@ function(module, exports, __webpack_require__) {
             return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), 
             Constructor;
         };
-    }(), _react = __webpack_require__(1), _react2 = _interopRequireDefault(_react), _draftJs = __webpack_require__(2), _getDefaultKeyBinding = __webpack_require__(130), _getDefaultKeyBinding2 = _interopRequireDefault(_getDefaultKeyBinding), _changeBlockDepth = __webpack_require__(143), _changeBlockDepth2 = _interopRequireDefault(_changeBlockDepth), _changeBlockType = __webpack_require__(144), _changeBlockType2 = _interopRequireDefault(_changeBlockType), _getBlocksInSelection = __webpack_require__(145), _getBlocksInSelection2 = _interopRequireDefault(_getBlocksInSelection), _insertBlockAfter = __webpack_require__(147), _insertBlockAfter2 = _interopRequireDefault(_insertBlockAfter), _isListItem = __webpack_require__(148), _isListItem2 = _interopRequireDefault(_isListItem), _isSoftNewlineEvent = __webpack_require__(155), _isSoftNewlineEvent2 = _interopRequireDefault(_isSoftNewlineEvent), _EditorToolbar = __webpack_require__(156), _EditorToolbar2 = _interopRequireDefault(_EditorToolbar), _EditorValue = __webpack_require__(186), _EditorValue2 = _interopRequireDefault(_EditorValue), _LinkDecorator = __webpack_require__(205), _LinkDecorator2 = _interopRequireDefault(_LinkDecorator), _ImageDecorator = __webpack_require__(206), _ImageDecorator2 = _interopRequireDefault(_ImageDecorator), _composite = __webpack_require__(210), _composite2 = _interopRequireDefault(_composite), _classnames = __webpack_require__(160), _classnames2 = _interopRequireDefault(_classnames), _classAutobind = __webpack_require__(162), _classAutobind2 = _interopRequireDefault(_classAutobind), _events = __webpack_require__(211), _events2 = _interopRequireDefault(_events), _draftJsUtils = __webpack_require__(149);
-    __webpack_require__(212);
-    var _RichTextEditor = __webpack_require__(214), _RichTextEditor2 = _interopRequireDefault(_RichTextEditor), MAX_LIST_DEPTH = 2, styleMap = {
+    }(), _react = __webpack_require__(1), _react2 = _interopRequireDefault(_react), _draftJs = __webpack_require__(2), _getDefaultKeyBinding = __webpack_require__(130), _getDefaultKeyBinding2 = _interopRequireDefault(_getDefaultKeyBinding), _changeBlockDepth = __webpack_require__(143), _changeBlockDepth2 = _interopRequireDefault(_changeBlockDepth), _changeBlockType = __webpack_require__(144), _changeBlockType2 = _interopRequireDefault(_changeBlockType), _getBlocksInSelection = __webpack_require__(145), _getBlocksInSelection2 = _interopRequireDefault(_getBlocksInSelection), _insertBlockAfter = __webpack_require__(147), _insertBlockAfter2 = _interopRequireDefault(_insertBlockAfter), _isListItem = __webpack_require__(148), _isListItem2 = _interopRequireDefault(_isListItem), _isSoftNewlineEvent = __webpack_require__(155), _isSoftNewlineEvent2 = _interopRequireDefault(_isSoftNewlineEvent), _EditorToolbar = __webpack_require__(156), _EditorToolbar2 = _interopRequireDefault(_EditorToolbar), _EditorValue = __webpack_require__(186), _EditorValue2 = _interopRequireDefault(_EditorValue), _LinkDecorator = __webpack_require__(204), _LinkDecorator2 = _interopRequireDefault(_LinkDecorator), _ImageDecorator = __webpack_require__(205), _ImageDecorator2 = _interopRequireDefault(_ImageDecorator), _composite = __webpack_require__(209), _composite2 = _interopRequireDefault(_composite), _classnames = __webpack_require__(160), _classnames2 = _interopRequireDefault(_classnames), _classAutobind = __webpack_require__(162), _classAutobind2 = _interopRequireDefault(_classAutobind), _events = __webpack_require__(210), _events2 = _interopRequireDefault(_events), _draftJsUtils = __webpack_require__(149);
+    __webpack_require__(211);
+    var _RichTextEditor = __webpack_require__(213), _RichTextEditor2 = _interopRequireDefault(_RichTextEditor), MAX_LIST_DEPTH = 2, styleMap = {
         CODE: {
             backgroundColor: "#f3f3f3",
             fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
@@ -170,7 +170,7 @@ function(module, exports, __webpack_require__) {
         }, {
             key: "render",
             value: function() {
-                var _cx, _props = this.props, value = _props.value, className = _props.className, toolbarClassName = _props.toolbarClassName, editorClassName = _props.editorClassName, placeholder = _props.placeholder, customStyleMap = _props.customStyleMap, readOnly = _props.readOnly, disabled = _props.disabled, toolbarConfig = _props.toolbarConfig, blockStyleFn = _props.blockStyleFn, otherProps = _objectWithoutProperties(_props, [ "value", "className", "toolbarClassName", "editorClassName", "placeholder", "customStyleMap", "readOnly", "disabled", "toolbarConfig", "blockStyleFn" ]), editorState = value.getEditorState();
+                var _cx, _props = this.props, value = _props.value, className = _props.className, toolbarClassName = _props.toolbarClassName, editorClassName = _props.editorClassName, placeholder = _props.placeholder, customStyleMap = _props.customStyleMap, readOnly = _props.readOnly, disabled = _props.disabled, toolbarConfig = _props.toolbarConfig, blockStyleFn = _props.blockStyleFn, rootStyle = _props.rootStyle, toolbarStyle = _props.toolbarStyle, editorStyle = _props.editorStyle, otherProps = _objectWithoutProperties(_props, [ "value", "className", "toolbarClassName", "editorClassName", "placeholder", "customStyleMap", "readOnly", "disabled", "toolbarConfig", "blockStyleFn", "rootStyle", "toolbarStyle", "editorStyle" ]), editorState = value.getEditorState();
                 customStyleMap = customStyleMap ? _extends({}, styleMap, customStyleMap) : styleMap;
                 // If the user changes block type before entering any text, we can either
                 // style the placeholder or hide it. Let's just hide it for now.
@@ -180,6 +180,7 @@ function(module, exports, __webpack_require__) {
                 null == readOnly && (readOnly = disabled);
                 var editorToolbar = void 0;
                 return readOnly || (editorToolbar = _react2.default.createElement(_EditorToolbar2.default, {
+                    rootStyle: toolbarStyle,
                     className: toolbarClassName,
                     keyEmitter: this._keyEmitter,
                     editorState: editorState,
@@ -187,9 +188,11 @@ function(module, exports, __webpack_require__) {
                     focusEditor: this._focus,
                     toolbarConfig: toolbarConfig
                 })), _react2.default.createElement("div", {
-                    className: (0, _classnames2.default)(_RichTextEditor2.default.root, className)
+                    className: (0, _classnames2.default)(_RichTextEditor2.default.root, className),
+                    style: rootStyle
                 }, editorToolbar, _react2.default.createElement("div", {
-                    className: combinedEditorClassName
+                    className: combinedEditorClassName,
+                    style: editorStyle
                 }, _react2.default.createElement(_draftJs.Editor, _extends({}, otherProps, {
                     blockStyleFn: (0, _composite2.default)(defaultBlockStyleFn, blockStyleFn),
                     customStyleMap: customStyleMap,
@@ -3513,6 +3516,11 @@ function(module, exports, __webpack_require__) {
 }, /* 15 */
 /***/
 function(module, exports) {
+    /*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
     "use strict";
     function toObject(val) {
         if (null === val || void 0 === val) throw new TypeError("Object.assign cannot be called with null or undefined");
@@ -3524,7 +3532,7 @@ function(module, exports) {
             // Detect buggy property enumeration order in older V8 versions.
             // https://bugs.chromium.org/p/v8/issues/detail?id=4118
             var test1 = new String("abc");
-            if (// eslint-disable-line
+            if (// eslint-disable-line no-new-wrappers
             test1[5] = "de", "5" === Object.getOwnPropertyNames(test1)[0]) return !1;
             for (var test2 = {}, i = 0; i < 10; i++) test2["_" + String.fromCharCode(i)] = i;
             var order2 = Object.getOwnPropertyNames(test2).map(function(n) {
@@ -3536,19 +3544,19 @@ function(module, exports) {
             return "abcdefghijklmnopqrst".split("").forEach(function(letter) {
                 test3[letter] = letter;
             }), "abcdefghijklmnopqrst" === Object.keys(Object.assign({}, test3)).join("");
-        } catch (e) {
+        } catch (err) {
             // We don't expect any of the above to throw, but better to be safe.
             return !1;
         }
     }
     /* eslint-disable no-unused-vars */
-    var hasOwnProperty = Object.prototype.hasOwnProperty, propIsEnumerable = Object.prototype.propertyIsEnumerable;
+    var getOwnPropertySymbols = Object.getOwnPropertySymbols, hasOwnProperty = Object.prototype.hasOwnProperty, propIsEnumerable = Object.prototype.propertyIsEnumerable;
     module.exports = shouldUseNative() ? Object.assign : function(target, source) {
         for (var from, symbols, to = toObject(target), s = 1; s < arguments.length; s++) {
             from = Object(arguments[s]);
             for (var key in from) hasOwnProperty.call(from, key) && (to[key] = from[key]);
-            if (Object.getOwnPropertySymbols) {
-                symbols = Object.getOwnPropertySymbols(from);
+            if (getOwnPropertySymbols) {
+                symbols = getOwnPropertySymbols(from);
                 for (var i = 0; i < symbols.length; i++) propIsEnumerable.call(from, symbols[i]) && (to[symbols[i]] = from[symbols[i]]);
             }
         }
@@ -3617,18 +3625,8 @@ function(module, exports, __webpack_require__) {
 	 *
 	 */
     "use strict";
-    /**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
     function invariant(condition, format, a, b, c, d, e, f) {
-        if (!condition) {
+        if (validateFormat(format), !condition) {
             var error;
             if (void 0 === format) error = new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings."); else {
                 var args = [ a, b, c, d, e, f ], argIndex = 0;
@@ -3640,6 +3638,17 @@ function(module, exports, __webpack_require__) {
             throw error.framesToPop = 1, error;
         }
     }
+    /**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+    var validateFormat = function(format) {};
     module.exports = invariant;
 }, /* 18 */
 /***/
@@ -6513,11 +6522,11 @@ function(module, exports, __webpack_require__) {
 function(module, exports, __webpack_require__) {
     var __WEBPACK_AMD_DEFINE_RESULT__;
     /**
-	 * UAParser.js v0.7.10
+	 * UAParser.js v0.7.13
 	 * Lightweight JavaScript-based User-Agent string parser
 	 * https://github.com/faisalman/ua-parser-js
 	 *
-	 * Copyright © 2012-2015 Faisal Salman <fyzlman@gmail.com>
+	 * Copyright © 2012-2016 Faisal Salman <fyzlman@gmail.com>
 	 * Dual licensed under GPLv2 & MIT
 	 */
     !function(window, undefined) {
@@ -6525,11 +6534,12 @@ function(module, exports, __webpack_require__) {
         //////////////
         // Constants
         /////////////
-        var LIBVERSION = "0.7.10", EMPTY = "", UNKNOWN = "?", FUNC_TYPE = "function", UNDEF_TYPE = "undefined", OBJ_TYPE = "object", STR_TYPE = "string", MAJOR = "major", // deprecated
+        var LIBVERSION = "0.7.13", EMPTY = "", UNKNOWN = "?", FUNC_TYPE = "function", UNDEF_TYPE = "undefined", OBJ_TYPE = "object", STR_TYPE = "string", MAJOR = "major", // deprecated
         MODEL = "model", NAME = "name", TYPE = "type", VENDOR = "vendor", VERSION = "version", ARCHITECTURE = "architecture", CONSOLE = "console", MOBILE = "mobile", TABLET = "tablet", SMARTTV = "smarttv", WEARABLE = "wearable", EMBEDDED = "embedded", util = {
             extend: function(regexes, extensions) {
-                for (var i in extensions) "browser cpu device engine os".indexOf(i) !== -1 && extensions[i].length % 2 === 0 && (regexes[i] = extensions[i].concat(regexes[i]));
-                return regexes;
+                var margedRegexes = {};
+                for (var i in regexes) extensions[i] && extensions[i].length % 2 === 0 ? margedRegexes[i] = extensions[i].concat(regexes[i]) : margedRegexes[i] = regexes[i];
+                return margedRegexes;
             },
             has: function(str1, str2) {
                 return "string" == typeof str1 && str2.toLowerCase().indexOf(str1.toLowerCase()) !== -1;
@@ -6538,32 +6548,36 @@ function(module, exports, __webpack_require__) {
                 return str.toLowerCase();
             },
             major: function(version) {
-                return typeof version === STR_TYPE ? version.split(".")[0] : undefined;
+                return typeof version === STR_TYPE ? version.replace(/[^\d\.]/g, "").split(".")[0] : undefined;
+            },
+            trim: function(str) {
+                return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
             }
         }, mapper = {
-            rgx: function() {
+            rgx: function(ua, arrays) {
+                //, args = arguments;
+                /*// construct object barebones
+	            for (p = 0; p < args[1].length; p++) {
+	                q = args[1][p];
+	                result[typeof q === OBJ_TYPE ? q[0] : q] = undefined;
+	            }*/
                 // loop through all regexes maps
-                for (var result, j, k, p, q, matches, match, i = 0, args = arguments; i < args.length && !matches; ) {
-                    var regex = args[i], // even sequence (0,2,4,..)
-                    props = args[i + 1];
-                    // odd sequence (1,3,5,..)
-                    // construct object barebones
-                    if (typeof result === UNDEF_TYPE) {
-                        result = {};
-                        for (p in props) props.hasOwnProperty(p) && (q = props[p], typeof q === OBJ_TYPE ? result[q[0]] = undefined : result[q] = undefined);
-                    }
-                    for (// try matching uastring with regexes
-                    j = k = 0; j < regex.length && !matches; ) if (matches = regex[j++].exec(this.getUA())) for (p = 0; p < props.length; p++) match = matches[++k], 
+                for (//var result = {},
+                var j, k, p, q, matches, match, i = 0; i < arrays.length && !matches; ) {
+                    var regex = arrays[i], // even sequence (0,2,4,..)
+                    props = arrays[i + 1];
+                    // try matching uastring with regexes
+                    for (// odd sequence (1,3,5,..)
+                    j = k = 0; j < regex.length && !matches; ) if (matches = regex[j++].exec(ua)) for (p = 0; p < props.length; p++) match = matches[++k], 
                     q = props[p], // check if given property is actually array
                     typeof q === OBJ_TYPE && q.length > 0 ? 2 == q.length ? typeof q[1] == FUNC_TYPE ? // assign modified match
-                    result[q[0]] = q[1].call(this, match) : // assign given value, ignore regex match
-                    result[q[0]] = q[1] : 3 == q.length ? // check whether function or regex
+                    this[q[0]] = q[1].call(this, match) : // assign given value, ignore regex match
+                    this[q[0]] = q[1] : 3 == q.length ? // check whether function or regex
                     typeof q[1] !== FUNC_TYPE || q[1].exec && q[1].test ? // sanitize match using given regex
-                    result[q[0]] = match ? match.replace(q[1], q[2]) : undefined : // call function (usually string mapper)
-                    result[q[0]] = match ? q[1].call(this, match, q[2]) : undefined : 4 == q.length && (result[q[0]] = match ? q[3].call(this, match.replace(q[1], q[2])) : undefined) : result[q] = match ? match : undefined;
+                    this[q[0]] = match ? match.replace(q[1], q[2]) : undefined : // call function (usually string mapper)
+                    this[q[0]] = match ? q[1].call(this, match, q[2]) : undefined : 4 == q.length && (this[q[0]] = match ? q[3].call(this, match.replace(q[1], q[2])) : undefined) : this[q] = match ? match : undefined;
                     i += 2;
                 }
-                return result;
             },
             str: function(str, map) {
                 for (var i in map) // check if array
@@ -6625,7 +6639,7 @@ function(module, exports, __webpack_require__) {
             /(opera\smini)\/([\w\.-]+)/i, // Opera Mini
             /(opera\s[mobiletab]+).+version\/([\w\.-]+)/i, // Opera Mobi/Tablet
             /(opera).+version\/([\w\.]+)/i, // Opera > 9.80
-            /(opera)[\/\s]+([\w\.]+)/i ], [ NAME, VERSION ], [ /\s(opr)\/([\w\.]+)/i ], [ [ NAME, "Opera" ], VERSION ], [ // Mixed
+            /(opera)[\/\s]+([\w\.]+)/i ], [ NAME, VERSION ], [ /(opios)[\/\s]+([\w\.]+)/i ], [ [ NAME, "Opera Mini" ], VERSION ], [ /\s(opr)\/([\w\.]+)/i ], [ [ NAME, "Opera" ], VERSION ], [ // Mixed
             /(kindle)\/([\w\.]+)/i, // Kindle
             /(lunascape|maxthon|netfront|jasmine|blazer)[\/\s]?([\w\.]+)*/i, // Lunascape/Maxthon/Netfront/Jasmine/Blazer
             // Trident based
@@ -6633,8 +6647,7 @@ function(module, exports, __webpack_require__) {
             /(?:ms|\()(ie)\s([\w\.]+)/i, // Internet Explorer
             // Webkit/KHTML based
             /(rekonq)\/([\w\.]+)*/i, // Rekonq
-            /(chromium|flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs)\/([\w\.-]+)/i ], [ NAME, VERSION ], [ /(trident).+rv[:\s]([\w\.]+).+like\sgecko/i ], [ [ NAME, "IE" ], VERSION ], [ /(edge)\/((\d+)?[\w\.]+)/i ], [ NAME, VERSION ], [ /(yabrowser)\/([\w\.]+)/i ], [ [ NAME, "Yandex" ], VERSION ], [ /(comodo_dragon)\/([\w\.]+)/i ], [ [ NAME, /_/g, " " ], VERSION ], [ /(chrome|omniweb|arora|[tizenoka]{5}\s?browser)\/v?([\w\.]+)/i, // Chrome/OmniWeb/Arora/Tizen/Nokia
-            /(qqbrowser)[\/\s]?([\w\.]+)/i ], [ NAME, VERSION ], [ /(uc\s?browser)[\/\s]?([\w\.]+)/i, /ucweb.+(ucbrowser)[\/\s]?([\w\.]+)/i, /JUC.+(ucweb)[\/\s]?([\w\.]+)/i ], [ [ NAME, "UCBrowser" ], VERSION ], [ /(dolfin)\/([\w\.]+)/i ], [ [ NAME, "Dolphin" ], VERSION ], [ /((?:android.+)crmo|crios)\/([\w\.]+)/i ], [ [ NAME, "Chrome" ], VERSION ], [ /XiaoMi\/MiuiBrowser\/([\w\.]+)/i ], [ VERSION, [ NAME, "MIUI Browser" ] ], [ /android.+version\/([\w\.]+)\s+(?:mobile\s?safari|safari)/i ], [ VERSION, [ NAME, "Android Browser" ] ], [ /FBAV\/([\w\.]+);/i ], [ VERSION, [ NAME, "Facebook" ] ], [ /fxios\/([\w\.-]+)/i ], [ VERSION, [ NAME, "Firefox" ] ], [ /version\/([\w\.]+).+?mobile\/\w+\s(safari)/i ], [ VERSION, [ NAME, "Mobile Safari" ] ], [ /version\/([\w\.]+).+?(mobile\s?safari|safari)/i ], [ VERSION, NAME ], [ /webkit.+?(mobile\s?safari|safari)(\/[\w\.]+)/i ], [ NAME, [ VERSION, mapper.str, maps.browser.oldsafari.version ] ], [ /(konqueror)\/([\w\.]+)/i, // Konqueror
+            /(chromium|flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser)\/([\w\.-]+)/i ], [ NAME, VERSION ], [ /(trident).+rv[:\s]([\w\.]+).+like\sgecko/i ], [ [ NAME, "IE" ], VERSION ], [ /(edge)\/((\d+)?[\w\.]+)/i ], [ NAME, VERSION ], [ /(yabrowser)\/([\w\.]+)/i ], [ [ NAME, "Yandex" ], VERSION ], [ /(puffin)\/([\w\.]+)/i ], [ [ NAME, "Puffin" ], VERSION ], [ /(uc\s?browser)[\/\s]?([\w\.]+)/i, /ucweb.+(ucbrowser)[\/\s]?([\w\.]+)/i, /juc.+(ucweb)[\/\s]?([\w\.]+)/i, /(ucbrowser)\/([\w\.]+)/i ], [ [ NAME, "UCBrowser" ], VERSION ], [ /(comodo_dragon)\/([\w\.]+)/i ], [ [ NAME, /_/g, " " ], VERSION ], [ /(micromessenger)\/([\w\.]+)/i ], [ [ NAME, "WeChat" ], VERSION ], [ /m?(qqbrowser)[\/\s]?([\w\.]+)/i ], [ NAME, VERSION ], [ /xiaomi\/miuibrowser\/([\w\.]+)/i ], [ VERSION, [ NAME, "MIUI Browser" ] ], [ /;fbav\/([\w\.]+);/i ], [ VERSION, [ NAME, "Facebook" ] ], [ /(headlesschrome) ([\w\.]+)/i ], [ VERSION, [ NAME, "Chrome Headless" ] ], [ /\swv\).+(chrome)\/([\w\.]+)/i ], [ [ NAME, /(.+)/, "$1 WebView" ], VERSION ], [ /android.+samsungbrowser\/([\w\.]+)/i, /android.+version\/([\w\.]+)\s+(?:mobile\s?safari|safari)*/i ], [ VERSION, [ NAME, "Android Browser" ] ], [ /(chrome|omniweb|arora|[tizenoka]{5}\s?browser)\/v?([\w\.]+)/i ], [ NAME, VERSION ], [ /(dolfin)\/([\w\.]+)/i ], [ [ NAME, "Dolphin" ], VERSION ], [ /((?:android.+)crmo|crios)\/([\w\.]+)/i ], [ [ NAME, "Chrome" ], VERSION ], [ /(coast)\/([\w\.]+)/i ], [ [ NAME, "Opera Coast" ], VERSION ], [ /fxios\/([\w\.-]+)/i ], [ VERSION, [ NAME, "Firefox" ] ], [ /version\/([\w\.]+).+?mobile\/\w+\s(safari)/i ], [ VERSION, [ NAME, "Mobile Safari" ] ], [ /version\/([\w\.]+).+?(mobile\s?safari|safari)/i ], [ VERSION, NAME ], [ /webkit.+?(mobile\s?safari|safari)(\/[\w\.]+)/i ], [ NAME, [ VERSION, mapper.str, maps.browser.oldsafari.version ] ], [ /(konqueror)\/([\w\.]+)/i, // Konqueror
             /(webkit|khtml)\/([\w\.]+)/i ], [ NAME, VERSION ], [ // Gecko based
             /(navigator|netscape)\/([\w\.-]+)/i ], [ [ NAME, "Netscape" ], VERSION ], [ /(swiftfox)/i, // Swiftfox
             /(icedragon|iceweasel|camino|chimera|fennec|maemo\sbrowser|minimo|conkeror)[\/\s]?([\w\.\+]+)/i, // IceDragon/Iceweasel/Camino/Chimera/Fennec/Maemo/Minimo/Conkeror
@@ -6650,31 +6663,33 @@ function(module, exports, __webpack_require__) {
             /windows\s(ce|mobile);\sppc;/i ], [ [ ARCHITECTURE, "arm" ] ], [ /((?:ppc|powerpc)(?:64)?)(?:\smac|;|\))/i ], [ [ ARCHITECTURE, /ower/, "", util.lowerize ] ], [ /(sun4\w)[;\)]/i ], [ [ ARCHITECTURE, "sparc" ] ], [ /((?:avr32|ia64(?=;))|68k(?=\))|arm(?:64|(?=v\d+;))|(?=atmel\s)avr|(?:irix|mips|sparc)(?:64)?(?=;)|pa-risc)/i ], [ [ ARCHITECTURE, util.lowerize ] ] ],
             device: [ [ /\((ipad|playbook);[\w\s\);-]+(rim|apple)/i ], [ MODEL, VENDOR, [ TYPE, TABLET ] ], [ /applecoremedia\/[\w\.]+ \((ipad)/ ], [ MODEL, [ VENDOR, "Apple" ], [ TYPE, TABLET ] ], [ /(apple\s{0,1}tv)/i ], [ [ MODEL, "Apple TV" ], [ VENDOR, "Apple" ] ], [ /(archos)\s(gamepad2?)/i, // Archos
             /(hp).+(touchpad)/i, // HP TouchPad
+            /(hp).+(tablet)/i, // HP Tablet
             /(kindle)\/([\w\.]+)/i, // Kindle
             /\s(nook)[\w\s]+build\/(\w+)/i, // Nook
             /(dell)\s(strea[kpr\s\d]*[\dko])/i ], [ VENDOR, MODEL, [ TYPE, TABLET ] ], [ /(kf[A-z]+)\sbuild\/[\w\.]+.*silk\//i ], [ MODEL, [ VENDOR, "Amazon" ], [ TYPE, TABLET ] ], [ /(sd|kf)[0349hijorstuw]+\sbuild\/[\w\.]+.*silk\//i ], [ [ MODEL, mapper.str, maps.device.amazon.model ], [ VENDOR, "Amazon" ], [ TYPE, MOBILE ] ], [ /\((ip[honed|\s\w*]+);.+(apple)/i ], [ MODEL, VENDOR, [ TYPE, MOBILE ] ], [ /\((ip[honed|\s\w*]+);/i ], [ MODEL, [ VENDOR, "Apple" ], [ TYPE, MOBILE ] ], [ /(blackberry)[\s-]?(\w+)/i, // BlackBerry
             /(blackberry|benq|palm(?=\-)|sonyericsson|acer|asus|dell|huawei|meizu|motorola|polytron)[\s_-]?([\w-]+)*/i, // BenQ/Palm/Sony-Ericsson/Acer/Asus/Dell/Huawei/Meizu/Motorola/Polytron
             /(hp)\s([\w\s]+\w)/i, // HP iPAQ
             /(asus)-?(\w+)/i ], [ VENDOR, MODEL, [ TYPE, MOBILE ] ], [ /\(bb10;\s(\w+)/i ], [ MODEL, [ VENDOR, "BlackBerry" ], [ TYPE, MOBILE ] ], [ // Asus Tablets
-            /android.+(transfo[prime\s]{4,10}\s\w+|eeepc|slider\s\w+|nexus 7)/i ], [ MODEL, [ VENDOR, "Asus" ], [ TYPE, TABLET ] ], [ /(sony)\s(tablet\s[ps])\sbuild\//i, // Sony
+            /android.+(transfo[prime\s]{4,10}\s\w+|eeepc|slider\s\w+|nexus 7|padfone)/i ], [ MODEL, [ VENDOR, "Asus" ], [ TYPE, TABLET ] ], [ /(sony)\s(tablet\s[ps])\sbuild\//i, // Sony
             /(sony)?(?:sgp.+)\sbuild\//i ], [ [ VENDOR, "Sony" ], [ MODEL, "Xperia Tablet" ], [ TYPE, TABLET ] ], [ /(?:sony)?(?:(?:(?:c|d)\d{4})|(?:so[-l].+))\sbuild\//i ], [ [ VENDOR, "Sony" ], [ MODEL, "Xperia Phone" ], [ TYPE, MOBILE ] ], [ /\s(ouya)\s/i, // Ouya
             /(nintendo)\s([wids3u]+)/i ], [ VENDOR, MODEL, [ TYPE, CONSOLE ] ], [ /android.+;\s(shield)\sbuild/i ], [ MODEL, [ VENDOR, "Nvidia" ], [ TYPE, CONSOLE ] ], [ /(playstation\s[34portablevi]+)/i ], [ MODEL, [ VENDOR, "Sony" ], [ TYPE, CONSOLE ] ], [ /(sprint\s(\w+))/i ], [ [ VENDOR, mapper.str, maps.device.sprint.vendor ], [ MODEL, mapper.str, maps.device.sprint.model ], [ TYPE, MOBILE ] ], [ /(lenovo)\s?(S(?:5000|6000)+(?:[-][\w+]))/i ], [ VENDOR, MODEL, [ TYPE, TABLET ] ], [ /(htc)[;_\s-]+([\w\s]+(?=\))|\w+)*/i, // HTC
             /(zte)-(\w+)*/i, // ZTE
-            /(alcatel|geeksphone|huawei|lenovo|nexian|panasonic|(?=;\s)sony)[_\s-]?([\w-]+)*/i ], [ VENDOR, [ MODEL, /_/g, " " ], [ TYPE, MOBILE ] ], [ /(nexus\s9)/i ], [ MODEL, [ VENDOR, "HTC" ], [ TYPE, TABLET ] ], [ /[\s\(;](xbox(?:\sone)?)[\s\);]/i ], [ MODEL, [ VENDOR, "Microsoft" ], [ TYPE, CONSOLE ] ], [ /(kin\.[onetw]{3})/i ], [ [ MODEL, /\./g, " " ], [ VENDOR, "Microsoft" ], [ TYPE, MOBILE ] ], [ // Motorola
-            /\s(milestone|droid(?:[2-4x]|\s(?:bionic|x2|pro|razr))?(:?\s4g)?)[\w\s]+build\//i, /mot[\s-]?(\w+)*/i, /(XT\d{3,4}) build\//i, /(nexus\s[6])/i ], [ MODEL, [ VENDOR, "Motorola" ], [ TYPE, MOBILE ] ], [ /android.+\s(mz60\d|xoom[\s2]{0,2})\sbuild\//i ], [ MODEL, [ VENDOR, "Motorola" ], [ TYPE, TABLET ] ], [ /android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n8000|sgh-t8[56]9|nexus 10))/i, /((SM-T\w+))/i ], [ [ VENDOR, "Samsung" ], MODEL, [ TYPE, TABLET ] ], [ // Samsung
-            /((s[cgp]h-\w+|gt-\w+|galaxy\snexus|sm-n900))/i, /(sam[sung]*)[\s-]*(\w+-?[\w-]*)*/i, /sec-((sgh\w+))/i ], [ [ VENDOR, "Samsung" ], MODEL, [ TYPE, MOBILE ] ], [ /(samsung);smarttv/i ], [ VENDOR, MODEL, [ TYPE, SMARTTV ] ], [ /\(dtv[\);].+(aquos)/i ], [ MODEL, [ VENDOR, "Sharp" ], [ TYPE, SMARTTV ] ], [ /sie-(\w+)*/i ], [ MODEL, [ VENDOR, "Siemens" ], [ TYPE, MOBILE ] ], [ /(maemo|nokia).*(n900|lumia\s\d+)/i, // Nokia
+            /(alcatel|geeksphone|huawei|lenovo|nexian|panasonic|(?=;\s)sony)[_\s-]?([\w-]+)*/i ], [ VENDOR, [ MODEL, /_/g, " " ], [ TYPE, MOBILE ] ], [ /(nexus\s9)/i ], [ MODEL, [ VENDOR, "HTC" ], [ TYPE, TABLET ] ], [ /(nexus\s6p)/i ], [ MODEL, [ VENDOR, "Huawei" ], [ TYPE, MOBILE ] ], [ /(microsoft);\s(lumia[\s\w]+)/i ], [ VENDOR, MODEL, [ TYPE, MOBILE ] ], [ /[\s\(;](xbox(?:\sone)?)[\s\);]/i ], [ MODEL, [ VENDOR, "Microsoft" ], [ TYPE, CONSOLE ] ], [ /(kin\.[onetw]{3})/i ], [ [ MODEL, /\./g, " " ], [ VENDOR, "Microsoft" ], [ TYPE, MOBILE ] ], [ // Motorola
+            /\s(milestone|droid(?:[2-4x]|\s(?:bionic|x2|pro|razr))?(:?\s4g)?)[\w\s]+build\//i, /mot[\s-]?(\w+)*/i, /(XT\d{3,4}) build\//i, /(nexus\s6)/i ], [ MODEL, [ VENDOR, "Motorola" ], [ TYPE, MOBILE ] ], [ /android.+\s(mz60\d|xoom[\s2]{0,2})\sbuild\//i ], [ MODEL, [ VENDOR, "Motorola" ], [ TYPE, TABLET ] ], [ /hbbtv\/\d+\.\d+\.\d+\s+\([\w\s]*;\s*(\w[^;]*);([^;]*)/i ], [ [ VENDOR, util.trim ], [ MODEL, util.trim ], [ TYPE, SMARTTV ] ], [ /hbbtv.+maple;(\d+)/i ], [ [ MODEL, /^/, "SmartTV" ], [ VENDOR, "Samsung" ], [ TYPE, SMARTTV ] ], [ /\(dtv[\);].+(aquos)/i ], [ MODEL, [ VENDOR, "Sharp" ], [ TYPE, SMARTTV ] ], [ /android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n\d+|sgh-t8[56]9|nexus 10))/i, /((SM-T\w+))/i ], [ [ VENDOR, "Samsung" ], MODEL, [ TYPE, TABLET ] ], [ // Samsung
+            /smart-tv.+(samsung)/i ], [ VENDOR, [ TYPE, SMARTTV ], MODEL ], [ /((s[cgp]h-\w+|gt-\w+|galaxy\snexus|sm-\w[\w\d]+))/i, /(sam[sung]*)[\s-]*(\w+-?[\w-]*)*/i, /sec-((sgh\w+))/i ], [ [ VENDOR, "Samsung" ], MODEL, [ TYPE, MOBILE ] ], [ /sie-(\w+)*/i ], [ MODEL, [ VENDOR, "Siemens" ], [ TYPE, MOBILE ] ], [ /(maemo|nokia).*(n900|lumia\s\d+)/i, // Nokia
             /(nokia)[\s_-]?([\w-]+)*/i ], [ [ VENDOR, "Nokia" ], MODEL, [ TYPE, MOBILE ] ], [ /android\s3\.[\s\w;-]{10}(a\d{3})/i ], [ MODEL, [ VENDOR, "Acer" ], [ TYPE, TABLET ] ], [ /android\s3\.[\s\w;-]{10}(lg?)-([06cv9]{3,4})/i ], [ [ VENDOR, "LG" ], MODEL, [ TYPE, TABLET ] ], [ /(lg) netcast\.tv/i ], [ VENDOR, MODEL, [ TYPE, SMARTTV ] ], [ /(nexus\s[45])/i, // LG
-            /lg[e;\s\/-]+(\w+)*/i ], [ MODEL, [ VENDOR, "LG" ], [ TYPE, MOBILE ] ], [ /android.+(ideatab[a-z0-9\-\s]+)/i ], [ MODEL, [ VENDOR, "Lenovo" ], [ TYPE, TABLET ] ], [ /linux;.+((jolla));/i ], [ VENDOR, MODEL, [ TYPE, MOBILE ] ], [ /((pebble))app\/[\d\.]+\s/i ], [ VENDOR, MODEL, [ TYPE, WEARABLE ] ], [ /android.+;\s(glass)\s\d/i ], [ MODEL, [ VENDOR, "Google" ], [ TYPE, WEARABLE ] ], [ /android.+(\w+)\s+build\/hm\1/i, // Xiaomi Hongmi 'numeric' models
+            /lg[e;\s\/-]+(\w+)*/i ], [ MODEL, [ VENDOR, "LG" ], [ TYPE, MOBILE ] ], [ /android.+(ideatab[a-z0-9\-\s]+)/i ], [ MODEL, [ VENDOR, "Lenovo" ], [ TYPE, TABLET ] ], [ /linux;.+((jolla));/i ], [ VENDOR, MODEL, [ TYPE, MOBILE ] ], [ /((pebble))app\/[\d\.]+\s/i ], [ VENDOR, MODEL, [ TYPE, WEARABLE ] ], [ /android.+;\s(oppo)\s?([\w\s]+)\sbuild/i ], [ VENDOR, MODEL, [ TYPE, MOBILE ] ], [ /crkey/i ], [ [ MODEL, "Chromecast" ], [ VENDOR, "Google" ] ], [ /android.+;\s(glass)\s\d/i ], [ MODEL, [ VENDOR, "Google" ], [ TYPE, WEARABLE ] ], [ /android.+;\s(pixel c)\s/i ], [ MODEL, [ VENDOR, "Google" ], [ TYPE, TABLET ] ], [ /android.+;\s(pixel xl|pixel)\s/i ], [ MODEL, [ VENDOR, "Google" ], [ TYPE, MOBILE ] ], [ /android.+(\w+)\s+build\/hm\1/i, // Xiaomi Hongmi 'numeric' models
             /android.+(hm[\s\-_]*note?[\s_]*(?:\d\w)?)\s+build/i, // Xiaomi Hongmi
-            /android.+(mi[\s\-_]*(?:one|one[\s_]plus)?[\s_]*(?:\d\w)?)\s+build/i ], [ [ MODEL, /_/g, " " ], [ VENDOR, "Xiaomi" ], [ TYPE, MOBILE ] ], [ /\s(tablet)[;\/\s]/i, // Unidentifiable Tablet
-            /\s(mobile)[;\/\s]/i ], [ [ TYPE, util.lowerize ], VENDOR, MODEL ] ],
+            /android.+(mi[\s\-_]*(?:one|one[\s_]plus|note lte)?[\s_]*(?:\d\w)?)\s+build/i ], [ [ MODEL, /_/g, " " ], [ VENDOR, "Xiaomi" ], [ TYPE, MOBILE ] ], [ /android.+a000(1)\s+build/i ], [ MODEL, [ VENDOR, "OnePlus" ], [ TYPE, MOBILE ] ], [ /\s(tablet)[;\/]/i, // Unidentifiable Tablet
+            /\s(mobile)(?:[;\/]|\ssafari)/i ], [ [ TYPE, util.lowerize ], VENDOR, MODEL ] ],
             engine: [ [ /windows.+\sedge\/([\w\.]+)/i ], [ VERSION, [ NAME, "EdgeHTML" ] ], [ /(presto)\/([\w\.]+)/i, // Presto
             /(webkit|trident|netfront|netsurf|amaya|lynx|w3m)\/([\w\.]+)/i, // WebKit/Trident/NetFront/NetSurf/Amaya/Lynx/w3m
             /(khtml|tasman|links)[\/\s]\(?([\w\.]+)/i, // KHTML/Tasman/Links
             /(icab)[\/\s]([23]\.[\d\.]+)/i ], [ NAME, VERSION ], [ /rv\:([\w\.]+).*(gecko)/i ], [ VERSION, NAME ] ],
             os: [ [ // Windows based
             /microsoft\s(windows)\s(vista|xp)/i ], [ NAME, VERSION ], [ /(windows)\snt\s6\.2;\s(arm)/i, // Windows RT
-            /(windows\sphone(?:\sos)*|windows\smobile|windows)[\s\/]?([ntce\d\.\s]+\w)/i ], [ NAME, [ VERSION, mapper.str, maps.os.windows.version ] ], [ /(win(?=3|9|n)|win\s9x\s)([nt\d\.]+)/i ], [ [ NAME, "Windows" ], [ VERSION, mapper.str, maps.os.windows.version ] ], [ // Mobile/Embedded OS
+            /(windows\sphone(?:\sos)*)[\s\/]?([\d\.\s]+\w)*/i, // Windows Phone
+            /(windows\smobile|windows)[\s\/]?([ntce\d\.\s]+\w)/i ], [ NAME, [ VERSION, mapper.str, maps.os.windows.version ] ], [ /(win(?=3|9|n)|win\s9x\s)([nt\d\.]+)/i ], [ [ NAME, "Windows" ], [ VERSION, mapper.str, maps.os.windows.version ] ], [ // Mobile/Embedded OS
             /\((bb)(10);/i ], [ [ NAME, "BlackBerry" ], VERSION ], [ /(blackberry)\w*\/?([\w\.]+)*/i, // Blackberry
             /(tizen)[\/\s]([\w\.]+)/i, // Tizen
             /(android|webos|palm\sos|qnx|bada|rim\stablet\sos|meego|contiki)[\/\s-]?([\w\.]+)*/i, // Android/WebOS/Palm/QNX/Bada/RIM/MeeGo/Contiki
@@ -6683,31 +6698,37 @@ function(module, exports, __webpack_require__) {
             // GNU/Linux based
             /(mint)[\/\s\(]?(\w+)*/i, // Mint
             /(mageia|vectorlinux)[;\s]/i, // Mageia/VectorLinux
-            /(joli|[kxln]?ubuntu|debian|[open]*suse|gentoo|(?=\s)arch|slackware|fedora|mandriva|centos|pclinuxos|redhat|zenwalk|linpus)[\/\s-]?([\w\.-]+)*/i, // Joli/Ubuntu/Debian/SUSE/Gentoo/Arch/Slackware
+            /(joli|[kxln]?ubuntu|debian|[open]*suse|gentoo|(?=\s)arch|slackware|fedora|mandriva|centos|pclinuxos|redhat|zenwalk|linpus)[\/\s-]?(?!chrom)([\w\.-]+)*/i, // Joli/Ubuntu/Debian/SUSE/Gentoo/Arch/Slackware
             // Fedora/Mandriva/CentOS/PCLinuxOS/RedHat/Zenwalk/Linpus
             /(hurd|linux)\s?([\w\.]+)*/i, // Hurd/Linux
             /(gnu)\s?([\w\.]+)*/i ], [ NAME, VERSION ], [ /(cros)\s[\w]+\s([\w\.]+\w)/i ], [ [ NAME, "Chromium OS" ], VERSION ], [ // Solaris
             /(sunos)\s?([\w\.]+\d)*/i ], [ [ NAME, "Solaris" ], VERSION ], [ // BSD based
-            /\s([frentopc-]{0,4}bsd|dragonfly)\s?([\w\.]+)*/i ], [ NAME, VERSION ], [ /(ip[honead]+)(?:.*os\s([\w]+)*\slike\smac|;\sopera)/i ], [ [ NAME, "iOS" ], [ VERSION, /_/g, "." ] ], [ /(mac\sos\sx)\s?([\w\s\.]+\w)*/i, /(macintosh|mac(?=_powerpc)\s)/i ], [ [ NAME, "Mac OS" ], [ VERSION, /_/g, "." ] ], [ // Other
+            /\s([frentopc-]{0,4}bsd|dragonfly)\s?([\w\.]+)*/i ], [ NAME, VERSION ], [ /(haiku)\s(\w+)/i ], [ NAME, VERSION ], [ /(ip[honead]+)(?:.*os\s([\w]+)*\slike\smac|;\sopera)/i ], [ [ NAME, "iOS" ], [ VERSION, /_/g, "." ] ], [ /(mac\sos\sx)\s?([\w\s\.]+\w)*/i, /(macintosh|mac(?=_powerpc)\s)/i ], [ [ NAME, "Mac OS" ], [ VERSION, /_/g, "." ] ], [ // Other
             /((?:open)?solaris)[\/\s-]?([\w\.]+)*/i, // Solaris
-            /(haiku)\s(\w+)/i, // Haiku
             /(aix)\s((\d)(?=\.|\)|\s)[\w\.]*)*/i, // AIX
             /(plan\s9|minix|beos|os\/2|amigaos|morphos|risc\sos|openvms)/i, // Plan9/Minix/BeOS/OS2/AmigaOS/MorphOS/RISCOS/OpenVMS
             /(unix)\s?([\w\.]+)*/i ], [ NAME, VERSION ] ]
-        }, UAParser = function(uastring, extensions) {
+        }, Browser = function(name, version) {
+            this[NAME] = name, this[VERSION] = version;
+        }, CPU = function(arch) {
+            this[ARCHITECTURE] = arch;
+        }, Device = function(vendor, model, type) {
+            this[VENDOR] = vendor, this[MODEL] = model, this[TYPE] = type;
+        }, Engine = Browser, OS = Browser, UAParser = function(uastring, extensions) {
             if (!(this instanceof UAParser)) return new UAParser(uastring, extensions).getResult();
-            var ua = uastring || (window && window.navigator && window.navigator.userAgent ? window.navigator.userAgent : EMPTY), rgxmap = extensions ? util.extend(regexes, extensions) : regexes;
+            var ua = uastring || (window && window.navigator && window.navigator.userAgent ? window.navigator.userAgent : EMPTY), rgxmap = extensions ? util.extend(regexes, extensions) : regexes, browser = new Browser(), cpu = new CPU(), device = new Device(), engine = new Engine(), os = new OS();
             return this.getBrowser = function() {
-                var browser = mapper.rgx.apply(this, rgxmap.browser);
-                return browser.major = util.major(browser.version), browser;
+                // deprecated
+                return mapper.rgx.call(browser, ua, rgxmap.browser), browser.major = util.major(browser.version), 
+                browser;
             }, this.getCPU = function() {
-                return mapper.rgx.apply(this, rgxmap.cpu);
+                return mapper.rgx.call(cpu, ua, rgxmap.cpu), cpu;
             }, this.getDevice = function() {
-                return mapper.rgx.apply(this, rgxmap.device);
+                return mapper.rgx.call(device, ua, rgxmap.device), device;
             }, this.getEngine = function() {
-                return mapper.rgx.apply(this, rgxmap.engine);
+                return mapper.rgx.call(engine, ua, rgxmap.engine), engine;
             }, this.getOS = function() {
-                return mapper.rgx.apply(this, rgxmap.os);
+                return mapper.rgx.call(os, ua, rgxmap.os), os;
             }, this.getResult = function() {
                 return {
                     ua: this.getUA(),
@@ -6720,8 +6741,9 @@ function(module, exports, __webpack_require__) {
             }, this.getUA = function() {
                 return ua;
             }, this.setUA = function(uastring) {
-                return ua = uastring, this;
-            }, this.setUA(ua), this;
+                return ua = uastring, browser = new Browser(), cpu = new CPU(), device = new Device(), 
+                engine = new Engine(), os = new OS(), this;
+            }, this;
         };
         UAParser.VERSION = LIBVERSION, UAParser.BROWSER = {
             NAME: NAME,
@@ -6746,7 +6768,8 @@ function(module, exports, __webpack_require__) {
         }, UAParser.OS = {
             NAME: NAME,
             VERSION: VERSION
-        }, ///////////
+        }, //UAParser.Utils = util;
+        ///////////
         // Export
         //////////
         // check js environment
@@ -6758,7 +6781,7 @@ function(module, exports, __webpack_require__) {
         }.call(exports, __webpack_require__, exports, module), !(__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))) : // browser env
         window.UAParser = UAParser;
         // jQuery/Zepto specific (optional)
-        // Note: 
+        // Note:
         //   In AMD env the global scope should be kept clean, but jQuery is an exception.
         //   jQuery always exports to global scope, unless jQuery.noConflict(true) is used,
         //   and we should catch that.
@@ -7295,7 +7318,8 @@ function(module, exports) {
 	 * @return {boolean} Whether or not the object is a DOM node.
 	 */
     function isNode(object) {
-        return !(!object || !("function" == typeof Node ? object instanceof Node : "object" == typeof object && "number" == typeof object.nodeType && "string" == typeof object.nodeName));
+        var doc = object ? object.ownerDocument || object : document, defaultView = doc.defaultView || window;
+        return !(!object || !("function" == typeof defaultView.Node ? object instanceof defaultView.Node : "object" == typeof object && "number" == typeof object.nodeType && "string" == typeof object.nodeName));
     }
     module.exports = isNode;
 }, /* 65 */
@@ -7319,13 +7343,16 @@ function(module, exports) {
 	 *
 	 * The activeElement will be null only if the document or document body is not
 	 * yet defined.
+	 *
+	 * @param {?DOMDocument} doc Defaults to current document.
+	 * @return {?DOMElement}
 	 */
-    function getActiveElement() {
-        if ("undefined" == typeof document) return null;
+    function getActiveElement(doc) {
+        if (doc = doc || ("undefined" != typeof document ? document : void 0), "undefined" == typeof doc) return null;
         try {
-            return document.activeElement || document.body;
+            return doc.activeElement || doc.body;
         } catch (e) {
-            return document.body;
+            return doc.body;
         }
     }
     module.exports = getActiveElement;
@@ -7472,11 +7499,11 @@ function(module, exports, __webpack_require__) {
 	   */
         getScrollParent: function(node) {
             if (!node) return null;
-            for (;node && node !== document.body; ) {
+            for (var ownerDocument = node.ownerDocument; node && node !== ownerDocument.body; ) {
                 if (_isNodeScrollable(node, "overflow") || _isNodeScrollable(node, "overflowY") || _isNodeScrollable(node, "overflowX")) return node;
                 node = node.parentNode;
             }
-            return window;
+            return ownerDocument.defaultView || ownerDocument.parentWindow;
         }
     };
     module.exports = Style;
@@ -7618,7 +7645,7 @@ function(module, exports, __webpack_require__) {
 	 * @return {object}
 	 */
     function getElementRect(elem) {
-        var docElem = document.documentElement;
+        var docElem = elem.ownerDocument.documentElement;
         // FF 2, Safari 3 and Opera 9.5- do not support getBoundingClientRect().
         // IE9- will throw if the element is not in the document.
         if (!("getBoundingClientRect" in elem && containsNode(docElem, elem))) return {
@@ -7678,9 +7705,9 @@ function(module, exports, __webpack_require__) {
 	 * @return {object} Map with `x` and `y` keys.
 	 */
     function getScrollPosition(scrollable) {
-        var documentScrollElement = getDocumentScrollElement();
-        scrollable === window && (scrollable = documentScrollElement);
-        var scrollPosition = getUnboundedScrollPosition(scrollable), viewport = scrollable === documentScrollElement ? document.documentElement : scrollable, xMax = scrollable.scrollWidth - viewport.clientWidth, yMax = scrollable.scrollHeight - viewport.clientHeight;
+        var documentScrollElement = getDocumentScrollElement(scrollable.ownerDocument || scrollable.document);
+        scrollable.Window && scrollable instanceof scrollable.Window && (scrollable = documentScrollElement);
+        var scrollPosition = getUnboundedScrollPosition(scrollable), viewport = scrollable === documentScrollElement ? scrollable.ownerDocument.documentElement : scrollable, xMax = scrollable.scrollWidth - viewport.clientWidth, yMax = scrollable.scrollHeight - viewport.clientHeight;
         return scrollPosition.x = Math.max(0, Math.min(scrollPosition.x, xMax)), scrollPosition.y = Math.max(0, Math.min(scrollPosition.y, yMax)), 
         scrollPosition;
     }
@@ -7739,9 +7766,9 @@ function(module, exports) {
 	 * @return {object} Map with `x` and `y` keys.
 	 */
     function getUnboundedScrollPosition(scrollable) {
-        return scrollable === window ? {
-            x: window.pageXOffset || document.documentElement.scrollLeft,
-            y: window.pageYOffset || document.documentElement.scrollTop
+        return scrollable.Window && scrollable instanceof scrollable.Window ? {
+            x: scrollable.pageXOffset || scrollable.document.documentElement.scrollLeft,
+            y: scrollable.pageYOffset || scrollable.document.documentElement.scrollTop
         } : {
             x: scrollable.scrollLeft,
             y: scrollable.scrollTop
@@ -14082,7 +14109,7 @@ function(module, exports, __webpack_require__) {
         }, {
             key: "render",
             value: function() {
-                var _this2 = this, _props = this.props, className = _props.className, toolbarConfig = _props.toolbarConfig;
+                var _this2 = this, _props = this.props, className = _props.className, toolbarConfig = _props.toolbarConfig, rootStyle = _props.rootStyle;
                 null == toolbarConfig && (toolbarConfig = _EditorToolbarConfig2.default);
                 var display = toolbarConfig.display || _EditorToolbarConfig2.default.display, buttonsGroups = display.map(function(groupName) {
                     switch (groupName) {
@@ -14106,7 +14133,8 @@ function(module, exports, __webpack_require__) {
                     }
                 });
                 return _react2.default.createElement("div", {
-                    className: (0, _classnames2.default)(_EditorToolbar2.default.root, className)
+                    className: (0, _classnames2.default)(_EditorToolbar2.default.root, className),
+                    style: rootStyle
                 }, buttonsGroups);
             }
         }, {
@@ -14218,10 +14246,12 @@ function(module, exports, __webpack_require__) {
             key: "_onKeypress",
             value: function(event, eventFlags) {
                 // Catch cmd+k for use with link insertion.
-                (0, _KeyBindingUtil.hasCommandModifier)(event) && 75 === event.keyCode && (// TODO: Ensure there is some text selected.
-                this.setState({
-                    showLinkInput: !0
-                }), eventFlags.wasHandled = !0);
+                if ((0, _KeyBindingUtil.hasCommandModifier)(event) && 75 === event.keyCode) {
+                    var _editorState = this.props.editorState;
+                    _editorState.getSelection().isCollapsed() || (this.setState({
+                        showLinkInput: !0
+                    }), eventFlags.wasHandled = !0);
+                }
             }
         }, {
             key: "_toggleShowLinkInput",
@@ -14870,7 +14900,7 @@ function(module, exports, __webpack_require__) {
             return "undefined" == typeof memo && (memo = fn.apply(this, arguments)), memo;
         };
     }, isOldIE = memoize(function() {
-        return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+        return /msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase());
     }), getHeadElement = memoize(function() {
         return document.head || document.getElementsByTagName("head")[0];
     }), singletonElement = null, singletonCounter = 0, styleElementsInsertedAtTop = [];
@@ -15551,7 +15581,7 @@ function(module, exports, __webpack_require__) {
             return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), 
             Constructor;
         };
-    }(), _draftJs = __webpack_require__(2), _draftJsExportHtml = __webpack_require__(187), _draftJsImportHtml = __webpack_require__(193), _draftJsExportMarkdown = __webpack_require__(200), _draftJsImportMarkdown = __webpack_require__(202), EditorValue = function() {
+    }(), _draftJs = __webpack_require__(2), _draftJsExportHtml = __webpack_require__(187), _draftJsImportHtml = __webpack_require__(192), _draftJsExportMarkdown = __webpack_require__(199), _draftJsImportMarkdown = __webpack_require__(201), EditorValue = function() {
         function EditorValue(editorState) {
             var cache = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
             _classCallCheck(this, EditorValue), this._cache = cache, this._editorState = editorState;
@@ -15688,6 +15718,9 @@ function(module, exports, __webpack_require__) {
             return null;
         }
     }
+    function getEntity(contentState, entityKey) {
+        return contentState.getEntity ? contentState.getEntity(entityKey) : _draftJs.Entity.get(entityKey);
+    }
     function stringifyAttrs(attrs) {
         if (null == attrs) return "";
         var parts = [], _iteratorNormalCompletion6 = !0, _didIteratorError6 = !1, _iteratorError6 = void 0;
@@ -15785,6 +15818,7 @@ function(module, exports, __webpack_require__) {
     }), _DEFAULT_STYLE_MAP), DEFAULT_STYLE_ORDER = [ BOLD, ITALIC, UNDERLINE, STRIKETHROUGH, CODE ], ENTITY_ATTR_MAP = (_ENTITY_ATTR_MAP = {}, 
     _defineProperty(_ENTITY_ATTR_MAP, _draftJsUtils.ENTITY_TYPE.LINK, {
         url: "href",
+        href: "href",
         rel: "rel",
         target: "target",
         title: "title",
@@ -16001,14 +16035,28 @@ function(module, exports, __webpack_require__) {
                             }
                         }
                         return content;
-                    }).join(""), entity = entityKey ? _draftJs.Entity.get(entityKey) : null, entityType = null == entity ? null : entity.getType().toUpperCase();
+                    }).join(""), entity = entityKey ? getEntity(_this.contentState, entityKey) : null, entityType = null == entity ? null : entity.getType().toUpperCase(), entityStyle = void 0;
+                    if (null != entity && _this.options.entityStyleFn && (entityStyle = _this.options.entityStyleFn(entity))) {
+                        var _entityStyle = entityStyle, _element2 = _entityStyle.element, _attributes3 = _entityStyle.attributes, _style3 = _entityStyle.style;
+                        if (null == _element2 && (_element2 = "span"), // Normalize `className` -> `class`, etc.
+                        _attributes3 = (0, _normalizeAttributes2.default)(_attributes3), null != _style3) {
+                            var styleAttr = (0, _styleToCSS2.default)(_style3);
+                            _attributes3 = null == _attributes3 ? {
+                                style: styleAttr
+                            } : _extends({}, _attributes3, {
+                                style: styleAttr
+                            });
+                        }
+                        var attrString = stringifyAttrs(_attributes3);
+                        return "<" + _element2 + attrString + ">" + content + "</" + _element2 + ">";
+                    }
                     if (null != entityType && entityType === _draftJsUtils.ENTITY_TYPE.LINK) {
-                        var attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null, attrString = stringifyAttrs(attrs);
-                        return "<a" + attrString + ">" + content + "</a>";
+                        var attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null, _attrString = stringifyAttrs(attrs);
+                        return "<a" + _attrString + ">" + content + "</a>";
                     }
                     if (null != entityType && entityType === _draftJsUtils.ENTITY_TYPE.IMAGE) {
-                        var _attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null, _attrString = stringifyAttrs(_attrs);
-                        return "<img" + _attrString + "/>";
+                        var _attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null, _attrString2 = stringifyAttrs(_attrs);
+                        return "<img" + _attrString2 + "/>";
                     }
                     return content;
                 }).join("");
@@ -16145,144 +16193,12 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     });
-    var _CSSProperty = __webpack_require__(192), VENDOR_PREFIX = /^(moz|ms|o|webkit)-/, NUMERIC_STRING = /^\d+$/, UPPERCASE_PATTERN = /([A-Z])/g;
+    var _CSSProperty = __webpack_require__(!function() {
+        var e = new Error('Cannot find module "react-dom/lib/CSSProperty"');
+        throw e.code = "MODULE_NOT_FOUND", e;
+    }()), VENDOR_PREFIX = /^(moz|ms|o|webkit)-/, NUMERIC_STRING = /^\d+$/, UPPERCASE_PATTERN = /([A-Z])/g;
     exports.default = styleToCSS;
 }, /* 192 */
-/***/
-function(module, exports) {
-    /**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule CSSProperty
-	 */
-    "use strict";
-    /**
-	 * @param {string} prefix vendor-specific prefix, eg: Webkit
-	 * @param {string} key style name, eg: transitionDuration
-	 * @return {string} style name prefixed with `prefix`, properly camelCased, eg:
-	 * WebkitTransitionDuration
-	 */
-    function prefixKey(prefix, key) {
-        return prefix + key.charAt(0).toUpperCase() + key.substring(1);
-    }
-    /**
-	 * CSS properties which accept numbers but are not in units of "px".
-	 */
-    var isUnitlessNumber = {
-        animationIterationCount: !0,
-        borderImageOutset: !0,
-        borderImageSlice: !0,
-        borderImageWidth: !0,
-        boxFlex: !0,
-        boxFlexGroup: !0,
-        boxOrdinalGroup: !0,
-        columnCount: !0,
-        flex: !0,
-        flexGrow: !0,
-        flexPositive: !0,
-        flexShrink: !0,
-        flexNegative: !0,
-        flexOrder: !0,
-        gridRow: !0,
-        gridColumn: !0,
-        fontWeight: !0,
-        lineClamp: !0,
-        lineHeight: !0,
-        opacity: !0,
-        order: !0,
-        orphans: !0,
-        tabSize: !0,
-        widows: !0,
-        zIndex: !0,
-        zoom: !0,
-        // SVG-related properties
-        fillOpacity: !0,
-        floodOpacity: !0,
-        stopOpacity: !0,
-        strokeDasharray: !0,
-        strokeDashoffset: !0,
-        strokeMiterlimit: !0,
-        strokeOpacity: !0,
-        strokeWidth: !0
-    }, prefixes = [ "Webkit", "ms", "Moz", "O" ];
-    // Using Object.keys here, or else the vanilla for-in loop makes IE8 go into an
-    // infinite loop, because it iterates over the newly added props too.
-    Object.keys(isUnitlessNumber).forEach(function(prop) {
-        prefixes.forEach(function(prefix) {
-            isUnitlessNumber[prefixKey(prefix, prop)] = isUnitlessNumber[prop];
-        });
-    });
-    /**
-	 * Most style properties can be unset by doing .style[prop] = '' but IE8
-	 * doesn't like doing that with shorthand properties so for the properties that
-	 * IE8 breaks on, which are listed here, we instead unset each of the
-	 * individual properties. See http://bugs.jquery.com/ticket/12385.
-	 * The 4-value 'clock' properties like margin, padding, border-width seem to
-	 * behave without any problems. Curiously, list-style works too without any
-	 * special prodding.
-	 */
-    var shorthandPropertyExpansions = {
-        background: {
-            backgroundAttachment: !0,
-            backgroundColor: !0,
-            backgroundImage: !0,
-            backgroundPositionX: !0,
-            backgroundPositionY: !0,
-            backgroundRepeat: !0
-        },
-        backgroundPosition: {
-            backgroundPositionX: !0,
-            backgroundPositionY: !0
-        },
-        border: {
-            borderWidth: !0,
-            borderStyle: !0,
-            borderColor: !0
-        },
-        borderBottom: {
-            borderBottomWidth: !0,
-            borderBottomStyle: !0,
-            borderBottomColor: !0
-        },
-        borderLeft: {
-            borderLeftWidth: !0,
-            borderLeftStyle: !0,
-            borderLeftColor: !0
-        },
-        borderRight: {
-            borderRightWidth: !0,
-            borderRightStyle: !0,
-            borderRightColor: !0
-        },
-        borderTop: {
-            borderTopWidth: !0,
-            borderTopStyle: !0,
-            borderTopColor: !0
-        },
-        font: {
-            fontStyle: !0,
-            fontVariant: !0,
-            fontWeight: !0,
-            fontSize: !0,
-            lineHeight: !0,
-            fontFamily: !0
-        },
-        outline: {
-            outlineWidth: !0,
-            outlineStyle: !0,
-            outlineColor: !0
-        }
-    }, CSSProperty = {
-        isUnitlessNumber: isUnitlessNumber,
-        shorthandPropertyExpansions: shorthandPropertyExpansions
-    };
-    module.exports = CSSProperty;
-}, /* 193 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -16294,14 +16210,14 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     });
-    var _stateFromHTML = __webpack_require__(194);
+    var _stateFromHTML = __webpack_require__(193);
     Object.defineProperty(exports, "stateFromHTML", {
         enumerable: !0,
         get: function() {
             return _interopRequireDefault(_stateFromHTML).default;
         }
     });
-}, /* 194 */
+}, /* 193 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -16317,8 +16233,8 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     }), exports.default = stateFromHTML;
-    var _draftJsImportElement = __webpack_require__(195), _parseHTML = __webpack_require__(199), _parseHTML2 = _interopRequireDefault(_parseHTML);
-}, /* 195 */
+    var _draftJsImportElement = __webpack_require__(194), _parseHTML = __webpack_require__(198), _parseHTML2 = _interopRequireDefault(_parseHTML);
+}, /* 194 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -16330,14 +16246,14 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     });
-    var _stateFromElement = __webpack_require__(196);
+    var _stateFromElement = __webpack_require__(195);
     Object.defineProperty(exports, "stateFromElement", {
         enumerable: !0,
         get: function() {
             return _interopRequireDefault(_stateFromElement).default;
         }
     });
-}, /* 196 */
+}, /* 195 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -16459,7 +16375,7 @@ function(module, exports, __webpack_require__) {
         };
     }();
     exports.default = stateFromElement;
-    var _replaceTextWithMeta3 = __webpack_require__(197), _replaceTextWithMeta4 = _interopRequireDefault(_replaceTextWithMeta3), _draftJs = __webpack_require__(2), _immutable = __webpack_require__(146), _draftJsUtils = __webpack_require__(149), _syntheticDom = __webpack_require__(198), NO_STYLE = (0, 
+    var _replaceTextWithMeta3 = __webpack_require__(196), _replaceTextWithMeta4 = _interopRequireDefault(_replaceTextWithMeta3), _draftJs = __webpack_require__(2), _immutable = __webpack_require__(146), _draftJsUtils = __webpack_require__(149), _syntheticDom = __webpack_require__(197), NO_STYLE = (0, 
     _immutable.OrderedSet)(), NO_ENTITY = null, EMPTY_BLOCK = new _draftJs.ContentBlock({
         key: (0, _draftJs.genKey)(),
         text: "",
@@ -16633,7 +16549,8 @@ function(module, exports, __webpack_require__) {
                         text: text,
                         type: block.type,
                         characterList: characterMeta.toList(),
-                        depth: block.depth
+                        depth: block.depth,
+                        data: block.data ? (0, _immutable.Map)(block.data) : (0, _immutable.Map)()
                     }));
                 }), contentBlocks.length ? contentBlocks : [ EMPTY_BLOCK ];
             }
@@ -16682,13 +16599,20 @@ function(module, exports, __webpack_require__) {
             key: "processBlockElement",
             value: function(element) {
                 if (element) {
-                    var tagName = element.nodeName.toLowerCase(), type = this.getBlockTypeFromTagName(tagName), hasDepth = canHaveDepth(type), allowRender = !SPECIAL_ELEMENTS.hasOwnProperty(tagName), block = {
+                    var customBlockFn = this.options.customBlockFn, tagName = element.nodeName.toLowerCase(), type = void 0, data = void 0;
+                    if (customBlockFn) {
+                        var customBlock = customBlockFn(element);
+                        null != customBlock && (type = customBlock.type, data = customBlock.data);
+                    }
+                    null == type && (type = this.getBlockTypeFromTagName(tagName));
+                    var hasDepth = canHaveDepth(type), allowRender = !SPECIAL_ELEMENTS.hasOwnProperty(tagName), block = {
                         tagName: tagName,
                         textFragments: [],
                         type: type,
                         styleStack: [ NO_STYLE ],
                         entityStack: [ NO_ENTITY ],
-                        depth: hasDepth ? this.depth : 0
+                        depth: hasDepth ? this.depth : 0,
+                        data: data
                     };
                     allowRender && (this.blockList.push(block), hasDepth && (this.depth += 1)), this.blockStack.push(block), 
                     null != element.childNodes && Array.from(element.childNodes).forEach(this.processNode, this), 
@@ -16734,13 +16658,13 @@ function(module, exports, __webpack_require__) {
             key: "processNode",
             value: function(node) {
                 if (node.nodeType === _syntheticDom.NODE_TYPE_ELEMENT) {
-                    var element = node, _tagName = element.nodeName.toLowerCase();
-                    INLINE_ELEMENTS.hasOwnProperty(_tagName) ? this.processInlineElement(element) : this.processBlockElement(element);
+                    var _element = node, _tagName = _element.nodeName.toLowerCase();
+                    INLINE_ELEMENTS.hasOwnProperty(_tagName) ? this.processInlineElement(_element) : this.processBlockElement(_element);
                 } else node.nodeType === _syntheticDom.NODE_TYPE_TEXT && this.processTextNode(node);
             }
         } ]), BlockGenerator;
     }();
-}, /* 197 */
+}, /* 196 */
 /***/
 function(module, exports) {
     "use strict";
@@ -16762,7 +16686,7 @@ function(module, exports) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     }), exports.default = replaceTextWithMeta;
-}, /* 198 */
+}, /* 197 */
 /***/
 function(module, exports) {
     "use strict";
@@ -16924,7 +16848,7 @@ function(module, exports) {
             }
         } ]), FragmentNode;
     }(Node);
-}, /* 199 */
+}, /* 198 */
 /***/
 function(module, exports) {
     "use strict";
@@ -16939,7 +16863,7 @@ function(module, exports) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     }), exports.default = parseHTML;
-}, /* 200 */
+}, /* 199 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -16951,14 +16875,14 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     });
-    var _stateToMarkdown = __webpack_require__(201);
+    var _stateToMarkdown = __webpack_require__(200);
     Object.defineProperty(exports, "stateToMarkdown", {
         enumerable: !0,
         get: function() {
             return _interopRequireDefault(_stateToMarkdown).default;
         }
     });
-}, /* 201 */
+}, /* 200 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -17157,7 +17081,7 @@ function(module, exports, __webpack_require__) {
             }
         } ]), MarkupGenerator;
     }();
-}, /* 202 */
+}, /* 201 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -17169,14 +17093,14 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     });
-    var _stateFromMarkdown = __webpack_require__(203);
+    var _stateFromMarkdown = __webpack_require__(202);
     Object.defineProperty(exports, "stateFromMarkdown", {
         enumerable: !0,
         get: function() {
             return _interopRequireDefault(_stateFromMarkdown).default;
         }
     });
-}, /* 203 */
+}, /* 202 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -17194,8 +17118,8 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     }), exports.default = stateFromMarkdown;
-    var _MarkdownParser = __webpack_require__(204), _MarkdownParser2 = _interopRequireDefault(_MarkdownParser), _draftJsImportElement = __webpack_require__(195);
-}, /* 204 */
+    var _MarkdownParser = __webpack_require__(203), _MarkdownParser2 = _interopRequireDefault(_MarkdownParser), _draftJsImportElement = __webpack_require__(194);
+}, /* 203 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -17241,7 +17165,7 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     });
-    var _syntheticDom = __webpack_require__(198), hasOwnProperty = Object.prototype.hasOwnProperty, assign = Object.assign || function(obj) {
+    var _syntheticDom = __webpack_require__(197), hasOwnProperty = Object.prototype.hasOwnProperty, assign = Object.assign || function(obj) {
         for (var i = 1; i < arguments.length; i++) {
             var target = arguments[i];
             for (var key in target) hasOwnProperty.call(target, key) && (obj[key] = target[key]);
@@ -17591,7 +17515,7 @@ function(module, exports, __webpack_require__) {
         }
     };
     exports.default = MarkdownParser;
-}, /* 205 */
+}, /* 204 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -17620,7 +17544,7 @@ function(module, exports, __webpack_require__) {
         strategy: findLinkEntities,
         component: Link
     };
-}, /* 206 */
+}, /* 205 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -17638,12 +17562,12 @@ function(module, exports, __webpack_require__) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     });
-    var _ImageSpan = __webpack_require__(207), _ImageSpan2 = _interopRequireDefault(_ImageSpan), _draftJs = __webpack_require__(2), _draftJsUtils = __webpack_require__(149);
+    var _ImageSpan = __webpack_require__(206), _ImageSpan2 = _interopRequireDefault(_ImageSpan), _draftJs = __webpack_require__(2), _draftJsUtils = __webpack_require__(149);
     exports.default = {
         strategy: findImageEntities,
         component: _ImageSpan2.default
     };
-}, /* 207 */
+}, /* 206 */
 /***/
 function(module, exports, __webpack_require__) {
     "use strict";
@@ -17685,7 +17609,7 @@ function(module, exports, __webpack_require__) {
             return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), 
             Constructor;
         };
-    }(), _classAutobind = __webpack_require__(162), _classAutobind2 = _interopRequireDefault(_classAutobind), _classnames = __webpack_require__(160), _classnames2 = _interopRequireDefault(_classnames), _react = __webpack_require__(1), _react2 = _interopRequireDefault(_react), _draftJs = __webpack_require__(2), _ImageSpan = __webpack_require__(208), _ImageSpan2 = _interopRequireDefault(_ImageSpan), ImageSpan = function(_Component) {
+    }(), _classAutobind = __webpack_require__(162), _classAutobind2 = _interopRequireDefault(_classAutobind), _classnames = __webpack_require__(160), _classnames2 = _interopRequireDefault(_classnames), _react = __webpack_require__(1), _react2 = _interopRequireDefault(_react), _draftJs = __webpack_require__(2), _ImageSpan = __webpack_require__(207), _ImageSpan2 = _interopRequireDefault(_ImageSpan), ImageSpan = function(_Component) {
         function ImageSpan(props) {
             _classCallCheck(this, ImageSpan);
             var _this = _possibleConstructorReturn(this, (ImageSpan.__proto__ || Object.getPrototypeOf(ImageSpan)).call(this, props));
@@ -17758,19 +17682,19 @@ function(module, exports, __webpack_require__) {
         } ]), ImageSpan;
     }(_react.Component);
     exports.default = ImageSpan;
-}, /* 208 */
+}, /* 207 */
 /***/
 function(module, exports, __webpack_require__) {
     // style-loader: Adds some css to the DOM by adding a <style> tag
     // load the styles
-    var content = __webpack_require__(209);
+    var content = __webpack_require__(208);
     "string" == typeof content && (content = [ [ module.id, content, "" ] ]);
     // add the styles to the DOM
     __webpack_require__(166)(content, {
         sourceMap: !0
     });
     content.locals && (module.exports = content.locals);
-}, /* 209 */
+}, /* 208 */
 /***/
 function(module, exports, __webpack_require__) {
     exports = module.exports = __webpack_require__(165)(), // imports
@@ -17782,7 +17706,7 @@ function(module, exports, __webpack_require__) {
         resize: "ImageSpan__resize___2PEqf",
         resizeHandle: "ImageSpan__resizeHandle___2JBaV"
     };
-}, /* 210 */
+}, /* 209 */
 /***/
 function(module, exports) {
     "use strict";
@@ -17798,7 +17722,7 @@ function(module, exports) {
     Object.defineProperty(exports, "__esModule", {
         value: !0
     }), exports.default = composite;
-}, /* 211 */
+}, /* 210 */
 /***/
 function(module, exports) {
     // Copyright Joyent, Inc. and other Node contributors.
@@ -17941,33 +17865,33 @@ function(module, exports) {
     }, EventEmitter.listenerCount = function(emitter, type) {
         return emitter.listenerCount(type);
     };
-}, /* 212 */
+}, /* 211 */
 /***/
 function(module, exports, __webpack_require__) {
     // style-loader: Adds some css to the DOM by adding a <style> tag
     // load the styles
-    var content = __webpack_require__(213);
+    var content = __webpack_require__(212);
     "string" == typeof content && (content = [ [ module.id, content, "" ] ]);
     // add the styles to the DOM
     __webpack_require__(166)(content, {});
     content.locals && (module.exports = content.locals);
-}, /* 213 */
+}, /* 212 */
 /***/
 function(module, exports) {
     module.exports = '/**\r\n * We inherit the height of the container by default\r\n */\r\n\r\n.DraftEditor-root,\r\n.DraftEditor-editorContainer,\r\n.public-DraftEditor-content {\r\n  height: inherit;\r\n  text-align: initial;\r\n}\r\n\r\n.DraftEditor-root {\r\n  position: relative;\r\n}\r\n\r\n/**\r\n * Zero-opacity background used to allow focus in IE. Otherwise, clicks\r\n * fall through to the placeholder.\r\n */\r\n\r\n.DraftEditor-editorContainer {\r\n  background-color: rgba(255, 255, 255, 0);\r\n  /* Repair mysterious missing Safari cursor */\r\n  border: 1px solid transparent;\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n.public-DraftEditor-content {\r\n  outline: none;\r\n  white-space: pre-wrap;\r\n}\r\n\r\n.public-DraftEditor-block {\r\n  position: relative;\r\n}\r\n\r\n.DraftEditor-alignLeft .public-DraftEditor-block {\r\n  text-align: left;\r\n}\r\n\r\n.DraftEditor-alignLeft .public-DraftEditorPlaceholder-root {\r\n  left: 0;\r\n  text-align: left;\r\n}\r\n\r\n.DraftEditor-alignCenter .public-DraftEditor-block {\r\n  text-align: center;\r\n}\r\n\r\n.DraftEditor-alignCenter .public-DraftEditorPlaceholder-root {\r\n  margin: 0 auto;\r\n  text-align: center;\r\n  width: 100%;\r\n}\r\n\r\n.DraftEditor-alignRight .public-DraftEditor-block {\r\n  text-align: right;\r\n}\r\n\r\n.DraftEditor-alignRight .public-DraftEditorPlaceholder-root {\r\n  right: 0;\r\n  text-align: right;\r\n}\r\n/**\r\n * @providesModule DraftEditorPlaceholder\r\n */\r\n\r\n.public-DraftEditorPlaceholder-root {\r\n  color: #9197a3;\r\n  position: absolute;\r\n  z-index: 0;\r\n}\r\n\r\n.public-DraftEditorPlaceholder-hasFocus {\r\n  color: #bdc1c9;\r\n}\r\n\r\n.DraftEditorPlaceholder-hidden {\r\n  display: none;\r\n}\r\n/**\r\n * @providesModule DraftStyleDefault\r\n */\r\n\r\n.public-DraftStyleDefault-block {\r\n  position: relative;\r\n  white-space: pre-wrap;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-ltr {\r\n  direction: ltr;\r\n  text-align: left;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-rtl {\r\n  direction: rtl;\r\n  text-align: right;\r\n}\r\n\r\n/**\r\n * These rules provide appropriate text direction for counter pseudo-elements.\r\n */\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-listLTR {\r\n  direction: ltr;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-listRTL {\r\n  direction: rtl;\r\n}\r\n\r\n/**\r\n * Default spacing for list container elements. Override with CSS as needed.\r\n */\r\n\r\n.public-DraftStyleDefault-ul,\r\n.public-DraftStyleDefault-ol {\r\n  margin: 16px 0;\r\n  padding: 0;\r\n}\r\n\r\n/**\r\n * Default counters and styles are provided for five levels of nesting.\r\n * If you require nesting beyond that level, you should use your own CSS\r\n * classes to do so. If you care about handling RTL languages, the rules you\r\n * create should look a lot like these.\r\n */\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-listLTR {\r\n  margin-left: 1.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-listRTL {\r\n  margin-right: 1.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-listLTR {\r\n  margin-left: 3em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-listRTL {\r\n  margin-right: 3em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-listLTR {\r\n  margin-left: 4.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-listRTL {\r\n  margin-right: 4.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-listLTR {\r\n  margin-left: 6em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-listRTL {\r\n  margin-right: 6em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-listLTR {\r\n  margin-left: 7.5em;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-listRTL {\r\n  margin-right: 7.5em;\r\n}\r\n\r\n/**\r\n * Only use `square` list-style after the first two levels.\r\n */\r\n\r\n.public-DraftStyleDefault-unorderedListItem {\r\n  list-style-type: square;\r\n  position: relative;\r\n}\r\n\r\n.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth0 {\r\n  list-style-type: disc;\r\n}\r\n\r\n.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth1 {\r\n  list-style-type: circle;\r\n}\r\n\r\n/**\r\n * Ordered list item counters are managed with CSS, since all list nesting is\r\n * purely visual.\r\n */\r\n\r\n.public-DraftStyleDefault-orderedListItem {\r\n  list-style-type: none;\r\n  position: relative;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listLTR:before {\r\n  left: -36px;\r\n  position: absolute;\r\n  text-align: right;\r\n  width: 30px;\r\n}\r\n\r\n/* @noflip */\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-listRTL:before {\r\n  position: absolute;\r\n  right: -36px;\r\n  text-align: left;\r\n  width: 30px;\r\n}\r\n\r\n/**\r\n * Counters are reset in JavaScript. If you need different counter styles,\r\n * override these rules. If you need more nesting, create your own rules to\r\n * do so.\r\n */\r\n\r\n.public-DraftStyleDefault-orderedListItem:before {\r\n  content: counter(ol0) ". ";\r\n  counter-increment: ol0;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth1:before {\r\n  content: counter(ol1) ". ";\r\n  counter-increment: ol1;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth2:before {\r\n  content: counter(ol2) ". ";\r\n  counter-increment: ol2;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth3:before {\r\n  content: counter(ol3) ". ";\r\n  counter-increment: ol3;\r\n}\r\n\r\n.public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth4:before {\r\n  content: counter(ol4) ". ";\r\n  counter-increment: ol4;\r\n}\r\n\r\n.public-DraftStyleDefault-depth0.public-DraftStyleDefault-reset {\r\n  counter-reset: ol0;\r\n}\r\n\r\n.public-DraftStyleDefault-depth1.public-DraftStyleDefault-reset {\r\n  counter-reset: ol1;\r\n}\r\n\r\n.public-DraftStyleDefault-depth2.public-DraftStyleDefault-reset {\r\n  counter-reset: ol2;\r\n}\r\n\r\n.public-DraftStyleDefault-depth3.public-DraftStyleDefault-reset {\r\n  counter-reset: ol3;\r\n}\r\n\r\n.public-DraftStyleDefault-depth4.public-DraftStyleDefault-reset {\r\n  counter-reset: ol4;\r\n}\r\n';
-}, /* 214 */
+}, /* 213 */
 /***/
 function(module, exports, __webpack_require__) {
     // style-loader: Adds some css to the DOM by adding a <style> tag
     // load the styles
-    var content = __webpack_require__(215);
+    var content = __webpack_require__(214);
     "string" == typeof content && (content = [ [ module.id, content, "" ] ]);
     // add the styles to the DOM
     __webpack_require__(166)(content, {
         sourceMap: !0
     });
     content.locals && (module.exports = content.locals);
-}, /* 215 */
+}, /* 214 */
 /***/
 function(module, exports, __webpack_require__) {
     exports = module.exports = __webpack_require__(165)(), // imports
