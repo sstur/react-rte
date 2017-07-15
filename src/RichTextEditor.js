@@ -1,6 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
-import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils} from 'draft-js';
+import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
@@ -21,7 +21,7 @@ import {BLOCK_TYPE} from 'draft-js-utils';
 import './Draft.global.css';
 import styles from './RichTextEditor.css';
 
-import type {ContentBlock, Entity} from 'draft-js';
+import type {ContentBlock} from 'draft-js';
 import type {ToolbarConfig} from './lib/EditorToolbarConfig';
 import type {ImportOptions} from './lib/EditorValue';
 

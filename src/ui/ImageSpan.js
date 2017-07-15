@@ -5,7 +5,6 @@ import cx from 'classnames';
 import React, {Component} from 'react';
 import {Entity} from 'draft-js';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './ImageSpan.css';
 
 // TODO: Use a more specific type here.

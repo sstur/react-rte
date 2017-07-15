@@ -182,7 +182,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderImageButton(name: string): React.Element {
+  _renderImageButton(name: string) {
     return (
       <ButtonGroup key={name}>
         <PopoverIconButton
