@@ -1,15 +1,17 @@
 /* @flow */
 import React, {Component} from 'react';
-import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils} from 'draft-js';
+import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, ContentBlock, Entity} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
+import getBlocksInSelection from './lib/getBlocksInSelection';
 import insertBlockAfter from './lib/insertBlockAfter';
 import isListItem from './lib/isListItem';
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
+import ImageDecorator from './lib/ImageDecorator';
 import composite from './lib/composite';
 import cx from 'classnames';
 import autobind from 'class-autobind';
@@ -22,6 +24,10 @@ import styles from './RichTextEditor.css';
 import type {ContentBlock} from 'draft-js';
 import type {ToolbarConfig} from './lib/EditorToolbarConfig';
 import type {ImportOptions} from './lib/EditorValue';
+
+import ButtonGroup from './ui/ButtonGroup';
+import Button from './ui/Button';
+import Dropdown from './ui/Dropdown';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -46,6 +52,7 @@ type Props = {
   placeholder?: string;
   customStyleMap?: {[style: string]: {[key: string]: any}};
   handleReturn?: (event: Object) => boolean;
+  customControls?: Array<Object|() => Object>;
   readOnly?: boolean;
   disabled?: boolean; // Alias of readOnly
   toolbarConfig?: ToolbarConfig;
@@ -89,6 +96,7 @@ export default class RichTextEditor extends Component {
       disabled,
       toolbarConfig,
       blockStyleFn,
+      customControls,
       keyBindingFn,
       rootStyle,
       toolbarStyle,
@@ -118,6 +126,7 @@ export default class RichTextEditor extends Component {
           onChange={this._onChange}
           focusEditor={this._focus}
           toolbarConfig={toolbarConfig}
+          customControls={customControls}
         />
       );
     }
@@ -279,10 +288,43 @@ export default class RichTextEditor extends Component {
 
   _onChange(editorState: EditorState) {
     let {onChange, value} = this.props;
-    if (onChange != null) {
-      let newValue = value.setEditorState(editorState);
-      onChange(newValue);
+    if (onChange == null) {
+      return;
     }
+    let newValue = value.setEditorState(editorState);
+    let newEditorState = newValue.getEditorState();
+    this._handleInlineImageSelection(newEditorState);
+    onChange(newValue);
+  }
+
+  _handleInlineImageSelection(editorState: EditorState) {
+    let selection = editorState.getSelection();
+    let blocks = getBlocksInSelection(editorState);
+
+    const selectImage = (block, offset) => {
+      const imageKey = block.getEntityAt(offset);
+      Entity.mergeData(imageKey, {selected: true});
+    };
+
+    let isInMiddleBlock = (index) => index > 0 && index < blocks.size - 1;
+    let isWithinStartBlockSelection = (offset, index) => (
+      index === 0 && offset > selection.getStartOffset()
+    );
+    let isWithinEndBlockSelection = (offset, index) => (
+      index === blocks.size - 1 && offset < selection.getEndOffset()
+    );
+
+    blocks.toIndexedSeq().forEach((block, index) => {
+      ImageDecorator.strategy(
+        block,
+        (offset) => {
+          if (isWithinStartBlockSelection(offset, index) ||
+              isInMiddleBlock(index) ||
+              isWithinEndBlockSelection(offset, index)) {
+            selectImage(block, offset);
+          }
+        });
+    });
   }
 
   _focus() {
@@ -304,7 +346,7 @@ function defaultBlockStyleFn(block: ContentBlock): string {
   }
 }
 
-const decorator = new CompositeDecorator([LinkDecorator]);
+const decorator = new CompositeDecorator([LinkDecorator, ImageDecorator]);
 
 function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);
@@ -320,6 +362,17 @@ Object.assign(RichTextEditor, {
   decorator,
   createEmptyValue,
   createValueFromString,
+  ButtonGroup,
+  Button,
+  Dropdown,
 });
 
-export {EditorValue, decorator, createEmptyValue, createValueFromString};
+export {
+  EditorValue,
+  decorator,
+  createEmptyValue,
+  createValueFromString,
+  ButtonGroup,
+  Button,
+  Dropdown,
+};
