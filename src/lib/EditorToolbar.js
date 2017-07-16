@@ -30,6 +30,7 @@ type Props = {
   onChange: ChangeHandler;
   focusEditor: Function;
   toolbarConfig: ToolbarConfig;
+  customControls: Array<Object>;
   rootStyle?: Object;
 };
 
@@ -37,6 +38,7 @@ type State = {
   showLinkInput: boolean;
   showImageInput: boolean;
 };
+
 
 export default class EditorToolbar extends Component {
   props: Props;
@@ -62,7 +64,7 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    let {className, toolbarConfig, rootStyle} = this.props;
+    let {className, toolbarConfig, rootStyle, customControls, editorState} = this.props;
     if (toolbarConfig == null) {
       toolbarConfig = DefaultToolbarConfig;
     }
@@ -98,6 +100,18 @@ export default class EditorToolbar extends Component {
 //         {this._renderBlockTypeDropdown()}
 //         {this._renderUndoRedo()}
         {buttonsGroups}
+        {customControls && customControls.map((f) => {
+          switch (typeof f) {
+            case 'function':
+              return f(
+                (key, value) => this.setState({['customControl' + key]: value}),
+                (key) => this.state['customControl' + key],
+                editorState
+              );
+            default:
+              return f;
+          }
+        })}
       </div>
     );
   }
