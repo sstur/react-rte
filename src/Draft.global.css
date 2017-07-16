@@ -21,7 +21,7 @@
 .DraftEditor-editorContainer {
   background-color: rgba(255, 255, 255, 0);
   /* Repair mysterious missing Safari cursor */
-  border-left: 0.1px solid transparent;
+  border: 1px solid transparent;
   position: relative;
   z-index: 1;
 }

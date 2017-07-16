@@ -5,11 +5,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {EditorState, Entity, RichUtils, Modifier} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
-import {
-  INLINE_STYLE_BUTTONS,
-  BLOCK_TYPE_DROPDOWN,
-  BLOCK_TYPE_BUTTONS,
-} from './EditorToolbarConfig';
+import DefaultToolbarConfig from './EditorToolbarConfig';
 import StyleButton from './StyleButton';
 import PopoverIconButton from '../ui/PopoverIconButton';
 import ButtonGroup from '../ui/ButtonGroup';
@@ -20,10 +16,10 @@ import clearEntityForRange from './clearEntityForRange';
 import autobind from 'class-autobind';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './EditorToolbar.css';
 
-import type {EventEmitter} from 'events';
+import type EventEmitter from 'events';
+import type {ToolbarConfig} from './EditorToolbarConfig';
 
 type ChangeHandler = (state: EditorState) => any;
 
@@ -33,6 +29,8 @@ type Props = {
   keyEmitter: EventEmitter;
   onChange: ChangeHandler;
   focusEditor: Function;
+  toolbarConfig: ToolbarConfig;
+  rootStyle?: Object;
 };
 
 type State = {
@@ -63,31 +61,56 @@ export default class EditorToolbar extends Component {
     this.props.keyEmitter.removeListener('keypress', this._onKeypress);
   }
 
-  render(): React.Element {
-    const {className} = this.props;
+  render() {
+    let {className, toolbarConfig, rootStyle} = this.props;
+    if (toolbarConfig == null) {
+      toolbarConfig = DefaultToolbarConfig;
+    }
+    let display = toolbarConfig.display || DefaultToolbarConfig.display;
+    let buttonsGroups = display.map((groupName) => {
+      switch (groupName) {
+        case 'INLINE_STYLE_BUTTONS': {
+          return this._renderInlineStyleButtons(groupName, toolbarConfig);
+        }
+        case 'BLOCK_TYPE_DROPDOWN': {
+          return this._renderBlockTypeDropdown(groupName, toolbarConfig);
+        }
+        case 'LINK_BUTTONS': {
+          return this._renderLinkButtons(groupName, toolbarConfig);
+        }
+        case 'BLOCK_TYPE_BUTTONS': {
+          return this._renderBlockTypeButtons(groupName, toolbarConfig);
+        }
+        case 'HISTORY_BUTTONS': {
+          return this._renderUndoRedo(groupName, toolbarConfig);
+        }
+      }
+    });
     return (
-      <div className={cx(styles.root, className)}>
-        {this._renderInlineStyleButtons()}
-        {this._renderBlockTypeButtons()}
-        {this._renderLinkButtons()}
-        {this._renderImageButton()}
-        {this._renderBlockTypeDropdown()}
-        {this._renderUndoRedo()}
+      <div className={cx(styles.root, className)} style={rootStyle}>
+//         {this._renderInlineStyleButtons()}
+//         {this._renderBlockTypeButtons()}
+//         {this._renderLinkButtons()}
+//         {this._renderImageButton()}
+//         {this._renderBlockTypeDropdown()}
+//         {this._renderUndoRedo()}
+        {buttonsGroups}
       </div>
     );
   }
 
-  _renderBlockTypeDropdown(): React.Element {
+  _renderBlockTypeDropdown(name: string, toolbarConfig: ToolbarConfig) {
     let blockType = this._getCurrentBlockType();
     let choices = new Map(
-      BLOCK_TYPE_DROPDOWN.map((type) => [type.style, type.label])
+      (toolbarConfig.BLOCK_TYPE_DROPDOWN || []).map((type) => [type.style, {label: type.label, className: type.className}])
     );
     if (!choices.has(blockType)) {
       blockType = Array.from(choices.keys())[0];
     }
     return (
-      <ButtonGroup>
+      <ButtonGroup key={name}>
         <Dropdown
+          {...toolbarConfig.extraProps}
           choices={choices}
           selectedKey={blockType}
           onChange={this._selectBlockType}
@@ -96,40 +119,44 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderBlockTypeButtons(): React.Element {
+  _renderBlockTypeButtons(name: string, toolbarConfig: ToolbarConfig) {
     let blockType = this._getCurrentBlockType();
-    let buttons = BLOCK_TYPE_BUTTONS.map((type, index) => (
+    let buttons = (toolbarConfig.BLOCK_TYPE_BUTTONS || []).map((type, index) => (
       <StyleButton
+        {...toolbarConfig.extraProps}
         key={String(index)}
         isActive={type.style === blockType}
         label={type.label}
         onToggle={this._toggleBlockType}
         style={type.style}
+        className={type.className}
       />
     ));
     return (
-      <ButtonGroup>{buttons}</ButtonGroup>
+      <ButtonGroup key={name}>{buttons}</ButtonGroup>
     );
   }
 
-  _renderInlineStyleButtons(): React.Element {
+  _renderInlineStyleButtons(name: string, toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let currentStyle = editorState.getCurrentInlineStyle();
-    let buttons = INLINE_STYLE_BUTTONS.map((type, index) => (
+    let buttons = (toolbarConfig.INLINE_STYLE_BUTTONS || []).map((type, index) => (
       <StyleButton
+        {...toolbarConfig.extraProps}
         key={String(index)}
         isActive={currentStyle.has(type.style)}
         label={type.label}
         onToggle={this._toggleInlineStyle}
         style={type.style}
+        className={type.className}
       />
     ));
     return (
-      <ButtonGroup>{buttons}</ButtonGroup>
+      <ButtonGroup key={name}>{buttons}</ButtonGroup>
     );
   }
 
-  _renderLinkButtons(): React.Element {
+  _renderLinkButtons(name: string, toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let selection = editorState.getSelection();
     let entity = this._getEntityAtCursor();
@@ -137,7 +164,7 @@ export default class EditorToolbar extends Component {
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     return (
-      <ButtonGroup>
+      <ButtonGroup key={name}>
         <PopoverIconButton
           label="Link"
           iconName="link"
@@ -147,6 +174,7 @@ export default class EditorToolbar extends Component {
           onSubmit={this._setLink}
         />
         <IconButton
+          {...toolbarConfig.extraProps}
           label="Remove Link"
           iconName="remove-link"
           isDisabled={!isCursorOnLink}
@@ -171,13 +199,14 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderUndoRedo(): React.Element {
+  _renderUndoRedo(name: string, toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let canUndo = editorState.getUndoStack().size !== 0;
     let canRedo = editorState.getRedoStack().size !== 0;
     return (
-      <ButtonGroup>
+      <ButtonGroup key={name}>
         <IconButton
+          {...toolbarConfig.extraProps}
           label="Undo"
           iconName="undo"
           isDisabled={!canUndo}
@@ -185,6 +214,7 @@ export default class EditorToolbar extends Component {
           focusOnClick={false}
         />
         <IconButton
+          {...toolbarConfig.extraProps}
           label="Redo"
           iconName="redo"
           isDisabled={!canRedo}
@@ -198,9 +228,11 @@ export default class EditorToolbar extends Component {
   _onKeypress(event: Object, eventFlags: Object) {
     // Catch cmd+k for use with link insertion.
     if (hasCommandModifier(event) && event.keyCode === 75) {
-      // TODO: Ensure there is some text selected.
-      this.setState({showLinkInput: true});
-      eventFlags.wasHandled = true;
+      let {editorState} = this.props;
+      if (!editorState.getSelection().isCollapsed()) {
+        this.setState({showLinkInput: true});
+        eventFlags.wasHandled = true;
+      }
     }
   }
 

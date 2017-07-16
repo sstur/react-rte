@@ -1,6 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
-import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils} from 'draft-js';
+import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, ContentBlock, Entity} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
@@ -12,17 +12,18 @@ import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
 import ImageDecorator from './lib/ImageDecorator';
+import composite from './lib/composite';
 import cx from 'classnames';
 import autobind from 'class-autobind';
-import {EventEmitter} from 'events';
+import EventEmitter from 'events';
 import {BLOCK_TYPE} from 'draft-js-utils';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import './Draft.global.css';
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './RichTextEditor.css';
 
-import {ContentBlock, Entity} from 'draft-js';
+import type {ContentBlock} from 'draft-js';
+import type {ToolbarConfig} from './lib/EditorToolbarConfig';
+import type {ImportOptions} from './lib/EditorValue';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -46,6 +47,16 @@ type Props = {
   onChange?: ChangeHandler;
   placeholder?: string;
   customStyleMap?: {[style: string]: {[key: string]: any}};
+  handleReturn?: (event: Object) => boolean;
+  readOnly?: boolean;
+  disabled?: boolean; // Alias of readOnly
+  toolbarConfig?: ToolbarConfig;
+  blockStyleFn?: (block: ContentBlock) => ?string;
+  autoFocus?: boolean;
+  keyBindingFn?: (event: Object) => ?string;
+  rootStyle?: Object;
+  editorStyle?: Object;
+  toolbarStyle?: Object;
 };
 
 export default class RichTextEditor extends Component {
@@ -58,8 +69,34 @@ export default class RichTextEditor extends Component {
     autobind(this);
   }
 
-  render(): React.Element {
-    let {value, className, toolbarClassName, editorClassName, placeholder, customStyleMap, ...otherProps} = this.props;
+  componentDidMount() {
+    const {autoFocus} = this.props;
+
+    if (!autoFocus) {
+      return;
+    }
+
+    this._focus();
+  }
+
+  render() {
+    let {
+      value,
+      className,
+      toolbarClassName,
+      editorClassName,
+      placeholder,
+      customStyleMap,
+      readOnly,
+      disabled,
+      toolbarConfig,
+      blockStyleFn,
+      keyBindingFn,
+      rootStyle,
+      toolbarStyle,
+      editorStyle,
+      ...otherProps // eslint-disable-line comma-dangle
+    } = this.props;
     let editorState = value.getEditorState();
     customStyleMap = customStyleMap ? {...styleMap, ...customStyleMap} : styleMap;
 
@@ -69,29 +106,41 @@ export default class RichTextEditor extends Component {
       [styles.editor]: true,
       [styles.hidePlaceholder]: this._shouldHidePlaceholder(),
     }, editorClassName);
-    return (
-      <div className={cx(styles.root, className)}>
+    if (readOnly == null) {
+      readOnly = disabled;
+    }
+    let editorToolbar;
+    if (!readOnly) {
+      editorToolbar = (
         <EditorToolbar
+          rootStyle={toolbarStyle}
           className={toolbarClassName}
           keyEmitter={this._keyEmitter}
           editorState={editorState}
           onChange={this._onChange}
           focusEditor={this._focus}
+          toolbarConfig={toolbarConfig}
         />
-        <div className={combinedEditorClassName}>
+      );
+    }
+    return (
+      <div className={cx(styles.root, className)} style={rootStyle}>
+        {editorToolbar}
+        <div className={combinedEditorClassName} style={editorStyle}>
           <Editor
             {...otherProps}
-            blockStyleFn={getBlockStyle}
+            blockStyleFn={composite(defaultBlockStyleFn, blockStyleFn)}
             customStyleMap={customStyleMap}
             editorState={editorState}
             handleReturn={this._handleReturn}
-            keyBindingFn={this._customKeyHandler}
+            keyBindingFn={keyBindingFn || this._customKeyHandler}
             handleKeyCommand={this._handleKeyCommand}
             onTab={this._onTab}
             onChange={this._onChange}
             placeholder={placeholder}
             ref="editor"
             spellCheck={true}
+            readOnly={readOnly}
           />
         </div>
       </div>
@@ -110,6 +159,10 @@ export default class RichTextEditor extends Component {
   }
 
   _handleReturn(event: Object): boolean {
+    let {handleReturn} = this.props;
+    if (handleReturn != null && handleReturn(event)) {
+      return true;
+    }
     if (this._handleReturnSoftNewline(event)) {
       return true;
     }
@@ -272,7 +325,7 @@ export default class RichTextEditor extends Component {
   }
 }
 
-function getBlockStyle(block: ContentBlock): string {
+function defaultBlockStyleFn(block: ContentBlock): string {
   let result = styles.block;
   switch (block.getType()) {
     case 'unstyled':
@@ -292,8 +345,8 @@ function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);
 }
 
-function createValueFromString(markup: string, format: string): EditorValue {
-  return EditorValue.createFromString(markup, format, decorator);
+function createValueFromString(markup: string, format: string, options?: ImportOptions): EditorValue {
+  return EditorValue.createFromString(markup, format, decorator, options);
 }
 
 // $FlowIssue - This should probably not be done this way.
