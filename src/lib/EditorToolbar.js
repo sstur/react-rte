@@ -78,6 +78,9 @@ export default class EditorToolbar extends Component {
         case 'LINK_BUTTONS': {
           return this._renderLinkButtons(groupName, toolbarConfig);
         }
+        case 'IMAGE_BUTTON': {
+          return this._renderImageButton(groupName, toolbarConfig);
+        }
         case 'BLOCK_TYPE_BUTTONS': {
           return this._renderBlockTypeButtons(groupName, toolbarConfig);
         }
@@ -185,9 +188,9 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderImageButton(): React.Element {
+  _renderImageButton(name: string) {
     return (
-      <ButtonGroup>
+      <ButtonGroup key={name}>
         <PopoverIconButton
           label="Image"
           iconName="image"

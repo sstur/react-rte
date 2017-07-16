@@ -90,7 +90,7 @@ export default class ImageSpan extends Component {
   }
 
   _onClick() {
-    console.log('image click');
+    console.log('image clicked');
   }
 
   _handleResize(event: Object, data: Object) {
