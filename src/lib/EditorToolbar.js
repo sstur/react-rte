@@ -3,7 +3,7 @@ import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {EditorState, Entity, RichUtils} from 'draft-js';
+import {EditorState, Entity, RichUtils, Modifier} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
 import DefaultToolbarConfig from './EditorToolbarConfig';
 import StyleButton from './StyleButton';
@@ -35,6 +35,7 @@ type Props = {
 
 type State = {
   showLinkInput: boolean;
+  showImageInput: boolean;
 };
 
 export default class EditorToolbar extends Component {
@@ -46,6 +47,7 @@ export default class EditorToolbar extends Component {
     autobind(this);
     this.state = {
       showLinkInput: false,
+      showImageInput: false,
     };
   }
 
@@ -86,6 +88,12 @@ export default class EditorToolbar extends Component {
     });
     return (
       <div className={cx(styles.root, className)} style={rootStyle}>
+//         {this._renderInlineStyleButtons()}
+//         {this._renderBlockTypeButtons()}
+//         {this._renderLinkButtons()}
+//         {this._renderImageButton()}
+//         {this._renderBlockTypeDropdown()}
+//         {this._renderUndoRedo()}
         {buttonsGroups}
       </div>
     );
@@ -177,6 +185,20 @@ export default class EditorToolbar extends Component {
     );
   }
 
+  _renderImageButton(): React.Element {
+    return (
+      <ButtonGroup>
+        <PopoverIconButton
+          label="Image"
+          iconName="image"
+          showPopover={this.state.showImageInput}
+          onTogglePopover={this._toggleShowImageInput}
+          onSubmit={this._setImage}
+        />
+      </ButtonGroup>
+    );
+  }
+
   _renderUndoRedo(name: string, toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let canUndo = editorState.getUndoStack().size !== 0;
@@ -233,6 +255,40 @@ export default class EditorToolbar extends Component {
       }
     }
     this.setState({showLinkInput: !isShowing});
+  }
+
+  _toggleShowImageInput(event: ?Object) {
+    let isShowing = this.state.showImageInput;
+    // If this is a hide request, decide if we should focus the editor.
+    if (isShowing) {
+      let shouldFocusEditor = true;
+      if (event && event.type === 'click') {
+        // TODO: Use a better way to get the editor root node.
+        let editorRoot = ReactDOM.findDOMNode(this).parentNode;
+        let {activeElement} = document;
+        let wasClickAway = (activeElement == null || activeElement === document.body);
+        if (!wasClickAway && !editorRoot.contains(activeElement)) {
+          shouldFocusEditor = false;
+        }
+      }
+      if (shouldFocusEditor) {
+        this.props.focusEditor();
+      }
+    }
+    this.setState({showImageInput: !isShowing});
+  }
+
+  _setImage(src: string) {
+    let {editorState} = this.props;
+    let contentState = editorState.getCurrentContent();
+    let selection = editorState.getSelection();
+    let entityKey = Entity.create(ENTITY_TYPE.IMAGE, 'IMMUTABLE', {src});
+    const updatedContent = Modifier.insertText(contentState, selection, ' ', null, entityKey);
+    this.setState({showImageInput: false});
+    this.props.onChange(
+      EditorState.push(editorState, updatedContent)
+    );
+    this._focusEditor();
   }
 
   _setLink(url: string) {
