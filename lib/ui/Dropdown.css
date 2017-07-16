@@ -1,0 +1,94 @@
+.root {
+  display: inline-block;
+  position: relative;
+  line-height: 22px;
+  vertical-align: top;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.root select {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  box-sizing: border-box;
+  height: 30px;
+  line-height: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  border: 4px solid transparent;
+  border-right-width: 10px;
+  border-left-width: 5px;
+  background: none transparent;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.root .value {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 23px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  padding: 3px;
+  padding-right: 33px;
+  padding-left: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.root .value::before,
+.root .value::after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+}
+
+.root .value::before {
+  margin-top: -10px;
+  border-bottom-color: #555;
+}
+
+.root .value::after {
+  margin-top: 1px;
+  border-top-color: #555;
+}
+
+.root select:focus + .value {
+  border-color: #66afe9;
+}
+
+/* On Webkit we can style <select> to be transparant without turning off the
+   default focus styles. This is better for accessibility. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .root select {
+    opacity: 1;
+    color: inherit;
+    -webkit-appearance: none;
+    border-left-width: 12px;
+    border-right-width: 35px;
+  }
+
+  .root select + .value {
+    color: transparent;
+  }
+
+  .root select:focus + .value {
+    border-color: #999;
+  }
+}

@@ -25,6 +25,10 @@ import type {ContentBlock} from 'draft-js';
 import type {ToolbarConfig} from './lib/EditorToolbarConfig';
 import type {ImportOptions} from './lib/EditorValue';
 
+import ButtonGroup from './ui/ButtonGroup';
+import Button from './ui/Button';
+import Dropdown from './ui/Dropdown';
+
 const MAX_LIST_DEPTH = 2;
 
 // Custom overrides for "code" style.
@@ -48,6 +52,7 @@ type Props = {
   placeholder?: string;
   customStyleMap?: {[style: string]: {[key: string]: any}};
   handleReturn?: (event: Object) => boolean;
+  customControls?: Array<Object|() => Object>;
   readOnly?: boolean;
   disabled?: boolean; // Alias of readOnly
   toolbarConfig?: ToolbarConfig;
@@ -91,6 +96,7 @@ export default class RichTextEditor extends Component {
       disabled,
       toolbarConfig,
       blockStyleFn,
+      customControls,
       keyBindingFn,
       rootStyle,
       toolbarStyle,
@@ -120,6 +126,7 @@ export default class RichTextEditor extends Component {
           onChange={this._onChange}
           focusEditor={this._focus}
           toolbarConfig={toolbarConfig}
+          customControls={customControls}
         />
       );
     }
@@ -355,6 +362,17 @@ Object.assign(RichTextEditor, {
   decorator,
   createEmptyValue,
   createValueFromString,
+  ButtonGroup,
+  Button,
+  Dropdown,
 });
 
-export {EditorValue, decorator, createEmptyValue, createValueFromString};
+export {
+  EditorValue,
+  decorator,
+  createEmptyValue,
+  createValueFromString,
+  ButtonGroup,
+  Button,
+  Dropdown,
+};
