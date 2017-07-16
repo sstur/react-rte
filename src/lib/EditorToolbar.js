@@ -3,7 +3,7 @@ import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {EditorState, Entity, RichUtils} from 'draft-js';
+import {EditorState, Entity, RichUtils, Modifier} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
 import DefaultToolbarConfig from './EditorToolbarConfig';
 import StyleButton from './StyleButton';
@@ -36,6 +36,7 @@ type Props = {
 
 type State = {
   showLinkInput: boolean;
+  showImageInput: boolean;
 };
 
 
@@ -48,6 +49,7 @@ export default class EditorToolbar extends Component {
     autobind(this);
     this.state = {
       showLinkInput: false,
+      showImageInput: false,
     };
   }
 
@@ -78,6 +80,9 @@ export default class EditorToolbar extends Component {
         case 'LINK_BUTTONS': {
           return this._renderLinkButtons(groupName, toolbarConfig);
         }
+        case 'IMAGE_BUTTON': {
+          return this._renderImageButton(groupName, toolbarConfig);
+        }
         case 'BLOCK_TYPE_BUTTONS': {
           return this._renderBlockTypeButtons(groupName, toolbarConfig);
         }
@@ -88,6 +93,12 @@ export default class EditorToolbar extends Component {
     });
     return (
       <div className={cx(styles.root, className)} style={rootStyle}>
+//         {this._renderInlineStyleButtons()}
+//         {this._renderBlockTypeButtons()}
+//         {this._renderLinkButtons()}
+//         {this._renderImageButton()}
+//         {this._renderBlockTypeDropdown()}
+//         {this._renderUndoRedo()}
         {buttonsGroups}
         {customControls && customControls.map((f) => {
           switch (typeof f) {
@@ -116,6 +127,7 @@ export default class EditorToolbar extends Component {
     return (
       <ButtonGroup key={name}>
         <Dropdown
+          {...toolbarConfig.extraProps}
           choices={choices}
           selectedKey={blockType}
           onChange={this._selectBlockType}
@@ -128,6 +140,7 @@ export default class EditorToolbar extends Component {
     let blockType = this._getCurrentBlockType();
     let buttons = (toolbarConfig.BLOCK_TYPE_BUTTONS || []).map((type, index) => (
       <StyleButton
+        {...toolbarConfig.extraProps}
         key={String(index)}
         isActive={type.style === blockType}
         label={type.label}
@@ -146,6 +159,7 @@ export default class EditorToolbar extends Component {
     let currentStyle = editorState.getCurrentInlineStyle();
     let buttons = (toolbarConfig.INLINE_STYLE_BUTTONS || []).map((type, index) => (
       <StyleButton
+        {...toolbarConfig.extraProps}
         key={String(index)}
         isActive={currentStyle.has(type.style)}
         label={type.label}
@@ -159,7 +173,7 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderLinkButtons(name: string) {
+  _renderLinkButtons(name: string, toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let selection = editorState.getSelection();
     let entity = this._getEntityAtCursor();
@@ -177,6 +191,7 @@ export default class EditorToolbar extends Component {
           onSubmit={this._setLink}
         />
         <IconButton
+          {...toolbarConfig.extraProps}
           label="Remove Link"
           iconName="remove-link"
           isDisabled={!isCursorOnLink}
@@ -187,13 +202,28 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderUndoRedo(name: string) {
+  _renderImageButton(name: string) {
+    return (
+      <ButtonGroup key={name}>
+        <PopoverIconButton
+          label="Image"
+          iconName="image"
+          showPopover={this.state.showImageInput}
+          onTogglePopover={this._toggleShowImageInput}
+          onSubmit={this._setImage}
+        />
+      </ButtonGroup>
+    );
+  }
+
+  _renderUndoRedo(name: string, toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let canUndo = editorState.getUndoStack().size !== 0;
     let canRedo = editorState.getRedoStack().size !== 0;
     return (
       <ButtonGroup key={name}>
         <IconButton
+          {...toolbarConfig.extraProps}
           label="Undo"
           iconName="undo"
           isDisabled={!canUndo}
@@ -201,6 +231,7 @@ export default class EditorToolbar extends Component {
           focusOnClick={false}
         />
         <IconButton
+          {...toolbarConfig.extraProps}
           label="Redo"
           iconName="redo"
           isDisabled={!canRedo}
@@ -241,6 +272,40 @@ export default class EditorToolbar extends Component {
       }
     }
     this.setState({showLinkInput: !isShowing});
+  }
+
+  _toggleShowImageInput(event: ?Object) {
+    let isShowing = this.state.showImageInput;
+    // If this is a hide request, decide if we should focus the editor.
+    if (isShowing) {
+      let shouldFocusEditor = true;
+      if (event && event.type === 'click') {
+        // TODO: Use a better way to get the editor root node.
+        let editorRoot = ReactDOM.findDOMNode(this).parentNode;
+        let {activeElement} = document;
+        let wasClickAway = (activeElement == null || activeElement === document.body);
+        if (!wasClickAway && !editorRoot.contains(activeElement)) {
+          shouldFocusEditor = false;
+        }
+      }
+      if (shouldFocusEditor) {
+        this.props.focusEditor();
+      }
+    }
+    this.setState({showImageInput: !isShowing});
+  }
+
+  _setImage(src: string) {
+    let {editorState} = this.props;
+    let contentState = editorState.getCurrentContent();
+    let selection = editorState.getSelection();
+    let entityKey = Entity.create(ENTITY_TYPE.IMAGE, 'IMMUTABLE', {src});
+    const updatedContent = Modifier.insertText(contentState, selection, ' ', null, entityKey);
+    this.setState({showImageInput: false});
+    this.props.onChange(
+      EditorState.push(editorState, updatedContent)
+    );
+    this._focusEditor();
   }
 
   _setLink(url: string) {
