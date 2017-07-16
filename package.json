@@ -3,10 +3,14 @@
   "version": "0.12.0",
   "description": "React Rich Text Editor",
   "main": "dist/react-rte.js",
+  "files": [
+    "lib",
+	"dist"
+  ],
   "scripts": {
     "build": "npm run build-lib && npm run build-dist",
     "build-dist": "rimraf dist && webpack",
-    "build-lib": "rimraf lib && babel src --ignore \"_*\" --out-dir lib",
+    "build-lib": "rimraf lib && babel src --ignore \"_*\" --out-dir lib --copy-files",
     "lint": "eslint --max-warnings 0 .",
     "typecheck": "flow",
     "prepublish": "npm run build",

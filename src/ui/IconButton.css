@@ -3,13 +3,15 @@
   padding-right: 3px;
 }
 
-.icon {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 18px;
+:local {
+	.icon {
+	  display: inline-block;
+	  width: 22px;
+	  height: 22px;
+	  background-position: center center;
+	  background-repeat: no-repeat;
+	  background-size: 18px;
+	}
 }
 
 .isActive {
