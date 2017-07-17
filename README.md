@@ -19,6 +19,10 @@ Try the editor here: [react-rte.org/demo][react-rte-demo]
 
 `RichTextEditor` is designed to be used like a `textarea` except that instead of `value` being a string, it is an object with `toString` on it. Creating a `value` from a string is also easy using `createValueFromString(markup, 'html')`.
 
+### Browser Compatibility
+
+The scripts are transpiled by Babel to ES6. Additionally, at least one of this package's dependencies does not support IE. So, for IE and back-plat support you will need to include some polyfill in your HTML (#74, #196, #203): `<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=String.prototype.startsWith,Array.from,Array.prototype.fill,Array.prototype.keys,Array.prototype.findIndex,Number.isInteger&flags=gated"></script>`
+
 ### Example Usage:
 
 This example uses newer JavaScript and JSX. For an example in old JavaScript, [see below](#example-with-es5-and-no-jsx).
