@@ -15,7 +15,7 @@
     "typecheck": "flow",
     "prepublish": "npm run build",
     "start": "webpack-dev-server --content-base assets/",
-    "test": "npm run lint && npm run typecheck && npm run test-src",
+    "test": "npm run lint && npm run test-src",
     "test-src": "mocha \"src/**/__tests__/*.js\""
   },
   "dependencies": {
@@ -30,10 +30,7 @@
     "draft-js-utils": "^0.1.7",
     "immutable": "^3.8.1"
   },
-  "peerDependencies": {
-    "react": "0.14.x || 15.x.x",
-    "react-dom": "0.14.x || 15.x.x"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
@@ -55,7 +52,7 @@
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^15.0.2",
     "rimraf": "^2.5.4",
-    "style-loader": "^0.13.1",
+    "style-loader": "^0.18.2",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   },
