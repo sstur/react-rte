@@ -15,7 +15,7 @@
     "typecheck": "flow",
     "prepublish": "npm run build",
     "start": "webpack-dev-server --content-base assets/",
-    "test": "npm run lint && npm run typecheck && npm run test-src", 
+    "test": "npm run lint && npm run typecheck && npm run test-src",
     "test-src": "mocha \"src/**/__tests__/*.js\""
   },
   "dependencies": {
