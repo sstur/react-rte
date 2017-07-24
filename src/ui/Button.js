@@ -27,12 +27,12 @@ export default class Button extends Component {
 
   render() {
     let {props} = this;
-    let {className, isDisabled, focusOnClick, formSubmit, ...otherProps} = props;
+    let {className, isDisabled, focusOnClick, formSubmit} = props;
     className = cx(className, styles.root);
     let onMouseDown = (focusOnClick === false) ? this._onMouseDownPreventDefault : props.onMouseDown;
     let type = formSubmit ? 'submit' : 'button';
     return (
-      <button type={type} {...otherProps} onMouseDown={onMouseDown} className={className} disabled={isDisabled}>
+      <button type={type} onMouseDown={onMouseDown} className={className} disabled={isDisabled}>
         {props.children}
       </button>
     );
