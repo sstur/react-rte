@@ -10,7 +10,11 @@
     "node": true
   },
   "globals": {
-    "Map": false
+    "Map": false,
+    "Set": false,
+    // Flow globals
+    "ReactElement": false,
+    "ReactNode": false
   },
   "rules": {
     "no-cond-assign": 1,                  // disallow assignment in conditional expressions

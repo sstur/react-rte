@@ -1,4 +1,4 @@
-@import "/assets/css/normalize.css";
+@import "/css/normalize.css";
 
 html {
   height: 100%;
@@ -58,7 +58,7 @@ a {
 }
 
 .editor-demo {
-  width: 540px;
+  width: 560px;
   margin: 10px auto;
 }
 

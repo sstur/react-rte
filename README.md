@@ -8,7 +8,7 @@ This is a UI component built completely in React that is meant to be a full-feat
 
 Try the editor here: [react-rte.org/demo][react-rte-demo]
 
-[![Screenshot 1](https://dl.dropboxusercontent.com/u/341900/images/2016-03-08-073550.png)][react-rte-demo]
+[![Screenshot 1](https://ucassets.blob.core.windows.net/uploads/rte.png)][react-rte-demo]
 
 
 ## Getting Started
@@ -18,6 +18,28 @@ Try the editor here: [react-rte.org/demo][react-rte-demo]
 `RichTextEditor` is the main editor component. It is comprised of the Draft.js `<Editor>`, some UI components (e.g. toolbar) and some helpful abstractions around getting and setting content with HTML/Markdown.
 
 `RichTextEditor` is designed to be used like a `textarea` except that instead of `value` being a string, it is an object with `toString` on it. Creating a `value` from a string is also easy using `createValueFromString(markup, 'html')`.
+
+### Browser Compatibility
+
+The scripts are transpiled by Babel to ES6. Additionally, at least one of this package's dependencies does not support IE. So, for IE and back-plat support you will need to include some polyfill in your HTML (#74, #196, #203): `<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=String.prototype.startsWith,Array.from,Array.prototype.fill,Array.prototype.keys,Array.prototype.findIndex,Number.isInteger&flags=gated"></script>`
+
+### Required Webpack configuration
+
+If you are not using Webpack, you can skip this section. Webpack is required for isomorphic/server-side rendering support in a Node.js environment.
+
+`'react-rte'` contains a bundle that is already built (with CSS) using webpack and is not intended to be consumed again by webpack. So, if you are using webpack you must import RichTextEditor from `react-rte/lib/RichTextEditor` in order to get the un-bundled script which webpack can bundle with your app.
+
+If you are using webpack you must add a css loader or else your webpack build will fail. For example:
+
+```js
+  {
+    test: /\.css$/,
+    loaders: [
+      'style-loader',
+      'css-loader?modules'
+    ]
+  },
+```
 
 ### Example Usage:
 
@@ -59,6 +81,40 @@ class MyStatefulEditor extends Component {
 }
 ```
 
+### Toolbar Customization
+
+```javascript
+
+render() {
+  // The toolbarConfig object allows you to specify custom buttons, reorder buttons and to add custom css classes.
+  // Supported inline styles: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Inline-Styles.md
+  // Supported block types: https://github.com/facebook/draft-js/blob/master/docs/Advanced-Topics-Custom-Block-Render.md#draft-default-block-render-map
+  const toolbarConfig = {
+    // Optionally specify the groups to display (displayed in the order listed).
+    display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
+    INLINE_STYLE_BUTTONS: [
+      {label: 'Bold', style: 'BOLD', className: 'custom-css-class'},
+      {label: 'Italic', style: 'ITALIC'},
+      {label: 'Underline', style: 'UNDERLINE'}
+    ],
+    BLOCK_TYPE_DROPDOWN: [
+      {label: 'Normal', style: 'unstyled'},
+      {label: 'Heading Large', style: 'header-one'},
+      {label: 'Heading Medium', style: 'header-two'},
+      {label: 'Heading Small', style: 'header-three'}
+    ],
+    BLOCK_TYPE_BUTTONS: [
+      {label: 'UL', style: 'unordered-list-item'},
+      {label: 'OL', style: 'ordered-list-item'}
+    ]
+  };
+  return (
+    <RichTextEditor toolbarConfig={toolbarConfig} />
+  );
+}
+
+```
+
 ## Motivation
 
 In short, this is a 2016 approach to rich text editing built on modern, battle-hardened components and, importantly, we do not store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
@@ -92,6 +148,10 @@ In this editor we use a pure, deterministic function to convert document state t
 
 ### Other Props
   All the props you can pass to Draft.js `Editor` can be passed to `RichTextEditor` (with the exception of `editorState` which will be generated internally based on the `value` prop).
+
+  * `autoFocus`: Setting this to true will automatically focus input into the editor when the component is mounted
+  * `placeholder`: A string to use as placeholder text for the `RichTextEditor`.
+  * `readOnly`: A boolean that determines if the `RichTextEditor` should render static html.
 
 ### EditorValue Class
 In Draft.js `EditorState` contains not only the document contents but the entire state of the editor including cursor position and selection. This is helpful for many reasons including undo/redo. To make things easier for you, we have wrapped the state of the editor in an `EditorValue` instance with helpful methods to convert to/from a HTML or Markdown. An instance of this class should be passed to `RichTextEditor` in the `value` prop.
@@ -142,7 +202,6 @@ React.createClass({
 
  - Support images
  - Better test coverage
- - Allow toolbar customization using props
  - Documentation for using this editor in your projects
  - Fix some issues with Markdown parsing (migrate to `remark` parser)
  - Internationalization
@@ -153,8 +212,6 @@ React.createClass({
 Currently the biggest limitation is that images are not supported. There is a plan to support inline images (using decorators) and eventually Medium-style block-level images (using a custom block renderer).
 
 Other limitations include missing features such as: text-alignment and text color. These are coming soon.
-
-Currently the UI (toolbar and link dialog, etc) is not very customizable. We plan to accept props for theming the UI as well as customizing which toolbar items are shown.
 
 React prior v15 will log the following superfluous warning:
 
@@ -184,7 +241,7 @@ Clone this project. Run `npm install`. Run `npm run build-dist` then point the s
 
 ## License
 
-This software is [BSD Licensed](/LICENSE).
+This software is [ISC Licensed](/LICENSE).
 
 
 [ckeditor]: http://ckeditor.com/

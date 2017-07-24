@@ -5,9 +5,6 @@ import {ENTITY_TYPE} from 'draft-js-utils';
 
 import type {ContentBlock} from 'draft-js';
 
-// TODO: Use a more specific type here.
-type ReactNode = any;
-
 type Props = {
   children: ReactNode,
   entityKey: string,
@@ -15,10 +12,10 @@ type Props = {
 
 type EntityRangeCallback = (start: number, end: number) => void;
 
-function Link(props_: Props): React.Element {
-  const {url} = Entity.get(props_.entityKey).getData();
+function Link(props: Props) {
+  const {url} = Entity.get(props.entityKey).getData();
   return (
-    <a href={url}>{props_.children}</a>
+    <a href={url}>{props.children}</a>
   );
 }
 

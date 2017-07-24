@@ -5,11 +5,7 @@ import cx from 'classnames';
 import Button from './Button';
 import ButtonWrap from './ButtonWrap';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './IconButton.css';
-
-// TODO: Use a more specific type here.
-type ReactNode = any;
 
 type Props = {
   iconName: string;
@@ -22,12 +18,12 @@ type Props = {
 export default class IconButton extends Component {
   props: Props;
 
-  render(): React.Element {
+  render() {
     let {props} = this;
-    let {className, iconName, label, children, ...otherProps} = props;
+    let {className, iconName, label, children, isActive, ...otherProps} = props;
     className = cx(className, {
       [styles.root]: true,
-      [styles.isActive]: props.isActive,
+      [styles.isActive]: isActive,
     });
     return (
       <ButtonWrap>

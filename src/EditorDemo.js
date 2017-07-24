@@ -4,12 +4,17 @@ import RichTextEditor, {createEmptyValue} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
+import ButtonGroup from './ui/ButtonGroup';
+import Dropdown from './ui/Dropdown';
+import IconButton from './ui/IconButton';
+
 import type {EditorValue} from './RichTextEditor';
 
 type Props = {};
 type State = {
   value: EditorValue;
   format: string;
+  readOnly: boolean;
 };
 
 export default class EditorDemo extends Component {
@@ -22,10 +27,11 @@ export default class EditorDemo extends Component {
     this.state = {
       value: createEmptyValue(),
       format: 'html',
+      readOnly: false,
     };
   }
 
-  render(): React.Element {
+  render() {
     let {value, format} = this.state;
 
     return (
@@ -41,6 +47,35 @@ export default class EditorDemo extends Component {
             placeholder="Tell a story"
             toolbarClassName="demo-toolbar"
             editorClassName="demo-editor"
+            readOnly={this.state.readOnly}
+            customControls={[
+              (handleChange, getValue, editorState) => { // eslint-disable-line
+                let choices = new Map(
+                  [
+                    {value: '1', label: 1},
+                    {value: '2', label: 2},
+                    {value: '3', label: 3},
+                  ].map((choice) => [choice.value, {label: choice.label}])
+                );
+                return (
+                  <ButtonGroup key={1}>
+                    <Dropdown
+                      choices={choices}
+                      selectedKey={getValue('some-state')}
+                      onChange={(val) => handleChange('some-state', val)}
+                    />
+                  </ButtonGroup>
+                );
+              },
+              <ButtonGroup key={2}>
+                <IconButton
+                  label="Remove Link"
+                  iconName="remove-link"
+                  focusOnClick={false}
+                  onClick={() => alert('You pressed a button')} // eslint-disable-line
+                />
+              </ButtonGroup>,
+            ]}
           />
         </div>
         <div className="row">
@@ -63,6 +98,14 @@ export default class EditorDemo extends Component {
               onChange={this._onChangeFormat}
             />
             <span>Markdown</span>
+          </label>
+          <label className="radio-item">
+            <input
+              type="checkbox"
+              onChange={this._onChangeReadOnly}
+              checked={this.state.readOnly}
+            />
+            <span>Editor is read-only</span>
           </label>
         </div>
         <div className="row">
@@ -109,5 +152,9 @@ export default class EditorDemo extends Component {
 
   _onChangeFormat(event: Object) {
     this.setState({format: event.target.value});
+  }
+
+  _onChangeReadOnly(event: Object) {
+    this.setState({readOnly: event.target.checked});
   }
 }

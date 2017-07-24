@@ -3,11 +3,15 @@ import React, {Component} from 'react';
 import autobind from 'class-autobind';
 import cx from 'classnames';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './Dropdown.css';
 
+type Choice = {
+  label: string;
+  className?: string;
+};
+
 type Props = {
-  choices: Map<string, string>;
+  choices: Map<string, Choice>;
   selectedKey: ?string;
   onChange: (selectedKey: string) => any;
   className?: string;
@@ -21,10 +25,11 @@ export default class Dropdown extends Component {
     autobind(this);
   }
 
-  render(): React.Element {
+  render() {
     let {choices, selectedKey, className, ...otherProps} = this.props;
     className = cx(className, styles.root);
-    let selectedValue = (selectedKey == null) ? '' : choices.get(selectedKey);
+    let selectedItem = (selectedKey == null) ? null : choices.get(selectedKey);
+    let selectedValue = selectedItem && selectedItem.label || '';
     return (
       <span className={className} title={selectedValue}>
         <select {...otherProps} value={selectedKey} onChange={this._onChange}>
@@ -40,11 +45,11 @@ export default class Dropdown extends Component {
     this.props.onChange(value);
   }
 
-  _renderChoices(): Array<React.Element> {
+  _renderChoices() {
     let {choices} = this.props;
     let entries = Array.from(choices.entries());
-    return entries.map(([key, text]) => (
-      <option key={key} value={key}>{text}</option>
+    return entries.map(([key, {label, className}]) => (
+      <option key={key} value={key} className={className}>{label}</option>
     ));
   }
 }

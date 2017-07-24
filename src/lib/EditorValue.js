@@ -1,11 +1,14 @@
 /* @flow */
-import {ContentState, EditorState} from 'draft-js';
+import {ContentState, EditorState, convertToRaw, convertFromRaw} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
 import {stateFromHTML} from 'draft-js-import-html';
 import {stateToMarkdown} from 'draft-js-export-markdown';
 import {stateFromMarkdown} from 'draft-js-import-markdown';
 
 import type {DraftDecoratorType as Decorator} from 'draft-js/lib/DraftDecoratorType';
+import type {Options as ImportOptions} from 'draft-js-import-html';
+import type {Options as ExportOptions} from 'draft-js-export-html';
+export type {ImportOptions, ExportOptions};
 
 type StringMap = {[key: string]: string};
 
@@ -28,18 +31,18 @@ export default class EditorValue {
       new EditorValue(editorState);
   }
 
-  toString(format: string): string {
+  toString(format: string, options?: ExportOptions): string {
     let fromCache = this._cache[format];
     if (fromCache != null) {
       return fromCache;
     }
-    return (this._cache[format] = toString(this.getEditorState(), format));
+    return (this._cache[format] = toString(this.getEditorState(), format, options));
   }
 
-  setContentFromString(markup: string, format: string): EditorValue {
+  setContentFromString(markup: string, format: string, options?: ImportOptions): EditorValue {
     let editorState = EditorState.push(
       this._editorState,
-      fromString(markup, format),
+      fromString(markup, format, options),
       'secondary-paste'
     );
     return new EditorValue(editorState, {[format]: markup});
@@ -54,21 +57,24 @@ export default class EditorValue {
     return new EditorValue(editorState);
   }
 
-  static createFromString(markup: string, format: string, decorator: ?Decorator): EditorValue {
-    let contentState = fromString(markup, format);
+  static createFromString(markup: string, format: string, decorator: ?Decorator, options?: ImportOptions): EditorValue {
+    let contentState = fromString(markup, format, options);
     let editorState = EditorState.createWithContent(contentState, decorator);
     return new EditorValue(editorState, {[format]: markup});
   }
 }
 
-function toString(editorState: EditorState, format: string): string {
+function toString(editorState: EditorState, format: string, options?: ExportOptions): string {
   let contentState = editorState.getCurrentContent();
   switch (format) {
     case 'html': {
-      return stateToHTML(contentState);
+      return stateToHTML(contentState, options);
     }
     case 'markdown': {
       return stateToMarkdown(contentState);
+    }
+    case 'raw': {
+      return JSON.stringify(convertToRaw(contentState));
     }
     default: {
       throw new Error('Format not supported: ' + format);
@@ -76,13 +82,16 @@ function toString(editorState: EditorState, format: string): string {
   }
 }
 
-function fromString(markup: string, format: string): ContentState {
+function fromString(markup: string, format: string, options?: ImportOptions): ContentState {
   switch (format) {
     case 'html': {
-      return stateFromHTML(markup);
+      return stateFromHTML(markup, options);
     }
     case 'markdown': {
       return stateFromMarkdown(markup);
+    }
+    case 'raw': {
+      return convertFromRaw(JSON.parse(markup));
     }
     default: {
       throw new Error('Format not supported: ' + format);

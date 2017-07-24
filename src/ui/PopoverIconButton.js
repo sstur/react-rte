@@ -20,10 +20,10 @@ export default class PopoverIconButton extends Component {
     autobind(this);
   }
 
-  render(): React.Element {
-    let {props} = this;
+  render() {
+    let {onTogglePopover, showPopover, ...props} = this.props; // eslint-disable-line no-unused-vars
     return (
-      <IconButton {...props} onClick={this.props.onTogglePopover}>
+      <IconButton {...props} onClick={onTogglePopover}>
         {this._renderPopover()}
       </IconButton>
     );

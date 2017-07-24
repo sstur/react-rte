@@ -1,26 +1,32 @@
 /* @flow */
 import React, {Component} from 'react';
-import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils} from 'draft-js';
+import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, ContentBlock, Entity} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
+import getBlocksInSelection from './lib/getBlocksInSelection';
 import insertBlockAfter from './lib/insertBlockAfter';
 import isListItem from './lib/isListItem';
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
+import ImageDecorator from './lib/ImageDecorator';
+import composite from './lib/composite';
 import cx from 'classnames';
 import autobind from 'class-autobind';
-import {EventEmitter} from 'events';
+import EventEmitter from 'events';
 import {BLOCK_TYPE} from 'draft-js-utils';
 
-// $FlowIssue - Flow doesn't understand CSS Modules
 import './Draft.global.css';
-// $FlowIssue - Flow doesn't understand CSS Modules
 import styles from './RichTextEditor.css';
 
-import type {ContentBlock} from 'draft-js';
+import type {ToolbarConfig} from './lib/EditorToolbarConfig';
+import type {ImportOptions} from './lib/EditorValue';
+
+import ButtonGroup from './ui/ButtonGroup';
+import Button from './ui/Button';
+import Dropdown from './ui/Dropdown';
 
 const MAX_LIST_DEPTH = 2;
 
@@ -44,6 +50,17 @@ type Props = {
   onChange?: ChangeHandler;
   placeholder?: string;
   customStyleMap?: {[style: string]: {[key: string]: any}};
+  handleReturn?: (event: Object) => boolean;
+  customControls?: Array<Object|() => Object>;
+  readOnly?: boolean;
+  disabled?: boolean; // Alias of readOnly
+  toolbarConfig?: ToolbarConfig;
+  blockStyleFn?: (block: ContentBlock) => ?string;
+  autoFocus?: boolean;
+  keyBindingFn?: (event: Object) => ?string;
+  rootStyle?: Object;
+  editorStyle?: Object;
+  toolbarStyle?: Object;
 };
 
 export default class RichTextEditor extends Component {
@@ -56,8 +73,35 @@ export default class RichTextEditor extends Component {
     autobind(this);
   }
 
-  render(): React.Element {
-    let {value, className, toolbarClassName, editorClassName, placeholder, customStyleMap, ...otherProps} = this.props;
+  componentDidMount() {
+    const {autoFocus} = this.props;
+
+    if (!autoFocus) {
+      return;
+    }
+
+    this._focus();
+  }
+
+  render() {
+    let {
+      value,
+      className,
+      toolbarClassName,
+      editorClassName,
+      placeholder,
+      customStyleMap,
+      readOnly,
+      disabled,
+      toolbarConfig,
+      blockStyleFn,
+      customControls,
+      keyBindingFn,
+      rootStyle,
+      toolbarStyle,
+      editorStyle,
+      ...otherProps // eslint-disable-line comma-dangle
+    } = this.props;
     let editorState = value.getEditorState();
     customStyleMap = customStyleMap ? {...styleMap, ...customStyleMap} : styleMap;
 
@@ -67,29 +111,42 @@ export default class RichTextEditor extends Component {
       [styles.editor]: true,
       [styles.hidePlaceholder]: this._shouldHidePlaceholder(),
     }, editorClassName);
-    return (
-      <div className={cx(styles.root, className)}>
+    if (readOnly == null) {
+      readOnly = disabled;
+    }
+    let editorToolbar;
+    if (!readOnly) {
+      editorToolbar = (
         <EditorToolbar
+          rootStyle={toolbarStyle}
           className={toolbarClassName}
           keyEmitter={this._keyEmitter}
           editorState={editorState}
           onChange={this._onChange}
           focusEditor={this._focus}
+          toolbarConfig={toolbarConfig}
+          customControls={customControls}
         />
-        <div className={combinedEditorClassName}>
+      );
+    }
+    return (
+      <div className={cx(styles.root, className)} style={rootStyle}>
+        {editorToolbar}
+        <div className={combinedEditorClassName} style={editorStyle}>
           <Editor
             {...otherProps}
-            blockStyleFn={getBlockStyle}
+            blockStyleFn={composite(defaultBlockStyleFn, blockStyleFn)}
             customStyleMap={customStyleMap}
             editorState={editorState}
             handleReturn={this._handleReturn}
-            keyBindingFn={this._customKeyHandler}
+            keyBindingFn={keyBindingFn || this._customKeyHandler}
             handleKeyCommand={this._handleKeyCommand}
             onTab={this._onTab}
             onChange={this._onChange}
             placeholder={placeholder}
             ref="editor"
             spellCheck={true}
+            readOnly={readOnly}
           />
         </div>
       </div>
@@ -108,6 +165,10 @@ export default class RichTextEditor extends Component {
   }
 
   _handleReturn(event: Object): boolean {
+    let {handleReturn} = this.props;
+    if (handleReturn != null && handleReturn(event)) {
+      return true;
+    }
     if (this._handleReturnSoftNewline(event)) {
       return true;
     }
@@ -226,10 +287,43 @@ export default class RichTextEditor extends Component {
 
   _onChange(editorState: EditorState) {
     let {onChange, value} = this.props;
-    if (onChange != null) {
-      let newValue = value.setEditorState(editorState);
-      onChange(newValue);
+    if (onChange == null) {
+      return;
     }
+    let newValue = value.setEditorState(editorState);
+    let newEditorState = newValue.getEditorState();
+    this._handleInlineImageSelection(newEditorState);
+    onChange(newValue);
+  }
+
+  _handleInlineImageSelection(editorState: EditorState) {
+    let selection = editorState.getSelection();
+    let blocks = getBlocksInSelection(editorState);
+
+    const selectImage = (block, offset) => {
+      const imageKey = block.getEntityAt(offset);
+      Entity.mergeData(imageKey, {selected: true});
+    };
+
+    let isInMiddleBlock = (index) => index > 0 && index < blocks.size - 1;
+    let isWithinStartBlockSelection = (offset, index) => (
+      index === 0 && offset > selection.getStartOffset()
+    );
+    let isWithinEndBlockSelection = (offset, index) => (
+      index === blocks.size - 1 && offset < selection.getEndOffset()
+    );
+
+    blocks.toIndexedSeq().forEach((block, index) => {
+      ImageDecorator.strategy(
+        block,
+        (offset) => {
+          if (isWithinStartBlockSelection(offset, index) ||
+              isInMiddleBlock(index) ||
+              isWithinEndBlockSelection(offset, index)) {
+            selectImage(block, offset);
+          }
+        });
+    });
   }
 
   _focus() {
@@ -237,7 +331,7 @@ export default class RichTextEditor extends Component {
   }
 }
 
-function getBlockStyle(block: ContentBlock): string {
+function defaultBlockStyleFn(block: ContentBlock): string {
   let result = styles.block;
   switch (block.getType()) {
     case 'unstyled':
@@ -251,14 +345,14 @@ function getBlockStyle(block: ContentBlock): string {
   }
 }
 
-const decorator = new CompositeDecorator([LinkDecorator]);
+const decorator = new CompositeDecorator([LinkDecorator, ImageDecorator]);
 
 function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);
 }
 
-function createValueFromString(markup: string, format: string): EditorValue {
-  return EditorValue.createFromString(markup, format, decorator);
+function createValueFromString(markup: string, format: string, options?: ImportOptions): EditorValue {
+  return EditorValue.createFromString(markup, format, decorator, options);
 }
 
 // $FlowIssue - This should probably not be done this way.
@@ -267,6 +361,17 @@ Object.assign(RichTextEditor, {
   decorator,
   createEmptyValue,
   createValueFromString,
+  ButtonGroup,
+  Button,
+  Dropdown,
 });
 
-export {EditorValue, decorator, createEmptyValue, createValueFromString};
+export {
+  EditorValue,
+  decorator,
+  createEmptyValue,
+  createValueFromString,
+  ButtonGroup,
+  Button,
+  Dropdown,
+};

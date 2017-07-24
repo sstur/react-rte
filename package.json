@@ -1,27 +1,33 @@
 {
   "name": "react-rte",
-  "version": "0.3.1",
+  "version": "0.12.0",
   "description": "React Rich Text Editor",
   "main": "dist/react-rte.js",
+  "files": [
+    "lib",
+    "dist"
+  ],
   "scripts": {
     "build": "npm run build-lib && npm run build-dist",
     "build-dist": "rimraf dist && webpack",
-    "build-lib": "rimraf lib && babel src --ignore '_*' --out-dir lib",
+    "build-lib": "rimraf lib && babel src --ignore \"_*\" --out-dir lib --copy-files",
     "lint": "eslint --max-warnings 0 .",
     "typecheck": "flow",
     "prepublish": "npm run build",
+    "start": "webpack-dev-server --content-base assets/",
     "test": "npm run lint && npm run typecheck && npm run test-src",
-    "test-src": "mocha src/__tests__/*.js src/**/__tests__/*.js"
+    "test-src": "mocha \"src/**/__tests__/*.js\""
   },
   "dependencies": {
-    "class-autobind": "^0.1.2",
+    "babel-runtime": "^6.23.0",
+    "class-autobind": "^0.1.4",
     "classnames": "^2.2.5",
-    "draft-js": "^0.7.0",
-    "draft-js-export-html": "^0.2.2",
-    "draft-js-export-markdown": "^0.2.0",
-    "draft-js-import-html": "^0.1.10",
-    "draft-js-import-markdown": "^0.1.6",
-    "draft-js-utils": "^0.1.5",
+    "draft-js": "^0.10.0",
+    "draft-js-export-html": "^0.5.4",
+    "draft-js-export-markdown": "^0.2.2",
+    "draft-js-import-html": "^0.3.2",
+    "draft-js-import-markdown": "^0.2.1",
+    "draft-js-utils": "^0.1.7",
     "immutable": "^3.8.1"
   },
   "peerDependencies": {
@@ -29,28 +35,29 @@
     "react-dom": "0.14.x || 15.x.x"
   },
   "devDependencies": {
-    "babel-cli": "^6.9.0",
-    "babel-core": "^6.9.0",
-    "babel-eslint": "^6.0.4",
-    "babel-loader": "^6.2.3",
-    "babel-plugin-transform-class-properties": "^6.9.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.5.0",
-    "babel-preset-stage-2": "^6.5.0",
-    "css-loader": "^0.23.1",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.0",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-2": "^6.18.0",
+    "css-loader": "^0.25.0",
     "css-modules-require-hook": "^4.0.0",
-    "eslint": "^2.10.2",
-    "eslint-plugin-babel": "^3.2.0",
-    "eslint-plugin-flow-vars": "^0.4.0",
-    "eslint-plugin-react": "^5.1.1",
-    "expect": "^1.20.1",
-    "flow-bin": "^0.25.0",
-    "mocha": "^2.4.5",
+    "eslint": "^3.9.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-flow-vars": "^0.5.0",
+    "eslint-plugin-react": "^6.5.0",
+    "expect": "^1.20.2",
+    "flow-bin": "^0.32.0",
+    "mocha": "^3.1.2",
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^15.0.2",
-    "rimraf": "^2.5.2",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.1"
+    "rimraf": "^2.5.4",
+    "style-loader": "^0.18.2",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
   },
   "repository": {
     "type": "git",
@@ -71,16 +78,56 @@
       "url": "https://github.com/amcintyre-cs"
     },
     {
+      "name": "André Schmidt",
+      "url": "https://github.com/andschdk"
+    },
+    {
       "name": "Harris Brakmic",
       "url": "https://github.com/brakmic"
+    },
+    {
+      "name": "Forbes Lindesay",
+      "url": "https://github.com/ForbesLindesay"
+    },
+    {
+      "name": "Kristopher Craw",
+      "url": "https://github.com/KCraw"
+    },
+    {
+      "name": "Rory Hunter",
+      "url": "https://github.com/pugnascotia"
+    },
+    {
+      "name": "Ralph Schindler",
+      "url": "https://github.com/ralphschindler"
+    },
+    {
+      "name": "RaoHai",
+      "url": "https://github.com/RaoHai"
     },
     {
       "name": "Jordan Kohl",
       "url": "https://github.com/simpixelated"
     },
     {
+      "name": "Steffen Kolmer",
+      "url": "https://github.com/skolmer"
+    },
+    {
       "name": "Simon Sturmer",
       "url": "https://github.com/sstur"
+    },
+    {
+      "name": "Waldir Pimenta",
+      "url": "https://github.com/waldyrious"
+    },
+    {
+      "name": "Zach Silveira",
+      "url": "https://github.com/zackify"
+    },
+    {
+      "name": "Hyunyoung Cho",
+      "url": "https://github.com/ZeroCho"
     }
   ],
   "license": "ISC",
