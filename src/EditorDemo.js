@@ -55,7 +55,7 @@ export default class EditorDemo extends Component {
                     {value: '1', label: 1},
                     {value: '2', label: 2},
                     {value: '3', label: 3},
-                  ].map((choice) => [choice.value, {label: choice.label}])
+                  ].map((choice) => [choice.value, {label: choice.label.toString()}])
                 );
                 return (
                   <ButtonGroup key={1}>
