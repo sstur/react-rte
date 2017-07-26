@@ -19,7 +19,7 @@ import cx from 'classnames';
 import styles from './EditorToolbar.css';
 
 import type EventEmitter from 'events';
-import type {ToolbarConfig} from './EditorToolbarConfig';
+import type {ToolbarConfig, CustomControl} from './EditorToolbarConfig';
 
 type ChangeHandler = (state: EditorState) => any;
 
@@ -30,13 +30,14 @@ type Props = {
   onChange: ChangeHandler;
   focusEditor: Function;
   toolbarConfig: ToolbarConfig;
-  customControls: Array<Object>;
+  customControls: Array<CustomControl>;
   rootStyle?: Object;
 };
 
 type State = {
   showLinkInput: boolean;
   showImageInput: boolean;
+  customControlState: {[key: string]: string};
 };
 
 
@@ -50,6 +51,7 @@ export default class EditorToolbar extends Component {
     this.state = {
       showLinkInput: false,
       showImageInput: false,
+      customControlState: {},
     };
   }
 
@@ -64,12 +66,12 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    let {className, toolbarConfig, rootStyle, customControls, editorState} = this.props;
+    let {className, toolbarConfig, rootStyle} = this.props;
     if (toolbarConfig == null) {
       toolbarConfig = DefaultToolbarConfig;
     }
     let display = toolbarConfig.display || DefaultToolbarConfig.display;
-    let buttonsGroups = display.map((groupName) => {
+    let buttonGroups = display.map((groupName) => {
       switch (groupName) {
         case 'INLINE_STYLE_BUTTONS': {
           return this._renderInlineStyleButtons(groupName, toolbarConfig);
@@ -93,27 +95,41 @@ export default class EditorToolbar extends Component {
     });
     return (
       <div className={cx(styles.root, className)} style={rootStyle}>
-        {/*{this._renderInlineStyleButtons()}*/}
-        {/*{this._renderBlockTypeButtons()}*/}
-        {/*{this._renderLinkButtons()}*/}
-        {/*{this._renderImageButton()}*/}
-        {/*{this._renderBlockTypeDropdown()}*/}
-        {/*{this._renderUndoRedo()}*/}
-        {buttonsGroups}
-        {customControls && customControls.map((f) => {
-          switch (typeof f) {
-            case 'function':
-              return f(
-                (key, value) => this.setState({['customControl' + key]: value}),
-                (key) => this.state['customControl' + key],
-                editorState
-              );
-            default:
-              return f;
-          }
-        })}
+        {buttonGroups}
+        {this._renderCustomControls()}
       </div>
     );
+  }
+
+  _renderCustomControls() {
+    let {customControls, editorState} = this.props;
+    if (customControls == null) {
+      return;
+    }
+    customControls.map((f) => {
+      switch (typeof f) {
+        case 'function': {
+          return f(
+            this._setCustomControlState,
+            this._getCustomControlState,
+            editorState
+          );
+        }
+        default: {
+          return f;
+        }
+      }
+    });
+  }
+
+  _setCustomControlState(key: string, value: string) {
+    this.setState(({customControlState}) => ({
+      customControlState: {...customControlState, [key]: value},
+    }));
+  }
+
+  _getCustomControlState(key: string) {
+    return this.state.customControlState[key];
   }
 
   _renderBlockTypeDropdown(name: string, toolbarConfig: ToolbarConfig) {

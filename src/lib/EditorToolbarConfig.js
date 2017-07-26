@@ -1,10 +1,17 @@
 /* @flow */
+import type {EditorState} from 'draft-js';
 
 export type StyleConfig = {
   label: string;
   style: string;
   className?: string;
 };
+
+type GetControlState = (key: string) => ?string;
+type SetControlState = (key: string, value: string) => void;
+
+export type CustomControl = ReactNode | (set: SetControlState, get: GetControlState, state: EditorState) => ReactNode;
+export type CustomControlList = Array<CustomControl>;
 
 export type StyleConfigList = Array<StyleConfig>;
 

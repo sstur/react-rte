@@ -49,20 +49,19 @@ export default class EditorDemo extends Component {
             editorClassName="demo-editor"
             readOnly={this.state.readOnly}
             customControls={[
-              (handleChange, getValue, editorState) => { // eslint-disable-line
-                let choices = new Map(
-                  [
-                    {value: '1', label: 1},
-                    {value: '2', label: 2},
-                    {value: '3', label: 3},
-                  ].map((choice) => [choice.value, {label: choice.label.toString()}])
-                );
+              // eslint-disable-next-line no-unused-vars
+              (setValue, getValue, editorState) => {
+                let choices = new Map([
+                  ['1', {label: '1'}],
+                  ['2', {label: '2'}],
+                  ['3', {label: '3'}],
+                ]);
                 return (
                   <ButtonGroup key={1}>
                     <Dropdown
                       choices={choices}
-                      selectedKey={getValue('some-state')}
-                      onChange={(val) => handleChange('some-state', val)}
+                      selectedKey={getValue('my-control-name')}
+                      onChange={(value) => setValue('my-control-name', value)}
                     />
                   </ButtonGroup>
                 );
@@ -72,7 +71,7 @@ export default class EditorDemo extends Component {
                   label="Remove Link"
                   iconName="remove-link"
                   focusOnClick={false}
-                  onClick={() => alert('You pressed a button')} // eslint-disable-line
+                  onClick={() => console.log('You pressed a button')}
                 />
               </ButtonGroup>,
             ]}

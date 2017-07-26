@@ -22,7 +22,7 @@ import './Draft.global.css';
 import styles from './RichTextEditor.css';
 
 import type {ContentBlock} from 'draft-js';
-import type {ToolbarConfig} from './lib/EditorToolbarConfig';
+import type {ToolbarConfig, CustomControl} from './lib/EditorToolbarConfig';
 import type {ImportOptions} from './lib/EditorValue';
 
 import ButtonGroup from './ui/ButtonGroup';
@@ -52,7 +52,7 @@ type Props = {
   placeholder?: string;
   customStyleMap?: {[style: string]: {[key: string]: any}};
   handleReturn?: (event: Object) => boolean;
-  customControls?: Array<Object|() => Object>;
+  customControls?: Array<CustomControl>;
   readOnly?: boolean;
   disabled?: boolean; // Alias of readOnly
   toolbarConfig?: ToolbarConfig;
