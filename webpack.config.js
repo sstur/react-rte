@@ -58,6 +58,7 @@ module.exports = [{
       mangle: false,
       compress: {
         dead_code: true,
+        warnings: false,
       },
     }),
   ],
