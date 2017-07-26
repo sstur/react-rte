@@ -2,21 +2,34 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var loaders = [
+var rules = [
   {
     test: /\.js$/,
-    loader: 'babel',
+    use: ['babel-loader'],
     exclude: /node_modules/,
   },
   {
     test: /\.css$/,
     exclude: /\.global\.css$/,
-    loaders: [
-      'style?sourceMap',
-      'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+    use: [
+      {
+        loader: 'style-loader',
+        options: {sourceMap: true},
+      },
+      {
+        loader: 'css-loader',
+        options: {
+          modules: true,
+          importLoaders: true,
+          localIdentName: '[name]__[local]___[hash:base64:5]',
+        },
+      },
     ],
   },
-  {test: /\.global\.css$/, loader: 'style!raw'},
+  {
+    test: /\.global\.css$/,
+    use: ['style-loader', 'raw-loader'],
+  },
 ];
 
 module.exports = [{
@@ -30,7 +43,9 @@ module.exports = [{
     react: 'react',
     'react-dom': 'react-dom',
   },
-  module: {loaders: loaders},
+  module: {
+    rules: rules,
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -50,7 +65,10 @@ module.exports = [{
   entry: './src/demo.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js',
+    publicPath: '/dist/',
+    filename: 'demo.js',
   },
-  module: {loaders: loaders},
+  module: {
+    rules: rules,
+  },
 }];
