@@ -7,12 +7,15 @@ import {Entity} from 'draft-js';
 
 import styles from './ImageSpan.css';
 
+import type {ContentState} from 'draft-js';
+
 // TODO: Use a more specific type here.
 type ReactNode = any;
 
 type Props = {
   children: ReactNode;
   entityKey: string;
+  contentState: ContentState,
   className?: string;
 };
 
@@ -28,7 +31,7 @@ export default class ImageSpan extends Component {
   constructor(props: Props) {
     super(props);
     autobind(this);
-    const entity = Entity.get(this.props.entityKey);
+    const entity = props.contentState.getEntity(props.entityKey);
     const {width, height} = entity.getData();
     this.state = {
       width,
@@ -38,7 +41,7 @@ export default class ImageSpan extends Component {
 
   componentDidMount() {
     const {width, height} = this.state;
-    const entity = Entity.get(this.props.entityKey);
+    const entity = this.props.contentState.getEntity(this.props.entityKey);
     const image = new Image();
     const {src} = entity.getData();
     image.src = src;
@@ -62,7 +65,7 @@ export default class ImageSpan extends Component {
   render() {
     const {width, height} = this.state;
     let {className} = this.props;
-    const entity = Entity.get(this.props.entityKey);
+    const entity = this.props.contentState.getEntity(this.props.entityKey);
     const {src} = entity.getData();
 
     className = cx(className, styles.root);

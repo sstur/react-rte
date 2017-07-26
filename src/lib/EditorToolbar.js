@@ -315,22 +315,26 @@ export default class EditorToolbar extends Component {
     let {editorState} = this.props;
     let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
-    let entityKey = Entity.create(ENTITY_TYPE.IMAGE, 'IMMUTABLE', {src});
-    const updatedContent = Modifier.insertText(contentState, selection, ' ', null, entityKey);
+    contentState = contentState.createEntity(ENTITY_TYPE.IMAGE, 'IMMUTABLE', {src});
+    let entityKey = contentState.getLastCreatedEntityKey();
+    let newContentState = Modifier.insertText(contentState, selection, ' ', null, entityKey);
     this.setState({showImageInput: false});
     this.props.onChange(
-      EditorState.push(editorState, updatedContent)
+      EditorState.push(editorState, newContentState)
     );
     this._focusEditor();
   }
 
   _setLink(url: string) {
     let {editorState} = this.props;
+    let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
-    let entityKey = Entity.create(ENTITY_TYPE.LINK, 'MUTABLE', {url});
+    contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url});
+    let entityKey = contentState.getLastCreatedEntityKey();
+    let newEditorState = EditorState.push(editorState, contentState);
     this.setState({showLinkInput: false});
     this.props.onChange(
-      RichUtils.toggleLink(editorState, selection, entityKey)
+      RichUtils.toggleLink(newEditorState, selection, entityKey)
     );
     this._focusEditor();
   }
@@ -348,8 +352,9 @@ export default class EditorToolbar extends Component {
 
   _getEntityAtCursor(): ?Entity {
     let {editorState} = this.props;
+    let contentState = editorState.getCurrentContent();
     let entity = getEntityAtCursor(editorState);
-    return (entity == null) ? null : Entity.get(entity.entityKey);
+    return (entity == null) ? null : contentState.getEntity(entity.entityKey);
   }
 
   _getCurrentBlockType(): string {

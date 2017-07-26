@@ -1,19 +1,19 @@
 /* @flow */
 import ImageSpan from '../ui/ImageSpan';
-import {Entity} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
 
-import type {ContentBlock} from 'draft-js';
+import type {ContentBlock, ContentState} from 'draft-js';
 
 type EntityRangeCallback = (start: number, end: number) => void;
 
-function findImageEntities(contentBlock: ContentBlock, callback: EntityRangeCallback) {
+function findImageEntities(contentBlock: ContentBlock, callback: EntityRangeCallback, contentState: ?ContentState) {
   contentBlock.findEntityRanges((character) => {
     const entityKey = character.getEntity();
-    return (
-      entityKey != null &&
-      Entity.get(entityKey).getType() === ENTITY_TYPE.IMAGE
-    );
+    if (entityKey != null) {
+      let entity = contentState ? contentState.getEntity(entityKey) : null;
+      return entity != null && entity.getType() === ENTITY_TYPE.IMAGE;
+    }
+    return false;
   }, callback);
 }
 

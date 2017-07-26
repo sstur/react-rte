@@ -1682,17 +1682,17 @@ domain-browser@^1.1.1:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
 
-draft-js-export-html@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/draft-js-export-html/-/draft-js-export-html-0.5.4.tgz#e24927da3efe6f3df17f1d7606a9dc6141dbf72d"
+draft-js-export-html@>=0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/draft-js-export-html/-/draft-js-export-html-0.6.0.tgz#cc80f0544c43d0a7fedbc53c0cb0914e8090f769"
   dependencies:
-    draft-js-utils "^0.1.5"
+    draft-js-utils ">=0.2.0"
 
-draft-js-export-markdown@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/draft-js-export-markdown/-/draft-js-export-markdown-0.2.2.tgz#5b0a1a10591d8b96199dcb70b04b1ab7deb72a33"
+draft-js-export-markdown@>=0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/draft-js-export-markdown/-/draft-js-export-markdown-0.3.0.tgz#86390e03ceaf1d347fc616867ab7f535eb76bf42"
   dependencies:
-    draft-js-utils "^0.1.5"
+    draft-js-utils ">=0.2.0"
 
 draft-js-import-element@^0.4.0, draft-js-import-element@^0.4.1:
   version "0.4.3"
@@ -1707,18 +1707,22 @@ draft-js-import-html@^0.3.2:
   dependencies:
     draft-js-import-element "^0.4.1"
 
-draft-js-import-markdown@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/draft-js-import-markdown/-/draft-js-import-markdown-0.2.1.tgz#194fccd2df6dd0301a25e80b2c0614de02d09549"
+draft-js-import-markdown@>=0.2.2:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/draft-js-import-markdown/-/draft-js-import-markdown-0.2.3.tgz#f2db157a5209321f57e77763dc31ffd35f1a8b09"
   dependencies:
     draft-js-import-element "^0.4.0"
     synthetic-dom "^0.2.0"
 
-draft-js-utils@^0.1.5, draft-js-utils@^0.1.7:
+draft-js-utils@>=0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-0.2.0.tgz#2403a314a055f73952517ef96a7cc4ccdf132c4f"
+
+draft-js-utils@^0.1.5:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-0.1.7.tgz#e2b6927ca620edf1855a4bfc1cf1d21080a70f16"
 
-draft-js@^0.10.0:
+draft-js@>=0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.10.1.tgz#6f1219d8095729691429ca6fd7a58d2a8be5cb67"
   dependencies:

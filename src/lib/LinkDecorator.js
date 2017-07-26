@@ -1,31 +1,32 @@
 /* @flow */
 import React from 'react';
-import {Entity} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
 
-import type {ContentBlock} from 'draft-js';
+import type {ContentBlock, ContentState} from 'draft-js';
 
 type Props = {
   children: ReactNode,
   entityKey: string,
+  contentState: ContentState,
 };
 
 type EntityRangeCallback = (start: number, end: number) => void;
 
 function Link(props: Props) {
-  const {url} = Entity.get(props.entityKey).getData();
+  const {url} = props.contentState.getEntity(props.entityKey).getData();
   return (
     <a href={url}>{props.children}</a>
   );
 }
 
-function findLinkEntities(contentBlock: ContentBlock, callback: EntityRangeCallback) {
+function findLinkEntities(contentBlock: ContentBlock, callback: EntityRangeCallback, contentState: ?ContentState) {
   contentBlock.findEntityRanges((character) => {
     const entityKey = character.getEntity();
-    return (
-      entityKey != null &&
-      Entity.get(entityKey).getType() === ENTITY_TYPE.LINK
-    );
+    if (entityKey != null) {
+      let entity = contentState ? contentState.getEntity(entityKey) : null;
+      return entity != null && entity.getType() === ENTITY_TYPE.LINK;
+    }
+    return false;
   }, callback);
 }
 
