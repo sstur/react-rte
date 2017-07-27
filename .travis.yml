@@ -1,5 +1,5 @@
 language: node_js
 node_js:
   - "6"
-before_script:
-  - npm install react react-dom
+before_install:
+  - yarn add react react-dom
