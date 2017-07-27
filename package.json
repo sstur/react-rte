@@ -25,8 +25,8 @@
     "draft-js": ">=0.10.0",
     "draft-js-export-html": ">=0.6.0",
     "draft-js-export-markdown": ">=0.3.0",
-    "draft-js-import-html": "^0.3.2",
-    "draft-js-import-markdown": ">=0.2.2",
+    "draft-js-import-html": ">=0.4.0",
+    "draft-js-import-markdown": ">=0.3.0",
     "draft-js-utils": ">=0.2.0",
     "immutable": "^3.8.1"
   },

@@ -1694,33 +1694,29 @@ draft-js-export-markdown@>=0.3.0:
   dependencies:
     draft-js-utils ">=0.2.0"
 
-draft-js-import-element@^0.4.0, draft-js-import-element@^0.4.1:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/draft-js-import-element/-/draft-js-import-element-0.4.3.tgz#785381a2e0323a9836cfa856c442e9013bd482a4"
+draft-js-import-element@>=0.5.0, draft-js-import-element@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/draft-js-import-element/-/draft-js-import-element-0.5.0.tgz#1d6c470561d6e4d40aa23d9b6d338b1e8d180fe1"
   dependencies:
-    draft-js-utils "^0.1.5"
+    draft-js-utils ">=0.2.0"
     synthetic-dom "^0.2.0"
 
-draft-js-import-html@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/draft-js-import-html/-/draft-js-import-html-0.3.2.tgz#cc205a6192cac2c6520576688702ee31f5241810"
+draft-js-import-html@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/draft-js-import-html/-/draft-js-import-html-0.4.0.tgz#efa0b970efb546bd8d4989b3a491ff5575b68b1b"
   dependencies:
-    draft-js-import-element "^0.4.1"
+    draft-js-import-element "^0.5.0"
 
-draft-js-import-markdown@>=0.2.2:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/draft-js-import-markdown/-/draft-js-import-markdown-0.2.3.tgz#f2db157a5209321f57e77763dc31ffd35f1a8b09"
+draft-js-import-markdown@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/draft-js-import-markdown/-/draft-js-import-markdown-0.3.0.tgz#e4500c6ff52c9d66d01f7cdc94328a5eaee14956"
   dependencies:
-    draft-js-import-element "^0.4.0"
+    draft-js-import-element ">=0.5.0"
     synthetic-dom "^0.2.0"
 
 draft-js-utils@>=0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-0.2.0.tgz#2403a314a055f73952517ef96a7cc4ccdf132c4f"
-
-draft-js-utils@^0.1.5:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-0.1.7.tgz#e2b6927ca620edf1855a4bfc1cf1d21080a70f16"
 
 draft-js@>=0.10.0:
   version "0.10.1"
