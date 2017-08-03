@@ -88,7 +88,7 @@ function fromString(markup: string, format: string, options?: ImportOptions): Co
       return stateFromHTML(markup, options);
     }
     case 'markdown': {
-      return stateFromMarkdown(markup);
+      return stateFromMarkdown(markup, options);
     }
     case 'raw': {
       return convertFromRaw(JSON.parse(markup));
