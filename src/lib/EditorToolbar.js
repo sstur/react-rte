@@ -106,7 +106,7 @@ export default class EditorToolbar extends Component {
     if (customControls == null) {
       return;
     }
-    customControls.map((f) => {
+    return customControls.map((f) => {
       switch (typeof f) {
         case 'function': {
           return f(
