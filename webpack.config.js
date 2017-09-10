@@ -33,7 +33,7 @@ var rules = [
 ];
 
 module.exports = [{
-  entry: ['babel-polyfill', './src/RichTextEditor.js'],
+  entry: './src/RichTextEditor.js',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'react-rte.js',
