@@ -340,7 +340,7 @@ export default class EditorToolbar extends Component {
     let {editorState} = this.props;
     let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
-    contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url});
+    contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url, target: '_blank' });
     let entityKey = contentState.getLastCreatedEntityKey();
     let newEditorState = EditorState.push(editorState, contentState);
     this.setState({showLinkInput: false});
