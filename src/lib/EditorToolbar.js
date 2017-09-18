@@ -196,12 +196,23 @@ export default class EditorToolbar extends Component {
     let hasSelection = !selection.isCollapsed();
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
+
+    // If there is already a url, pass that in.
+    let data = {};
+    if (entity) {
+      let {url} = (entity != null && entity.type === ENTITY_TYPE.LINK) ? entity.getData() : null;
+      if (url) {
+        data = {url};
+      }
+    }
+
     return (
       <ButtonGroup key={name}>
         <PopoverIconButton
           label="Link"
           iconName="link"
           isDisabled={!shouldShowLinkButton}
+          data={data}
           showPopover={this.state.showLinkInput}
           onTogglePopover={this._toggleShowLinkInput}
           onSubmit={this._setLink}

@@ -8,6 +8,7 @@ import autobind from 'class-autobind';
 type Props = {
   iconName: string;
   showPopover: boolean,
+  data: Object,
   onTogglePopover: Function,
   onSubmit: Function;
 };
@@ -33,8 +34,11 @@ export default class PopoverIconButton extends Component {
     if (!this.props.showPopover) {
       return null;
     }
+
     return (
       <InputPopover
+        // This is part of enabling showing url
+        data={this.props.data}
         onSubmit={this._onSubmit}
         onCancel={this._hidePopover}
       />
