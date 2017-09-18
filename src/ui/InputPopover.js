@@ -39,6 +39,9 @@ export default class InputPopover extends Component {
   render() {
     let {props} = this;
     let className = cx(props.className, styles.root);
+
+    // If it has a url already, show that.
+    let url = (props.data && props.data.url) ? props.data.url : '';
     return (
       <div className={className}>
         <div className={styles.inner}>
@@ -46,6 +49,7 @@ export default class InputPopover extends Component {
             ref={this._setInputRef}
             type="text"
             placeholder="https://example.com/"
+            defaultValue={url}
             className={styles.input}
             onKeyPress={this._onInputKeyPress}
           />
