@@ -1,0 +1,27 @@
+.root {
+  display: inline-block;
+  margin: 0 5px 0 0;
+  padding: 3px 8px;
+  height: 30px;
+  line-height: 22px;
+  box-sizing: border-box;
+  background: none #fdfdfd;
+  background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);
+  border: 1px solid #999;
+  border-radius: 2px;
+  color: #333;
+  text-decoration: none;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.root:disabled {
+  cursor: not-allowed;
+  background: none transparent;
+}
+
+.root:disabled > * {
+  opacity: .5;
+}

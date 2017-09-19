@@ -1,0 +1,11 @@
+.root {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 14px;
+  margin: 0 10px;
+  padding: 10px 0 5px;
+  border-bottom: 1px solid #ddd;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

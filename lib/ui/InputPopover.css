@@ -1,0 +1,60 @@
+.root {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 260px;
+  background: none #fdfdfd;
+  background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);
+  border: 1px solid #999;
+  border-radius: 2px;
+  box-sizing: border-box;
+  padding: 4px;
+}
+
+.root:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -10px;
+  left: 10px;
+  border: 5px solid transparent;
+  border-bottom-color: #999;
+}
+
+.root:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -9px;
+  left: 10px;
+  border: 5px solid transparent;
+  border-bottom-color: #fdfdfd;
+}
+
+.inner {
+  display: flex;
+}
+
+.input {
+  display: block;
+  flex: 1 0 auto;
+  height: 30px;
+  background: none white;
+  border: 1px solid #999;
+  border-radius: 2px;
+  box-sizing: border-box;
+  padding: 2px 6px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 24px;
+}
+
+.inner .buttonGroup {
+  flex: 0 1 auto;
+  margin-left: 4px;
+  margin-bottom: 0;
+}

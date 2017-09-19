@@ -1,7 +1,7 @@
 _*
 /assets
 /flow-typed
-/src
+#/src
 /test
 .babelrc
 .eslintignore
