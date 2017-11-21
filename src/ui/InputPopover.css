@@ -3,10 +3,9 @@
   top: calc(100% + 5px);
   left: 0;
   width: 260px;
-  background: none #fdfdfd;
-  background: linear-gradient(to bottom, #fdfdfd 0%,#f6f7f8 100%);
-  border: 1px solid #999;
-  border-radius: 2px;
+  background: none;
+  background-color: rgb(247, 247, 247);
+  border: 1px solid #d1d3d4;
   box-sizing: border-box;
   padding: 4px;
 }
@@ -48,7 +47,6 @@
   border-radius: 2px;
   box-sizing: border-box;
   padding: 2px 6px;
-  font-family: inherit;
   font-size: inherit;
   line-height: 24px;
 }

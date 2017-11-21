@@ -5,15 +5,17 @@
 
 .icon {
   display: inline-block;
-  width: 22px;
-  height: 22px;
+  width: 17px;
+  height: 17px;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 18px;
 }
 
 .isActive {
-  background: none #d8d8d8;
+  background: none;
+  background-color: rgb(60, 63, 70);
+  color: #fff;
 }
 
 .icon-undo {
