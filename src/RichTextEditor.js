@@ -62,6 +62,7 @@ type Props = {
   rootStyle?: Object;
   editorStyle?: Object;
   toolbarStyle?: Object;
+  enableSoftNewLineByDefault?: boolean;
 };
 
 export default class RichTextEditor extends Component {
@@ -185,7 +186,9 @@ export default class RichTextEditor extends Component {
   // `shift + return` should insert a soft newline.
   _handleReturnSoftNewline(event: Object): boolean {
     let editorState = this.props.value.getEditorState();
-    if (isSoftNewlineEvent(event)) {
+    let softLineKeyPress = isSoftNewlineEvent(event);
+    let enableSoftNewLineByDefault = this.props.enableSoftNewLineByDefault;
+    if ((enableSoftNewLineByDefault && !softLineKeyPress) || (!enableSoftNewLineByDefault && softLineKeyPress)) {
       let selection = editorState.getSelection();
       if (selection.isCollapsed()) {
         this._onChange(RichUtils.insertSoftNewline(editorState));
