@@ -52,15 +52,8 @@ module.exports = [{
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: true,
-      comments: true,
-      mangle: false,
-      compress: {
-        dead_code: true,
-        warnings: false,
-      },
-    }),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
 }, {
   entry: './src/demo.js',
