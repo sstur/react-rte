@@ -3,7 +3,7 @@
     "transform-runtime"
   ],
   "presets": [
-    "babel-preset-es2015",
+    ["babel-preset-es2015", { "modules": false }],
     "babel-preset-react",
     "babel-preset-stage-2"
   ]

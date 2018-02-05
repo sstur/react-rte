@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "npm run build-lib && npm run build-dist",
-    "build-dist": "rimraf dist && webpack",
+    "build-dist": "rimraf dist && webpack -p",
     "build-lib": "rimraf lib && babel src --ignore \"_*\" --out-dir lib --copy-files",
     "lint": "eslint --max-warnings 0 .",
     "typecheck": "flow",
