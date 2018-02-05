@@ -202,7 +202,7 @@
     "prefer-spread": 0,                   // suggest using the spread operator instead of .apply().
     "prefer-template": 0,                 // suggest using template literals instead of strings concatenation
     "require-yield": 0,                   // disallow generator functions that do not have yield
-    "babel/no-await-in-loop": 1,          // async inside a loop will run operations in serial, when often the desired behavior is to do do in parallel
+    "no-await-in-loop": 1,                // async inside a loop will run operations in serial, when often the desired behavior is to do do in parallel
 
     // Legacy (included for compatibility with JSHint and JSLint. While the names of the rules may not match up with the JSHint/JSLint counterpart, the functionality is the same)
 
