@@ -1,6 +1,6 @@
 {
   "name": "react-rte",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "React Rich Text Editor",
   "main": "dist/react-rte.js",
   "files": [
@@ -71,6 +71,10 @@
   ],
   "author": "sstur@me.com",
   "contributors": [
+    {
+      "name": "Snigdha Roy",
+      "url": "https://github.com/roy-gbiv"
+    },
     {
       "name": "Adam J. McIntyre",
       "url": "https://github.com/amcintyre-cs"
