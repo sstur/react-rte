@@ -1,6 +1,6 @@
 {
   "name": "react-rte",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "React Rich Text Editor",
   "main": "dist/react-rte.js",
   "files": [
@@ -28,9 +28,7 @@
     "draft-js-import-html": ">=0.4.0",
     "draft-js-import-markdown": ">=0.3.0",
     "draft-js-utils": ">=0.2.0",
-    "immutable": "^3.8.1"
-  },
-  "peerDependencies": {
+    "immutable": "^3.8.1",
     "react": "0.14.x || 15.x.x",
     "react-dom": "0.14.x || 15.x.x"
   },
@@ -73,6 +71,10 @@
   ],
   "author": "sstur@me.com",
   "contributors": [
+    {
+      "name": "Snigdha Roy",
+      "url": "https://github.com/roy-gbiv"
+    },
     {
       "name": "Adam J. McIntyre",
       "url": "https://github.com/amcintyre-cs"
