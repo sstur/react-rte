@@ -67,6 +67,7 @@ type Props = {
 export default class RichTextEditor extends Component {
   props: Props;
   _keyEmitter: EventEmitter;
+  editor: HTMLDivElement;
 
   constructor() {
     super(...arguments);
