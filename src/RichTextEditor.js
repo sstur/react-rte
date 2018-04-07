@@ -145,7 +145,9 @@ export default class RichTextEditor extends Component {
             onTab={this._onTab}
             onChange={this._onChange}
             placeholder={placeholder}
-            ref={el => this.editor = el}
+            ref={(el) => {
+              this.editor = el;
+            }}
             spellCheck={true}
             readOnly={readOnly}
           />
