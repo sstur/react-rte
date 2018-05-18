@@ -3,7 +3,7 @@ import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {EditorState, Entity, RichUtils, Modifier} from 'draft-js';
+import {EditorState, Entity, EntityDescription, RichUtils, Modifier} from 'draft-js';
 import {ENTITY_TYPE} from 'draft-js-utils';
 import DefaultToolbarConfig from './EditorToolbarConfig';
 import StyleButton from './StyleButton';
@@ -196,6 +196,8 @@ export default class EditorToolbar extends Component {
     let hasSelection = !selection.isCollapsed();
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
+    let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : '';
+
     return (
       <ButtonGroup key={name}>
         <PopoverIconButton
@@ -204,6 +206,7 @@ export default class EditorToolbar extends Component {
           isDisabled={!shouldShowLinkButton}
           showPopover={this.state.showLinkInput}
           onTogglePopover={this._toggleShowLinkInput}
+          defaultValue={defaultValue}
           onSubmit={this._setLink}
         />
         <IconButton
@@ -329,13 +332,34 @@ export default class EditorToolbar extends Component {
     let {editorState} = this.props;
     let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
-    contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url});
-    let entityKey = contentState.getLastCreatedEntityKey();
-    let newEditorState = EditorState.push(editorState, contentState);
+    let origSelection = selection;
+    let canApplyLink = false;
+
+    if (selection.isCollapsed()) {
+      let entity = this._getEntityDescriptionAtCursor();
+      if (entity) {
+        canApplyLink = true;
+        selection = selection.merge({
+          anchorOffset: entity.startOffset,
+          focusOffset: entity.endOffset,
+          isBackward: false,
+        });
+      }
+    } else {
+      canApplyLink = true;
+    }
+
     this.setState({showLinkInput: false});
-    this.props.onChange(
-      RichUtils.toggleLink(newEditorState, selection, entityKey)
-    );
+    if (canApplyLink) {
+      contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url});
+      let entityKey = contentState.getLastCreatedEntityKey();
+
+      editorState = EditorState.push(editorState, contentState);
+      editorState = RichUtils.toggleLink(editorState, selection, entityKey);
+      editorState = EditorState.acceptSelection(editorState, origSelection);
+
+      this.props.onChange(editorState);
+    }
     this._focusEditor();
   }
 
@@ -348,6 +372,11 @@ export default class EditorToolbar extends Component {
         clearEntityForRange(editorState, blockKey, startOffset, endOffset)
       );
     }
+  }
+
+  _getEntityDescriptionAtCursor(): ?EntityDescription {
+    let {editorState} = this.props;
+    return getEntityAtCursor(editorState);
   }
 
   _getEntityAtCursor(): ?Entity {
