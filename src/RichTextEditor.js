@@ -67,6 +67,7 @@ type Props = {
 export default class RichTextEditor extends Component {
   props: Props;
   _keyEmitter: EventEmitter;
+  editor: HTMLDivElement;
 
   constructor() {
     super(...arguments);
@@ -145,7 +146,9 @@ export default class RichTextEditor extends Component {
             onTab={this._onTab}
             onChange={this._onChange}
             placeholder={placeholder}
-            ref="editor"
+            ref={(el) => {
+              this.editor = el;
+            }}
             spellCheck={true}
             readOnly={readOnly}
           />
@@ -328,7 +331,7 @@ export default class RichTextEditor extends Component {
   }
 
   _focus() {
-    this.refs.editor.focus();
+    this.editor.focus();
   }
 }
 
