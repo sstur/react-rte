@@ -3,6 +3,7 @@
   "version": "0.16.1",
   "description": "React Rich Text Editor",
   "main": "dist/react-rte.js",
+  "types": "lib/types.d.ts",
   "files": [
     "lib",
     "dist"
@@ -19,6 +20,8 @@
     "test-src": "BABEL_ENV=test mocha \"src/**/__tests__/*.js\""
   },
   "dependencies": {
+    "@types/draft-js": "^0.10.23",
+    "@types/react": "^16.4.1",
     "babel-runtime": "^6.23.0",
     "class-autobind": "^0.1.4",
     "classnames": "^2.2.5",
