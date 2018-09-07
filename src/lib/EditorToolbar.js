@@ -193,7 +193,7 @@ export default class EditorToolbar extends Component {
   }
 
   _renderBlockAlignmentButtons(name: string, toolbarConfig: ToolbarConfig) {
-    let { editorState } = this.props;
+    let {editorState} = this.props;
     let content = editorState.getCurrentContent();
     let selection = editorState.getSelection();
     let blockKey = selection.getStartKey();
@@ -446,7 +446,7 @@ export default class EditorToolbar extends Component {
   }
 
   _toggleAlignment(textAlign: string) {
-    let { editorState } = this.props;
+    let {editorState} = this.props;
     let selection = editorState.getSelection();
 
     let content = editorState.getCurrentContent();
@@ -482,7 +482,7 @@ export default class EditorToolbar extends Component {
   }
 
   _redo() {
-    let { editorState } = this.props;
+    let {editorState} = this.props;
     this.props.onChange(
       EditorState.redo(editorState)
     );
