@@ -4,6 +4,7 @@ import RichTextEditor, {createEmptyValue} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
+import {getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
 import ButtonGroup from './ui/ButtonGroup';
 import Dropdown from './ui/Dropdown';
 import IconButton from './ui/IconButton';
@@ -48,6 +49,7 @@ export default class EditorDemo extends Component {
             toolbarClassName="demo-toolbar"
             editorClassName="demo-editor"
             readOnly={this.state.readOnly}
+            blockStyleFn={getTextAlignClassName}
             customControls={[
               // eslint-disable-next-line no-unused-vars
               (setValue, getValue, editorState) => {
@@ -111,7 +113,7 @@ export default class EditorDemo extends Component {
           <textarea
             className="source"
             placeholder="Editor Source"
-            value={value.toString(format)}
+            value={value.toString(format, {blockStyleFn: getTextAlignStyles})}
             onChange={this._onChangeSource}
           />
         </div>
