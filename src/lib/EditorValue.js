@@ -65,6 +65,43 @@ export default class EditorValue {
 }
 
 function toString(editorState: EditorState, format: string, options?: ExportOptions): string {
+  options = Object.assign({
+    blockStyleFn: (block) => {
+      switch (block.getData().get('textAlign')) {
+        case 'ALIGN_LEFT':
+          return {
+            style: {
+              textAlign: 'left',
+            },
+          };
+
+        case 'ALIGN_CENTER':
+          return {
+            style: {
+              textAlign: 'center',
+            },
+          };
+
+        case 'ALIGN_RIGHT':
+          return {
+            style: {
+              textAlign: 'right',
+            },
+          };
+
+        case 'ALIGN_JUSTIFY':
+          return {
+            style: {
+              textAlign: 'justify',
+            },
+          };
+
+        default:
+          return {};
+      }
+    },
+  }, options);
+
   let contentState = editorState.getCurrentContent();
   switch (format) {
     case 'html': {
