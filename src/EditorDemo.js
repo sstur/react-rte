@@ -4,7 +4,7 @@ import RichTextEditor, {createEmptyValue} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
-import {getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
+import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
 import ButtonGroup from './ui/ButtonGroup';
 import Dropdown from './ui/Dropdown';
 import IconButton from './ui/IconButton';
@@ -147,7 +147,7 @@ export default class EditorDemo extends Component {
     let source = event.target.value;
     let oldValue = this.state.value;
     this.setState({
-      value: oldValue.setContentFromString(source, this.state.format),
+      value: oldValue.setContentFromString(source, this.state.format, {customBlockFn: getTextAlignBlockMetadata}),
     });
   }
 

@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
-import {getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
+import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
 import getBlocksInSelection from './lib/getBlocksInSelection';
@@ -376,6 +376,7 @@ export {
   decorator,
   createEmptyValue,
   createValueFromString,
+  getTextAlignBlockMetadata,
   getTextAlignClassName,
   getTextAlignStyles,
   ButtonGroup,

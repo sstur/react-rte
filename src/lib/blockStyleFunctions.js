@@ -1,5 +1,5 @@
 /* @flow */
-import type {BlockStyleFn} from 'draft-js-import-html';
+import type {BlockStyleFn, CustomBlockFn} from 'draft-js-import-html';
 
 export const getTextAlignClassName: BlockStyleFn = (contentBlock) => {
   switch (contentBlock.getData().get('textAlign')) {
@@ -47,6 +47,41 @@ export const getTextAlignStyles: BlockStyleFn = (contentBlock) => {
       return {
         style: {
           textAlign: 'justify',
+        },
+      };
+
+    default:
+      return {};
+  }
+};
+
+export const getTextAlignBlockMetadata: CustomBlockFn = (element) => {
+  switch (element.style.textAlign) {
+    case 'right':
+      return {
+        data: {
+          textAlign: 'ALIGN_RIGHT',
+        },
+      };
+
+    case 'center':
+      return {
+        data: {
+          textAlign: 'ALIGN_CENTER',
+        },
+      };
+
+    case 'justify':
+      return {
+        data: {
+          textAlign: 'ALIGN_JUSTIFY',
+        },
+      };
+
+    case 'left':
+      return {
+        data: {
+          textAlign: 'ALIGN_LEFT',
         },
       };
 
