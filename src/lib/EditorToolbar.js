@@ -197,6 +197,8 @@ export default class EditorToolbar extends Component {
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : '';
+    let target = entity ? entity.getData().target : null;
+    let rel = entity ? entity.getData().rel : null;
 
     return (
       <ButtonGroup key={name}>
@@ -208,6 +210,8 @@ export default class EditorToolbar extends Component {
           onTogglePopover={this._toggleShowLinkInput}
           defaultValue={defaultValue}
           onSubmit={this._setLink}
+          target={target}
+          rel={rel}
         />
         <IconButton
           {...toolbarConfig.extraProps}
@@ -328,7 +332,7 @@ export default class EditorToolbar extends Component {
     this._focusEditor();
   }
 
-  _setLink(url: string) {
+  _setLink(url: string, target?: ?string, rel?: ?string) {
     let {editorState} = this.props;
     let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
@@ -351,7 +355,7 @@ export default class EditorToolbar extends Component {
 
     this.setState({showLinkInput: false});
     if (canApplyLink) {
-      contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url});
+      contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url, target, rel});
       let entityKey = contentState.getLastCreatedEntityKey();
 
       editorState = EditorState.push(editorState, contentState);
