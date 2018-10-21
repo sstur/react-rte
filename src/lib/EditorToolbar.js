@@ -197,8 +197,8 @@ export default class EditorToolbar extends Component {
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : '';
-    let target = entity ? entity.getData().target : null;
-    let rel = entity ? entity.getData().rel : null;
+    let target = (entity && isCursorOnLink) ? entity.getData().target : null;
+    let rel = (entity && isCursorOnLink) ? entity.getData().rel : null;
 
     return (
       <ButtonGroup key={name}>

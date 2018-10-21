@@ -18,12 +18,13 @@ type Props = {
 };
 
 type State = {
-  target: ?string;
-  rel: ?string;
+  target?: ?string;
+  rel?: ?string;
 };
 
-export default class InputPopover extends Component<Props, State> {
+export default class InputPopover extends Component {
   props: Props;
+  state: State;
   _inputRef: ?Object;
 
   constructor() {
