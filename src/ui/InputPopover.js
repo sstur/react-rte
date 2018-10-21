@@ -88,7 +88,7 @@ export default class InputPopover extends Component<Props, State> {
           </div>
         }
         {(props.rel || props.rel === null) &&
-          <div className={styles.targetBlank}>
+          <div className={styles.noFollow}>
             <label>
               <input
                 type="checkbox"

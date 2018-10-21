@@ -60,12 +60,17 @@
 }
 
 .targetBlank {
-  padding: 8px 2px;
   margin-top: 4px;
 }
-.targetBlank input {
+
+.targetBlank, .noFollow {
+  padding: 8px 2px;
+}
+
+.targetBlank input, .noFollow input {
   margin-right: 8px;
 }
-.targetBlank label {
+
+.targetBlank input, .noFollow label {
   cursor: pointer;
 }
