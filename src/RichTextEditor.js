@@ -123,6 +123,7 @@ export default class RichTextEditor extends Component {
       editorToolbar = (
         <EditorToolbar
           rootStyle={toolbarStyle}
+          isOnBottom={toolbarOnBottom}
           className={toolbarClassName}
           keyEmitter={this._keyEmitter}
           editorState={editorState}
