@@ -56,6 +56,7 @@ type Props = {
   readOnly?: boolean;
   disabled?: boolean; // Alias of readOnly
   toolbarConfig?: ToolbarConfig;
+  toolbarOnBottom?: boolean;
   blockStyleFn?: (block: ContentBlock) => ?string;
   autoFocus?: boolean;
   keyBindingFn?: (event: Object) => ?string;
@@ -96,6 +97,7 @@ export default class RichTextEditor extends Component {
       readOnly,
       disabled,
       toolbarConfig,
+      toolbarOnBottom,
       blockStyleFn,
       customControls,
       keyBindingFn,
@@ -121,6 +123,7 @@ export default class RichTextEditor extends Component {
       editorToolbar = (
         <EditorToolbar
           rootStyle={toolbarStyle}
+          isOnBottom={toolbarOnBottom}
           className={toolbarClassName}
           keyEmitter={this._keyEmitter}
           editorState={editorState}
@@ -133,7 +136,7 @@ export default class RichTextEditor extends Component {
     }
     return (
       <div className={cx(styles.root, className)} style={rootStyle}>
-        {editorToolbar}
+        { !toolbarOnBottom && editorToolbar }
         <div className={combinedEditorClassName} style={editorStyle}>
           <Editor
             {...otherProps}
@@ -153,6 +156,7 @@ export default class RichTextEditor extends Component {
             readOnly={readOnly}
           />
         </div>
+        { toolbarOnBottom && editorToolbar }
       </div>
     );
   }
