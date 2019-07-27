@@ -17,9 +17,7 @@ type Props = {
   onMouseDown?: EventHandler;
 };
 
-export default class Button extends Component {
-  props: Props;
-
+export default class Button extends Component<Props> {
   constructor() {
     super(...arguments);
     autobind(this);

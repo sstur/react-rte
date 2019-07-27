@@ -15,9 +15,7 @@ type Props = {
   label?: string;
 };
 
-export default class IconButton extends Component {
-  props: Props;
-
+export default class IconButton extends Component<Props> {
   render() {
     let {props} = this;
     let {className, iconName, label, children, isActive, ...otherProps} = props;

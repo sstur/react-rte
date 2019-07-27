@@ -11,12 +11,11 @@ import styles from './InputPopover.css';
 type Props = {
   className?: string;
   defaultValue?: string;
-  onCancel: () => any;
+  onCancel: (event?: Object) => any;
   onSubmit: (value: string) => any;
 };
 
-export default class InputPopover extends Component {
-  props: Props;
+export default class InputPopover extends Component<Props> {
   _inputRef: ?Object;
 
   constructor() {
@@ -87,7 +86,7 @@ export default class InputPopover extends Component {
 
   _onDocumentClick(event: Object) {
     let rootNode = ReactDOM.findDOMNode(this);
-    if (!rootNode.contains(event.target)) {
+    if (rootNode && !rootNode.contains(event.target)) {
       // Here we pass the event so the parent can manage focus.
       this.props.onCancel(event);
     }

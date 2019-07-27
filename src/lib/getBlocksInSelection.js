@@ -15,6 +15,7 @@ export default function getBlocksInSelection(
   let startKey = selection.getStartKey();
   let endKey = selection.getEndKey();
   if (startKey === endKey) {
+    // $FlowIssue
     return new OrderedMap({startKey: contentState.getBlockForKey(startKey)});
   }
   let blocksUntilEnd = blockMap.takeUntil((block, key) => key === endKey);
