@@ -51,7 +51,7 @@
     "eslint-plugin-flow-vars": "^0.5.0",
     "eslint-plugin-react": "^6.5.0",
     "expect": "^1.20.2",
-    "flow-bin": "^0.32.0",
+    "flow-bin": "^0.104.0",
     "mocha": "^3.1.2",
     "raw-loader": "^0.5.1",
     "react": "16.x.x",

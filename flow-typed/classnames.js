@@ -1,5 +1,5 @@
 // @flow
 
 declare module 'classnames' {
-  declare function exports(...args: Array<any>): string;
+  declare export default function exports(...args: Array<any>): string;
 }
