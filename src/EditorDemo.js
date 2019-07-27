@@ -17,7 +17,7 @@ type State = {
   readOnly: boolean;
 };
 
-export default class EditorDemo extends Component {
+export default class EditorDemo extends Component<Props, State> {
   props: Props;
   state: State;
 

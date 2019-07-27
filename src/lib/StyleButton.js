@@ -8,9 +8,7 @@ type Props = {
   onToggle: (style: string) => any;
 };
 
-export default class StyleButton extends Component {
-  props: Props;
-
+export default class StyleButton extends Component<Props> {
   constructor() {
     super(...arguments);
     autobind(this);

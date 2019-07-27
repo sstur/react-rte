@@ -13,9 +13,7 @@ type Props = {
   onSubmit: Function;
 };
 
-export default class PopoverIconButton extends Component {
-  props: Props;
-
+export default class PopoverIconButton extends Component<Props> {
   constructor() {
     super(...arguments);
     autobind(this);

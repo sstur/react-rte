@@ -42,10 +42,7 @@ type State = {
 };
 
 
-export default class EditorToolbar extends Component {
-  props: Props;
-  state: State;
-
+export default class EditorToolbar extends Component<Props, State> {
   constructor() {
     super(...arguments);
     autobind(this);
@@ -107,7 +104,7 @@ export default class EditorToolbar extends Component {
     if (customControls == null) {
       return;
     }
-    return customControls.map((f) => {
+    return customControls.map<ReactNode>((f) => {
       switch (typeof f) {
         case 'function': {
           return f(
@@ -292,10 +289,11 @@ export default class EditorToolbar extends Component {
       let shouldFocusEditor = true;
       if (event && event.type === 'click') {
         // TODO: Use a better way to get the editor root node.
-        let editorRoot = ReactDOM.findDOMNode(this).parentNode;
+        const node = ReactDOM.findDOMNode(this);
+        let editorRoot = node ? node.parentNode : null;
         let {activeElement} = document;
         let wasClickAway = (activeElement == null || activeElement === document.body);
-        if (!wasClickAway && !editorRoot.contains(activeElement)) {
+        if (!wasClickAway && editorRoot && !editorRoot.contains(activeElement)) {
           shouldFocusEditor = false;
         }
       }
@@ -313,10 +311,11 @@ export default class EditorToolbar extends Component {
       let shouldFocusEditor = true;
       if (event && event.type === 'click') {
         // TODO: Use a better way to get the editor root node.
-        let editorRoot = ReactDOM.findDOMNode(this).parentNode;
+        const node = ReactDOM.findDOMNode(this);
+        let editorRoot = node ? node.parentNode : null;
         let {activeElement} = document;
         let wasClickAway = (activeElement == null || activeElement === document.body);
-        if (!wasClickAway && !editorRoot.contains(activeElement)) {
+        if (!wasClickAway && editorRoot && !editorRoot.contains(activeElement)) {
           shouldFocusEditor = false;
         }
       }

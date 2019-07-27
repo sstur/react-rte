@@ -65,10 +65,9 @@ type Props = {
   toolbarStyle?: Object;
 };
 
-export default class RichTextEditor extends Component {
-  props: Props;
+export default class RichTextEditor extends Component<Props> {
   _keyEmitter: EventEmitter;
-  editor: HTMLDivElement;
+  editor: ?HTMLDivElement;
 
   constructor() {
     super(...arguments);
@@ -335,7 +334,9 @@ export default class RichTextEditor extends Component {
   }
 
   _focus() {
-    this.editor.focus();
+    if (this.editor) {
+      this.editor.focus();
+    }
   }
 }
 

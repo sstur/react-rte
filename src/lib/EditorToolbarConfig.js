@@ -23,6 +23,25 @@ export type ToolbarConfig = {
   INLINE_STYLE_BUTTONS: StyleConfigList;
   BLOCK_TYPE_DROPDOWN: StyleConfigList;
   BLOCK_TYPE_BUTTONS: StyleConfigList;
+  HISTORY_BUTTONS: {
+    undo: {
+      label: string,
+    },
+    redo: {
+      label: string,
+    },
+  };
+  IMAGE_BUTTON: {
+    label: string,
+  };
+  LINK_BUTTONS: {
+    link: {
+      label: string,
+    },
+    removeLink: {
+      label: string,
+    },
+  };
 };
 
 export const INLINE_STYLE_BUTTONS: StyleConfigList = [
@@ -46,11 +65,34 @@ export const BLOCK_TYPE_BUTTONS: StyleConfigList = [
   {label: 'Blockquote', style: 'blockquote'},
 ];
 
+export const LINK_BUTTONS = {
+    link: {
+      label: 'Link',
+    },
+    removeLink: {
+      label: 'RemoveLink',
+    },
+};
+export const IMAGE_BUTTON = {
+  label: 'Image',
+};
+export const HISTORY_BUTTONS = {
+  undo: {
+    label: 'Undo',
+  },
+  redo: {
+    label: 'Redo',
+  },
+};
+
 let EditorToolbarConfig: ToolbarConfig = {
   display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'IMAGE_BUTTON', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
   INLINE_STYLE_BUTTONS,
   BLOCK_TYPE_DROPDOWN,
   BLOCK_TYPE_BUTTONS,
+  HISTORY_BUTTONS,
+  IMAGE_BUTTON,
+  LINK_BUTTONS,
 };
 
 export default EditorToolbarConfig;

@@ -14,9 +14,7 @@ type State = {
   editorValue: EditorValue;
 };
 
-export default class SimpleRichTextEditor extends Component {
-  props: Props;
-  state: State;
+export default class SimpleRichTextEditor extends Component<Props, State> {
   // The [format, value] of what's currently displayed in the <RichTextEditor />
   _currentValue: ?[string, string];
 

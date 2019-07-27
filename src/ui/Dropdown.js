@@ -17,9 +17,7 @@ type Props = {
   className?: string;
 };
 
-export default class Dropdown extends Component {
-  props: Props;
-
+export default class Dropdown extends Component<Props> {
   constructor() {
     super(...arguments);
     autobind(this);
@@ -48,7 +46,7 @@ export default class Dropdown extends Component {
   _renderChoices() {
     let {choices} = this.props;
     let entries = Array.from(choices.entries());
-    return entries.map(([key, {label, className}]) => (
+    return entries.map<React$Node>(([key, {label, className}]) => (
       <option key={key} value={key} className={className}>{label}</option>
     ));
   }

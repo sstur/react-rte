@@ -24,10 +24,7 @@ type State = {
   height: number;
 };
 
-export default class ImageSpan extends Component {
-  props: Props;
-  state: State;
-
+export default class ImageSpan extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     autobind(this);
