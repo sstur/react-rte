@@ -32,6 +32,7 @@ type Props = {
   toolbarConfig: ToolbarConfig;
   customControls: Array<CustomControl>;
   rootStyle?: Object;
+  isOnBottom?: boolean;
 };
 
 type State = {
@@ -66,7 +67,7 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    let {className, toolbarConfig, rootStyle} = this.props;
+    let {className, toolbarConfig, rootStyle, isOnBottom} = this.props;
     if (toolbarConfig == null) {
       toolbarConfig = DefaultToolbarConfig;
     }
@@ -94,7 +95,7 @@ export default class EditorToolbar extends Component {
       }
     });
     return (
-      <div className={cx(styles.root, className)} style={rootStyle}>
+      <div className={cx(styles.root, (isOnBottom && styles.onBottom), className)} style={rootStyle}>
         {buttonGroups}
         {this._renderCustomControls()}
       </div>
