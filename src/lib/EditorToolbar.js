@@ -56,7 +56,8 @@ export default class EditorToolbar extends Component {
     };
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line
+  UNSAFE_componentWillMount() {
     // Technically, we should also attach/detach event listeners when the
     // `keyEmitter` prop changes.
     this.props.keyEmitter.on('keypress', this._onKeypress);
