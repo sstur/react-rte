@@ -60,7 +60,7 @@
     "rimraf": "^2.5.4",
     "style-loader": "^0.18.2",
     "webpack": "^3.4.0",
-    "webpack-dev-server": "^2.6.1"
+    "webpack-dev-server": "^3.1.11"
   },
   "repository": {
     "type": "git",
