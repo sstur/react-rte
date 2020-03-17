@@ -9,3 +9,8 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+.onBottom {
+  border-top: 1px solid #ddd;
+  border-bottom: none;
+}
