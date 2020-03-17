@@ -32,6 +32,7 @@ type Props = {
   toolbarConfig: ToolbarConfig;
   customControls: Array<CustomControl>;
   rootStyle?: Object;
+  isOnBottom?: boolean;
 };
 
 type State = {
@@ -66,7 +67,7 @@ export default class EditorToolbar extends Component {
   }
 
   render() {
-    let {className, toolbarConfig, rootStyle} = this.props;
+    let {className, toolbarConfig, rootStyle, isOnBottom} = this.props;
     if (toolbarConfig == null) {
       toolbarConfig = DefaultToolbarConfig;
     }
@@ -94,7 +95,7 @@ export default class EditorToolbar extends Component {
       }
     });
     return (
-      <div className={cx(styles.root, className)} style={rootStyle}>
+      <div className={cx(styles.root, (isOnBottom && styles.onBottom), className)} style={rootStyle}>
         {buttonGroups}
         {this._renderCustomControls()}
       </div>
@@ -197,11 +198,16 @@ export default class EditorToolbar extends Component {
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : '';
+    const config = toolbarConfig.LINK_BUTTONS || {};
+    const linkConfig = config.link || {};
+    const removeLinkConfig = config.removeLink || {};
+    const linkLabel = linkConfig.label || 'Link';
+    const removeLinkLabel = removeLinkConfig.label || 'Remove Link';
 
     return (
       <ButtonGroup key={name}>
         <PopoverIconButton
-          label="Link"
+          label={linkLabel}
           iconName="link"
           isDisabled={!shouldShowLinkButton}
           showPopover={this.state.showLinkInput}
@@ -211,7 +217,7 @@ export default class EditorToolbar extends Component {
         />
         <IconButton
           {...toolbarConfig.extraProps}
-          label="Remove Link"
+          label={removeLinkLabel}
           iconName="remove-link"
           isDisabled={!isCursorOnLink}
           onClick={this._removeLink}
@@ -221,11 +227,13 @@ export default class EditorToolbar extends Component {
     );
   }
 
-  _renderImageButton(name: string) {
+  _renderImageButton(name: string, toolbarConfig: ToolbarConfig) {
+    const config = (toolbarConfig.IMAGE_BUTTON || {});
+    const label = config.label || 'Image';
     return (
       <ButtonGroup key={name}>
         <PopoverIconButton
-          label="Image"
+          label={label}
           iconName="image"
           showPopover={this.state.showImageInput}
           onTogglePopover={this._toggleShowImageInput}
@@ -239,11 +247,16 @@ export default class EditorToolbar extends Component {
     let {editorState} = this.props;
     let canUndo = editorState.getUndoStack().size !== 0;
     let canRedo = editorState.getRedoStack().size !== 0;
+    const config = toolbarConfig.HISTORY_BUTTONS || {};
+    const undoConfig = config.undo || {};
+    const redoConfig = config.redo || {};
+    const undoLabel = undoConfig.label || 'Undo';
+    const redoLabel = redoConfig.label || 'Redo';
     return (
       <ButtonGroup key={name}>
         <IconButton
           {...toolbarConfig.extraProps}
-          label="Undo"
+          label={undoLabel}
           iconName="undo"
           isDisabled={!canUndo}
           onClick={this._undo}
@@ -251,7 +264,7 @@ export default class EditorToolbar extends Component {
         />
         <IconButton
           {...toolbarConfig.extraProps}
-          label="Redo"
+          label={redoLabel}
           iconName="redo"
           isDisabled={!canRedo}
           onClick={this._redo}

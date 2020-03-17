@@ -1,13 +1,13 @@
 /* @flow */
 const {describe, it} = global;
 import React from 'react';
-import {createRenderer} from 'react-addons-test-utils';
+import ShallowRenderer from 'react-test-renderer/shallow';
 import expect from 'expect';
 import RichTextEditor, {createEmptyValue} from '../RichTextEditor';
 
 describe('RichTextEditor', () => {
   it('should render', () => {
-    let renderer = createRenderer();
+    let renderer = new ShallowRenderer();
     let value = createEmptyValue();
     renderer.render(<RichTextEditor value={value} />);
     let output = renderer.getRenderOutput();
