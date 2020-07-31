@@ -15,12 +15,13 @@ export type CustomControlList = Array<CustomControl>;
 
 export type StyleConfigList = Array<StyleConfig>;
 
-export type GroupName = 'INLINE_STYLE_BUTTONS' | 'BLOCK_TYPE_BUTTONS' | 'LINK_BUTTONS' | 'BLOCK_TYPE_DROPDOWN' | 'HISTORY_BUTTONS' | 'IMAGE_BUTTON';
+export type GroupName = 'INLINE_STYLE_BUTTONS' | 'BLOCK_ALIGNMENT_BUTTONS' | 'BLOCK_TYPE_BUTTONS' | 'LINK_BUTTONS' | 'BLOCK_TYPE_DROPDOWN' | 'HISTORY_BUTTONS' | 'IMAGE_BUTTON';
 
 export type ToolbarConfig = {
   display: Array<GroupName>;
   extraProps?: Object;
   INLINE_STYLE_BUTTONS: StyleConfigList;
+  BLOCK_ALIGNMENT_BUTTONS: StyleConfigList;
   BLOCK_TYPE_DROPDOWN: StyleConfigList;
   BLOCK_TYPE_BUTTONS: StyleConfigList;
 };
@@ -31,6 +32,13 @@ export const INLINE_STYLE_BUTTONS: StyleConfigList = [
   {label: 'Strikethrough', style: 'STRIKETHROUGH'},
   {label: 'Monospace', style: 'CODE'},
   {label: 'Underline', style: 'UNDERLINE'},
+];
+
+export const BLOCK_ALIGNMENT_BUTTONS: StyleConfigList = [
+  {label: 'Align Left', style: 'ALIGN_LEFT'},
+  {label: 'Align Center', style: 'ALIGN_CENTER'},
+  {label: 'Align Right', style: 'ALIGN_RIGHT'},
+  {label: 'Align Justify', style: 'ALIGN_JUSTIFY'},
 ];
 
 export const BLOCK_TYPE_DROPDOWN: StyleConfigList = [
@@ -47,8 +55,9 @@ export const BLOCK_TYPE_BUTTONS: StyleConfigList = [
 ];
 
 let EditorToolbarConfig: ToolbarConfig = {
-  display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'IMAGE_BUTTON', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
+  display: ['INLINE_STYLE_BUTTONS', 'BLOCK_ALIGNMENT_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'IMAGE_BUTTON', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
   INLINE_STYLE_BUTTONS,
+  BLOCK_ALIGNMENT_BUTTONS,
   BLOCK_TYPE_DROPDOWN,
   BLOCK_TYPE_BUTTONS,
 };

@@ -77,6 +77,9 @@ export default class EditorToolbar extends Component {
         case 'INLINE_STYLE_BUTTONS': {
           return this._renderInlineStyleButtons(groupName, toolbarConfig);
         }
+        case 'BLOCK_ALIGNMENT_BUTTONS': {
+          return this._renderBlockAlignmentButtons(groupName, toolbarConfig);
+        }
         case 'BLOCK_TYPE_DROPDOWN': {
           return this._renderBlockTypeDropdown(groupName, toolbarConfig);
         }
@@ -181,6 +184,30 @@ export default class EditorToolbar extends Component {
         isActive={currentStyle.has(type.style)}
         label={type.label}
         onToggle={this._toggleInlineStyle}
+        style={type.style}
+        className={type.className}
+      />
+    ));
+    return (
+      <ButtonGroup key={name}>{buttons}</ButtonGroup>
+    );
+  }
+
+  _renderBlockAlignmentButtons(name: string, toolbarConfig: ToolbarConfig) {
+    let {editorState} = this.props;
+    let content = editorState.getCurrentContent();
+    let selection = editorState.getSelection();
+    let blockKey = selection.getStartKey();
+    let block = content.getBlockForKey(blockKey);
+    let blockAlignment = block.getData().get('textAlign');
+
+    let buttons = (toolbarConfig.BLOCK_ALIGNMENT_BUTTONS || []).map((type, index) => (
+      <StyleButton
+        {...toolbarConfig.extraProps}
+        key={String(index)}
+        isActive={blockAlignment === type.style}
+        label={type.label}
+        onToggle={this._toggleAlignment}
         style={type.style}
         className={type.className}
       />
@@ -429,6 +456,35 @@ export default class EditorToolbar extends Component {
         inlineStyle
       )
     );
+  }
+
+  _toggleAlignment(textAlign: string) {
+    let {editorState} = this.props;
+    let selection = editorState.getSelection();
+
+    let content = editorState.getCurrentContent();
+    let blockKey = selection.getStartKey();
+    let block = content.getBlockForKey(blockKey);
+    let blockData = block.getData();
+
+    let newBlockData;
+    if (blockData.get('textAlign') === textAlign) {
+      newBlockData = blockData.remove('textAlign');
+    } else {
+      newBlockData = blockData.set('textAlign', textAlign);
+    }
+
+    let newBlock = block.set('data', newBlockData);
+
+    let newContent = content.merge({
+      blockMap: content.getBlockMap().set(blockKey, newBlock),
+    });
+    let newState = EditorState.push(
+      editorState,
+      newContent,
+      'change-block-data'
+    );
+    this.props.onChange(newState);
   }
 
   _undo() {
