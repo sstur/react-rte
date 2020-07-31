@@ -11,6 +11,18 @@
   font-size: 16px;
 }
 
+:global(.text-align--center .public-DraftStyleDefault-ltr) {
+  text-align: center;
+}
+
+:global(.text-align--right .public-DraftStyleDefault-ltr) {
+  text-align: right;
+}
+
+:global(.text-align--justify .public-DraftStyleDefault-ltr) {
+  text-align: justify;
+}
+
 .editor :global(.public-DraftEditorPlaceholder-root),
 .editor :global(.public-DraftEditor-content) {
   margin: 0;
