@@ -82,9 +82,9 @@ export default class InputPopover extends Component {
               <input
                 type="checkbox"
                 checked={this.state.target === '_blank'}
-                onChange={this._onNewTabPress}
+                onChange={this._onTargetBlankPress}
               />
-              <span>Open link in a new tab</span>
+              <span>Open link in new tab</span>
             </label>
           </div>
         }
@@ -108,7 +108,7 @@ export default class InputPopover extends Component {
     this._inputRef = inputElement;
   }
 
-  _onNewTabPress(event: Object) {
+  _onTargetBlankPress(event: Object) {
     this.setState({
       target: event.target.checked ? '_blank' : null,
     });
