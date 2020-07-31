@@ -11,6 +11,8 @@ type Props = {
   defaultValue?: string,
   onTogglePopover: Function,
   onSubmit: Function;
+  target?: ?string;
+  rel?: ?string;
 };
 
 export default class PopoverIconButton extends Component {
@@ -22,7 +24,7 @@ export default class PopoverIconButton extends Component {
   }
 
   render() {
-    let {onTogglePopover, showPopover, ...props} = this.props; // eslint-disable-line no-unused-vars
+    let {onTogglePopover, showPopover, target, rel, ...props} = this.props; // eslint-disable-line no-unused-vars
     return (
       <IconButton {...props} onClick={onTogglePopover}>
         {this._renderPopover()}
@@ -37,6 +39,8 @@ export default class PopoverIconButton extends Component {
     return (
       <InputPopover
         defaultValue={this.props.defaultValue}
+        target={this.props.target}
+        rel={this.props.rel}
         onSubmit={this._onSubmit}
         onCancel={this._hidePopover}
       />

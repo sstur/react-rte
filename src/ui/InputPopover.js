@@ -13,15 +13,27 @@ type Props = {
   defaultValue?: string;
   onCancel: () => any;
   onSubmit: (value: string) => any;
+  target?: ?string;
+  rel?: ?string;
+};
+
+type State = {
+  target?: ?string;
+  rel?: ?string;
 };
 
 export default class InputPopover extends Component {
   props: Props;
+  state: State;
   _inputRef: ?Object;
 
   constructor() {
     super(...arguments);
     autobind(this);
+    this.state = {
+      target: this.props.target,
+      rel: this.props.rel,
+    };
   }
 
   componentDidMount() {
@@ -64,12 +76,48 @@ export default class InputPopover extends Component {
             />
           </ButtonGroup>
         </div>
+        {(props.target || props.target === null) &&
+          <div className={styles.targetBlank}>
+            <label>
+              <input
+                type="checkbox"
+                checked={this.state.target === '_blank'}
+                onChange={this._onNewTabPress}
+              />
+              <span>Open link in a new tab</span>
+            </label>
+          </div>
+        }
+        {(props.rel || props.rel === null) &&
+          <div className={styles.noFollow}>
+            <label>
+              <input
+                type="checkbox"
+                checked={this.state.rel === 'nofollow'}
+                onChange={this._onNoFollowPress}
+              />
+              <span>No follow</span>
+            </label>
+          </div>
+        }
       </div>
     );
   }
 
   _setInputRef(inputElement: Object) {
     this._inputRef = inputElement;
+  }
+
+  _onNewTabPress(event: Object) {
+    this.setState({
+      target: event.target.checked ? '_blank' : null,
+    });
+  }
+
+  _onNoFollowPress(event: Object) {
+    this.setState({
+      rel: event.target.checked ? 'nofollow' : null,
+    });
   }
 
   _onInputKeyPress(event: Object) {
@@ -82,7 +130,7 @@ export default class InputPopover extends Component {
 
   _onSubmit() {
     let value = this._inputRef ? this._inputRef.value : '';
-    this.props.onSubmit(value);
+    this.props.onSubmit(value, this.state.target, this.state.rel);
   }
 
   _onDocumentClick(event: Object) {
