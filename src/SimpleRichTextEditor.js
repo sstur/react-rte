@@ -28,11 +28,13 @@ export default class SimpleRichTextEditor extends Component {
     };
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line
+  UNSAFE_componentWillMount() {
     this._updateStateFromProps(this.props);
   }
 
-  componentWillReceiveProps(newProps: Props) {
+  // eslint-disable-next-line
+  UNSAFE_componentWillReceiveProps(newProps: Props) {
     this._updateStateFromProps(newProps);
   }
 
