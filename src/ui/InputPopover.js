@@ -8,18 +8,22 @@ import cx from 'classnames';
 
 import styles from './InputPopover.css';
 
+type CheckOptionValues = {
+  [key: string]: boolean;
+};
+
 type Props = {
   className?: string;
   defaultValue?: string;
+  checkOptions?: {
+    [key: string]: { label: string, defaultValue: boolean };
+  };
   onCancel: () => any;
-  onSubmit: (value: string) => any;
-  target?: ?string;
-  rel?: ?string;
+  onSubmit: (value: string, checkOptionValues: CheckOptionValues) => any;
 };
 
 type State = {
-  target?: ?string;
-  rel?: ?string;
+  checkOptionValues: CheckOptionValues
 };
 
 export default class InputPopover extends Component {
@@ -30,9 +34,16 @@ export default class InputPopover extends Component {
   constructor() {
     super(...arguments);
     autobind(this);
+    let {checkOptions} = this.props;
+    let checkOptionValues: CheckOptionValues = {};
+    if (checkOptions) {
+      for (let key of Object.keys(checkOptions)) {
+        let {defaultValue} = checkOptions[key];
+        checkOptionValues[key] = defaultValue;
+      }
+    }
     this.state = {
-      target: this.props.target,
-      rel: this.props.rel,
+      checkOptionValues,
     };
   }
 
@@ -76,47 +87,43 @@ export default class InputPopover extends Component {
             />
           </ButtonGroup>
         </div>
-        {(props.target || props.target === null) &&
-          <div className={styles.targetBlank}>
-            <label>
-              <input
-                type="checkbox"
-                checked={this.state.target === '_blank'}
-                onChange={this._onTargetBlankPress}
-              />
-              <span>Open link in new tab</span>
-            </label>
-          </div>
-        }
-        {(props.rel || props.rel === null) &&
-          <div className={styles.noFollow}>
-            <label>
-              <input
-                type="checkbox"
-                checked={this.state.rel === 'nofollow'}
-                onChange={this._onNoFollowPress}
-              />
-              <span>No follow</span>
-            </label>
-          </div>
-        }
+        {this._renderCheckOptions()}
       </div>
     );
+  }
+
+  _renderCheckOptions() {
+    if (!this.props.checkOptions) {
+      return null;
+    }
+    let {checkOptions} = this.props;
+    return Object.keys(checkOptions).map((key) => {
+      let label = checkOptions && checkOptions[key] ? checkOptions[key].label : '';
+      return (
+        <div key={key} className={styles.checkOption}>
+          <label>
+            <input
+              type="checkbox"
+              checked={this.state.checkOptionValues[key]}
+              onChange={() => this._onCheckOptionPress(key)}
+            />
+            <span>{label}</span>
+          </label>
+        </div>
+      );
+    });
   }
 
   _setInputRef(inputElement: Object) {
     this._inputRef = inputElement;
   }
 
-  _onTargetBlankPress(event: Object) {
+  _onCheckOptionPress(key: string) {
+    let {checkOptionValues} = this.state;
+    let oldValue = Boolean(checkOptionValues[key]);
+    let newCheckOptionValues = {...checkOptionValues, [key]: !oldValue};
     this.setState({
-      target: event.target.checked ? '_blank' : null,
-    });
-  }
-
-  _onNoFollowPress(event: Object) {
-    this.setState({
-      rel: event.target.checked ? 'nofollow' : null,
+      checkOptionValues: newCheckOptionValues,
     });
   }
 
@@ -130,7 +137,7 @@ export default class InputPopover extends Component {
 
   _onSubmit() {
     let value = this._inputRef ? this._inputRef.value : '';
-    this.props.onSubmit(value, this.state.target, this.state.rel);
+    this.props.onSubmit(value, this.state.checkOptionValues);
   }
 
   _onDocumentClick(event: Object) {

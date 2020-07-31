@@ -59,18 +59,14 @@
   margin-bottom: 0;
 }
 
-.targetBlank {
-  margin-top: 4px;
+.checkOption {
+  margin: 8px 2px;
 }
 
-.targetBlank, .noFollow {
-  padding: 8px 2px;
-}
-
-.targetBlank input, .noFollow input {
+.checkOption input {
   margin-right: 8px;
 }
 
-.targetBlank input, .noFollow label {
+.checkOption input {
   cursor: pointer;
 }

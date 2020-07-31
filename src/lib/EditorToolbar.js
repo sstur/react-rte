@@ -231,8 +231,8 @@ export default class EditorToolbar extends Component {
     let removeLinkConfig = config.removeLink || {};
     let linkLabel = linkConfig.label || 'Link';
     let removeLinkLabel = removeLinkConfig.label || 'Remove Link';
-    let target = (entity && isCursorOnLink) ? entity.getData().target : null;
-    let rel = (entity && isCursorOnLink) ? entity.getData().rel : null;
+    let targetBlank = (entity && isCursorOnLink) ? entity.getData().target === '_blank' : false;
+    let noFollow = (entity && isCursorOnLink) ? entity.getData().rel === 'nofollow' : false;
 
     return (
       <ButtonGroup key={name}>
@@ -244,8 +244,10 @@ export default class EditorToolbar extends Component {
           onTogglePopover={this._toggleShowLinkInput}
           defaultValue={defaultValue}
           onSubmit={this._setLink}
-          target={target}
-          rel={rel}
+          checkOptions={{
+            targetBlank: {label: 'Open link in new tab', defaultValue: targetBlank},
+            noFollow: {label: 'No follow', defaultValue: noFollow},
+          }}
         />
         <IconButton
           {...toolbarConfig.extraProps}
@@ -373,7 +375,7 @@ export default class EditorToolbar extends Component {
     this._focusEditor();
   }
 
-  _setLink(url: string, target?: ?string, rel?: ?string) {
+  _setLink(url: string, checkOptions: {[key: string]: boolean}) {
     let {editorState} = this.props;
     let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
@@ -396,6 +398,8 @@ export default class EditorToolbar extends Component {
 
     this.setState({showLinkInput: false});
     if (canApplyLink) {
+      let target = checkOptions.targetBlank ? '_blank' : undefined;
+      let rel = checkOptions.noFollow ? 'nofollow' : undefined;
       contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url, target, rel});
       let entityKey = contentState.getLastCreatedEntityKey();
 
