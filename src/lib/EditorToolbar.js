@@ -226,11 +226,13 @@ export default class EditorToolbar extends Component {
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : '';
-    const config = toolbarConfig.LINK_BUTTONS || {};
-    const linkConfig = config.link || {};
-    const removeLinkConfig = config.removeLink || {};
-    const linkLabel = linkConfig.label || 'Link';
-    const removeLinkLabel = removeLinkConfig.label || 'Remove Link';
+    let config = toolbarConfig.LINK_BUTTONS || {};
+    let linkConfig = config.link || {};
+    let removeLinkConfig = config.removeLink || {};
+    let linkLabel = linkConfig.label || 'Link';
+    let removeLinkLabel = removeLinkConfig.label || 'Remove Link';
+    let targetBlank = (entity && isCursorOnLink) ? entity.getData().target === '_blank' : false;
+    let noFollow = (entity && isCursorOnLink) ? entity.getData().rel === 'nofollow' : false;
 
     return (
       <ButtonGroup key={name}>
@@ -242,6 +244,10 @@ export default class EditorToolbar extends Component {
           onTogglePopover={this._toggleShowLinkInput}
           defaultValue={defaultValue}
           onSubmit={this._setLink}
+          checkOptions={{
+            targetBlank: {label: 'Open link in new tab', defaultValue: targetBlank},
+            noFollow: {label: 'No follow', defaultValue: noFollow},
+          }}
         />
         <IconButton
           {...toolbarConfig.extraProps}
@@ -369,7 +375,7 @@ export default class EditorToolbar extends Component {
     this._focusEditor();
   }
 
-  _setLink(url: string) {
+  _setLink(url: string, checkOptions: {[key: string]: boolean}) {
     let {editorState} = this.props;
     let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
@@ -392,7 +398,9 @@ export default class EditorToolbar extends Component {
 
     this.setState({showLinkInput: false});
     if (canApplyLink) {
-      contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url});
+      let target = checkOptions.targetBlank ? '_blank' : undefined;
+      let rel = checkOptions.noFollow ? 'nofollow' : undefined;
+      contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url, target, rel});
       let entityKey = contentState.getLastCreatedEntityKey();
 
       editorState = EditorState.push(editorState, contentState);

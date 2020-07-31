@@ -58,3 +58,15 @@
   margin-left: 4px;
   margin-bottom: 0;
 }
+
+.checkOption {
+  margin: 8px 2px;
+}
+
+.checkOption input {
+  margin-right: 8px;
+}
+
+.checkOption input {
+  cursor: pointer;
+}

@@ -8,20 +8,43 @@ import cx from 'classnames';
 
 import styles from './InputPopover.css';
 
+type CheckOptionValues = {
+  [key: string]: boolean;
+};
+
 type Props = {
   className?: string;
   defaultValue?: string;
+  checkOptions?: {
+    [key: string]: { label: string, defaultValue: boolean };
+  };
   onCancel: () => any;
-  onSubmit: (value: string) => any;
+  onSubmit: (value: string, checkOptionValues: CheckOptionValues) => any;
+};
+
+type State = {
+  checkOptionValues: CheckOptionValues
 };
 
 export default class InputPopover extends Component {
   props: Props;
+  state: State;
   _inputRef: ?Object;
 
   constructor() {
     super(...arguments);
     autobind(this);
+    let {checkOptions} = this.props;
+    let checkOptionValues: CheckOptionValues = {};
+    if (checkOptions) {
+      for (let key of Object.keys(checkOptions)) {
+        let {defaultValue} = checkOptions[key];
+        checkOptionValues[key] = defaultValue;
+      }
+    }
+    this.state = {
+      checkOptionValues,
+    };
   }
 
   componentDidMount() {
@@ -64,12 +87,44 @@ export default class InputPopover extends Component {
             />
           </ButtonGroup>
         </div>
+        {this._renderCheckOptions()}
       </div>
     );
   }
 
+  _renderCheckOptions() {
+    if (!this.props.checkOptions) {
+      return null;
+    }
+    let {checkOptions} = this.props;
+    return Object.keys(checkOptions).map((key) => {
+      let label = checkOptions && checkOptions[key] ? checkOptions[key].label : '';
+      return (
+        <div key={key} className={styles.checkOption}>
+          <label>
+            <input
+              type="checkbox"
+              checked={this.state.checkOptionValues[key]}
+              onChange={() => this._onCheckOptionPress(key)}
+            />
+            <span>{label}</span>
+          </label>
+        </div>
+      );
+    });
+  }
+
   _setInputRef(inputElement: Object) {
     this._inputRef = inputElement;
+  }
+
+  _onCheckOptionPress(key: string) {
+    let {checkOptionValues} = this.state;
+    let oldValue = Boolean(checkOptionValues[key]);
+    let newCheckOptionValues = {...checkOptionValues, [key]: !oldValue};
+    this.setState({
+      checkOptionValues: newCheckOptionValues,
+    });
   }
 
   _onInputKeyPress(event: Object) {
@@ -82,7 +137,7 @@ export default class InputPopover extends Component {
 
   _onSubmit() {
     let value = this._inputRef ? this._inputRef.value : '';
-    this.props.onSubmit(value);
+    this.props.onSubmit(value, this.state.checkOptionValues);
   }
 
   _onDocumentClick(event: Object) {
