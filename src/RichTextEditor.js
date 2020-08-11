@@ -64,6 +64,7 @@ type Props = {
   rootStyle?: Object;
   editorStyle?: Object;
   toolbarStyle?: Object;
+  onBlur?: (event: Object) => void;
 };
 
 export default class RichTextEditor extends Component {
