@@ -123,7 +123,8 @@ export default class RichTextEditor extends Component {
       readOnly = disabled;
     }
     let editorToolbar;
-    if (!readOnly && toolbarHidden) {
+
+    if (!readOnly && !toolbarHidden) {
       editorToolbar = (
         <EditorToolbar
           rootStyle={toolbarStyle}
