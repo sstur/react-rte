@@ -13,6 +13,7 @@ type Props = {
   children?: ReactNode;
   className?: string;
   label?: string;
+  isSwitch?: boolean;
 };
 
 export default class IconButton extends Component {
@@ -20,14 +21,14 @@ export default class IconButton extends Component {
 
   render() {
     let {props} = this;
-    let {className, iconName, label, children, isActive, ...otherProps} = props;
+    let {className, iconName, label, children, isActive, isSwitch, ...otherProps} = props;
     className = cx(className, {
       [styles.root]: true,
       [styles.isActive]: isActive,
     });
     return (
       <ButtonWrap>
-        <Button {...otherProps} title={label} className={className}>
+        <Button {...otherProps} title={label} className={className} role={isSwitch && 'switch'} aria-checked={isActive}>
           <span className={styles['icon-' + iconName]} />
           {/* TODO: add text label here with aria-hidden */}
         </Button>

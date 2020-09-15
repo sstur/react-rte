@@ -27,6 +27,7 @@ export default class StyleButton extends Component {
         iconName={iconName}
         onClick={this._onClick}
         focusOnClick={false}
+        isSwitch={true}
       />
     );
   }
