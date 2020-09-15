@@ -152,6 +152,7 @@ export default class EditorToolbar extends Component {
           choices={choices}
           selectedKey={blockType}
           onChange={this._selectBlockType}
+          aria-label={'Block type'}
         />
       </ButtonGroup>
     );
