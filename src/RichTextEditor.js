@@ -154,6 +154,7 @@ export default class RichTextEditor extends Component {
             onTab={this._onTab}
             onChange={this._onChange}
             placeholder={placeholder}
+            ariaLabel={placeholder || 'Edit text'}
             ref={(el) => {
               this.editor = el;
             }}
