@@ -63,7 +63,7 @@ export default class ImageSpan extends Component {
   }
 
   render() {
-    const {width, height} = this.state;
+    const {width, height} = this._getSize();
     let {className} = this.props;
     const entity = this.props.contentState.getEntity(this.props.entityKey);
     const {src} = entity.getData();
@@ -72,9 +72,9 @@ export default class ImageSpan extends Component {
     const imageStyle = {
       verticalAlign: 'bottom',
       backgroundImage: `url("${src}")`,
-      backgroundSize: `${width}px ${height}px`,
-      lineHeight: `${height}px`,
-      fontSize: `${height}px`,
+      backgroundSize: `${width} ${height}`,
+      lineHeight: `${height}`,
+      fontSize: `${height}`,
       width,
       height,
       letterSpacing: width,
@@ -102,5 +102,16 @@ export default class ImageSpan extends Component {
       this.props.entityKey,
       {width, height}
     );
+  }
+
+  _getSize() {
+    let {width, height} = this.state;
+    if (!isNaN(width)) {
+      width = `${width}px`;
+    }
+    if (!isNaN(height)) {
+      height = `${height}px`;
+    }
+    return {width, height};
   }
 }
