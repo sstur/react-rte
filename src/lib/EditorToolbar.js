@@ -232,7 +232,7 @@ export default class EditorToolbar extends Component {
     let removeLinkConfig = config.removeLink || {};
     let linkLabel = linkConfig.label || 'Link';
     let removeLinkLabel = removeLinkConfig.label || 'Remove Link';
-    let linkShowCheckOptions = linkConfig.showCheckOptions || true;
+    let linkHideCheckOptions = linkConfig.hideCheckOptions || false;
     let targetBlank = (entity && isCursorOnLink) ? entity.getData().target === '_blank' : false;
     let noFollow = (entity && isCursorOnLink) ? entity.getData().rel === 'nofollow' : false;
 
@@ -246,7 +246,7 @@ export default class EditorToolbar extends Component {
           onTogglePopover={this._toggleShowLinkInput}
           defaultValue={defaultValue}
           onSubmit={this._setLink}
-          checkOptions={linkShowCheckOptions && {
+          checkOptions={!linkHideCheckOptions && {
             targetBlank: {label: 'Open link in new tab', defaultValue: targetBlank},
             noFollow: {label: 'No follow', defaultValue: noFollow},
           }}
