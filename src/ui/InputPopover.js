@@ -48,7 +48,7 @@ export default class InputPopover extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('click', this._onDocumentClick);
+    document.addEventListener('click', this._onDocumentClick, true);
     document.addEventListener('keydown', this._onDocumentKeydown);
     if (this._inputRef) {
       this._inputRef.focus();
@@ -56,7 +56,7 @@ export default class InputPopover extends Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this._onDocumentClick);
+    document.removeEventListener('click', this._onDocumentClick, true);
     document.removeEventListener('keydown', this._onDocumentKeydown);
   }
 
