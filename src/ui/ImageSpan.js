@@ -20,8 +20,8 @@ type Props = {
 };
 
 type State = {
-  width: number;
-  height: number;
+  width: string;
+  height: string;
 };
 
 export default class ImageSpan extends Component {
@@ -33,10 +33,7 @@ export default class ImageSpan extends Component {
     autobind(this);
     const entity = props.contentState.getEntity(props.entityKey);
     const {width, height} = entity.getData();
-    this.state = {
-      width,
-      height,
-    };
+    this._setSize(width, height);
   }
 
   componentDidMount() {
@@ -48,7 +45,7 @@ export default class ImageSpan extends Component {
     image.onload = () => {
       if (width == null || height == null) {
         // TODO: isMounted?
-        this.setState({width: image.width, height: image.height});
+        this._setSize({width: image.width, height: image.height});
         Entity.mergeData(
           this.props.entityKey,
           {
@@ -63,7 +60,7 @@ export default class ImageSpan extends Component {
   }
 
   render() {
-    const {width, height} = this._getSize();
+    const {width, height} = this.state;
     let {className} = this.props;
     const entity = this.props.contentState.getEntity(this.props.entityKey);
     const {src} = entity.getData();
@@ -97,21 +94,20 @@ export default class ImageSpan extends Component {
 
   _handleResize(event: Object, data: Object) {
     const {width, height} = data.size;
-    this.setState({width, height});
+    this._setSize(width, height);
     Entity.mergeData(
       this.props.entityKey,
       {width, height}
     );
   }
 
-  _getSize() {
-    let {width, height} = this.state;
-    if (!isNaN(width)) {
+  _setSize(width: string | number, height: string | number) {
+    if (isFinite(width)) {
       width = `${width}px`;
     }
-    if (!isNaN(height)) {
+    if (isFinite(height)) {
       height = `${height}px`;
     }
-    return {width, height};
+    this.setState({width, height});
   }
 }
