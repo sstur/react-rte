@@ -55,6 +55,7 @@ type Props = {
   handleReturn?: (event: Object) => boolean;
   customControls?: Array<CustomControl>;
   readOnly?: boolean;
+  toolbarHidden?: boolean;
   disabled?: boolean; // Alias of readOnly
   toolbarConfig?: ToolbarConfig;
   toolbarOnBottom?: boolean;
@@ -97,6 +98,7 @@ export default class RichTextEditor extends Component {
       placeholder,
       customStyleMap,
       readOnly,
+      toolbarHidden,
       disabled,
       toolbarConfig,
       toolbarOnBottom,
@@ -121,7 +123,8 @@ export default class RichTextEditor extends Component {
       readOnly = disabled;
     }
     let editorToolbar;
-    if (!readOnly) {
+
+    if (!readOnly && !toolbarHidden) {
       editorToolbar = (
         <EditorToolbar
           rootStyle={toolbarStyle}
@@ -151,6 +154,7 @@ export default class RichTextEditor extends Component {
             onTab={this._onTab}
             onChange={this._onChange}
             placeholder={placeholder}
+            ariaLabel={placeholder || 'Edit text'}
             ref={(el) => {
               this.editor = el;
             }}
