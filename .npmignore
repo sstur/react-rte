@@ -3,6 +3,7 @@ _*
 /flow-typed
 /src
 /test
+/.github
 .babelrc
 .eslintignore
 .eslintrc

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-find-dom-node */
 /* @flow */
 import {hasCommandModifier} from 'draft-js/lib/KeyBindingUtil';
 

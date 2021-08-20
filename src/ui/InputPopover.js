@@ -1,3 +1,4 @@
+/* eslint-disable react/no-find-dom-node */
 /* @flow */
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';

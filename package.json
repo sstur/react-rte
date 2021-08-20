@@ -15,14 +15,15 @@
     "typecheck": "flow",
     "prepare": "npm run build",
     "start": "webpack-dev-server --content-base assets/",
-    "test": "npm run lint && npm run typecheck && npm run test-src",
-    "test-src": "BABEL_ENV=test mocha \"src/**/__tests__/*.js\""
+    "test": "npm run lint && npm run test-src",
+    "test-src": "cross-env BABEL_ENV=test mocha \"src/**/__tests__/*.js\""
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
     "class-autobind": "^0.1.4",
     "classnames": "^2.2.5",
-    "draft-js": ">=0.10.0",
+    "cross-env": "^7.0.3",
+    "draft-js": "^0.11.7",
     "draft-js-export-html": ">=0.6.0",
     "draft-js-export-markdown": ">=0.3.0",
     "draft-js-import-html": ">=0.4.0",
@@ -37,7 +38,7 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
-    "babel-eslint": "^7.1.0",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -46,10 +47,10 @@
     "babel-preset-stage-2": "^6.18.0",
     "css-loader": "^0.28.4",
     "css-modules-require-hook": "^4.0.0",
-    "eslint": "^3.9.1",
-    "eslint-plugin-babel": "^3.3.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-flow-vars": "^0.5.0",
-    "eslint-plugin-react": "^6.5.0",
+    "eslint-plugin-react": "^7.24.0",
     "expect": "^1.20.2",
     "flow-bin": "^0.32.0",
     "mocha": "^3.1.2",
@@ -60,7 +61,7 @@
     "rimraf": "^2.5.4",
     "style-loader": "^0.18.2",
     "webpack": "^3.4.0",
-    "webpack-dev-server": "^2.6.1"
+    "webpack-dev-server": "^2.11.5"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 # React Rich Text Editor
 
-![Build Status](https://travis-ci.org/sstur/react-rte.svg?branch=master)
+[![Build status](https://github.com/RemiSorlin/react-rte/actions/workflows/node.js.yml/badge.svg)](https://github.com/RemiSorlin/react-rte/actions/workflows/node.js.yml)
 
 This is a UI component built completely in React that is meant to be a full-featured textarea replacement similar to [CKEditor][ckeditor], [TinyMCE][tinymce] and other [rich text "WYSIWYG" editors][rte]. It's based on the excellent, open source [Draft.js][draft-js] from Facebook which is performant and production-tested.
 
