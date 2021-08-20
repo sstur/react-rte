@@ -1,5 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
+import mergeRefs from "react-merge-refs";
 import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
@@ -66,9 +67,10 @@ type Props = {
   editorStyle?: Object;
   toolbarStyle?: Object;
   onBlur?: (event: Object) => void;
+  forwardedRef?: React.RefObject<HTMLDivElement>;
 };
 
-export default class RichTextEditor extends Component {
+class RichTextEditorBase extends Component {
   props: Props;
   _keyEmitter: EventEmitter;
   editor: HTMLDivElement;
@@ -76,6 +78,7 @@ export default class RichTextEditor extends Component {
   constructor() {
     super(...arguments);
     this._keyEmitter = new EventEmitter();
+    this.editor = React.createRef();
     autobind(this);
   }
 
@@ -108,6 +111,7 @@ export default class RichTextEditor extends Component {
       rootStyle,
       toolbarStyle,
       editorStyle,
+      forwardedRef,
       ...otherProps // eslint-disable-line comma-dangle
     } = this.props;
     let editorState = value.getEditorState();
@@ -155,9 +159,7 @@ export default class RichTextEditor extends Component {
             onChange={this._onChange}
             placeholder={placeholder}
             ariaLabel={placeholder || 'Edit text'}
-            ref={(el) => {
-              this.editor = el;
-            }}
+            ref={mergeRefs([forwardedRef, this.editor])}
             spellCheck={true}
             readOnly={readOnly}
           />
@@ -171,7 +173,7 @@ export default class RichTextEditor extends Component {
     let editorState = this.props.value.getEditorState();
     let contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
-      if (contentState.getBlockMap().first().getType() !== 'unstyled') {
+      if (contentState.getBlockMap().first().getType() !== "unstyled") {
         return true;
       }
     }
@@ -179,7 +181,7 @@ export default class RichTextEditor extends Component {
   }
 
   _handleReturn(event: Object): boolean {
-    let {handleReturn} = this.props;
+    let { handleReturn } = this.props;
     if (handleReturn != null && handleReturn(event)) {
       return true;
     }
@@ -234,9 +236,10 @@ export default class RichTextEditor extends Component {
       let block = contentState.getBlockForKey(blockKey);
       if (isListItem(block) && block.getLength() === 0) {
         let depth = block.getDepth();
-        let newState = (depth === 0) ?
-          changeBlockType(editorState, blockKey, BLOCK_TYPE.UNSTYLED) :
-          changeBlockDepth(editorState, blockKey, depth - 1);
+        let newState =
+          depth === 0
+            ? changeBlockType(editorState, blockKey, BLOCK_TYPE.UNSTYLED)
+            : changeBlockDepth(editorState, blockKey, depth - 1);
         this._onChange(newState);
         return true;
       }
@@ -280,7 +283,7 @@ export default class RichTextEditor extends Component {
   _customKeyHandler(event: Object): ?string {
     // Allow toolbar to catch key combinations.
     let eventFlags = {};
-    this._keyEmitter.emit('keypress', event, eventFlags);
+    this._keyEmitter.emit("keypress", event, eventFlags);
     if (eventFlags.wasHandled) {
       return null;
     } else {
@@ -300,7 +303,7 @@ export default class RichTextEditor extends Component {
   }
 
   _onChange(editorState: EditorState) {
-    let {onChange, value} = this.props;
+    let { onChange, value } = this.props;
     if (onChange == null) {
       return;
     }
@@ -316,27 +319,25 @@ export default class RichTextEditor extends Component {
 
     const selectImage = (block, offset) => {
       const imageKey = block.getEntityAt(offset);
-      Entity.mergeData(imageKey, {selected: true});
+      Entity.mergeData(imageKey, { selected: true });
     };
 
     let isInMiddleBlock = (index) => index > 0 && index < blocks.size - 1;
-    let isWithinStartBlockSelection = (offset, index) => (
-      index === 0 && offset > selection.getStartOffset()
-    );
-    let isWithinEndBlockSelection = (offset, index) => (
-      index === blocks.size - 1 && offset < selection.getEndOffset()
-    );
+    let isWithinStartBlockSelection = (offset, index) =>
+      index === 0 && offset > selection.getStartOffset();
+    let isWithinEndBlockSelection = (offset, index) =>
+      index === blocks.size - 1 && offset < selection.getEndOffset();
 
     blocks.toIndexedSeq().forEach((block, index) => {
-      ImageDecorator.strategy(
-        block,
-        (offset) => {
-          if (isWithinStartBlockSelection(offset, index) ||
-              isInMiddleBlock(index) ||
-              isWithinEndBlockSelection(offset, index)) {
-            selectImage(block, offset);
-          }
-        });
+      ImageDecorator.strategy(block, (offset) => {
+        if (
+          isWithinStartBlockSelection(offset, index) ||
+          isInMiddleBlock(index) ||
+          isWithinEndBlockSelection(offset, index)
+        ) {
+          selectImage(block, offset);
+        }
+      });
     });
   }
 
@@ -348,11 +349,11 @@ export default class RichTextEditor extends Component {
 function defaultBlockStyleFn(block: ContentBlock): string {
   let result = styles.block;
   switch (block.getType()) {
-    case 'unstyled':
+    case "unstyled":
       return cx(result, styles.paragraph);
-    case 'blockquote':
+    case "blockquote":
       return cx(result, styles.blockquote);
-    case 'code-block':
+    case "code-block":
       return cx(result, styles.codeBlock);
     default:
       return result;
@@ -392,3 +393,7 @@ export {
   Button,
   Dropdown,
 };
+
+export default RichTextEditor = React.forwardRef((props, ref) => (
+  <RichTextEditorBase forwardedRef={ref} {...props} />
+));

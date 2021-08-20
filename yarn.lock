@@ -4163,6 +4163,11 @@ react-is@^16.4.0:
   version "16.4.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.0.tgz#cc9fdc855ac34d2e7d9d2eb7059bbc240d35ffcf"
 
+react-merge-refs@^1.1.0:
+  version "1.1.0"
+  resolved "https://artifactory.spotify.net/artifactory/api/npm/virtual-npm/react-merge-refs/-/react-merge-refs-1.1.0.tgz#73d88b892c6c68cbb7a66e0800faa374f4c38b06"
+  integrity sha1-c9iLiSxsaMu3pm4IAPqjdPTDiwY=
+
 react-test-renderer@^16.4.0:
   version "16.4.0"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.4.0.tgz#0dbe0e24263e94e1830c7afb1f403707fad313a3"
