@@ -173,7 +173,7 @@ class RichTextEditorBase extends Component {
     let editorState = this.props.value.getEditorState();
     let contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
-      if (contentState.getBlockMap().first().getType() !== "unstyled") {
+      if (contentState.getBlockMap().first().getType() !== 'unstyled') {
         return true;
       }
     }
@@ -181,7 +181,7 @@ class RichTextEditorBase extends Component {
   }
 
   _handleReturn(event: Object): boolean {
-    let { handleReturn } = this.props;
+    let {handleReturn} = this.props;
     if (handleReturn != null && handleReturn(event)) {
       return true;
     }
@@ -236,10 +236,9 @@ class RichTextEditorBase extends Component {
       let block = contentState.getBlockForKey(blockKey);
       if (isListItem(block) && block.getLength() === 0) {
         let depth = block.getDepth();
-        let newState =
-          depth === 0
-            ? changeBlockType(editorState, blockKey, BLOCK_TYPE.UNSTYLED)
-            : changeBlockDepth(editorState, blockKey, depth - 1);
+        let newState = (depth === 0) ?
+        changeBlockType(editorState, blockKey, BLOCK_TYPE.UNSTYLED) :
+        changeBlockDepth(editorState, blockKey, depth - 1);
         this._onChange(newState);
         return true;
       }
@@ -283,7 +282,7 @@ class RichTextEditorBase extends Component {
   _customKeyHandler(event: Object): ?string {
     // Allow toolbar to catch key combinations.
     let eventFlags = {};
-    this._keyEmitter.emit("keypress", event, eventFlags);
+    this._keyEmitter.emit('keypress', event, eventFlags);
     if (eventFlags.wasHandled) {
       return null;
     } else {
@@ -319,7 +318,7 @@ class RichTextEditorBase extends Component {
 
     const selectImage = (block, offset) => {
       const imageKey = block.getEntityAt(offset);
-      Entity.mergeData(imageKey, { selected: true });
+      Entity.mergeData(imageKey, {selected: true});
     };
 
     let isInMiddleBlock = (index) => index > 0 && index < blocks.size - 1;
@@ -327,18 +326,16 @@ class RichTextEditorBase extends Component {
       index === 0 && offset > selection.getStartOffset();
     let isWithinEndBlockSelection = (offset, index) =>
       index === blocks.size - 1 && offset < selection.getEndOffset();
-
     blocks.toIndexedSeq().forEach((block, index) => {
-      ImageDecorator.strategy(block, (offset) => {
-        if (
-          isWithinStartBlockSelection(offset, index) ||
-          isInMiddleBlock(index) ||
-          isWithinEndBlockSelection(offset, index)
-        ) {
-          selectImage(block, offset);
-        }
-      });
-    });
+      ImageDecorator.strategy(
+        block,
+        (offset) => {
+          if (isWithinStartBlockSelection(offset, index) ||
+              isInMiddleBlock(index) ||
+              isWithinEndBlockSelection(offset, index)) {
+            selectImage(block, offset);
+          }
+        });
   }
 
   _focus() {
