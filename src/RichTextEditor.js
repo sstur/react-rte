@@ -237,8 +237,8 @@ class RichTextEditorBase extends Component {
       if (isListItem(block) && block.getLength() === 0) {
         let depth = block.getDepth();
         let newState = (depth === 0) ?
-        changeBlockType(editorState, blockKey, BLOCK_TYPE.UNSTYLED) :
-        changeBlockDepth(editorState, blockKey, depth - 1);
+          changeBlockType(editorState, blockKey, BLOCK_TYPE.UNSTYLED) :
+          changeBlockDepth(editorState, blockKey, depth - 1);
         this._onChange(newState);
         return true;
       }
@@ -302,7 +302,7 @@ class RichTextEditorBase extends Component {
   }
 
   _onChange(editorState: EditorState) {
-    let { onChange, value } = this.props;
+    let {onChange, value} = this.props;
     if (onChange == null) {
       return;
     }
@@ -322,10 +322,13 @@ class RichTextEditorBase extends Component {
     };
 
     let isInMiddleBlock = (index) => index > 0 && index < blocks.size - 1;
-    let isWithinStartBlockSelection = (offset, index) =>
-      index === 0 && offset > selection.getStartOffset();
-    let isWithinEndBlockSelection = (offset, index) =>
-      index === blocks.size - 1 && offset < selection.getEndOffset();
+    let isWithinStartBlockSelection = (offset, index) => (
+      index === 0 && offset > selection.getStartOffset()
+    );
+    let isWithinEndBlockSelection = (offset, index) => (
+      index === blocks.size - 1 && offset < selection.getEndOffset()
+    );
+
     blocks.toIndexedSeq().forEach((block, index) => {
       ImageDecorator.strategy(
         block,
@@ -346,11 +349,11 @@ class RichTextEditorBase extends Component {
 function defaultBlockStyleFn(block: ContentBlock): string {
   let result = styles.block;
   switch (block.getType()) {
-    case "unstyled":
+    case 'unstyled':
       return cx(result, styles.paragraph);
-    case "blockquote":
+    case 'blockquote':
       return cx(result, styles.blockquote);
-    case "code-block":
+    case 'code-block':
       return cx(result, styles.codeBlock);
     default:
       return result;
