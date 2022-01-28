@@ -1,6 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
-import mergeRefs from "react-merge-refs";
+import mergeRefs from 'react-merge-refs';
 import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
@@ -70,7 +70,7 @@ type Props = {
   forwardedRef?: React.RefObject<HTMLDivElement>;
 };
 
-class RichTextEditorBase extends Component {
+class RichTextEditor extends Component {
   props: Props;
   _keyEmitter: EventEmitter;
   editor: HTMLDivElement;
@@ -339,6 +339,7 @@ class RichTextEditorBase extends Component {
             selectImage(block, offset);
           }
         });
+    });
   }
 
   _focus() {
@@ -394,6 +395,6 @@ export {
   Dropdown,
 };
 
-export default RichTextEditor = React.forwardRef((props, ref) => (
-  <RichTextEditorBase forwardedRef={ref} {...props} />
+export default React.forwardRef((props, ref) => (
+  <RichTextEditor forwardedRef={ref} {...props} />
 ));
