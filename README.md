@@ -117,7 +117,7 @@ render() {
 
 ## Motivation
 
-In short, this is a 2016 approach to rich text editing built on modern, battle-hardened components and, importantly, we do not store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
+In short, this is a 2022 approach to rich text editing built on modern, battle-hardened components and, importantly, we do not store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
 
 This editor is built on [Draft.js][draft-js] from Facebook. Draft.js is more of a low-level framework (`contentEditable` abstraction), however this component is intended to be a fully polished UI component that you can reach for when you need to replace a `<textarea/>` in your application to support bold, italic, links, lists, etc.
 
@@ -152,6 +152,7 @@ In this editor we use a pure, deterministic function to convert document state t
   * `autoFocus`: Setting this to true will automatically focus input into the editor when the component is mounted
   * `placeholder`: A string to use as placeholder text for the `RichTextEditor`.
   * `readOnly`: A boolean that determines if the `RichTextEditor` should render static html.
+  * `enableSoftNewLineByDefault`: Set this to `true` if you wish to use soft line breaks when only pressing the return key. By default, if you press the return/enter key it will create a new text block. If you don't set this value to `true`, the user may use one of several [designated keys](https://github.com/facebook/draft-js/blob/cf9be24e8b14419143f1f01aabc68ed1be2f95e4/src/component/utils/isSoftNewlineEvent.js#L16) while pressing the return key to create a soft new line.
 
 ### EditorValue Class
 In Draft.js `EditorState` contains not only the document contents but the entire state of the editor including cursor position and selection. This is helpful for many reasons including undo/redo. To make things easier for you, we have wrapped the state of the editor in an `EditorValue` instance with helpful methods to convert to/from a HTML or Markdown. An instance of this class should be passed to `RichTextEditor` in the `value` prop.
