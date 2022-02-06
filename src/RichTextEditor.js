@@ -45,6 +45,7 @@ const styleMap = {
 };
 
 const emojiPlugin = createEmojiPlugin();
+const { EmojiSelect } = emojiPlugin;
 const plugins = [emojiPlugin];
 
 type ChangeHandler = (value: EditorValue) => any;
@@ -167,6 +168,7 @@ export default class RichTextEditor extends Component {
             readOnly={readOnly}
             plugins={plugins}
           />
+          <EmojiSelect />
         </div>
         { toolbarOnBottom && editorToolbar }
       </div>
