@@ -1,6 +1,8 @@
 /* @flow */
 import React, {Component} from 'react';
-import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
+import {CompositeDecorator, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
+import Editor from '@draft-js-plugins/editor';
+import createEmojiPlugin from '@draft-js-plugins/emoji';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
 import changeBlockDepth from './lib/changeBlockDepth';
@@ -41,6 +43,9 @@ const styleMap = {
     padding: 2,
   },
 };
+
+const emojiPlugin = createEmojiPlugin();
+const plugins = [emojiPlugin];
 
 type ChangeHandler = (value: EditorValue) => any;
 
@@ -160,6 +165,7 @@ export default class RichTextEditor extends Component {
             }}
             spellCheck={true}
             readOnly={readOnly}
+            plugins={plugins}
           />
         </div>
         { toolbarOnBottom && editorToolbar }
