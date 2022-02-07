@@ -2,7 +2,10 @@
 import React, {Component} from 'react';
 import {CompositeDecorator, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
 import Editor from '@draft-js-plugins/editor';
-import createEmojiPlugin from '@draft-js-plugins/emoji';
+import createEmojiMartPlugin from 'draft-js-emoji-mart-plugin';
+import data from 'emoji-mart/data/apple.json';
+import 'emoji-mart/css/emoji-mart.css';
+
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
 import changeBlockDepth from './lib/changeBlockDepth';
@@ -44,9 +47,13 @@ const styleMap = {
   },
 };
 
-const emojiPlugin = createEmojiPlugin();
-const { EmojiSelect } = emojiPlugin;
+const emojiPlugin = createEmojiMartPlugin({
+  data,
+  set: 'apple'
+});
+
 const plugins = [emojiPlugin];
+const { Picker } = emojiPlugin;
 
 type ChangeHandler = (value: EditorValue) => any;
 
@@ -168,7 +175,10 @@ export default class RichTextEditor extends Component {
             readOnly={readOnly}
             plugins={plugins}
           />
-          <EmojiSelect />
+          <Picker
+            perLine={7}
+            showPreview={false}
+          />
         </div>
         { toolbarOnBottom && editorToolbar }
       </div>
