@@ -117,7 +117,7 @@ render() {
 
 ## Motivation
 
-In short, this is a 2022 approach to rich text editing built on modern, battle-hardened components and, importantly, we do not store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
+In short, this is a modern approach to rich text editing built on a battle-hardened open-source framework and, importantly, we do not store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
 
 This editor is built on [Draft.js][draft-js] from Facebook. Draft.js is more of a low-level framework (`contentEditable` abstraction), however this component is intended to be a fully polished UI component that you can reach for when you need to replace a `<textarea/>` in your application to support bold, italic, links, lists, etc.
 
