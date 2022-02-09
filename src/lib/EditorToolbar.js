@@ -33,11 +33,14 @@ type Props = {
   customControls: Array<CustomControl>;
   rootStyle?: Object;
   isOnBottom?: boolean;
+  customStyleMap?: Object;
 };
 
 type State = {
   showLinkInput: boolean;
   showImageInput: boolean;
+  showBackgroundColorInput: boolean;
+  showTextColorInput: boolean;
   customControlState: {[key: string]: string};
 };
 
@@ -52,6 +55,8 @@ export default class EditorToolbar extends Component {
     this.state = {
       showLinkInput: false,
       showImageInput: false,
+      showTextColorInput: false,
+      showBackgroundColorInput: false,
       customControlState: {},
     };
   }
@@ -95,6 +100,9 @@ export default class EditorToolbar extends Component {
         }
         case 'HISTORY_BUTTONS': {
           return this._renderUndoRedo(groupName, toolbarConfig);
+        }
+        case 'COLOR_BUTTONS': {
+          return this._renderBlockColorButtons(groupName, toolbarConfig);
         }
       }
     });
@@ -219,6 +227,53 @@ export default class EditorToolbar extends Component {
     );
   }
 
+  _renderBlockColorButtons(name: string, toolbarConfig: ToolbarConfig) {
+    let {editorState} = this.props;
+    let content = editorState.getCurrentContent();
+    let selection = editorState.getSelection();
+    let blockKey = selection.getStartKey();
+    let block = content.getBlockForKey(blockKey);
+    let textColor = block.getData().get('textColor');
+    let backgroundColor = block.getData().get('backgroundColor');
+
+    let entity = this._getEntityAtCursor();
+    let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
+    let defaultTextColorValue = (entity && isCursorOnLink) ? entity.getData().url : '';
+
+    const config = toolbarConfig.BLOCK_COLOR_BUTTONS || {};
+    const textColorConfig = config.textColor || {};
+    const backgroundColorConfig = config.backgroundColor || {};
+    const textColorLabel = textColorConfig.label || 'Text color';
+    const backgroundColorLabel = backgroundColorConfig.label || 'Background color';
+
+    return (
+        <ButtonGroup key={name}>
+          <PopoverIconButton
+              {...toolbarConfig.extraProps}
+              label={textColorLabel}
+              iconName="textColor"
+              isActive={textColor === 'TEXT_COLOR'}
+              showPopover={this.state.showTextColorInput}
+              onTogglePopover={this._toggleShowColorInput('showTextColorInput')}
+              defaultValue={defaultTextColorValue}
+              onSubmit={this._setColor}
+              inputType="color"
+          />
+          <PopoverIconButton
+              {...toolbarConfig.extraProps}
+              label={backgroundColorLabel}
+              iconName="backgroundColor"
+              isActive={backgroundColor === 'BACKGROUND_COLOR'}
+              showPopover={this.state.showBackgroundColorInput}
+              onTogglePopover={this._toggleShowColorInput('showBackgroundColorInput')}
+              onSubmit={this._setBackgroundColor}
+              defaultValue={defaultTextColorValue}
+              inputType="color"
+          />
+        </ButtonGroup>
+    );
+  }
+
   _renderLinkButtons(name: string, toolbarConfig: ToolbarConfig) {
     let {editorState} = this.props;
     let selection = editorState.getSelection();
@@ -320,9 +375,16 @@ export default class EditorToolbar extends Component {
     }
   }
 
-  _toggleShowLinkInput(event: ?Object) {
-    let isShowing = this.state.showLinkInput;
-    // If this is a hide request, decide if we should focus the editor.
+  _toggleShowColorInput(inputType: 'showTextColorInput' | 'showBackgroundColorInput') {
+    return (event: ?Object) => {
+      let isShowing = this.state[inputType];
+      // If this is a hide request, decide if we should focus the editor.
+      this._handlePopOverShow(isShowing, event);
+      this.setState({[inputType]: !isShowing});
+    };
+  }
+
+  _handlePopOverShow(isShowing, event) {
     if (isShowing) {
       let shouldFocusEditor = true;
       if (event && event.type === 'click') {
@@ -338,27 +400,19 @@ export default class EditorToolbar extends Component {
         this.props.focusEditor();
       }
     }
+  }
+
+  _toggleShowLinkInput(event: ?Object) {
+    let isShowing = this.state.showLinkInput;
+    // If this is a hide request, decide if we should focus the editor.
+    this._handlePopOverShow(isShowing, event);
     this.setState({showLinkInput: !isShowing});
   }
 
   _toggleShowImageInput(event: ?Object) {
     let isShowing = this.state.showImageInput;
     // If this is a hide request, decide if we should focus the editor.
-    if (isShowing) {
-      let shouldFocusEditor = true;
-      if (event && event.type === 'click') {
-        // TODO: Use a better way to get the editor root node.
-        let editorRoot = ReactDOM.findDOMNode(this).parentNode;
-        let {activeElement} = document;
-        let wasClickAway = (activeElement == null || activeElement === document.body);
-        if (!wasClickAway && !editorRoot.contains(activeElement)) {
-          shouldFocusEditor = false;
-        }
-      }
-      if (shouldFocusEditor) {
-        this.props.focusEditor();
-      }
-    }
+    this._handlePopOverShow(isShowing, event);
     this.setState({showImageInput: !isShowing});
   }
 
@@ -373,6 +427,33 @@ export default class EditorToolbar extends Component {
     this.props.onChange(
       EditorState.push(editorState, newContentState)
     );
+    this._focusEditor();
+  }
+
+  _setColor(toggledColor: string) {
+    this._setColorWithType(toggledColor, 'color', 'showTextColorInput');
+  }
+
+  _setBackgroundColor(toggledColor: string) {
+    this._setColorWithType(toggledColor, 'backgroundColor', 'showBackgroundColorInput');
+  }
+
+  _setColorWithType(toggledColor: string, type: string, inputKey: string) {
+    let {editorState} = this.props;
+    let contentState = editorState.getCurrentContent();
+    let selection = editorState.getSelection();
+
+    let origSelection = selection;
+
+    this.setState({[inputKey]: false});
+    contentState = contentState.createEntity(type, 'MUTABLE', {[type]: toggledColor});
+    let entityKey = contentState.getLastCreatedEntityKey();
+
+    editorState = EditorState.push(editorState, contentState);
+    editorState = RichUtils.toggleLink(editorState, selection, entityKey);
+    editorState = EditorState.acceptSelection(editorState, origSelection);
+
+    this.props.onChange(editorState);
     this._focusEditor();
   }
 

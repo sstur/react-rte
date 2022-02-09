@@ -1,6 +1,6 @@
 /* @flow */
 import React, {Component} from 'react';
-import RichTextEditor, {createEmptyValue} from './RichTextEditor';
+import RichTextEditor, {createEmptyValue, getColorStyles} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
@@ -113,7 +113,7 @@ export default class EditorDemo extends Component {
           <textarea
             className="source"
             placeholder="Editor Source"
-            value={value.toString(format, {blockStyleFn: getTextAlignStyles})}
+            value={value.toString(format, {blockStyleFn: getTextAlignStyles, entityStyleFn: getColorStyles})}
             onChange={this._onChangeSource}
           />
         </div>
