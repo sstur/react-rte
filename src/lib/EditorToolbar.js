@@ -257,7 +257,7 @@ export default class EditorToolbar extends Component {
               onTogglePopover={this._toggleShowColorInput('showTextColorInput')}
               defaultValue={defaultTextColorValue}
               onSubmit={this._setColor}
-              inputType="color"
+              inputtype="color"
           />
           <PopoverIconButton
               {...toolbarConfig.extraProps}
@@ -268,7 +268,7 @@ export default class EditorToolbar extends Component {
               onTogglePopover={this._toggleShowColorInput('showBackgroundColorInput')}
               onSubmit={this._setBackgroundColor}
               defaultValue={defaultTextColorValue}
-              inputType="color"
+              inputtype="color"
           />
         </ButtonGroup>
     );
