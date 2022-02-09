@@ -1,5 +1,5 @@
 /* @flow */
-import type {BlockStyleFn, CustomBlockFn} from 'draft-js-import-html';
+import type {BlockStyleFn, CustomBlockFn, CustomInlineFn} from 'draft-js-import-html';
 import {EntityStyleFn} from 'draft-js-export-html';
 
 export const getTextAlignClassName: BlockStyleFn = (contentBlock) => {
@@ -99,4 +99,13 @@ export const getColorStyles: EntityStyleFn = (contentBlock) => {
     };
   }
   return null;
+};
+
+export const getColorEntity: CustomInlineFn = (element, inlineCreators) => {
+  if (element.style.color) {
+    return inlineCreators.Entity('color', {color: element.style.color});
+  }
+  if (element.style.backgroundColor) {
+    return inlineCreators.Entity('backgroundColor', {backgroundColor: element.style.backgroundColor});
+  }
 };
