@@ -102,10 +102,11 @@ export const getColorStyles: EntityStyleFn = (contentBlock) => {
 };
 
 export const getColorEntity: CustomInlineFn = (element, inlineCreators) => {
-  if (element.style.color) {
+  if (element && element.style && element.style.color) {
     return inlineCreators.Entity('color', {color: element.style.color});
   }
-  if (element.style.backgroundColor) {
+  if (element && element.style && element.style.backgroundColor) {
     return inlineCreators.Entity('backgroundColor', {backgroundColor: element.style.backgroundColor});
   }
+  return element;
 };
