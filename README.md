@@ -258,7 +258,6 @@ class MyStatefulEditor extends Component {
           onChange={this.onChange}
           toolbarConfig={toolbar}
           ariaLabel={this.props.label}
-          ariaRequired={this.props.required}
           // You are also able to use these properties:
           // ariaDescribedBy={...}
           // ariaLabelledBy={...}
