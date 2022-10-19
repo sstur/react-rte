@@ -234,7 +234,6 @@ export default class EditorToolbar extends Component {
     let blockKey = selection.getStartKey();
     let block = content.getBlockForKey(blockKey);
     let textColor = block.getData().get('textColor');
-    let backgroundColor = block.getData().get('backgroundColor');
 
     let entity = this._getEntityAtCursor();
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
@@ -242,9 +241,7 @@ export default class EditorToolbar extends Component {
 
     const config = toolbarConfig.BLOCK_COLOR_BUTTONS || {};
     const textColorConfig = config.textColor || {};
-    const backgroundColorConfig = config.backgroundColor || {};
     const textColorLabel = textColorConfig.label || 'Text color';
-    const backgroundColorLabel = backgroundColorConfig.label || 'Background color';
 
     return (
         <ButtonGroup key={name}>
@@ -257,17 +254,6 @@ export default class EditorToolbar extends Component {
               onTogglePopover={this._toggleShowColorInput('showTextColorInput')}
               defaultValue={defaultTextColorValue}
               onSubmit={this._setColor}
-              inputtype="color"
-          />
-          <PopoverIconButton
-              {...toolbarConfig.extraProps}
-              label={backgroundColorLabel}
-              iconName="backgroundColor"
-              isActive={backgroundColor === 'BACKGROUND_COLOR'}
-              showPopover={this.state.showBackgroundColorInput}
-              onTogglePopover={this._toggleShowColorInput('showBackgroundColorInput')}
-              onSubmit={this._setBackgroundColor}
-              defaultValue={defaultTextColorValue}
               inputtype="color"
           />
         </ButtonGroup>
