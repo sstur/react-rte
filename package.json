@@ -56,7 +56,7 @@
     "raw-loader": "^0.5.1",
     "react": "18.x.x",
     "react-dom": "18.x.x",
-    "react-test-renderer": "^16.4.0",
+    "react-test-renderer": "18.x.x",
     "rimraf": "^2.5.4",
     "style-loader": "^0.18.2",
     "webpack": "^3.4.0",
