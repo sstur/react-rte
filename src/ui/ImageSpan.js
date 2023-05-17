@@ -33,7 +33,7 @@ export default class ImageSpan extends Component {
     autobind(this);
     const entity = props.contentState.getEntity(props.entityKey);
     const {width, height} = entity.getData();
-    this._setSize(width, height);
+    this.state = this._getSize(width, height);
   }
 
   componentDidMount() {
@@ -45,7 +45,7 @@ export default class ImageSpan extends Component {
     image.onload = () => {
       if (width == null || height == null) {
         // TODO: isMounted?
-        this._setSize({width: image.width, height: image.height});
+        this.setState(this._getSize(image.width, image.height));
         Entity.mergeData(
           this.props.entityKey,
           {
@@ -94,20 +94,20 @@ export default class ImageSpan extends Component {
 
   _handleResize(event: Object, data: Object) {
     const {width, height} = data.size;
-    this._setSize(width, height);
+    this.setState(this._getSize(width, height));
     Entity.mergeData(
       this.props.entityKey,
       {width, height}
     );
   }
 
-  _setSize(width: string | number, height: string | number) {
+  _getSize(width: string | number, height: string | number) {
     if (isFinite(width)) {
       width = `${width}px`;
     }
     if (isFinite(height)) {
       height = `${height}px`;
     }
-    this.setState({width, height});
+    return {width, height};
   }
 }
