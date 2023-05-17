@@ -22,7 +22,7 @@
     "babel-runtime": "^6.23.0",
     "class-autobind": "^0.1.4",
     "classnames": "^2.2.5",
-    "draft-js": ">=0.10.0",
+    "draft-js": ">=0.11.7",
     "draft-js-export-html": ">=0.6.0",
     "draft-js-export-markdown": ">=0.3.0",
     "draft-js-import-html": ">=0.4.0",
@@ -32,8 +32,8 @@
     "immutable": "^3.8.1"
   },
   "peerDependencies": {
-    "react": "0.14.x || 15.x.x || 16.x.x || 17.x.x",
-    "react-dom": "0.14.x || 15.x.x || 16.x.x || 17.x.x"
+    "react": "0.14.x || 15.x.x || 16.x.x || 17.x.x || 18.x.x",
+    "react-dom": "0.14.x || 15.x.x || 16.x.x || 17.x.x || 18.x.x"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -55,9 +55,9 @@
     "flow-bin": "^0.32.0",
     "mocha": "^3.1.2",
     "raw-loader": "^0.5.1",
-    "react": "16.x.x",
-    "react-dom": "16.x.x",
-    "react-test-renderer": "^16.4.0",
+    "react": "18.x.x",
+    "react-dom": "18.x.x",
+    "react-test-renderer": "18.x.x",
     "rimraf": "^2.5.4",
     "style-loader": "^0.18.2",
     "webpack": "^3.4.0",
