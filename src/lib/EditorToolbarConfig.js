@@ -54,7 +54,7 @@ export const BLOCK_TYPE_BUTTONS: StyleConfigList = [
   {label: 'Blockquote', style: 'blockquote'},
 ];
 
-let EditorToolbarConfig: ToolbarConfig = {
+let DefaultToolbarConfig: ToolbarConfig = {
   display: ['INLINE_STYLE_BUTTONS', 'BLOCK_ALIGNMENT_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'IMAGE_BUTTON', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
   INLINE_STYLE_BUTTONS,
   BLOCK_ALIGNMENT_BUTTONS,
@@ -62,4 +62,4 @@ let EditorToolbarConfig: ToolbarConfig = {
   BLOCK_TYPE_BUTTONS,
 };
 
-export default EditorToolbarConfig;
+export default DefaultToolbarConfig

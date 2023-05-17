@@ -119,6 +119,8 @@ render() {
 
 ```
 
+When `toolbarConfig` is not specified, the Defaults are loaded from [`EditorToolbarConfig.js`](./src/lib/EditorToolbarConfig.js)
+
 ## Motivation
 
 In short, this is a modern approach to rich text editing built on a battle-hardened open-source framework and, importantly, we do not store document state in the DOM, eliminating entire classes of common "WYSIWYG" problems.
