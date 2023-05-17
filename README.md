@@ -203,6 +203,75 @@ React.createClass({
 });
 ```
 
+## Accessibility
+
+The Accessibility support is currently not that great, if you have the requirement in your project to match the axe accessility check, you can try to use an implementation like this:
+
+```javascript
+import React, {Component, PropTypes} from 'react';
+import RichTextEditor from 'react-rte';
+
+// You can use your necessary language translations here
+const toolbar = {
+    display: ["INLINE_STYLE_BUTTONS", "BLOCK_TYPE_BUTTONS", "BLOCK_ALIGNMENT_BUTTONS", "HISTORY_BUTTONS"],
+    INLINE_STYLE_BUTTONS: [
+        { label: "bold", style: "BOLD" },
+        { label: "italic", style: "ITALIC" },
+        { label: "underline", style: "UNDERLINE" },
+        { label: "strikethrough", style: "STRIKETHROUGH" },
+    ],
+    BLOCK_TYPE_BUTTONS: [
+        { label: "unorderedList", style: "unordered-list-item" },
+        { label: "orderedList", style: "ordered-list-item" },
+    ],
+    HISTORY_BUTTONS: {
+        undo: { label: "undo" },
+        redo: { label: "redo" },
+    },
+}
+
+class MyStatefulEditor extends Component {
+  static propTypes = {
+    onChange: PropTypes.func
+    label: PropTypes.string
+    required: PropTypes.string
+  };
+
+  state = {
+    value: RichTextEditor.createEmptyValue()
+  }
+
+  onChange = (value) => {
+    this.setState({value});
+    if (this.props.onChange) {
+      // Send the changes up to the parent component as an HTML string.
+      // This is here to demonstrate using `.toString()` but in a real app it
+      // would be better to avoid generating a string on each change.
+      this.props.onChange(
+        value.toString('html')
+      );
+    }
+  };
+
+  render () {
+    return (
+      <>
+        <label aria-hidden="true">{this.props.label}</label>
+        <RichTextEditor
+          value={this.state.value}
+          onChange={this.onChange}
+          toolbarConfig={toolbar}
+          ariaLabel={this.props.label}
+          // You are also able to use these properties:
+          // ariaDescribedBy={...}
+          // ariaLabelledBy={...}
+        />
+      </>
+    );
+  }
+}
+```
+
 ## TODO
 
  - Support images

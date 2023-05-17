@@ -66,6 +66,9 @@ type Props = {
   editorStyle?: Object;
   toolbarStyle?: Object;
   onBlur?: (event: Object) => void;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
+  ariaDescribedBy?: string;
 };
 
 export default class RichTextEditor extends Component {
@@ -108,6 +111,9 @@ export default class RichTextEditor extends Component {
       rootStyle,
       toolbarStyle,
       editorStyle,
+      ariaLabel,
+      ariaDescribedBy,
+      ariaLabelledBy,
       ...otherProps // eslint-disable-line comma-dangle
     } = this.props;
     let editorState = value.getEditorState();
@@ -154,7 +160,9 @@ export default class RichTextEditor extends Component {
             onTab={this._onTab}
             onChange={this._onChange}
             placeholder={placeholder}
-            ariaLabel={placeholder || 'Edit text'}
+            ariaLabel={ariaLabel || 'Edit text'}
+            ariaLabelledBy={ariaLabelledBy}
+            ariaDescribedBy={ariaDescribedBy}
             ref={(el) => {
               this.editor = el;
             }}

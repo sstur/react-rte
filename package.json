@@ -16,13 +16,13 @@
     "prepare": "npm run build",
     "start": "webpack-dev-server --content-base assets/",
     "test": "npm run lint && npm run typecheck && npm run test-src",
-    "test-src": "BABEL_ENV=test mocha \"src/**/__tests__/*.js\""
+    "test-src": "BABEL_ENV=test mocha --require global-jsdom/register \"src/**/__tests__/*.js\""
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
     "class-autobind": "^0.1.4",
     "classnames": "^2.2.5",
-    "draft-js": ">=0.10.0",
+    "draft-js": ">=0.11.0",
     "draft-js-export-html": ">=0.6.0",
     "draft-js-export-markdown": ">=0.3.0",
     "draft-js-import-html": ">=0.4.0",
@@ -36,6 +36,7 @@
     "react-dom": "0.14.x || 15.x.x || 16.x.x || 17.x.x"
   },
   "devDependencies": {
+    "@testing-library/react": "^12.0.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.0",
@@ -53,11 +54,12 @@
     "eslint-plugin-react": "^6.5.0",
     "expect": "^1.20.2",
     "flow-bin": "^0.32.0",
+    "global-jsdom": "^8.5.0",
+    "jsdom": "^20.0.0",
     "mocha": "^3.1.2",
     "raw-loader": "^0.5.1",
-    "react": "16.x.x",
-    "react-dom": "16.x.x",
-    "react-test-renderer": "^16.4.0",
+    "react": "16.14.x",
+    "react-dom": "16.14.x",
     "rimraf": "^2.5.4",
     "style-loader": "^0.18.2",
     "webpack": "^3.4.0",
