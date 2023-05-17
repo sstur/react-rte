@@ -1,10 +1,15 @@
 /* @flow */
 import React, {Component} from 'react';
-import RichTextEditor, {createEmptyValue} from './RichTextEditor';
+import RichTextEditor, {getColorStyles} from './RichTextEditor';
 import {convertToRaw} from 'draft-js';
 import autobind from 'class-autobind';
 
-import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
+import {
+  getColorEntity,
+  getTextAlignBlockMetadata,
+  getTextAlignClassName,
+  getTextAlignStyles,
+} from './lib/blockStyleFunctions';
 import ButtonGroup from './ui/ButtonGroup';
 import Dropdown from './ui/Dropdown';
 import IconButton from './ui/IconButton';
@@ -26,7 +31,7 @@ export default class EditorDemo extends Component {
     super(...arguments);
     autobind(this);
     this.state = {
-      value: createEmptyValue(),
+      value: RichTextEditor.createValueFromString("<p><span style='color: #0000ff'>Hello</span> <span style='color: #ff0000'>world</span></p>", 'html', {customInlineFn: getColorEntity}),
       format: 'html',
       readOnly: false,
     };
@@ -113,7 +118,7 @@ export default class EditorDemo extends Component {
           <textarea
             className="source"
             placeholder="Editor Source"
-            value={value.toString(format, {blockStyleFn: getTextAlignStyles})}
+            value={value.toString(format, {blockStyleFn: getTextAlignStyles, entityStyleFn: getColorStyles})}
             onChange={this._onChangeSource}
           />
         </div>

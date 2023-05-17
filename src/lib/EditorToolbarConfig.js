@@ -15,7 +15,7 @@ export type CustomControlList = Array<CustomControl>;
 
 export type StyleConfigList = Array<StyleConfig>;
 
-export type GroupName = 'INLINE_STYLE_BUTTONS' | 'BLOCK_ALIGNMENT_BUTTONS' | 'BLOCK_TYPE_BUTTONS' | 'LINK_BUTTONS' | 'BLOCK_TYPE_DROPDOWN' | 'HISTORY_BUTTONS' | 'IMAGE_BUTTON';
+export type GroupName = 'INLINE_STYLE_BUTTONS' | 'BLOCK_ALIGNMENT_BUTTONS' | 'BLOCK_TYPE_BUTTONS' | 'LINK_BUTTONS' | 'BLOCK_TYPE_DROPDOWN' | 'HISTORY_BUTTONS' | 'IMAGE_BUTTON' | 'COLOR_BUTTONS';
 
 export type ToolbarConfig = {
   display: Array<GroupName>;
@@ -24,6 +24,7 @@ export type ToolbarConfig = {
   BLOCK_ALIGNMENT_BUTTONS: StyleConfigList;
   BLOCK_TYPE_DROPDOWN: StyleConfigList;
   BLOCK_TYPE_BUTTONS: StyleConfigList;
+  BLOCK_COLOR_BUTTONS: StyleConfigList;
 };
 
 export const INLINE_STYLE_BUTTONS: StyleConfigList = [
@@ -54,12 +55,18 @@ export const BLOCK_TYPE_BUTTONS: StyleConfigList = [
   {label: 'Blockquote', style: 'blockquote'},
 ];
 
+export const BLOCK_COLOR_BUTTONS: StyleConfigList = [
+  {label: 'Text color', style: 'TEXT_COLOR'},
+  {label: 'Background color', style: 'BACKGROUND_COLOR'},
+];
+
 let EditorToolbarConfig: ToolbarConfig = {
-  display: ['INLINE_STYLE_BUTTONS', 'BLOCK_ALIGNMENT_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'IMAGE_BUTTON', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
+  display: ['INLINE_STYLE_BUTTONS', 'BLOCK_ALIGNMENT_BUTTONS', 'COLOR_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'IMAGE_BUTTON', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
   INLINE_STYLE_BUTTONS,
   BLOCK_ALIGNMENT_BUTTONS,
   BLOCK_TYPE_DROPDOWN,
   BLOCK_TYPE_BUTTONS,
+  BLOCK_COLOR_BUTTONS,
 };
 
 export default EditorToolbarConfig;

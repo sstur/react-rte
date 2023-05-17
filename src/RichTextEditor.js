@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
-import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles} from './lib/blockStyleFunctions';
+import {getTextAlignBlockMetadata, getTextAlignClassName, getTextAlignStyles, getColorStyles} from './lib/blockStyleFunctions';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
 import getBlocksInSelection from './lib/getBlocksInSelection';
@@ -13,6 +13,8 @@ import EditorToolbar from './lib/EditorToolbar';
 import EditorValue from './lib/EditorValue';
 import LinkDecorator from './lib/LinkDecorator';
 import ImageDecorator from './lib/ImageDecorator';
+import ColorDecorator from './lib/ColorDecorator';
+import BackgroundColorDecorator from './lib/BackgroundColorDecorator';
 import composite from './lib/composite';
 import cx from 'classnames';
 import autobind from 'class-autobind';
@@ -189,10 +191,8 @@ export default class RichTextEditor extends Component {
     if (this._handleReturnEmptyListItem()) {
       return true;
     }
-    if (this._handleReturnSpecialBlock()) {
-      return true;
-    }
-    return false;
+    return this._handleReturnSpecialBlock();
+
   }
 
   // `shift + return` should insert a soft newline.
@@ -359,7 +359,7 @@ function defaultBlockStyleFn(block: ContentBlock): string {
   }
 }
 
-const decorator = new CompositeDecorator([LinkDecorator, ImageDecorator]);
+const decorator = new CompositeDecorator([LinkDecorator, ImageDecorator, ColorDecorator, BackgroundColorDecorator]);
 
 function createEmptyValue(): EditorValue {
   return EditorValue.createEmpty(decorator);
@@ -388,6 +388,7 @@ export {
   getTextAlignBlockMetadata,
   getTextAlignClassName,
   getTextAlignStyles,
+  getColorStyles,
   ButtonGroup,
   Button,
   Dropdown,

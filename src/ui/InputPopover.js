@@ -18,6 +18,7 @@ type Props = {
   checkOptions?: {
     [key: string]: { label: string, defaultValue: boolean };
   };
+  type?: 'button' | 'checkbox' | 'color' | 'date' | 'datetime' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
   onCancel: () => any;
   onSubmit: (value: string, checkOptionValues: CheckOptionValues) => any;
 };
@@ -69,7 +70,7 @@ export default class InputPopover extends Component {
           <input
             ref={this._setInputRef}
             defaultValue={props.defaultValue}
-            type="text"
+            type={props.type || 'text'}
             placeholder="https://example.com/"
             className={styles.input}
             onKeyPress={this._onInputKeyPress}

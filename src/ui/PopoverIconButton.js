@@ -8,6 +8,7 @@ import autobind from 'class-autobind';
 type Props = {
   iconName: string;
   showPopover: boolean,
+  inputtype?: 'button' | 'checkbox' | 'color' | 'date' | 'datetime' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
   defaultValue?: string,
   checkOptions?: {
     [key: string]: { label: string, defaultValue: boolean };
@@ -43,6 +44,7 @@ export default class PopoverIconButton extends Component {
         checkOptions={this.props.checkOptions}
         onSubmit={this._onSubmit}
         onCancel={this._hidePopover}
+        type={this.props.inputtype}
       />
     );
   }
