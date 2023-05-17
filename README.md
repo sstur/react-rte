@@ -1,6 +1,10 @@
-# React Rich Text Editor
+# Deprecated
 
-![Build Status](https://travis-ci.org/sstur/react-rte.svg?branch=master)
+This repository is long ourdated and even [Draft.js](https://github.com/facebookarchive/draft-js) (on which this editor is built) is long outdated and has been superceded by [Lexical](https://github.com/facebook/lexical).
+
+I don't recommend you use this in your project. There are many great alternatives such as [TipTap](https://tiptap.dev/).
+
+# React Rich Text Editor
 
 This is a UI component built completely in React that is meant to be a full-featured textarea replacement similar to [CKEditor][ckeditor], [TinyMCE][tinymce] and other [rich text "WYSIWYG" editors][rte]. It's based on the excellent, open source [Draft.js][draft-js] from Facebook which is performant and production-tested.
 
